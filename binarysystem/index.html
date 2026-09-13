@@ -2,9 +2,10 @@
 layout: null
 ---
 <!DOCTYPE html>
-<html lang="en-GB"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0f1e46"><meta name="description" content="RGSV Number Systems Lab: binary, hexadecimal, seven-bit arithmetic, staged addition and two's-complement subtraction."><title>RGSV | Number Systems Lab</title><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0f1e46;color:white;font-family:'Segoe UI',Arial,sans-serif}main{max-width:520px;padding:36px;text-align:center}h1{font:32px Georgia,serif}p{line-height:1.7;color:#d0d9e8}.gold{color:#ceab63;letter-spacing:2px;font-size:12px}button{border:0;border-radius:8px;background:#ceab63;color:#0f1e46;padding:12px 24px;font:inherit;cursor:pointer}</style></head><body><main><p class="gold">REIGATE GRAMMAR SCHOOL VIETNAM</p><h1>Number Systems Lab</h1><p id="status" role="status">Opening your learning studio…</p><button id="retry" hidden onclick="location.reload()">Try again</button><noscript><p>Please enable JavaScript to use the interactive exercises.</p></noscript></main><script>
-/* v2.5: B -> -B -> independent addition; A+B=D followed by D+C=E.
+<html lang="en-GB"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0f1e46"><meta name="description" content="RGSV Number Systems Lab: binary, hexadecimal, seven-bit arithmetic, continuous addition and two's-complement subtraction."><title>RGSV | Number Systems Lab</title><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0f1e46;color:white;font-family:'Segoe UI',Arial,sans-serif}main{max-width:520px;padding:36px;text-align:center}h1{font:32px Georgia,serif}p{line-height:1.7;color:#d0d9e8}.gold{color:#ceab63;letter-spacing:2px;font-size:12px}button{border:0;border-radius:8px;background:#ceab63;color:#0f1e46;padding:12px 24px;font:inherit;cursor:pointer}</style></head><body><main><p class="gold">REIGATE GRAMMAR SCHOOL VIETNAM</p><h1>Number Systems Lab</h1><p id="status" role="status">Opening your learning studio…</p><button id="retry" hidden onclick="location.reload()">Try again</button><noscript><p>Please enable JavaScript to use the interactive exercises.</p></noscript></main><script>
+/* v2.6: one continuous A, B, subtotal D, C, final D worksheet; final answer in orange.
    Jekyll embeds verified source components into one standalone HTML page. */
+{% include_relative _payload/triple-layout-v2_6.js %}
 (async () => {
   const packedBase = '{% include_relative _payload/p0.txt %}{% include_relative _payload/c02.txt %}{% include_relative _payload/c03.txt %}{% include_relative _payload/c04.txt %}{% include_relative _payload/c05.txt %}{% include_relative _payload/c06.txt %}{% include_relative _payload/c07.txt %}{% include_relative _payload/c08.txt %}{% include_relative _payload/c09.txt %}{% include_relative _payload/c10.txt %}{% include_relative _payload/c11.txt %}';
   // Retain the two verified transport repairs from the existing arithmetic component.
@@ -25,6 +26,8 @@ layout: null
   if(await digest(new TextEncoder().encode(html))!=='d978020ad5f7673f256fe3820b5a9b763ad44d63c92ccd144e75828925a9c658') throw new Error('The arithmetic worksheet did not pass its integrity check.');
   html=html.replace(anchor,decoder.decode(sequential)+'\ninstallSequentialV25();installExerciseMenuV25();\n'+anchor);
   if(await digest(new TextEncoder().encode(html))!=='28527156f5e5ccbfc531d13d95547bf854f9c64d2221beba92af7e727f794fbf') throw new Error('The updated resource did not pass its integrity check. Please refresh.');
+  html=updateTripleLayoutV26(html);
+  if(await digest(new TextEncoder().encode(html))!=='750a8b4e69f1cd5ebfa473f2c7ec480ab8a22d39077ac1964b8c601ce30e129a') throw new Error('The continuous worksheet did not pass its integrity check. Please refresh.');
   document.open();document.write(html);document.close();
 })().catch(error=>{
   document.getElementById('status').textContent=error.message||'Unable to load. Please refresh the page.';
