@@ -2,27 +2,29 @@
 layout: null
 ---
 <!DOCTYPE html>
-<html lang="en-GB"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0f1e46"><meta name="description" content="RGSV Number Systems Lab: binary, hexadecimal, 7-bit addition and subtraction, two's complement and quizzes."><title>RGSV | Number Systems Lab</title><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0f1e46;color:white;font-family:'Segoe UI',Arial,sans-serif}main{max-width:520px;padding:36px;text-align:center}h1{font:32px Georgia,serif}p{line-height:1.7;color:#d0d9e8}.gold{color:#ceab63;letter-spacing:2px;font-size:12px}button{border:0;border-radius:8px;background:#ceab63;color:#0f1e46;padding:12px 24px;font:inherit;cursor:pointer}</style></head><body><main><p class="gold">REIGATE GRAMMAR SCHOOL VIETNAM</p><h1>Number Systems Lab</h1><p id="status" role="status">Opening your learning studio…</p><button id="retry" hidden onclick="location.reload()">Try again</button><noscript><p>Please enable JavaScript to use the interactive exercises.</p></noscript></main><script>
-/* v2.4: explicit exercise buttons and shareable routes for triple addition and subtraction. */
-{% include_relative _payload/exercise-menu-v2_4.js %}
+<html lang="en-GB"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0f1e46"><meta name="description" content="RGSV Number Systems Lab: binary, hexadecimal, seven-bit arithmetic, staged addition and two's-complement subtraction."><title>RGSV | Number Systems Lab</title><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0f1e46;color:white;font-family:'Segoe UI',Arial,sans-serif}main{max-width:520px;padding:36px;text-align:center}h1{font:32px Georgia,serif}p{line-height:1.7;color:#d0d9e8}.gold{color:#ceab63;letter-spacing:2px;font-size:12px}button{border:0;border-radius:8px;background:#ceab63;color:#0f1e46;padding:12px 24px;font:inherit;cursor:pointer}</style></head><body><main><p class="gold">REIGATE GRAMMAR SCHOOL VIETNAM</p><h1>Number Systems Lab</h1><p id="status" role="status">Opening your learning studio…</p><button id="retry" hidden onclick="location.reload()">Try again</button><noscript><p>Please enable JavaScript to use the interactive exercises.</p></noscript></main><script>
+/* v2.5: B -> -B -> independent addition; A+B=D followed by D+C=E.
+   Jekyll embeds verified source components into one standalone HTML page. */
 (async () => {
   const packedBase = '{% include_relative _payload/p0.txt %}{% include_relative _payload/c02.txt %}{% include_relative _payload/c03.txt %}{% include_relative _payload/c04.txt %}{% include_relative _payload/c05.txt %}{% include_relative _payload/c06.txt %}{% include_relative _payload/c07.txt %}{% include_relative _payload/c08.txt %}{% include_relative _payload/c09.txt %}{% include_relative _payload/c10.txt %}{% include_relative _payload/c11.txt %}';
-  // Repair two verified transport transcription errors before checking the unpacked source.
-  const packedInstaller = '{% include_relative _payload/arithmetic-v2_3.txt %}'.replace('EnMyCy7jeLb4','EnMy7jeLb4').replace('gDfBhs8SS','gDfB688SS');
+  // Retain the two verified transport repairs from the existing arithmetic component.
+  const packedArithmetic = '{% include_relative _payload/arithmetic-v2_3.txt %}'.replace('EnMyCy7jeLb4','EnMy7jeLb4').replace('gDfBhs8SS','gDfB688SS');
+  const packedSequential = '{% include_relative _payload/sequential-v2_5.txt %}';
   if (typeof DecompressionStream === 'undefined') throw new Error('Please open this lab in a recent version of Chrome, Edge, Firefox or Safari.');
   const inflate = async packed => new Uint8Array(await new Response(new Blob([Uint8Array.from(atob(packed.replace(/\s+/g,'')),c=>c.charCodeAt(0))]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer());
   const digest = async bytes => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)),b=>b.toString(16).padStart(2,'0')).join('');
-  const [base, installerBytes] = await Promise.all([inflate(packedBase),inflate(packedInstaller)]);
-  if (await digest(base) !== '371bfd07580c141b467deb9bb351a50374e95db7f15d236bc91a4ed22e7273fa') throw new Error('The base resource did not pass its integrity check. Please refresh.');
-  if (await digest(installerBytes) !== 'e488db6b26a8ab58bcdec6ef8af39897a5c623280c8d7c1b3730d81fd6ef4d67') throw new Error('The arithmetic update did not pass its integrity check. Please refresh.');
+  const [base, arithmetic, sequential] = await Promise.all([inflate(packedBase),inflate(packedArithmetic),inflate(packedSequential)]);
+  if(await digest(base)!=='371bfd07580c141b467deb9bb351a50374e95db7f15d236bc91a4ed22e7273fa') throw new Error('The base resource did not pass its integrity check. Please refresh.');
+  if(await digest(arithmetic)!=='e488db6b26a8ab58bcdec6ef8af39897a5c623280c8d7c1b3730d81fd6ef4d67') throw new Error('The arithmetic resource did not pass its integrity check. Please refresh.');
+  if(await digest(sequential)!=='4cd22aaca0474789937f6d626029e2bfc4f8c2d048e26d0ae7aeac7e2b397996') throw new Error('The sequential exercise update did not pass its integrity check. Please refresh.');
   const decoder=new TextDecoder('utf-8',{fatal:true});
   let html=decoder.decode(base);
   const anchor='newAdditionExample();newShiftExample();state.twosValue=-rand(1,63);';
   if(html.split(anchor).length!==2) throw new Error('The source version could not be updated. Please refresh.');
-  html=html.replace(anchor,'('+decoder.decode(installerBytes)+')();\n'+anchor);
-  if(await digest(new TextEncoder().encode(html))!=='d978020ad5f7673f256fe3820b5a9b763ad44d63c92ccd144e75828925a9c658') throw new Error('The updated resource did not pass its integrity check. Please refresh.');
-  html=html.replace(anchor,'('+installExerciseMenuV24.toString()+')();\n'+anchor);
-  if(await digest(new TextEncoder().encode(html))!=='53642d84a41ea03a723e2c4957138f6bafe1de9a8bef5cc3ec5f6e25d37a9e65') throw new Error('The exercise update did not pass its integrity check. Please refresh.');
+  html=html.replace(anchor,'('+decoder.decode(arithmetic)+')();\n'+anchor);
+  if(await digest(new TextEncoder().encode(html))!=='d978020ad5f7673f256fe3820b5a9b763ad44d63c92ccd144e75828925a9c658') throw new Error('The arithmetic worksheet did not pass its integrity check.');
+  html=html.replace(anchor,decoder.decode(sequential)+'\ninstallSequentialV25();installExerciseMenuV25();\n'+anchor);
+  if(await digest(new TextEncoder().encode(html))!=='28527156f5e5ccbfc531d13d95547bf854f9c64d2221beba92af7e727f794fbf') throw new Error('The updated resource did not pass its integrity check. Please refresh.');
   document.open();document.write(html);document.close();
 })().catch(error=>{
   document.getElementById('status').textContent=error.message||'Unable to load. Please refresh the page.';
