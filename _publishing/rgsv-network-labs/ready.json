@@ -1,0 +1,12 @@
+{
+  "format": "xz-json-utf8-v1",
+  "parts": ["part-00.b64", "part-01.b64", "part-02.b64", "part-03.b64", "part-04.b64", "part-05.b64", "part-06.b64", "part-07.b64", "part-08.b64", "part-09.b64", "part-10.b64", "part-11.b64"],
+  "archive_sha256": "7139b1ebb6fcd2d93c23147abef144211618ac8012a3b80c202d1744a89f3ef4",
+  "sha256": {
+    "lab-01.html": "f2cbccdd3a5c87a66049ececb0a873d1603f0d1c2aef6aaf88a531eff3d79f13",
+    "lab-02.html": "eaad815aca8be925460fb2066d42e2718a961945b7f608e466167e7333ae6bf6",
+    "lab-03.html": "2b22911b64a7020f08202b3a4a1093da78943410bb644bd2039c3fa333ef6671",
+    "index.html": "04bd8a26901f4cde83b5273071d8fc067ea6908c38811442687de1b44b4d7b5d",
+    "README.md": "b6d325c35b0d7a3eba8f09cc739a77a3530a43cb4a1e56cc1adae56edb372634"
+  }
+}
