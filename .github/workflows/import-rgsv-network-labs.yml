@@ -1,0 +1,44 @@
+name: Import verified RGSV network labs
+on:
+  push:
+    branches: [publish-rgsv-network-labs-20260923]
+    paths: [_publishing/rgsv-network-labs/ready.json]
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify and unpack the teaching labs
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import base64, hashlib, json, lzma
+          from pathlib import Path
+          source = Path('_publishing/rgsv-network-labs')
+          manifest = json.loads((source / 'ready.json').read_text())
+          names = ['index.html', 'lab-01.html', 'lab-02.html', 'lab-03.html', 'README.md']
+          encoded = ''.join((source / name).read_text().strip() for name in manifest['parts'])
+          packed = base64.b64decode(encoded, validate=True)
+          assert hashlib.sha256(packed).hexdigest() == manifest['archive_sha256'], 'Archive checksum mismatch'
+          documents = json.loads(lzma.decompress(packed).decode('utf-8'))
+          assert set(documents) == set(names), 'Unexpected bundle contents'
+          target = Path('network-labs')
+          target.mkdir(exist_ok=True)
+          for name in names:
+              data = documents[name].encode('utf-8')
+              assert hashlib.sha256(data).hexdigest() == manifest['sha256'][name], 'File checksum mismatch: ' + name
+              if name.endswith('.html'):
+                  assert b'<html' in data.lower() and b'</html>' in data.lower()
+              (target / name).write_bytes(data)
+              print(name, len(data), hashlib.sha256(data).hexdigest())
+          PY
+      - name: Commit the verified files on the staging branch only
+        env:
+          IMPORT_BRANCH: ${{ github.ref_name }}
+        run: |
+          git add -- network-labs
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Import the three verified RGSV network labs and launch page'
+          git push origin "HEAD:$IMPORT_BRANCH"
