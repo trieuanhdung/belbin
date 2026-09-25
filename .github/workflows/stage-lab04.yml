@@ -1,0 +1,66 @@
+name: Prepare verified Lab 04
+on:
+  push:
+    branches: [publish-lab04-go-20260925]
+    paths: ['_publishing/lab04/**', '.github/workflows/stage-lab04.yml']
+permissions:
+  contents: write
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore tested standalone HTML and extend the launch page
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import base64, hashlib, lzma, re
+          from pathlib import Path
+          root = Path('network-labs')
+          parts = sorted(Path('_publishing/lab04').glob('part-*.b64'))
+          assert len(parts) == 4
+          packed = base64.b64decode(''.join(p.read_text() for p in parts), validate=True)
+          assert hashlib.sha256(packed).hexdigest() == 'a0e20375eca38db90a67267b885cd5da81fbfe72244fe5792cf0ed7dcdd02cab'
+          crest = re.search(r'data:image/png;base64,[A-Za-z0-9+/=]+', (root/'lab-03.html').read_text()).group(0)
+          assert hashlib.sha256(crest.encode()).hexdigest().startswith('b938059d29bc')
+          html = lzma.decompress(packed).decode().replace('__RGSV_CREST_DATA_URI__', crest)
+          data = html.encode()
+          assert hashlib.sha256(data).hexdigest() == '2c0e3daa1d20074f99cdc25461e293aeff40edb51e444baeb0681232cc509e88'
+          (root/'lab-04.html').write_bytes(data)
+          def replace_once(text, old, new):
+              assert text.count(old) == 1, 'Unexpected source: '+old[:80]
+              return text.replace(old, new, 1)
+          hub = (root/'index.html').read_text()
+          hub = replace_once(hub, 'grid-template-columns:repeat(3,minmax(0,1fr))', 'grid-template-columns:repeat(2,minmax(0,1fr))')
+          hub = replace_once(hub, 'Build the connections, give devices an address, then follow a file across the network — one packet at a time.', 'Build the connections, give devices an address, follow packets across the network, then discover how a browser finds a web page.')
+          hub = replace_once(hub, '<b>03 &nbsp; Send &amp; reassemble</b></div>', '<b>03 &nbsp; Send &amp; reassemble</b><i aria-hidden="true"></i><b>04 &nbsp; Find a website</b></div>')
+          hub = hub.replace('download="RGSV_Network_Lab_02_v2.html"', 'download="RGSV_Network_Lab_02_v3.html"')
+          card = '''<article class="lab"><div class="art"><span class="lab-index">LAB 04</span><svg viewBox="0 0 340 150" aria-hidden="true"><g fill="none" stroke-width="2"><path d="M150 65H198L238 46" stroke="#ceab63"/><path d="M238 57L198 78H150" stroke="#ceab63"/><path d="M150 88H199L238 105M238 117L198 101H150" stroke="#4f9c8c"/></g><rect x="48" y="44" width="105" height="75" rx="4" fill="#fff" stroke="#354f71" stroke-width="2"/><path d="M49 62h103M88 120v8m-18 0h37" stroke="#354f71" stroke-width="2"/><rect x="57" y="49" width="68" height="8" rx="2" fill="#edf1f7"/><path d="M61 76h77m-77 10h61m-61 10h70" stroke="#c6d3df" stroke-width="3"/><g fill="#fff" stroke="#354f71" stroke-width="2"><rect x="238" y="31" width="43" height="35" rx="3"/><rect x="238" y="92" width="43" height="35" rx="3"/></g><path d="M245 40h27m-27 9h27m-27 52h27m-27 9h27" stroke="#b5c8d8" stroke-width="2"/><g font-family="Segoe UI,Arial,sans-serif" font-size="10" text-anchor="middle" fill="#526c88"><text x="300" y="52">DNS</text><text x="300" y="114">Web</text></g><circle cx="199" cy="66" r="5" fill="#ceab63"/><circle cx="209" cy="109" r="5" fill="#4f9c8c"/></svg></div><div class="body"><div class="tag">URL · DNS · HTTP · HTML</div><h2>Find a website</h2><p>Type a web address and press Go. Watch the browser ask DNS for an IP address, request the page from the web server, and display the returned HTML.</p><div class="skills"><b>Your challenge:</b> explain the six steps from URL to web page.</div><a class="launch" href="lab-04.html">Open Lab 04 <span aria-hidden="true">→</span></a><a class="download" href="lab-04.html" download="RGSV_Network_Lab_04_v2.html">Download the offline HTML</a></div></article>'''
+          hub = replace_once(hub, '</section>', card+'\n</section>')
+          hub = hub.replace('.journey{display:flex;align-items:center;', '.journey{display:flex;flex-wrap:wrap;align-items:center;')
+          assert len(re.findall(r'<article class="lab">',hub)) == 4
+          assert all('href="lab-%02d.html"'%i in hub for i in range(1,5))
+          (root/'index.html').write_text(hub)
+          readme = (root/'README.md').read_text().replace('Three self-contained', 'Four self-contained').replace('The three lab files', 'The four lab files').replace('RGSV_Network_Lab_02_v2.html', 'RGSV_Network_Lab_02_v3.html')
+          marker = '\n\nThe four lab files'
+          row = '\n| `lab-04.html` | `RGSV_Network_Lab_04_v2.html` | Type a URL and press Go to run the full DNS and HTTP journey; Next step remains available for teaching. |'
+          readme = replace_once(readme, marker, row+marker)
+          readme = readme.replace('a labelled shortcut to a DHCP simulation,', 'a labelled shortcut to a simplified one-round-trip DHCP simulation,')
+          notes = '\n\nLab 04 shows DNS resolving the domain name and the web server returning HTML. Go or Enter runs all six steps automatically; Go also restarts after Pause or Next step. DNS hierarchy, caching, TCP and TLS are outside this simplified model. All websites are virtual.\n'
+          readme = readme.replace('\n## Integrity', notes+'\n## Integrity')
+          checks = '\n'.join(hashlib.sha256((root/name).read_bytes()).hexdigest()+'  '+name for name in ['index.html','lab-01.html','lab-02.html','lab-03.html','lab-04.html'])
+          readme = re.sub(r'```\n[\s\S]*?\n```', '```\n'+checks+'\n```', readme, count=1)
+          (root/'README.md').write_text(readme)
+          for name in ['index.html','lab-04.html','README.md']:
+              b = (root/name).read_bytes()
+              sha = hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()
+              print('READY', name, len(b), 'git-blob', sha, 'sha256',hashlib.sha256(b).hexdigest())
+          PY
+      - name: Commit prepared pages to the staging branch only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add network-labs/lab-04.html network-labs/index.html network-labs/README.md
+          git commit -m "Prepare Lab 04 v2 with automatic Go and four-lab launch page"
+          git push origin HEAD:publish-lab04-go-20260925
