@@ -1,0 +1,37 @@
+name: Verify live Lab 04 simple IPs v5
+on:
+  push:
+    branches: [lab04-simple-server-ips-v5-20260925]
+    paths: [.github/workflows/verify-lab04-simple-ips-v5.yml]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Confirm GitHub Pages serves the tested Lab 04 and updated hub
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib,time,urllib.request
+          base='https://trieuanhdung.github.io/belbin/network-labs/'
+          expected={'lab-04.html?v=5':'5ba25c61ad6f9061be4709c58d2575b596769ed2c6203b4be30e0e40a4c2acb0','lab-04.html':'5ba25c61ad6f9061be4709c58d2575b596769ed2c6203b4be30e0e40a4c2acb0','':'b8c4a6a51bf1113092c3e9646bdb1ae7c494ad1a36940b8f16cb796b713de21d'}
+          for path,digest in expected.items():
+              url=base+path
+              for attempt in range(24):
+                  try:
+                      req=urllib.request.Request(url,headers={'Cache-Control':'no-cache','User-Agent':'RGSV-Lab04-v5-Verification'})
+                      with urllib.request.urlopen(req,timeout=15) as response:
+                          assert response.status==200
+                          content=response.read()
+                      actual=hashlib.sha256(content).hexdigest()
+                      assert actual==digest,'Waiting for the new version'
+                      print('PASS HTTP 200',url,'SHA256',actual,flush=True)
+                      break
+                  except Exception as error:
+                      if attempt==23:raise
+                      print('Retry',url,str(error),flush=True)
+                      time.sleep(5)
+          print('PASS: Lab 04 v5 and its hub are live. DNS 10.0.0.1; School 10.0.0.2; Library 10.0.0.3; Sport 10.0.0.4.')
+          PY
