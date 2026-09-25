@@ -1,0 +1,104 @@
+name: Prepare Lab 04 Go v3
+on:
+  push:
+    branches: [fix-lab04-go-v3-20260925]
+    paths: [.github/workflows/fix-lab04-go-v3.yml]
+permissions:
+  contents: write
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply the checksum-guarded change
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib, re, subprocess
+          p=Path('network-labs/lab-04.html')
+          s=p.read_text(encoding='utf-8')
+          expected='2c0e3daa1d20074f99cdc25461e293aeff40edb51e444baeb0681232cc509e88'
+          assert hashlib.sha256(p.read_bytes()).hexdigest()==expected, 'Base file changed'
+          def replace(old,new):
+           global s
+           assert s.count(old)==1, ('Expected one match',old[:100],s.count(old))
+           s=s.replace(old,new,1)
+          replace('<title>RGSV · Lab 04 — Find a Website · v2</title>','<title>RGSV · Lab 04 — Find a Website · v3</title>')
+          replace('NETWORK LAB 04 · YEAR 11','NETWORK LAB 04 · YEAR 11 · v3')
+          replace('<button id="go-button" class="go-button" type="submit">Go</button>','<button id="go-button" class="go-button" type="button">Go</button>')
+          replace("$('#url-input').value=req.url;renderStatic();renderState(true);updateGeometry();", "$('#url-input').value=req.url;ensureAnimationLoop();renderStatic();renderState(true);updateGeometry();")
+          replace('''// Go is always a complete browser lookup, never a single-step command.
+          // A paused/stepped run can be restarted directly without pressing Play or Reset.
+          function go(){
+           if(state.running)return;
+           start(true,true);
+          }''','''// Go is the browser navigation command in EVERY state, including a running
+          // Next-step animation. It starts a fresh automatic run, without Play or Reset.
+          function go(){start(true,true);}''')
+          replace("state.running=!state.running;if(state.running)state.auto=true;renderState(true);", "state.running=!state.running;if(state.running){state.auto=true;state.lastTime=performance.now();ensureAnimationLoop();}renderState(true);")
+          replace("state.auto=false;if(state.p>=1){state.phase++;state.p=0;state.uiKey='';}state.running=true;renderState(true);", "state.auto=false;if(state.p>=1){state.phase++;state.p=0;state.uiKey='';}state.running=true;state.lastTime=performance.now();ensureAnimationLoop();renderState(true);")
+          a=s.index('function renderControls(){');b=s.index('\nfunction homeScreen()',a)
+          s=s[:a]+'''function renderControls(){
+           const busy=isBusy(),paused=busy&&!state.running;
+           // Only one start command is prominent: Go in the browser. This control
+           // pauses/resumes an existing run; it is not an extra required start step.
+           $('#play-button').innerHTML=icon(paused?'play':'pause')+`<span>${paused?t('Continue','Tiếp tục'):t('Pause','Tạm dừng')}</span>`;
+           $('#play-button').disabled=!busy;
+           $('#play-button').setAttribute('aria-label',paused?t('Continue animation','Tiếp tục hoạt cảnh'):t('Pause animation','Tạm dừng hoạt cảnh'));
+           $('#step-button').innerHTML=icon('step')+`<span>${t('Next step','Từng bước')}</span>`;$('#step-button').disabled=state.running;
+           // Do not lock Go or the URL field: a new navigation replaces the current run.
+           $('#go-button').disabled=false;$('#url-input').disabled=false;
+           $('#go-button').title=t('Start or restart all six steps now','Chạy ngay hoặc chạy lại cả sáu bước');
+           $('#go-button').setAttribute('aria-label',t('Go: run all six steps now','Đi: chạy ngay cả sáu bước'));
+           $$('.bookmark,.other-client').forEach(b=>b.disabled=busy);
+           document.body.classList.toggle('paused',!state.running);
+          }''' + s[b:]
+          replace("el.style.opacity=state.p<.025||state.p>.98?'0':String(Math.min(1,(state.p-.025)*20,(.98-state.p)*30));", "// Immediate visual acknowledgement: the outgoing message is visible on Go.\n el.style.opacity=state.p>.985?'0':'1';")
+          a=s.index('let lastPaint=0;');b=s.index('\nfunction showHelp()',a)
+          s=s[:a]+'''let lastPaint=0,animationFrameId=null;
+          function ensureAnimationLoop(){
+           if(animationFrameId===null)animationFrameId=requestAnimationFrame(frame);
+          }
+          function frame(now){
+           animationFrameId=null;
+           try{
+            const delta=state.lastTime?Math.min(90,Math.max(0,now-state.lastTime)):0;state.lastTime=now;
+            if(state.running&&!state.done&&state.phase){
+             state.p=Math.min(1,state.p+delta*state.speed/DURATION[state.phase]);
+             if(state.p>=1)endPhase();
+             else{renderMotion();if(now-lastPaint>70){updateDnsTable();updateServer();lastPaint=now;}}
+            }
+           }finally{ensureAnimationLoop();}
+          }''' + s[b:]
+          replace("// Handle clicks explicitly as well as form submission (Enter in the URL bar).\n$('#go-button').addEventListener('click',e=>{e.preventDefault();go();});", "// Use explicit activation for mouse/touch and Enter; never depend on a disabled submit control.\n$('#go-button').addEventListener('click',go);\n$('#url-input').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();if(!e.repeat)go();}});")
+          replace("$('#modal').classList.add('hidden');if(state.modalResume&&isBusy())state.running=true;state.modalResume=false;renderState(true);if(savedFocus?.isConnected)savedFocus.focus();", "$('#modal').classList.add('hidden');if(state.modalResume&&isBusy()){state.running=true;state.lastTime=performance.now();ensureAnimationLoop();}state.modalResume=false;renderState(true);if(savedFocus?.isConnected)savedFocus.focus();")
+          replace('renderStatic();renderState(true);updateGeometry();requestAnimationFrame(frame);','renderStatic();renderState(true);updateGeometry();ensureAnimationLoop();')
+          replace('Play runs all six steps. Next step animates one step, then pauses. Enter or Go runs all six steps automatically. After pausing or using Next step, Go restarts the complete journey.', 'Go or Enter immediately starts all six steps, even during a running or paused step. No Play click is needed. Pause / Continue controls an existing run. Next step animates one step, then pauses.')
+          replace('Chạy tự động qua sáu bước. Từng bước chạy một bước rồi dừng. Enter hoặc Đi chạy tự động cả sáu bước. Sau khi tạm dừng hoặc dùng Từng bước, Đi chạy lại toàn bộ quá trình.', 'Đi hoặc Enter chạy ngay cả sáu bước, kể cả khi một bước đang chạy hoặc tạm dừng. Không cần bấm Chạy. Tạm dừng / Tiếp tục điều khiển lượt đang chạy. Từng bước chạy một bước rồi dừng.')
+          p.write_text(s,encoding='utf-8')
+          actual=hashlib.sha256(p.read_bytes()).hexdigest()
+          assert actual=='1ebfd5b1139f6e8257cf7165e87df2372f8f8f97fac70175574d8f213c4ec4f8', 'Output differs from browser-tested HTML'
+          for js in re.findall(r'<script>([\s\S]*?)</script>',s):
+           subprocess.run(['node','--check'],input=js,text=True,check=True)
+          hub=Path('network-labs/index.html');h=hub.read_text(encoding='utf-8')
+          assert hashlib.sha256(hub.read_bytes()).hexdigest()=='f6562eff28c456728ec9e97a3475c5276001fba5bce472ca876c79d59d72297e'
+          assert h.count('href="lab-04.html"')==2
+          h=h.replace('href="lab-04.html"','href="lab-04.html?v=3"').replace('RGSV_Network_Lab_04_v2.html','RGSV_Network_Lab_04_v3.html')
+          hub.write_text(h,encoding='utf-8')
+          readme=Path('network-labs/README.md');r=readme.read_text(encoding='utf-8')
+          r=r.replace('RGSV_Network_Lab_04_v2.html','RGSV_Network_Lab_04_v3.html').replace('Go also restarts after Pause or Next step.', 'Go is always active and restarts even during a running or paused step. The other playback control only pauses or continues; no second Play click is needed.')
+          r=r.replace(expected,actual).replace('f6562eff28c456728ec9e97a3475c5276001fba5bce472ca876c79d59d72297e',hashlib.sha256(hub.read_bytes()).hexdigest())
+          readme.write_text(r,encoding='utf-8')
+          for f in [p,hub,readme]:
+           data=f.read_bytes();blob=hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
+           print('VERIFIED',str(f),len(data),'bytes; blob',blob,'SHA-256',hashlib.sha256(data).hexdigest(),flush=True)
+          PY
+      - name: Commit only the three prepared publishing files
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add network-labs/lab-04.html network-labs/index.html network-labs/README.md
+          git commit -m 'Prepare Lab 04 v3: one Go click starts the whole journey'
+          git push origin HEAD:fix-lab04-go-v3-20260925
