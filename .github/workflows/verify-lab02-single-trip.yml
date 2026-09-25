@@ -1,0 +1,35 @@
+name: Verify published Lab 02 v3
+on:
+  push:
+    branches: [update-lab02-one-round-trip-20260925]
+    paths: [.github/workflows/verify-lab02-single-trip.yml]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify the student URL serves the exact updated HTML
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib, time, urllib.request
+          url = 'https://trieuanhdung.github.io/belbin/network-labs/lab-02.html'
+          expected = '9655145339aaf38d2cd07bf952cf3efcb9ed5d4ba8857b59779f8c1b3d19f731'
+          for attempt in range(18):
+              try:
+                  request = urllib.request.Request(url, headers={'User-Agent':'RGSV-Lab02-Deployment-Check','Cache-Control':'no-cache'})
+                  with urllib.request.urlopen(request, timeout=20) as response:
+                      data = response.read()
+                      assert response.status == 200
+                  actual = hashlib.sha256(data).hexdigest()
+                  assert actual == expected, 'Waiting for the updated deployment'
+                  print('PASS: HTTP 200', url, len(data), 'bytes; SHA-256', actual, flush=True)
+                  print('The public page exactly matches the browser-tested one-round-trip Lab 02.', flush=True)
+                  break
+              except Exception as error:
+                  if attempt == 17:
+                      raise
+                  print('Retry:', str(error), flush=True)
+                  time.sleep(5)
+          PY
