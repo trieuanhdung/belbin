@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0f1e46">
-<meta name="description" content="RGSV Network Lab 04. A simple, offline Year 11 simulation of DNS lookup, HTTP request and HTML delivery in six steps.">
-<title>RGSV · Lab 04 — Find a Website · v3</title>
+<meta name="description" content="RGSV Network Lab 04. An offline Year 11 DNS and HTTP simulation with one DNS server and three separately addressed web servers.">
+<title>RGSV · Lab 04 — Find a Website · v4</title>
 <link rel="icon" href="data:image/png;base64,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">
 <style>
 :root{--navy:#0f1e46;--ink:#20364f;--gold:#ceab63;--dns:#aa792c;--dnssoft:#fcf3e2;--teal:#137f75;--tealsoft:#e9f7f2;--muted:#778698;--line:#e0e6ee;--bg:#f6f8fb;--red:#b84254;--mono:'Cascadia Code',Consolas,monospace;--sans:'Segoe UI',Arial,sans-serif}
@@ -28,13 +28,122 @@ header{height:73px;flex:none;display:flex;align-items:center;gap:22px;padding:0 
 @media(max-width:580px){header{height:64px;padding:0 12px;gap:12px}.wordmark{display:none}.crest{width:34px;height:41px}.heading{border-left:0;padding-left:0}.heading h1{font-size:19px}.eyebrow{font-size:8px;letter-spacing:1px}.top-actions{gap:4px}.top-button{height:30px;min-width:30px}#fullscreen-button{display:none}.control-bar{padding:9px 12px;gap:7px;flex-wrap:wrap}.journey{flex-basis:100%;margin-bottom:3px;font-size:11px}.btn{font-size:11px;padding:6px 10px;min-height:34px}.btn.primary{min-width:96px}.speed-label{margin-left:auto}.speed-label>span{display:none}.stage{height:1030px;min-height:1030px}.client-window{left:3%;width:94%;top:3%;height:338px}.device-title{font-size:11px}.device-title .client-id{font-size:9px}.monitor{border-width:5px;border-bottom-width:17px}.url-frame{padding:0 6px;gap:5px}#url-input{font-size:11px}.browser-status{font-size:8px;padding-left:7px;padding-right:7px}.browser-status .resolved{font-size:8px}.browser-tab{height:23px}.url-form{gap:6px}.bookmarks{gap:1px}.bookmark{font-size:9px}.home-screen h2{font-size:25px}.hero-globe{width:45px;height:45px}.home-screen p{font-size:10px}.other-clients{left:10%;width:80%;top:392px;gap:42px}.server-node{width:85%;left:8%;right:auto;bottom:auto}.dns-node{top:560px}.web-node{top:803px}.server-heading{font-size:15px}.server-content{gap:14px}.server-machine{width:83px}.server-machine .art{width:83px;height:94px}.dns-table td{font-size:10px;padding:10px 7px}.step-track{grid-template-columns:repeat(3,1fr);gap:10px}.lesson-bar{padding:13px 14px}.step{font-size:10px}.caption-text{font-size:13px}.caption-row{gap:9px;align-items:flex-start}.state-tag{display:none}.caption-number{font-size:10px;padding:4px 6px;min-width:34px}.site-hero{padding:15px 15px;gap:7px;min-height:138px}.site-hero h2{font-size:26px}.site-hero p{font-size:9px;line-height:1.5}.site-hero svg{width:85px;height:75px}.site-nav{padding:9px 13px;font-size:9px}.site-nav small{display:none}.site-cards{padding:9px 11px;gap:6px}.site-card{padding:7px 5px;font-size:8px;gap:4px}.site-card .icon{width:13px;height:13px}footer{padding-left:13px;padding-right:13px;font-size:7px}.footer-key{gap:8px}.network-note{font-size:8px;right:12px}.dialog-body{padding:18px;font-size:11px}.dialog-header{padding:19px 18px 15px}.message{font-size:10px}.path-label{font-size:10px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.wait-orbit:before{animation:none}.page{animation:none}button,svg{transition:none!important}}
 @media print{.control-bar,.top-actions,.other-clients,.message-layer,footer{display:none}body{height:auto}.stage{height:590px;min-height:590px}.lesson-bar{break-inside:avoid}header{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+
+/* v4: three separate web servers, kept outside device containers. */
+.client-window{left:3.2%;width:47%;top:10%;height:69%;max-height:490px}
+.home-screen,.waiting-screen{gap:8px;padding:12px 18px}
+.hero-globe,.wait-orbit{width:40px;height:40px;flex:none}
+.home-screen h2{font-size:28px}.waiting-screen h2{font-size:23px}
+.home-screen .empty-hint{font-size:9px;padding:3px 8px}
+.waiting-screen .lookup-name{font-size:11px;padding:4px 9px}
+.other-clients{left:11%;width:32%;bottom:3%;gap:48px}
+.dns-node{top:4%;right:3%;width:34%;max-width:none}
+.dns-node .server-machine{width:74px}
+.dns-node .art{width:74px;height:81px}
+.dns-node .server-content{gap:12px}
+.dns-node .server-heading{margin:0 0 10px 5px;font-size:15px}
+.dns-node .server-note{margin:8px 0 0 5px;font-size:10px}
+.dns-node .server-ip{font-size:10px!important}
+.dns-table td{padding:8px 6px;font-size:11px}
+.dns-table th{padding:7px 6px;font-size:9px}
+.dns-table th:first-child{width:54%}
+.web-servers{position:absolute;top:38%;bottom:5%;right:3%;width:34%;z-index:3;display:flex;flex-direction:column;justify-content:space-between;gap:12px}
+.web-servers .web-node{position:relative;inset:auto;width:100%;max-width:none;display:flex;align-items:center;gap:16px;min-height:82px;padding:0;background:none;border:0;border-radius:0;box-shadow:none}
+.web-node .server-machine{width:74px;align-self:center}
+.web-node .art{width:68px;height:75px}
+.web-node .server-halo{width:78px;height:78px;left:-2px;top:1px}
+.web-detail{flex:1;min-width:0;max-width:380px}
+.web-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:5px}
+.web-select{border:0;background:none;padding:0;color:var(--ink);display:flex;gap:6px;align-items:center;text-align:left;font-size:13px;font-weight:650}
+.web-select .icon{width:14px;height:14px;color:#8499ac}
+.web-select:disabled{opacity:1;cursor:default}
+.web-select small{font-size:9px;color:#9aabbc;font-weight:500}
+.web-server-ip{font:600 14px var(--mono);color:#385771;letter-spacing:.1px}
+.web-domain{margin:4px 0 0;color:#8395a9;font:10px var(--mono)}
+.server-state{font-size:8px;letter-spacing:.65px;color:#899aa9;white-space:nowrap;flex:none}
+.web-mini-file{display:flex;align-items:center;gap:6px;margin-top:6px;min-height:22px;color:#718c91;font:10px var(--mono);overflow:hidden}
+.web-mini-file .icon{width:15px;height:15px;color:#80a899}
+.web-file-code{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.web-node .server-progress{margin:3px 0 0;background:#e6eeec;width:100%;height:3px}
+.web-node.active .web-server-ip,.web-node.active .web-select,.web-node.active .server-state{color:var(--teal)}
+.web-node.active .web-mini-file{color:#1c6c60}
+.web-node.delivered .server-state{color:var(--teal)}
+.web-node.delivered .web-server-ip{color:#318477}
+.web-node.active .art{filter:drop-shadow(0 0 5px #7cc8b760)}
+.web-node[data-status="processing"] .server-state:before{content:'';display:inline-block;width:5px;height:5px;background:var(--teal);border-radius:50%;margin-right:5px}
+.web-reference{stroke:#d5e2e0;stroke-width:1.5;fill:none;opacity:.75}
+.web-reference.selected{opacity:0}
+.web-node .web-mini-file.idle{color:#9caaa8}
+.path-label{font-size:10px}
+@media(min-width:1650px){
+ .client-window{left:4%;width:47%;top:15%;height:65%;max-height:535px}
+ .home-screen,.waiting-screen{gap:14px;padding:22px}.hero-globe,.wait-orbit{width:65px;height:65px}.home-screen h2{font-size:37px}.waiting-screen h2{font-size:30px}.waiting-screen .lookup-name{font-size:14px;padding:7px 12px}
+ .dns-node{top:7%;right:3.5%;width:33%}.dns-node .server-machine{width:100px}.dns-node .art{width:100px;height:110px}
+ .dns-node .server-heading{font-size:19px;margin-bottom:12px}.dns-node .server-ip{font-size:12px!important}
+ .dns-table td{font-size:13px;padding:11px 8px}.dns-table th{font-size:11px;padding:9px 8px}.dns-node .server-note{font-size:12px;margin-top:11px}
+ .web-servers{top:40%;bottom:5%;right:3.5%;width:33%;gap:14px}.web-servers .web-node{gap:22px;min-height:110px}
+ .web-node .server-machine{width:100px}.web-node .art{width:86px;height:97px}.web-node .server-halo{width:98px;height:98px}
+ .web-select{font-size:16px}.web-select .icon{width:17px;height:17px}.web-select small{font-size:11px}
+ .web-server-ip{font-size:17px}.web-domain{font-size:12px;margin-top:5px}.server-state{font-size:10px}
+ .web-mini-file{font-size:12px;margin-top:10px}.path-label{font-size:12px}.other-clients{bottom:3%;left:12%;width:31%}
+}
+@media(max-width:1200px) and (min-width:1001px){
+ .client-window{left:2.5%;width:46%;top:15%;height:62%;min-height:285px}
+ .dns-node{right:2%;width:35%;top:3.5%}.dns-node .server-machine{width:63px}.dns-node .art{width:63px;height:73px}.dns-node .server-content{gap:7px}
+ .dns-table td{font-size:9px;padding:8px 4px}.dns-table th{font-size:9px;padding:6px 4px}.dns-node .server-ip{font-size:9px!important}
+ .web-servers{right:2%;width:35%;top:39%;bottom:5%;gap:10px}.web-servers .web-node{gap:9px;min-height:78px}
+ .web-node .server-machine{width:63px}.web-node .art{width:60px;height:66px}.web-server-ip{font-size:13px}.web-select{font-size:12px}.web-domain{font-size:9px}.server-state{font-size:7px}.web-mini-file{font-size:9px}
+ .other-clients{left:9%;width:34%;bottom:3%}
+}
+@media(max-height:730px) and (min-width:1001px){
+ .stage{min-height:440px}.client-window{top:12%;height:65%;min-height:282px}
+ .dns-node{top:2.5%}.dns-node .server-heading{margin-bottom:5px;font-size:14px}
+ .dns-table td{padding:6px 5px;font-size:10px}.dns-table th{padding:5px;font-size:9px}
+ .dns-node .art{height:72px;width:65px}.dns-node .server-note{margin-top:5px;font-size:9px}
+ .web-servers{top:35%;bottom:4%;gap:8px}.web-servers .web-node{min-height:77px;gap:12px}
+ .web-node .art{height:62px;width:57px}.web-node .web-select{font-size:12px}.web-server-ip{font-size:13px}.web-mini-file{margin-top:3px;min-height:17px;font-size:9px}
+ .other-clients{bottom:2%}.network-note{font-size:8px;bottom:4px}
+}
+@media(max-width:1000px){
+ .stage{height:990px;min-height:990px;flex:none}
+ .client-window{left:6%;top:26px;width:88%;height:352px;min-height:0;max-height:none}
+ .other-clients{left:25%;width:50%;top:405px;bottom:auto;gap:65px}
+ .dns-node{left:5%;right:auto;top:550px;bottom:auto;width:42%;max-width:none}
+ .dns-node .server-content{gap:10px}.dns-node .server-heading{font-size:15px}.dns-node .server-machine{width:67px}.dns-node .art{width:67px;height:79px}
+ .dns-table td{font-size:10px;padding:9px 5px}.dns-table th{font-size:9px;padding:8px 5px}.dns-node .server-note{font-size:10px}
+ .web-servers{left:auto;right:5%;top:550px;bottom:64px;width:42%;gap:20px}
+ .web-servers .web-node{position:relative;inset:auto;width:100%;gap:11px;min-height:104px}
+ .web-node .server-machine{width:69px}.web-node .art{width:64px;height:78px}
+ .web-select{font-size:13px}.web-server-ip{font-size:14px}.web-domain{font-size:10px}.web-mini-file{font-size:10px}.path-label{font-size:10px}
+ .network-note{right:5%;bottom:24px;font-size:9px;max-width:85%;text-align:right}
+}
+@media(max-width:700px) and (min-width:581px){
+ .dns-node{width:40%;left:3%}.dns-node .server-content{flex-direction:column;gap:12px;align-items:flex-start}.dns-node .server-machine{align-self:center}
+ .web-servers{right:3%;width:46%}.web-servers .web-node{gap:8px}.server-state{font-size:7px}.web-select small{display:none}
+}
+@media(max-width:580px){
+ .stage{height:1360px;min-height:1360px}
+ .client-window{left:4%;top:27px;width:92%;height:315px;min-height:0}
+ .other-clients{left:14%;width:72%;top:379px;bottom:auto;gap:45px}
+ .dns-node{left:9%;right:auto;top:540px;width:82%;bottom:auto}
+ .dns-node .server-heading{font-size:15px;margin-bottom:12px}.dns-node .server-content{gap:12px}.dns-node .server-machine{width:65px}
+ .dns-table td{font-size:9px;padding:9px 4px}.dns-table th{font-size:9px;padding:8px 4px}.dns-node .server-ip{font-size:9px!important}
+ .dns-node .server-note{font-size:10px;margin-top:10px}
+ .web-servers{left:11%;right:auto;top:825px;bottom:65px;width:80%;gap:26px}
+ .web-servers .web-node{width:100%;inset:auto;min-height:113px;gap:13px}
+ .web-node .server-machine{width:66px}.web-node .art{width:63px;height:78px}
+ .web-select{font-size:13px}.web-select small{display:none}.web-server-ip{font-size:15px}.web-domain{font-size:10px}.server-state{font-size:7px}.web-mini-file{font-size:10px}
+ .network-note{bottom:22px;left:5%;right:5%;max-width:90%;text-align:center;font-size:8px}
+ .message{font-size:10px}.path-label{font-size:10px}.browser-status .resolved{font-size:9px}
+}
+
 </style>
 </head>
 <body>
 <a class="skip" href="#url-input">Skip to browser</a>
 <header>
  <div class="brand"><img class="crest" src="data:image/png;base64,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" alt="RGSV crest"><div class="wordmark">REIGATE GRAMMAR<br>SCHOOL VIETNAM<span>COMPUTER SCIENCE</span></div></div>
- <div class="heading"><div class="eyebrow">NETWORK LAB 04 · YEAR 11 · v3</div><h1 id="app-title">Find a website</h1></div>
+ <div class="heading"><div class="eyebrow">NETWORK LAB 04 · YEAR 11 · v4</div><h1 id="app-title">Find a website</h1></div>
  <div class="top-actions"><span class="sim-label" id="sim-label">SIMULATION</span><button id="lang-button" class="top-button lang-button" title="Tiếng Việt" aria-label="Switch to Vietnamese">VI</button><button id="fullscreen-button" class="top-button" title="Full screen" aria-label="Full screen"></button><button id="help-button" class="top-button" title="Teacher notes" aria-label="Teacher notes"></button></div>
 </header>
 <section class="control-bar" aria-label="Playback controls">
@@ -42,13 +151,14 @@ header{height:73px;flex:none;display:flex;align-items:center;gap:22px;padding:0 
  <button id="play-button" class="btn primary"></button><button id="step-button" class="btn"></button><button id="reset-button" class="btn reset-btn" title="Reset" aria-label="Reset"></button>
  <label class="speed-label"><span id="speed-label">Speed</span><select id="speed" aria-label="Animation speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label>
 </section>
-<main id="stage" class="stage" aria-label="Three clients, a DNS server and a web server">
+<main id="stage" class="stage" aria-label="Three clients, one DNS server and three web servers">
  <svg class="connections" id="connections" aria-hidden="true"><defs>
   <marker id="arrow-idle" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#c3cedb" stroke-width="1.2"/></marker>
   <marker id="arrow-dns" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#b48b46" stroke-width="1.2"/></marker>
   <marker id="arrow-web" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#25867b" stroke-width="1.2"/></marker>
  </defs>
  <path id="path-1" class="route-path dns" style="--route:var(--dns)" marker-end="url(#arrow-idle)"/><path id="path-3" class="route-path dns" style="--route:var(--dns)" marker-end="url(#arrow-idle)"/>
+ <g id="web-links"></g>
  <path id="path-4" class="route-path web" style="--route:var(--teal)" marker-end="url(#arrow-idle)"/><path id="path-6" class="route-path web" style="--route:var(--teal)" marker-end="url(#arrow-idle)"/>
  <text id="path-label-1" class="path-label" style="--route:var(--dns)"></text><text id="path-label-3" class="path-label" style="--route:var(--dns)"></text><text id="path-label-4" class="path-label" style="--route:var(--teal)"></text><text id="path-label-6" class="path-label" style="--route:var(--teal)"></text>
  </svg>
@@ -70,12 +180,7 @@ header{height:73px;flex:none;display:flex;align-items:center;gap:22px;padding:0 
    <table class="dns-table" aria-label="DNS records"><thead><tr><th id="domain-heading">Domain name</th><th>IPv4</th></tr></thead><tbody id="dns-records"></tbody></table>
   </div><p id="dns-note" class="server-note">Looks up an IP address.</p>
  </section>
- <section id="web-node" class="server-node web-node" aria-label="Web server">
-  <h2 class="server-heading"><span class="step-dot">5</span><span id="web-title">Web server</span></h2>
-  <div class="server-content"><div class="server-machine"><div class="server-halo"></div><svg id="web-art" class="art" viewBox="0 0 100 80" aria-hidden="true"></svg><span class="server-ip">203.0.113.20</span></div>
-   <div class="server-document"><div class="file-top"><span id="html-icon"></span><b id="server-filename">index.html</b><span>HTML</span></div><div id="source-code" class="source-code"><span class="tag">&lt;html&gt;</span>\n  &lt;h1&gt; … &lt;/h1&gt;\n<span class="tag">&lt;/html&gt;</span></div><div class="server-progress"><i id="server-progress"></i></div></div>
-  </div><p id="web-note" class="server-note">Stores and returns the web page.</p>
- </section>
+ <section id="web-servers" class="web-servers" aria-label="Three web servers"></section>
  <div class="message-layer" aria-hidden="true"><div id="message" class="message"><i class="signal"></i><span id="message-text"></span></div></div>
  <div id="network-note" class="network-note">Logical paths · intermediate network devices hidden</div>
 </main>
@@ -140,7 +245,7 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const ICONS={
  play:'<path d="m8 4 12 8-12 8V4Z"/>',pause:'<path d="M8 5v14M16 5v14"/>',step:'<path d="m5 5 10 7-10 7V5Zm14 0v14"/>',reset:'<path d="M3 11a9 9 0 1 1 3 8M3 4v7h7"/>',full:'<path d="M3 9V3h6m6 0h6v6m0 6v6h-6m-6 0H3v-6"/>',help:'<circle cx="12" cy="12" r="9"/><path d="M9.5 8.5a2.5 2.5 0 1 1 4 2l-1.5 1V14m0 3h.01"/>',close:'<path d="m6 6 12 12M18 6 6 18"/>',globe:'<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 7h14M5 17h14"/>',school:'<path d="M3 10h18v11H3V10ZM1 10 12 3l11 7M9 21v-6h6v6M6 12v2m12-2v2M12 6v2"/>',book:'<path d="M12 5C9 3 5 3 2 4v15c3-1 7-1 10 1 3-2 7-2 10-1V4c-3-1-7-1-10 1Zm0 0v15"/>',sport:'<circle cx="12" cy="12" r="9"/><path d="m12 7 5 4-2 6H9l-2-6 5-4Zm0 0V3m5 8 4-2m-6 8 2 3m-8-3-2 3m0-9L3 9"/>',file:'<path d="M5 2h9l5 5v15H5V2Zm9 0v6h5M8 12l-2 3 2 3m8-6 2 3-2 3m-3-7-2 10"/>',check:'<path d="m5 12 4 4L19 6"/>',search:'<circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/>',server:'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 9h16M4 15h16M7 6h.1M7 12h.1M7 18h.1m4-12h6m-6 6h6m-6 6h6"/>',error:'<circle cx="12" cy="12" r="9"/><path d="M12 6v8m0 3h.01"/>',code:'<path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18"/>',arrow:'<path d="M4 12h16m-6-6 6 6-6 6"/>'};
 const icon=(name)=>`<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]||ICONS.globe}</svg>`;
-const SITES=[{id:'school',domain:'www.rgsv.test',ip:'203.0.113.20',name:['School','Trường học'],title:['Welcome to RGSV','Chào mừng tới RGSV'],tag:['STUDENT PORTAL','CỔNG HỌC SINH'],subtitle:['Learn. Explore. Belong.','Học hỏi. Khám phá. Kết nối.'],cards:[['Learning','Học tập'],['School life','Đời sống'],['Our community','Cộng đồng']]},{id:'library',domain:'library.test',ip:'203.0.113.20',name:['Library','Thư viện'],title:['Your next chapter','Khám phá trang sách'],tag:['RGSV LIBRARY','THƯ VIỆN RGSV'],subtitle:['Discover a world between the covers.','Mỗi cuốn sách mở ra một thế giới.'],cards:[['New books','Sách mới'],['Research','Nghiên cứu'],['Reading club','CLB sách']]},{id:'sport',domain:'sport.test',ip:'203.0.113.20',name:['Sport','Thể thao'],title:['Ready. Set. Go!','Sẵn sàng bứt phá!'],tag:['RGSV SPORT','THỂ THAO RGSV'],subtitle:['Find your team. Play your part.','Tìm đồng đội. Cùng chinh phục.'],cards:[['Fixtures','Lịch thi đấu'],['Our teams','Đội tuyển'],['Activities','Hoạt động']]}];
+const SITES=[{id:'school',domain:'www.rgsv.test',ip:'203.0.113.20',name:['School','Trường học'],title:['Welcome to RGSV','Chào mừng tới RGSV'],tag:['STUDENT PORTAL','CỔNG HỌC SINH'],subtitle:['Learn. Explore. Belong.','Học hỏi. Khám phá. Kết nối.'],cards:[['Learning','Học tập'],['School life','Đời sống'],['Our community','Cộng đồng']]},{id:'library',domain:'library.test',ip:'203.0.113.30',name:['Library','Thư viện'],title:['Your next chapter','Khám phá trang sách'],tag:['RGSV LIBRARY','THƯ VIỆN RGSV'],subtitle:['Discover a world between the covers.','Mỗi cuốn sách mở ra một thế giới.'],cards:[['New books','Sách mới'],['Research','Nghiên cứu'],['Reading club','CLB sách']]},{id:'sport',domain:'sport.test',ip:'203.0.113.40',name:['Sport','Thể thao'],title:['Ready. Set. Go!','Sẵn sàng bứt phá!'],tag:['RGSV SPORT','THỂ THAO RGSV'],subtitle:['Find your team. Play your part.','Tìm đồng đội. Cùng chinh phục.'],cards:[['Fixtures','Lịch thi đấu'],['Our teams','Đội tuyển'],['Activities','Hoạt động']]}];
 // All domains, addresses, requests and pages are local teaching data. No fetch, XHR, iframe or navigation.
 const CLIENTS=[0,1,2].map((_,i)=>({id:i,label:`Client 0${i+1}`,ip:`192.168.1.${10+i}`,url:'http://www.rgsv.test/',result:null}));
 let lang='en';try{lang=localStorage.getItem('rgsv-lab04-language')==='vi'?'vi':'en';}catch{}
@@ -224,7 +329,7 @@ function renderSteps(){
  tag.textContent=state.done?(state.error?t('NOT FOUND','KHÔNG CÓ'):t('COMPLETE','HOÀN TẤT')):state.running?t('PLAYING','ĐANG CHẠY'):state.phase?t('PAUSED','TẠM DỪNG'):t('READY','SẴN SÀNG');
 }
 function renderStatic(){
- document.documentElement.lang=lang;$('#stage').setAttribute('aria-label',t('Three clients, a DNS server and a web server','Ba máy khách, một máy chủ DNS và một Web Server'));$('#speed').setAttribute('aria-label',t('Animation speed','Tốc độ hoạt cảnh'));
+ document.documentElement.lang=lang;$('#stage').setAttribute('aria-label',t('Three clients, one DNS server and three web servers','Ba máy khách, một máy chủ DNS và ba Web Server'));$('#speed').setAttribute('aria-label',t('Animation speed','Tốc độ hoạt cảnh'));
  $('#app-title').textContent=t('Find a website','Tìm một trang web');$('#sim-label').textContent=t('SIMULATION','MÔ PHỎNG');$('#journey-page').textContent=t('Web page','Trang web');$('#speed-label').textContent=t('Speed','Tốc độ');
  $('#lang-button').textContent=lang==='en'?'VI':'EN';$('#lang-button').setAttribute('aria-label',t('Switch to Vietnamese','Switch to English'));$('#lang-button').title=t('Tiếng Việt','English');
  $('#fullscreen-button').innerHTML=icon('full');$('#fullscreen-button').title=t('Full screen','Toàn màn hình');$('#help-button').innerHTML=icon('help');$('#help-button').title=t('Teacher notes','Ghi chú giáo viên');$('#reset-button').innerHTML=icon('reset');$('#reset-button').title=t('Reset','Làm lại');$('#reset-button').setAttribute('aria-label',t('Reset','Làm lại'));$('#url-icon').innerHTML=icon('globe');$('#url-input').setAttribute('aria-label',t('Website URL','Địa chỉ URL'));$('#close-modal').innerHTML=icon('close');$('#close-modal').setAttribute('aria-label',t('Close','Đóng'));
@@ -232,8 +337,8 @@ function renderStatic(){
  $$('.bookmark').forEach(b=>{const s=SITES.find(s=>s.id===b.dataset.site);b.innerHTML=icon(s.id==='school'?'school':s.id==='library'?'book':'sport')+esc(tx(s.name));b.title=`http://${s.domain}/`;b.classList.toggle('active',$('#url-input').value.toLowerCase().includes(s.domain));});
  $('#client-label').textContent=t(currentClient().label+' · Browser',`Máy 0${state.client+1} · Trình duyệt`);$('#client-ip').textContent=currentClient().ip;
  $('#other-clients').innerHTML=CLIENTS.filter(c=>c.id!==state.client).map(c=>`<button class="other-client ${c.result&&!c.result.error?'visited':''}" data-client="${c.id}" aria-label="${t('Open the browser of','Mở trình duyệt của')} ${c.label}" ${isBusy()?'disabled':''}><svg viewBox="0 0 100 80" aria-hidden="true">${DEVICE_ART[c.id===2?'laptop':'desktop']}</svg><b>${t(c.label,`Máy 0${c.id+1}`)}</b><small>${c.ip}</small></button>`).join('');
- $('#dns-title').textContent=t('DNS server','Máy chủ DNS');$('#web-title').textContent=t('Web server','Web Server');$('#dns-art').innerHTML=DEVICE_ART.server;$('#web-art').innerHTML=DEVICE_ART.server;
- $('#domain-heading').textContent=t('Domain name','Tên miền');$('#dns-records').innerHTML=SITES.map(s=>`<tr data-domain="${s.domain}"><td class="domain-cell" title="${s.domain}">${s.domain}</td><td>${s.ip}</td></tr>`).join('');$('#html-icon').innerHTML=icon('file');
+ $('#dns-title').textContent=t('DNS server','Máy chủ DNS');$('#dns-art').innerHTML=DEVICE_ART.server;renderWebServers();
+ $('#domain-heading').textContent=t('Domain name','Tên miền');$('#dns-records').innerHTML=SITES.map(s=>`<tr data-domain="${s.domain}"><td class="domain-cell" title="${s.domain}">${s.domain}</td><td>${s.ip}</td></tr>`).join('');
  $('#network-note').textContent=t('Logical paths · intermediate network devices hidden','Đường trao đổi dữ liệu · lược bỏ thiết bị mạng trung gian');
  $('#path-label-1').textContent=t('1 · Domain name','1 · Tên miền');$('#path-label-3').textContent='3 · IP';$('#path-label-4').textContent='4 · HTTP';$('#path-label-6').textContent='6 · HTML';
  state.uiKey='';renderSteps();
@@ -250,7 +355,7 @@ function renderControls(){
  $('#go-button').disabled=false;$('#url-input').disabled=false;
  $('#go-button').title=t('Start or restart all six steps now','Chạy ngay hoặc chạy lại cả sáu bước');
  $('#go-button').setAttribute('aria-label',t('Go: run all six steps now','Đi: chạy ngay cả sáu bước'));
- $$('.bookmark,.other-client').forEach(b=>b.disabled=busy);
+ $$('.bookmark,.other-client,.web-select').forEach(b=>b.disabled=busy);
  document.body.classList.toggle('paused',!state.running);
 }
 function homeScreen(){return`<div class="home-screen"><div class="hero-globe">${icon('globe')}</div><h2>${t('Where is this website?','Trang web này ở đâu?')}</h2><p>${t('Type a web address. Follow its journey.','Nhập địa chỉ web. Theo dõi hành trình tìm trang.')}</p><span class="empty-hint">URL → IP → HTML</span></div>`;}
@@ -291,46 +396,77 @@ function updateDnsTable(){
   note.textContent=state.p>=.82?(i>=0?t('Match found → ','Tìm thấy → ')+r.ip:t('No record in this lab.','Không có trong bảng DNS của lab.')):t('Looking up: ','Đang tra: ')+r.domain;note.classList.add('found');
  }else{if(i>=0){rows[i].className='match';note.textContent=t('IP returned to the client.','Đã trả IP về máy khách.');note.classList.add('found');}else{note.textContent=t('No record in this lab.','Không có trong bảng DNS của lab.');}}
 }
+function renderWebServers(){
+ const host=$('#web-servers');
+ host.setAttribute('aria-label',t('Three web servers with different IP addresses','Ba Web Server có địa chỉ IP khác nhau'));
+ host.innerHTML=SITES.map((site,i)=>`<section class="server-node web-node" id="web-node-${site.id}" data-site="${site.id}" aria-label="${esc(tx(site.name)+' · Web server '+(i+1)+' · '+site.ip)}">
+  <div class="server-machine"><div class="server-halo"></div><svg id="web-art-${site.id}" class="art" viewBox="0 0 100 80" aria-hidden="true">${DEVICE_ART.server}</svg></div>
+  <div class="web-detail"><div class="web-heading"><button type="button" class="web-select" data-open-site="${site.id}" title="${esc(t('Choose this website, then press Go','Chọn trang này rồi bấm Đi'))}">${icon(site.id==='library'?'book':site.id==='sport'?'sport':'school')}<span>${esc(tx(site.name))}</span><small>· Web 0${i+1}</small></button><span class="server-state" id="web-state-${site.id}"></span></div>
+  <div class="web-server-ip">${site.ip}</div><p class="web-domain">${site.domain}</p>
+  <div class="web-mini-file" id="web-file-${site.id}">${icon('file')}<span class="web-file-code" id="web-code-${site.id}">index.html</span></div>
+  <div class="server-progress"><i id="web-progress-${site.id}"></i></div></div></section>`).join('');
+ $('#web-links').innerHTML=SITES.map(site=>`<path class="web-reference" id="web-link-${site.id}"/>`).join('');
+}
 function updateServer(){
- const r=state.request,p=state.phase,note=$('#web-note');note.className='server-note';
- $('#server-progress').style.width=(p===5?state.p*100:p>=6?100:0)+'%';
- if(!r||p<4){note.textContent=t('Stores and returns the web page.','Lưu trữ và gửi nội dung trang.');$('#server-filename').textContent='index.html';$('#source-code').innerHTML='<span class="tag">&lt;html&gt;</span>\n  &lt;h1&gt; … &lt;/h1&gt;\n<span class="tag">&lt;/html&gt;</span>';return;}
- $('#server-filename').textContent=r.code===404?'404.html':'index.html';
- const title=r.code===404?t('Page not found','Không tìm thấy trang'):tx(r.site.title);
- const short=title.length>19?title.slice(0,17)+'…':title;
- $('#source-code').innerHTML=`<span class="tag">&lt;html&gt;</span>\n  <span class="tag">&lt;h1&gt;</span><span class="text">${esc(short)}</span><span class="tag">&lt;/h1&gt;</span>\n<span class="tag">&lt;/html&gt;</span>`;
- note.textContent=p===4?(state.p>.8?'GET '+r.path:t('Waiting for the request.','Đang chờ yêu cầu.')):p===5?t('Processing request…','Đang xử lý yêu cầu…'):r.code===200?t('200 OK · HTML response','200 OK · Phản hồi HTML'):t('404 · Page not found','404 · Không có trang');note.classList.add('working');
+ const r=state.request,p=state.phase;
+ for(const site of SITES){
+  const node=$('#web-node-'+site.id),selected=!!r?.ip&&r.site?.id===site.id&&p>=4;
+  const active=selected&&!state.done;
+  node.classList.toggle('active',active);node.classList.toggle('delivered',selected&&state.done);
+  node.dataset.status=active?(p===5?'processing':p===4?'request':'reply'):selected?'sent':'idle';
+  const status=$('#web-state-'+site.id),code=$('#web-code-'+site.id);
+  status.textContent=!selected?t('READY','SẴN SÀNG'):state.done?t('SENT','ĐÃ GỬI'):p===4?t('REQUEST','YÊU CẦU'):p===5?t('PROCESSING','XỬ LÝ'):'HTML';
+  code.textContent=!selected?'index.html':p===4?(state.p>.8?'GET '+r.path:t('Awaiting HTTP…','Đợi HTTP…')):p===5?(r.code===404?'404.html':`<h1>${tx(site.title)}</h1>`):r.code===404?'404 · HTML':'200 OK · HTML';
+  code.title=code.textContent;$('#web-file-'+site.id).classList.toggle('idle',!selected);
+  $('#web-progress-'+site.id).style.width=(selected?(p===5?state.p*100:p>=6?100:0):0)+'%';
+  $('#web-link-'+site.id).classList.toggle('selected',selected);
+ }
 }
 function renderState(force=false){
  renderControls();renderSteps();renderBrowser(force);updateDnsTable();updateServer();
- $('#client-window').classList.toggle('active',isBusy()&&[1,3,4,6].includes(state.phase));$('#dns-node').classList.toggle('active',state.phase>0&&state.phase<=3&&!state.done);$('#web-node').classList.toggle('active',state.phase>=4&&!state.done);
- [1,3,4,6].forEach(n=>{const on=state.phase===n&&!state.done;$('#path-'+n).classList.toggle('current',on);$('#path-label-'+n).classList.toggle('current',on);$('#path-'+n).setAttribute('marker-end',`url(#arrow-${on?(n<4?'dns':'web'):'idle'})`);});
+ $('#client-window').classList.toggle('active',isBusy()&&[1,3,4,6].includes(state.phase));$('#dns-node').classList.toggle('active',state.phase>0&&state.phase<=3&&!state.done);
+ [1,3,4,6].forEach(n=>{const show=n<4||(state.phase>=4&&!!state.request?.ip);$('#path-'+n).style.visibility=show?'visible':'hidden';$('#path-label-'+n).style.visibility=show?'visible':'hidden';const on=state.phase===n&&!state.done;$('#path-'+n).classList.toggle('current',on);$('#path-label-'+n).classList.toggle('current',on);$('#path-'+n).setAttribute('marker-end',`url(#arrow-${on?(n<4?'dns':'web'):'idle'})`);});
  renderMotion();
 }
 const geometry={};
 function updateGeometry(){
- const root=$('#stage').getBoundingClientRect(),m=$('#monitor').getBoundingClientRect(),d=$('#dns-art').getBoundingClientRect(),w=$('#web-art').getBoundingClientRect();
+ const root=$('#stage').getBoundingClientRect(),m=$('#monitor').getBoundingClientRect(),d=$('#dns-art').getBoundingClientRect();
+ if(!root.width||!root.height)return;
+ const selected=state.request?.site||SITES[0];
+ const w=$('#web-art-'+selected.id).getBoundingClientRect();
  $('#connections').setAttribute('viewBox',`0 0 ${root.width} ${root.height}`);
- const rel=(r,x,y)=>({x:r.left-root.left+r.width*x,y:r.top-root.top+r.height*y});
+ const rel=(rect,x,y)=>({x:rect.left-root.left+rect.width*x,y:rect.top-root.top+rect.height*y});
  const compact=root.width<=1000,phone=root.width<=580;
- const set=(n,a,b,kind)=>{
-  let path;
-  if(!compact){const mid=a.x+(b.x-a.x)*.48;path=`M ${a.x} ${a.y} C ${mid} ${a.y}, ${mid} ${b.y}, ${b.x} ${b.y}`;}
-  else if(phone){const lane=n===1||n===3?root.width*.035:root.width*.965;path=`M ${a.x} ${a.y} C ${lane} ${a.y+28}, ${lane} ${b.y-28}, ${b.x} ${b.y}`;}
-  else{const middle=a.y+(b.y-a.y)*.66;path=`M ${a.x} ${a.y} C ${a.x} ${middle}, ${b.x} ${middle}, ${b.x} ${b.y}`;}
-  // Reply paths are geometrically parallel to requests and point towards the client.
-  const el=$('#path-'+n);el.setAttribute('d',path);const len=el.getTotalLength();geometry[n]={el,len};
-  const q=el.getPointAtLength(len*.56),label=$('#path-label-'+n);const half=label.getComputedTextLength()/2+8;label.setAttribute('x',Math.max(half,Math.min(root.width-half,q.x)));label.setAttribute('y',q.y+(phone?(n===1?-20:n===3?16:n===4?-16:14):-12));
+ const curve=(a,b,n)=>{
+  if(!compact){const mid=a.x+(b.x-a.x)*.5;return `M ${a.x} ${a.y} C ${mid} ${a.y}, ${mid} ${b.y}, ${b.x} ${b.y}`;}
+  const isDNS=n<4,forward=n===1||n===4;
+  const lane=root.width*(phone?(isDNS?.045:.95):(isDNS?.025:.52));
+  // Long vertical segments run in an empty lane, not through the other clients or servers.
+  return `M ${a.x} ${a.y} C ${lane} ${a.y}, ${lane} ${a.y+(forward?34:-34)}, ${lane} ${a.y+(forward?48:-48)} L ${lane} ${b.y+(forward?-40:40)} Q ${lane} ${b.y}, ${b.x} ${b.y}`;
  };
+ const set=(n,a,b)=>{
+  const el=$('#path-'+n);el.setAttribute('d',curve(a,b,n));const len=el.getTotalLength();geometry[n]={el,len,target:n>=4?selected.id:'dns'};
+  const q=el.getPointAtLength(len*(compact?.58:.52)),label=$('#path-label-'+n),half=label.getComputedTextLength()/2+8;
+  label.setAttribute('x',Math.max(half,Math.min(root.width-half,q.x)));
+  label.setAttribute('y',q.y+(n===1||n===4?-12:17));
+ };
+ let webStart,webEnd;
  if(!compact){
-  set(1,rel(m,1,.27),rel(d,.35,.42),'dns');set(3,rel(d,.35,.68),rel(m,1,.41),'dns');
-  set(4,rel(m,1,.68),rel(w,.35,.36),'web');set(6,rel(w,.35,.64),rel(m,1,.83),'web');
+  set(1,rel(m,1,.2),rel(d,.35,.36));set(3,rel(d,.35,.66),rel(m,1,.36));
+  webStart=rel(m,1,.65);webEnd=rel(m,1,.83);
+  set(4,webStart,rel(w,.35,.37));set(6,rel(w,.35,.69),webEnd);
  }else if(!phone){
-  set(1,rel(m,.24,1),rel(d,.36,.35),'dns');set(3,rel(d,.7,.35),rel(m,.34,1),'dns');
-  set(4,rel(m,.68,1),rel(w,.35,.35),'web');set(6,rel(w,.7,.35),rel(m,.78,1),'web');
+  set(1,rel(m,0,.61),rel(d,.2,.38));set(3,rel(d,.2,.7),rel(m,0,.79));
+  webStart=rel(m,.68,1);webEnd=rel(m,.82,1);
+  set(4,webStart,rel(w,.15,.35));set(6,rel(w,.15,.7),webEnd);
  }else{
-  set(1,rel(m,0,.63),rel(d,.25,.4),'dns');set(3,rel(d,.35,.71),rel(m,0,.8),'dns');
-  set(4,rel(m,1,.65),rel(w,.78,.45),'web');set(6,rel(w,.78,.72),rel(m,1,.82),'web');
+  set(1,rel(m,0,.57),rel(d,.2,.33));set(3,rel(d,.2,.7),rel(m,0,.77));
+  webStart=rel(m,1,.6);webEnd=rel(m,1,.83);
+  set(4,webStart,rel(w,.88,.35));set(6,rel(w,.88,.75),webEnd);
+ }
+ for(const site of SITES){
+  const art=$('#web-art-'+site.id).getBoundingClientRect();
+  $('#web-link-'+site.id).setAttribute('d',curve(webStart,rel(art,phone?.88:compact?.15:.35,.52),4));
  }
  renderMotion();
 }
@@ -341,7 +477,7 @@ function renderMotion(){
  const point=geometry[n].el.getPointAtLength(geometry[n].len*travel);
  const web=n>=4;el.className='message '+(web?'web':'')+(n===3&&!r.ip?' error':'');
  const longDomain=r.domain.length>25?r.domain.slice(0,22)+'…':r.domain;
- $('#message-text').textContent=n===1?longDomain:n===3?(r.ip||t('No IP','Không có IP')):n===4?'HTTP GET':r.code===404?'404 · HTML':'HTML';
+ $('#message-text').textContent=n===1?longDomain:n===3?(r.ip||t('No IP','Không có IP')):n===4?'HTTP → '+r.ip:r.code===404?'404 · HTML':'HTML';
  const stageW=$('#stage').clientWidth,half=el.offsetWidth/2+5;const x=stageW<=580?Math.max(half,Math.min(stageW-half,point.x)):point.x;el.style.left=x+'px';el.style.top=point.y+'px';
  // Immediate visual acknowledgement: the outgoing message is visible on Go.
  el.style.opacity=state.p>.985?'0':'1';
@@ -364,8 +500,8 @@ function frame(now){
 function showHelp(){
  savedFocus=document.activeElement;state.modalResume=state.running;state.running=false;renderControls();
  $('#modal-title').textContent=t('Six steps. One web page.','Sáu bước. Một trang web.');
- const lines=[t('The browser sends the domain name from the URL to DNS.','Trình duyệt gửi tên miền trong URL tới DNS.'),t('DNS finds the matching IP address in its records.','DNS tìm địa chỉ IP khớp với tên miền.'),t('DNS returns that IP address to the client.','DNS trả địa chỉ IP về máy khách.'),t('The browser sends an HTTP request to the web server at that IP.','Trình duyệt gửi yêu cầu HTTP tới Web Server tại IP đó.'),t('The web server processes the request.','Web Server xử lý yêu cầu.'),t('The server returns HTML; the browser renders the page.','Server gửi HTML về; trình duyệt hiển thị trang web.')];
- $('#modal-body').innerHTML=`<div class="dialog-steps">${lines.map((s,i)=>`<div class="dialog-step"><b>${i+1}</b><span>${s}</span></div>`).join('')}</div><h3>${t('Use in class','Sử dụng trên lớp')}</h3><p>${t('Go or Enter immediately starts all six steps, even during a running or paused step. No Play click is needed. Pause / Continue controls an existing run. Next step animates one step, then pauses. Choose one of the three bookmarks, or click another client after the request finishes.','Đi hoặc Enter chạy ngay cả sáu bước, kể cả khi một bước đang chạy hoặc tạm dừng. Không cần bấm Chạy. Tạm dừng / Tiếp tục điều khiển lượt đang chạy. Từng bước chạy một bước rồi dừng. Chọn một trong ba trang mẫu hoặc đổi máy khách sau khi hoàn tất.')}</p><div class="keyboard-hint"><kbd>Space</kbd><span>${t('Play / pause','Chạy / dừng')}</span><kbd>→</kbd><span>${t('Next step','Từng bước')}</span></div><details class="teacher-notes"><summary>${t('Teacher notes · model & accuracy','Ghi chú giáo viên · quy ước mô phỏng')}</summary><p>${t('DNS looks up the domain name, not the complete URL or its path. The HTML comes from the web server, never from DNS. One web server hosts the three sample sites, so their IP addresses are intentionally identical.','DNS tra tên miền, không tra toàn bộ URL hay đường dẫn. HTML do Web Server gửi, không phải DNS. Một Web Server chứa ba trang mẫu nên các tên miền có cùng IP.')}</p><p>${t('This is a six-step application-level teaching model. The lines show exchanges, not direct physical cables. Switching, routing, DNS caching, recursive lookup, TCP/TLS setup and separate image/CSS requests are omitted. Every demonstration repeats DNS lookup for visibility. If HTTPS is typed, encryption and TLS are still not simulated.','Đây là mô hình sáu bước ở tầng ứng dụng. Các đường biểu diễn trao đổi dữ liệu, không phải cáp nối trực tiếp. Lab lược bỏ switch, định tuyến, cache DNS, tra cứu đệ quy, TCP/TLS và yêu cầu riêng cho ảnh/CSS. Mỗi lần mở trang đều tra lại DNS để dễ quan sát. Nếu nhập HTTPS, lab vẫn không mô phỏng mã hoá hay TLS.')}</p><p>${t('Real DNS can consult other DNS servers when an answer is not locally available. To keep only two servers visible, this lab uses a closed table: an unknown domain returns “No record in this lab”, not a simulation of the full DNS hierarchy.','DNS thực tế có thể hỏi những DNS server khác khi chưa có câu trả lời. Để chỉ hiển thị hai máy chủ, lab dùng bảng đóng: tên lạ trả về “không có trong bảng của lab”, không mô phỏng toàn bộ hệ thống DNS.')}</p><p>${t('Try unknown.test to see a DNS failure. Try http://www.rgsv.test/missing.html to see a successful DNS lookup followed by an HTTP 404 response. Query strings do not affect this demonstration’s page selection.','Thử unknown.test để thấy lỗi tra DNS. Thử http://www.rgsv.test/missing.html để thấy tìm IP thành công nhưng nhận HTTP 404. Phần query của URL không ảnh hưởng tới lựa chọn trang trong mô phỏng.')}</p><p>${t('All pages and IPs are simulated. .test is a reserved testing domain and 203.0.113.0/24 is reserved for documentation. No data leaves this page. Only the language preference is saved locally.','Mọi trang và IP đều mô phỏng. .test dành cho thử nghiệm; 203.0.113.0/24 dành cho tài liệu. Không gửi dữ liệu ra ngoài. Chỉ lựa chọn ngôn ngữ được lưu cục bộ.')}</p><div class="source-links"><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works" target="_blank" rel="noopener noreferrer">MDN · How the web works</a><a href="https://www.rfc-editor.org/rfc/rfc1034" target="_blank" rel="noopener noreferrer">RFC 1034 · DNS</a><a href="https://www.rfc-editor.org/rfc/rfc2606" target="_blank" rel="noopener noreferrer">RFC 2606</a><a href="https://www.rfc-editor.org/rfc/rfc5737" target="_blank" rel="noopener noreferrer">RFC 5737</a></div></details>`;
+ const lines=[t('The browser sends the domain name from the URL to DNS.','Trình duyệt gửi tên miền trong URL tới DNS.'),t('DNS finds the matching IP address in its records.','DNS tìm địa chỉ IP khớp với tên miền.'),t('DNS returns that IP address to the client.','DNS trả địa chỉ IP về máy khách.'),t('The browser sends an HTTP request to the web server at that IP.','Trình duyệt gửi yêu cầu HTTP tới Web Server tại IP đó.'),t('The selected web server processes the request.','Web Server đúng địa chỉ xử lý yêu cầu.'),t('The server returns HTML; the browser renders the page.','Server gửi HTML về; trình duyệt hiển thị trang web.')];
+ $('#modal-body').innerHTML=`<div class="dialog-steps">${lines.map((s,i)=>`<div class="dialog-step"><b>${i+1}</b><span>${s}</span></div>`).join('')}</div><h3>${t('Use in class','Sử dụng trên lớp')}</h3><p>${t('Go or Enter immediately starts all six steps, even during a running or paused step. No Play click is needed. Pause / Continue controls an existing run. Next step animates one step, then pauses. Choose one of the three bookmarks, or click another client after the request finishes.','Đi hoặc Enter chạy ngay cả sáu bước, kể cả khi một bước đang chạy hoặc tạm dừng. Không cần bấm Chạy. Tạm dừng / Tiếp tục điều khiển lượt đang chạy. Từng bước chạy một bước rồi dừng. Chọn một trong ba trang mẫu hoặc đổi máy khách sau khi hoàn tất.')}</p><div class="keyboard-hint"><kbd>Space</kbd><span>${t('Play / pause','Chạy / dừng')}</span><kbd>→</kbd><span>${t('Next step','Từng bước')}</span></div><details class="teacher-notes"><summary>${t('Teacher notes · model & accuracy','Ghi chú giáo viên · quy ước mô phỏng')}</summary><p>${t('DNS looks up the domain name, not the complete URL or its path. The HTML comes from the web server, never from DNS. The three sample sites run on three separate web servers: School at 203.0.113.20, Library at 203.0.113.30 and Sport at 203.0.113.40. Only the server matching the DNS reply receives the HTTP request. In real hosting, different websites can also share an IP address.','DNS tra tên miền, không tra toàn bộ URL hay đường dẫn. HTML do Web Server gửi, không phải DNS. Ba trang mẫu nằm trên ba Web Server riêng: School tại 203.0.113.20, Library tại 203.0.113.30 và Sport tại 203.0.113.40. Chỉ máy chủ có IP khớp với kết quả DNS nhận yêu cầu HTTP. Trong thực tế, nhiều trang web cũng có thể dùng chung IP.')}</p><p>${t('This is a six-step application-level teaching model. The lines show exchanges, not direct physical cables. Switching, routing, DNS caching, recursive lookup, TCP/TLS setup and separate image/CSS requests are omitted. Every demonstration repeats DNS lookup for visibility. If HTTPS is typed, encryption and TLS are still not simulated.','Đây là mô hình sáu bước ở tầng ứng dụng. Các đường biểu diễn trao đổi dữ liệu, không phải cáp nối trực tiếp. Lab lược bỏ switch, định tuyến, cache DNS, tra cứu đệ quy, TCP/TLS và yêu cầu riêng cho ảnh/CSS. Mỗi lần mở trang đều tra lại DNS để dễ quan sát. Nếu nhập HTTPS, lab vẫn không mô phỏng mã hoá hay TLS.')}</p><p>${t('Real DNS can consult other DNS servers when an answer is not locally available. This lab keeps DNS lookup local to its table: an unknown domain returns “No record in this lab”, not a simulation of the full DNS hierarchy.','DNS thực tế có thể hỏi những DNS server khác khi chưa có câu trả lời. Lab dùng bảng tra DNS cục bộ: tên lạ trả về “không có trong bảng của lab”, không mô phỏng toàn bộ hệ thống DNS.')}</p><p>${t('Try unknown.test to see a DNS failure. Try http://www.rgsv.test/missing.html to see a successful DNS lookup followed by an HTTP 404 response. Query strings do not affect this demonstration’s page selection.','Thử unknown.test để thấy lỗi tra DNS. Thử http://www.rgsv.test/missing.html để thấy tìm IP thành công nhưng nhận HTTP 404. Phần query của URL không ảnh hưởng tới lựa chọn trang trong mô phỏng.')}</p><p>${t('All pages and IPs are simulated. .test is a reserved testing domain and 203.0.113.0/24 is reserved for documentation. No data leaves this page. Only the language preference is saved locally.','Mọi trang và IP đều mô phỏng. .test dành cho thử nghiệm; 203.0.113.0/24 dành cho tài liệu. Không gửi dữ liệu ra ngoài. Chỉ lựa chọn ngôn ngữ được lưu cục bộ.')}</p><div class="source-links"><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works" target="_blank" rel="noopener noreferrer">MDN · How the web works</a><a href="https://www.rfc-editor.org/rfc/rfc1034" target="_blank" rel="noopener noreferrer">RFC 1034 · DNS</a><a href="https://www.rfc-editor.org/rfc/rfc2606" target="_blank" rel="noopener noreferrer">RFC 2606</a><a href="https://www.rfc-editor.org/rfc/rfc5737" target="_blank" rel="noopener noreferrer">RFC 5737</a></div></details>`;
  $('#modal').classList.remove('hidden');$('#close-modal').focus();
 }
 function closeHelp(){
@@ -379,6 +515,7 @@ $('#play-button').addEventListener('click',play);$('#step-button').addEventListe
 $('#speed').addEventListener('change',e=>{state.speed=Number(e.target.value)||1;});
 $('#url-input').addEventListener('input',()=>{$('#url-input').removeAttribute('aria-invalid');currentClient().url=$('#url-input').value;$$('.bookmark').forEach(b=>b.classList.toggle('active',$('#url-input').value.toLowerCase().includes(SITES.find(s=>s.id===b.dataset.site).domain)));});
 $$('.bookmark').forEach(b=>b.addEventListener('click',()=>{if(isBusy())return;const s=SITES.find(s=>s.id===b.dataset.site);currentClient().url=`http://${s.domain}/`;reset(true);$('#url-input').focus();}));
+$('#web-servers').addEventListener('click',e=>{const b=e.target.closest('[data-open-site]');if(!b||b.disabled||isBusy())return;const site=SITES.find(s=>s.id===b.dataset.openSite);if(!site)return;currentClient().url=`http://${site.domain}/`;reset(true);$('#url-input').focus();});
 $('#other-clients').addEventListener('click',e=>{const b=e.target.closest('[data-client]');if(b&&!b.disabled)changeClient(Number(b.dataset.client));});
 $('#lang-button').addEventListener('click',()=>{lang=lang==='en'?'vi':'en';try{localStorage.setItem('rgsv-lab04-language',lang);}catch{}renderStatic();renderState(true);updateGeometry();});
 $('#help-button').addEventListener('click',showHelp);$('#close-modal').addEventListener('click',closeHelp);$('#modal').addEventListener('click',e=>{if(e.target===$('#modal'))closeHelp();});
