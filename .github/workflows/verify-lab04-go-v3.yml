@@ -1,0 +1,91 @@
+name: Verify live Lab 04 Go v3
+on:
+  push:
+    branches: [fix-lab04-go-v3-20260925]
+    paths: [.github/workflows/verify-lab04-go-v3.yml]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Wait for the exact tested HTML on GitHub Pages
+        run: |
+          python3 - <<'PY'
+          import urllib.request, hashlib, time
+          base='https://trieuanhdung.github.io/belbin/network-labs/'
+          expected='1ebfd5b1139f6e8257cf7165e87df2372f8f8f97fac70175574d8f213c4ec4f8'
+          for path in ['lab-04.html','lab-04.html?v=3']:
+           for attempt in range(24):
+            try:
+             req=urllib.request.Request(base+path,headers={'User-Agent':'RGSV-Lab04-Go-v3-Check','Cache-Control':'no-cache'})
+             with urllib.request.urlopen(req,timeout=20) as r:
+              data=r.read();assert r.status==200
+             assert hashlib.sha256(data).hexdigest()==expected,'Previous cached version'
+             print('PASS: HTTP 200; exact tested HTML',base+path,len(data),'bytes',flush=True)
+             break
+            except Exception as e:
+             if attempt==23: raise
+             print('Waiting for Pages:',str(e),flush=True);time.sleep(5)
+          for attempt in range(24):
+           with urllib.request.urlopen(base,timeout=20) as r: text=r.read().decode()
+           if 'href="lab-04.html?v=3"' in text:
+            print('PASS: home page links to v3',flush=True);break
+           if attempt==23: raise AssertionError('Home page not updated')
+           time.sleep(5)
+          PY
+      - name: Install isolated browser test environment
+        run: |
+          python3 -m venv "$RUNNER_TEMP/lab04-browser"
+          "$RUNNER_TEMP/lab04-browser/bin/python" -m pip install --quiet playwright==1.57.0
+          "$RUNNER_TEMP/lab04-browser/bin/python" -m playwright install --with-deps --only-shell chromium
+      - name: Click Go on the public page and observe all six steps
+        run: |
+          "$RUNNER_TEMP/lab04-browser/bin/python" - <<'PY'
+          from playwright.sync_api import sync_playwright
+          import time
+          url='https://trieuanhdung.github.io/belbin/network-labs/lab-04.html?v=3'
+          with sync_playwright() as p:
+           browser=p.chromium.launch(headless=True)
+           page=browser.new_page(viewport={'width':1366,'height':768})
+           errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+           page.goto(url,wait_until='networkidle')
+           assert 'v3' in page.title()
+           assert page.locator('#play-button').is_disabled()
+           page.locator('#go-button').click()
+           assert page.evaluate('state.running && state.auto && state.phase===1')
+           assert page.locator('#message').evaluate('(e)=>Number(getComputedStyle(e).opacity)>0')
+           print('PASS: a single Go click starts immediately, with a visible signal',flush=True)
+           seen=set();deadline=time.monotonic()+35
+           while not page.evaluate('state.done'):
+            seen.add(page.evaluate('state.phase'));assert time.monotonic()<deadline,'Run did not finish'
+            page.wait_for_timeout(120)
+           seen.add(page.evaluate('state.phase'))
+           assert seen=={1,2,3,4,5,6},seen
+           assert 'Welcome to RGSV' in page.locator('#browser-content').inner_text()
+           assert not errors,errors
+           print('PASS: all six phases completed at normal 1x speed, without Play or extra clicks',flush=True)
+           page.locator('#reset-button').click();page.locator('#step-button').click()
+           assert page.evaluate('state.running && !state.auto')
+           assert page.locator('#go-button').is_enabled()
+           page.locator('#go-button').click()
+           assert page.evaluate('state.running && state.auto && state.phase===1')
+           print('PASS: Go overrides a currently running Next step',flush=True)
+           page.locator('#play-button').click();assert page.evaluate('!state.running')
+           page.locator('#go-button').click();assert page.evaluate('state.running && state.auto && state.phase===1')
+           print('PASS: Go after Pause immediately starts the complete automatic journey',flush=True)
+           page.locator('#url-input').fill('library.test');page.locator('#url-input').press('Enter')
+           assert page.evaluate('state.running && state.auto && state.request.domain==="library.test"')
+           page.locator('#speed').select_option('2')
+           page.wait_for_function('state.done',timeout=25000)
+           assert 'Your next chapter' in page.locator('#browser-content').inner_text()
+           assert not errors,errors
+           print('PASS: Enter during a run starts the new URL and loads its page',flush=True)
+           context=browser.new_context(viewport={'width':390,'height':844},has_touch=True,is_mobile=True)
+           phone=context.new_page();phone.goto(url,wait_until='networkidle')
+           phone.locator('#go-button').tap();assert phone.evaluate('state.running && state.auto')
+           print('PASS: mobile touch on Go starts immediately',flush=True)
+           browser.close()
+          print('PASS: live GitHub Pages interaction checks completed successfully.',flush=True)
+          PY
