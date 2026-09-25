@@ -1,0 +1,55 @@
+name: Prepare Lab 04 with three web servers
+on:
+  push:
+    branches: [update-lab04-three-web-servers-20260925]
+    paths: ['.github/workflows/stage-lab04-three-servers.yml']
+permissions:
+  contents: write
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply exact browser-tested changes
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import base64, gzip, hashlib, json, re
+          from pathlib import Path
+          root = Path('network-labs')
+          p = root / 'lab-04.html'
+          original = p.read_bytes()
+          delta = json.loads(gzip.decompress(base64.b64decode(Path('_publishing/lab04-v4-delta.b64').read_text(), validate=True)))
+          assert hashlib.sha256(original).hexdigest() == delta['old_sha256'], 'Unexpected base version'
+          lines = original.decode('utf-8').splitlines(keepends=True)
+          for start, end, replacement in reversed(delta['edits']):
+              lines[start:end] = replacement
+          output = ''.join(lines).encode('utf-8')
+          assert hashlib.sha256(output).hexdigest() == delta['new_sha256'], 'Patch integrity failed'
+          p.write_bytes(output)
+          h = root / 'index.html'
+          hub = h.read_text()
+          assert 'lab-04.html?v=3' in hub
+          hub = hub.replace('lab-04.html?v=3', 'lab-04.html?v=4').replace('RGSV_Network_Lab_04_v3.html', 'RGSV_Network_Lab_04_v4.html')
+          hub = hub.replace('request the page from the web server, and display the returned HTML.', 'contact the correct one of three web servers, and display its returned HTML.')
+          hub = hub.replace('Three RGSV Computer Science network labs: build a network, configure IPv4 and PING, and explore packet switching.', 'Four RGSV Computer Science network labs: build connections, configure IPv4, explore packet switching, and locate websites using DNS.')
+          h.write_text(hub)
+          r = root / 'README.md'
+          readme = r.read_text().replace('RGSV_Network_Lab_04_v3.html', 'RGSV_Network_Lab_04_v4.html')
+          readme = readme.replace('Lab 04 shows DNS resolving the domain name and the web server returning HTML.', 'Lab 04 shows one DNS server (192.168.1.53) and three separate web servers: School (203.0.113.20), Library (203.0.113.30) and Sport (203.0.113.40). DNS returns the matching IP; only that server receives the HTTP request and returns the HTML.')
+          for name in ['index.html', 'lab-04.html']:
+              digest = hashlib.sha256((root / name).read_bytes()).hexdigest()
+              readme = re.sub(r'[0-9a-f]{64}  ' + re.escape(name), digest + '  ' + name, readme)
+          r.write_text(readme)
+          for name in ['lab-04.html', 'index.html', 'README.md']:
+              data = (root / name).read_bytes()
+              blob = hashlib.sha1(('blob ' + str(len(data)) + '\0').encode() + data).hexdigest()
+              print('VERIFIED', name, len(data), 'bytes; blob', blob, 'SHA256', hashlib.sha256(data).hexdigest())
+          PY
+      - name: Commit only the updated lab, launch page and documentation
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add network-labs/lab-04.html network-labs/index.html network-labs/README.md
+          git commit -m 'Prepare Lab 04 v4: DNS and three independently addressed web servers'
+          git push origin HEAD:update-lab04-three-web-servers-20260925
