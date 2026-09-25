@@ -1,0 +1,42 @@
+name: Verify live Lab 04 three web servers
+on:
+  push:
+    branches: [update-lab04-three-web-servers-20260925]
+    paths: ['.github/workflows/verify-lab04-three-servers.yml']
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check published Lab 04 and updated launch link
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib, time, urllib.request
+          base = 'https://trieuanhdung.github.io/belbin/network-labs/'
+          expected = '6116038b92db1d614aa5c0f9358e7130881b1f62ca5c6fa9782244a868231eee'
+          for attempt in range(24):
+              try:
+                  request = urllib.request.Request(base + 'lab-04.html?v=4', headers={'User-Agent':'RGSV-Lab04-v4-Verification','Cache-Control':'no-cache'})
+                  with urllib.request.urlopen(request, timeout=20) as response:
+                      assert response.status == 200
+                      data = response.read()
+                  assert hashlib.sha256(data).hexdigest() == expected, 'Waiting for v4 deployment'
+                  html = data.decode('utf-8')
+                  for address in ['203.0.113.20','203.0.113.30','203.0.113.40','192.168.1.53']:
+                      assert address in html
+                  assert 'function go(){start(true,true);}' in html
+                  assert 'web-node-${site.id}' in html
+                  with urllib.request.urlopen(base, timeout=20) as response:
+                      hub = response.read().decode('utf-8')
+                  assert 'lab-04.html?v=4' in hub
+                  print('PASS: HTTP 200. Live Lab 04 v4 matches the tested HTML exactly:', len(data), 'bytes; SHA256', expected)
+                  print('PASS: one DNS server and three unique web-server IPs; unconditional Go retained; hub links to v4.')
+                  break
+              except Exception as error:
+                  if attempt == 23:
+                      raise
+                  print('Waiting:', str(error), flush=True)
+                  time.sleep(5)
+          PY
