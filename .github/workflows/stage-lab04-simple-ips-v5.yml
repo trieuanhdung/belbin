@@ -1,0 +1,65 @@
+name: Prepare Lab 04 simple server IPs v5
+on:
+  push:
+    branches: [lab04-simple-server-ips-v5-20260925]
+    paths: [.github/workflows/stage-lab04-simple-ips-v5.yml]
+permissions:
+  contents: write
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply exact, tested address changes
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib,re
+          root=Path('network-labs')
+          lab=root/'lab-04.html'
+          raw=lab.read_bytes()
+          assert hashlib.sha256(raw).hexdigest()=='6116038b92db1d614aa5c0f9358e7130881b1f62ca5c6fa9782244a868231eee','Lab 04 source has changed'
+          mapping={'192.168.1.53':'10.0.0.1','203.0.113.20':'10.0.0.2','203.0.113.30':'10.0.0.3','203.0.113.40':'10.0.0.4'}
+          s=raw.decode('utf-8')
+          for old,new in mapping.items():
+              assert old in s
+              s=s.replace(old,new)
+          assert s.count(' · v4')==2
+          s=s.replace(' · v4',' · v5')
+          s=s.replace('All pages and IPs are simulated. .test is a reserved testing domain and 203.0.113.0/24 is reserved for documentation. No data leaves this page. Only the language preference is saved locally.','All pages and IPs are simulated. The four servers use 10.0.0.1 to 10.0.0.4 to keep the addresses easy to follow. No data leaves this page. Only the language preference is saved locally.')
+          s=s.replace('Mọi trang và IP đều mô phỏng. .test dành cho thử nghiệm; 203.0.113.0/24 dành cho tài liệu. Không gửi dữ liệu ra ngoài. Chỉ lựa chọn ngôn ngữ được lưu cục bộ.','Mọi trang và IP đều mô phỏng. Bốn máy chủ dùng IP từ 10.0.0.1 đến 10.0.0.4 để dễ theo dõi. Không gửi dữ liệu ra ngoài. Chỉ lựa chọn ngôn ngữ được lưu cục bộ.')
+          s=s.replace('<a href="https://www.rfc-editor.org/rfc/rfc5737" target="_blank" rel="noopener noreferrer">RFC 5737</a>','')
+          assert '203.0.113.' not in s and '192.168.1.53' not in s
+          output=s.encode('utf-8')
+          assert hashlib.sha256(output).hexdigest()=='5ba25c61ad6f9061be4709c58d2575b596769ed2c6203b4be30e0e40a4c2acb0','Mismatch with browser-tested HTML'
+          lab.write_bytes(output)
+          hub=root/'index.html'
+          old=hub.read_bytes()
+          assert hashlib.sha256(old).hexdigest()=='12f64e88ac35fbaec43816647b61ebd297e284f789977f043c58245137528aa0','Hub source has changed'
+          text=old.decode('utf-8')
+          assert text.count('lab-04.html?v=4')==2
+          text=text.replace('lab-04.html?v=4','lab-04.html?v=5').replace('RGSV_Network_Lab_04_v4.html','RGSV_Network_Lab_04_v5.html')
+          hub.write_bytes(text.encode('utf-8'))
+          readme=root/'README.md'
+          text=readme.read_text(encoding='utf-8').replace('RGSV_Network_Lab_04_v4.html','RGSV_Network_Lab_04_v5.html')
+          for old,new in mapping.items():
+              text=text.replace(old,new)
+          for name in ['index.html','lab-04.html']:
+              digest=hashlib.sha256((root/name).read_bytes()).hexdigest()
+              text,count=re.subn(r'[0-9a-f]{64}  '+re.escape(name),digest+'  '+name,text)
+              assert count==1
+          readme.write_bytes(text.encode('utf-8'))
+          for name in ['lab-04.html','index.html','README.md']:
+              data=(root/name).read_bytes()
+              print(name,len(data),'SHA256',hashlib.sha256(data).hexdigest(),'BLOB',hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest())
+          PY
+      - name: Commit only the lab and its documentation on the staging branch
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add network-labs/lab-04.html network-labs/index.html network-labs/README.md
+          git commit -m "Use sequential 10.0.0.x IPs in Lab 04 v5"
+          git push origin HEAD:lab04-simple-server-ips-v5-20260925
