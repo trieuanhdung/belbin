@@ -1,0 +1,38 @@
+name: Verify republished Lab 02
+on:
+  push:
+    branches: [verify-lab02-republish-20260926]
+    paths: [.github/workflows/verify-lab02-republish.yml]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Check the public Lab 02 links against the approved v3 HTML
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib, time, urllib.request
+          base = 'https://trieuanhdung.github.io/belbin/network-labs/lab-02.html'
+          expected = '9655145339aaf38d2cd07bf952cf3efcb9ed5d4ba8857b59779f8c1b3d19f731'
+          for suffix in ['', '?v=3&publish=f25d225']:
+              url = base + suffix
+              for attempt in range(12):
+                  try:
+                      req = urllib.request.Request(url, headers={'User-Agent': 'RGSV-Lab02-Republish-Check', 'Cache-Control': 'no-cache'})
+                      with urllib.request.urlopen(req, timeout=15) as response:
+                          data = response.read()
+                          assert response.status == 200, response.status
+                      actual = hashlib.sha256(data).hexdigest()
+                      assert actual == expected, 'The deployed HTML does not match the approved v3'
+                      print('PASS HTTP 200:', url, len(data), 'bytes; SHA-256:', actual, flush=True)
+                      break
+                  except Exception as error:
+                      if attempt == 11:
+                          raise
+                      print('Waiting:', str(error), flush=True)
+                      time.sleep(5)
+          print('PASS: both public Lab 02 links serve the exact one-round-trip v3 HTML.', flush=True)
+          PY
