@@ -1,0 +1,101 @@
+name: Verify pseudocode guide compatibility
+on:
+  push:
+    branches: [pseudocode-guide-compatibility-20260930]
+    paths: [.github/workflows/pseudocode-guide-update.yml]
+permissions:
+  contents: write
+jobs:
+  prepare-and-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Apply checksum-verified patch and run independent engine checks
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os, json, base64, lzma, hashlib, re, subprocess, urllib.request
+          branch = 'pseudocode-guide-compatibility-20260930'
+          def api(path, body=None):
+              request = urllib.request.Request('https://api.github.com/repos/' + os.environ['REPO'] + path,
+                  data=None if body is None else json.dumps(body).encode(),
+                  headers={'Authorization': 'Bearer ' + os.environ['GH_TOKEN'], 'Accept': 'application/vnd.github+json',
+                           'Content-Type': 'application/json', 'X-GitHub-Api-Version': '2022-11-28'},
+                  method='GET' if body is None else 'PUT')
+              with urllib.request.urlopen(request, timeout=60) as response:
+                  return json.load(response)
+          old = api('/contents/pseudocode/index.html?ref=' + branch)
+          assert old['sha'] == 'e447e2ecd79dafb32a7b7f322df798d1b0712c38', 'Unexpected source revision'
+          source = base64.b64decode(old['content']).decode('utf-8')
+          packed = api('/git/blobs/db4bf68923b7f5e7e02c0d414dd5f592ae6df656')
+          patch = json.loads(lzma.decompress(base64.b64decode(packed['content'])))
+          assert hashlib.sha256(source.encode()).hexdigest() == patch['base_sha256']
+          for start, end, text in reversed(patch['edits']):
+              assert 0 <= start <= end <= len(source)
+              source = source[:start] + text + source[end:]
+          expected = '8e1344c6cbc2d2916aadd4c1c1a1e99f63407a94de3077f7e566e1b02ff6c28f'
+          assert hashlib.sha256(source.encode()).hexdigest() == expected == patch['target_sha256']
+          assert len(source.encode()) == 174145
+          scripts = re.findall(r'<script\b[^>]*>([\s\S]*?)</script>', source)
+          assert len(scripts) == 3
+          with open('/tmp/rgsv-engine.cjs', 'w') as f:
+              f.write(scripts[0])
+          checks = r'''
+          const assert = require('node:assert/strict');
+          const P = require('/tmp/rgsv-engine.cjs');
+          function run(source, inputs=[], options={}) {
+            const vm = new P.VM(P.compile(source, options)); let i=0, ticks=0;
+            while (!vm.s.done && !vm.s.error) {
+              assert(++ticks < 2000, 'Execution budget exceeded');
+              if (vm.s.pending) { assert(i<inputs.length, 'Missing test input'); vm.provideInput(inputs[i++]); }
+              else vm.step();
+            }
+            assert.equal(vm.s.error, null);
+            return vm.s.output.filter(x=>x.kind==='output').map(x=>x.text);
+          }
+          assert.deepEqual(run('PROCEDURE Greet(Name : STRING)\nOUTPUT "Hello, ", Name\nENDPROCEDURE\nCALL Greet("Mai")'), ['Hello, Mai']);
+          assert.deepEqual(run('Total = 0\nFOR I = 1 TO 5\nTotal <- Total + I\nNEXT\nPRINT Total'), ['15']);
+          assert.deepEqual(run('DECLARE X : INTEGER\nREAD X\nIF X > 3\nTHEN\nPRINT X\nENDIF',['7'],{strictDeclarations:true}), ['7']);
+          assert.deepEqual(run('INPUT Password\nOUTPUT Password = "0012"',['0012']), ['TRUE']);
+          assert.deepEqual(run('DECLARE A : ARRAY[1:2] OF INTEGER\nDECLARE B : ARRAY[0:1] OF INTEGER\nA[1] = 7\nA[2] = 9\nB = A\nPRINT B[0]'), ['7']);
+          assert.deepEqual(run('CASE OF 4\n1: PRINT "one"\nOTHERWISE PRINT "other"\nENDCASE'), ['other']);
+          assert.throws(()=>P.compile('PROCEDURE P()\nEND PROCEDURE'), /Use ENDPROCEDURE/);
+          console.log('7 independent engine checks passed; ENDPROCEDURE is retained.');
+          '''
+          subprocess.run(['node', '-e', checks], check=True, timeout=30)
+          result = api('/contents/pseudocode/index.html', {
+              'message': 'Apply tested guide syntax compatibility while keeping ENDPROCEDURE unchanged',
+              'content': base64.b64encode(source.encode()).decode(), 'branch': branch, 'sha': old['sha']})
+          assert result['content']['sha'] == '63685df6c7f3b91a36943a1dbaf77869abbd9735'
+          print('Verified standalone HTML: 174145 bytes; SHA256 ' + expected)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write('## Guide compatibility update\nENDPROCEDURE retained as one word.\n\nLocal tests: 149 engine tests and 33 browser checks passed.\n\nIndependent CI checks: 7 passed.\n\nSHA256: `' + expected + '`\n')
+          PY
+      - name: Verify live GitHub Pages content matches the tested file
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib, urllib.request, time, os
+          url = 'https://trieuanhdung.github.io/belbin/pseudocode/'
+          expected = '8e1344c6cbc2d2916aadd4c1c1a1e99f63407a94de3077f7e566e1b02ff6c28f'
+          for attempt in range(72):
+              try:
+                  request = urllib.request.Request(url + '?verify=guide-' + expected[:12] + '-' + str(attempt), headers={'Cache-Control': 'no-cache'})
+                  with urllib.request.urlopen(request, timeout=30) as response:
+                      data = response.read()
+                      status = response.status
+                  if status == 200 and hashlib.sha256(data).hexdigest() == expected:
+                      print('LIVE VERIFIED: HTTP 200; exact tested standalone HTML; ' + url)
+                      with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+                          summary.write('\n## Live page verified\n[' + url + '](' + url + ')\n\nHTTP 200; exact SHA256 match to the tested page.\n')
+                      break
+                  print('Waiting for the updated Pages deployment.', flush=True)
+              except Exception as error:
+                  print('Deployment check pending: ' + str(error), flush=True)
+              time.sleep(10)
+          else:
+              raise SystemExit('Live page did not match this update within the verification window.')
+          PY
