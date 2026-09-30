@@ -1,0 +1,86 @@
+name: Prepare and verify RGSV Pseudocode Studio
+on:
+  push:
+    branches: [publish-pseudocode-studio-20260930]
+    paths: [.github/workflows/materialise-pseudocode.yml]
+permissions:
+  contents: write
+jobs:
+  publish-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Reassemble and checksum the tested standalone HTML
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          TARGET_BRANCH: publish-pseudocode-studio-20260930
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os, json, base64, lzma, hashlib, urllib.request
+          repo = os.environ['REPO']
+          def api(path, body=None):
+              data = None if body is None else json.dumps(body).encode()
+              req = urllib.request.Request('https://api.github.com/repos/' + repo + path, data=data,
+                  headers={'Authorization': 'Bearer ' + os.environ['GH_TOKEN'],
+                           'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json',
+                           'X-GitHub-Api-Version': '2022-11-28'}, method='GET' if body is None else 'PUT')
+              with urllib.request.urlopen(req, timeout=60) as response:
+                  return json.load(response)
+          parts = [
+              '982d305c8aab39aa706051623364cc2a74d133a0',
+              '06b1cf59cfd2354f6a161231234a3b0ad537986d',
+              '5c1db31483969d9e3c4d38b3c9708bbff2589e32',
+              '9c47461372de4f8875eaab77b64bcdba1c1995d9',
+              'fc38fe16244742a40920665f5bae2b663c022e88',
+              '9fcdc9cca241f0fb05a7ace5c481371fa869e705',
+              'ed197aa4f36d9b5970f5f1d424ae0b08b76a2085',
+              'ca3a6349f48189bae026befd463fc73b86c27316',
+              'd623a63eedbf01197186b7a42b09890d1aa3aeed',
+              'dadd5d08797d44adf5a24eaf58c33b06dccb2820'
+          ]
+          compressed = b''.join(base64.b64decode(api('/git/blobs/' + sha)['content']) for sha in parts)
+          source = lzma.decompress(compressed)
+          expected = 'ad5c74fab4bbdb1960e206fac12369d76e329e7a9efbba3764d083004ede3b23'
+          assert len(source) == 149643
+          assert hashlib.sha256(source).hexdigest() == expected, 'Source checksum mismatch'
+          assert b'rgsv-logo' in source and b'data:image/png;base64,' in source
+          result = api('/contents/pseudocode/index.html', {
+              'message': 'Materialise tested RGSV Pseudocode Studio standalone page',
+              'content': base64.b64encode(source).decode(), 'branch': os.environ['TARGET_BRANCH']
+          })
+          assert result['content']['sha'] == '6c05353986a764dcfb6f66e6388de8c89c26b1fb'
+          print('Standalone page stored: ' + result['content']['sha'])
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write('## RGSV Pseudocode Studio\nSource verified: 149643 bytes.\n\nSHA256: `' + expected + '`\n')
+          PY
+      - name: Verify the public student link serves the exact branded page
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import urllib.request, hashlib, time, os
+          url = 'https://trieuanhdung.github.io/belbin/pseudocode/'
+          expected = 'ad5c74fab4bbdb1960e206fac12369d76e329e7a9efbba3764d083004ede3b23'
+          for attempt in range(72):
+              try:
+                  request = urllib.request.Request(url + '?verify=' + expected[:12] + '-' + str(attempt), headers={'Cache-Control': 'no-cache'})
+                  with urllib.request.urlopen(request, timeout=30) as response:
+                      data = response.read()
+                      status = response.status
+                  if status == 200 and hashlib.sha256(data).hexdigest() == expected:
+                      print('LIVE VERIFIED: HTTP 200; exact tested source; ' + str(len(data)) + ' bytes; ' + url)
+                      with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+                          summary.write('\n## Public page verified\n[' + url + '](' + url + ')\n\nHTTP 200; deployed file SHA256 exactly matches the tested standalone HTML.\n')
+                      break
+                  print('Pages has not served the matching version yet.', flush=True)
+              except Exception as error:
+                  print('Pages check pending: ' + str(error), flush=True)
+              time.sleep(10)
+          else:
+              raise SystemExit('Public page did not match the tested source within this verification run.')
+          for path in ['network-labs/', 'binarysystem/']:
+              with urllib.request.urlopen('https://trieuanhdung.github.io/belbin/' + path, timeout=30) as response:
+                  assert response.status == 200
+              print('Existing site remains reachable: ' + path)
+          PY
