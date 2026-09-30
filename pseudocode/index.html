@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="RGSV Computing: a single-file, offline pseudocode compiler and visual debugger. Write, run, step, and inspect Cambridge-style pseudocode.">
+<title>Pseudocode Studio • RGSV Computing</title>
+<meta name="theme-color" content="#14264d">
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<style>
+:root{--bg:#f3f6f8;--paper:#fff;--ink:#162b38;--muted:#5b7180;--line:#dce5ea;--accent:#006f72;--accent2:#00898b;--tint:#e7f4f3;--blue:#245fb8;--code-size:14px;--code-line:25px;--orange:#9f6000;--orange-bg:#fff3d9;--red:#b23142;--red-bg:#fff0f1;--shadow:0 3px 12px rgba(22,43,56,.035);--mono:ui-monospace,"Cascadia Code","SFMono-Regular",Consolas,"Liberation Mono",monospace}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:13px}button,input,select,textarea{font:inherit}button{cursor:pointer;white-space:nowrap}button:disabled{cursor:default;opacity:.38}button,select,input{outline:none}button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #58b6c4;outline-offset:2px}button{transition:background .15s,border-color .15s}button svg{width:17px;height:17px;vertical-align:middle;flex-shrink:0}svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.app{height:100dvh;min-height:710px;display:flex;flex-direction:column;max-width:2000px;margin:auto;padding:0 26px}.topbar{display:flex;align-items:center;justify-content:space-between;min-height:85px;gap:18px}.brand{display:flex;align-items:center;gap:13px}.brandmark{background:var(--ink);color:#9fe4d7;width:43px;height:43px;display:grid;place-items:center;border-radius:13px}.brandmark svg{width:27px;height:27px;stroke-width:1.7}.brand h1{font-size:22px;letter-spacing:-.8px;margin:0;font-weight:750}.brand .sub{font-size:11px;color:var(--muted);margin-top:5px;letter-spacing:.35px}.school{font-size:10px;font-weight:750;color:var(--accent);border-left:1px solid #ccd9de;padding-left:16px;margin-left:5px;line-height:1.7;letter-spacing:1.15px}.top-actions{display:flex;gap:7px;align-items:center}.btn{display:inline-flex;gap:7px;align-items:center;justify-content:center;background:white;border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-weight:600;line-height:20px;color:var(--ink)}.btn:hover:not(:disabled){background:#f3f7f8;border-color:#b8ccd2}.btn.primary{background:var(--accent);color:white;border-color:var(--accent);box-shadow:0 2px 3px #006f7217}.btn.primary:hover:not(:disabled){background:#00595c}.btn.soft{color:var(--accent);background:var(--tint);border-color:#c4e3de}.btn.ghost{background:transparent;border-color:transparent;padding:7px 9px}.btn.ghost:hover:not(:disabled){background:#e8eff2;border-color:transparent}.btn.small{padding:4px 8px;font-size:11px;line-height:18px;gap:5px}.iconbtn{width:30px;height:30px;padding:5px;border:0;background:transparent;color:var(--muted);border-radius:6px;display:inline-grid;place-items:center}.iconbtn:hover:not(:disabled){background:#edf3f5;color:var(--ink)}.iconbtn svg{width:16px;height:16px}.toolbar{display:flex;gap:8px;align-items:center;padding:13px 15px;background:white;border:1px solid var(--line);border-radius:12px;margin-bottom:14px;box-shadow:var(--shadow);flex-wrap:wrap}.toolbar .rule{height:24px;background:var(--line);width:1px;margin:0 3px}.toolbar .spacer{flex:1}.toolbar kbd{font-size:10px;opacity:.68;border:1px solid currentColor;border-radius:3px;padding:0 3px;line-height:15px;font-family:inherit;margin-left:4px}label.speed{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted)}select{background:#f8fafb;color:var(--ink);border:1px solid var(--line);border-radius:7px;padding:7px 25px 7px 9px;font-size:12px}.status-pill{display:inline-flex;gap:7px;align-items:center;border-radius:30px;background:#edf2f5;color:#506674;font-size:11px;font-weight:650;padding:7px 11px;min-width:81px;justify-content:center}.status-pill:before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}.status-pill.ready,.status-pill.done{background:var(--tint);color:var(--accent)}.status-pill.running{background:#e9f0fc;color:#2863b7}.status-pill.running:before{animation:pulse 1s infinite}.status-pill.waiting,.status-pill.breakpoint{background:var(--orange-bg);color:var(--orange)}.status-pill.error{background:var(--red-bg);color:var(--red)}@keyframes pulse{50%{opacity:.3}}.workspace{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(350px,1fr);grid-template-rows:minmax(300px,1fr) 224px;gap:14px;flex:1;min-height:0}.panel{background:var(--paper);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);min-width:0;min-height:0;display:flex;flex-direction:column;overflow:hidden}.panelhead{height:47px;flex-shrink:0;padding:0 15px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line)}.panelhead h2{font-size:12px;font-weight:720;margin:0;letter-spacing:.05px;display:flex;gap:8px;align-items:center}.panelhead h2 svg{width:16px;height:16px;color:var(--muted)}.panelhead .grow{flex:1}.panelhead .faded{color:#7e929d;font-size:10px}.filename{font-family:var(--mono);font-size:11px;color:var(--muted);margin-left:3px}.editor-tools{display:flex;gap:1px;align-items:center}.editor-tools button{font-size:12px}.editor-wrap{position:relative;flex:1;min-height:0;overflow:hidden;background:#fff}.editor-wrap .code-window{position:absolute;inset:0 0 0 61px;overflow:hidden;pointer-events:none}.code-view{position:absolute;top:0;left:0;margin:0;padding:16px 20px 80px;min-width:100%;font:var(--code-size)/var(--code-line) var(--mono);tab-size:4;white-space:pre;color:#263e4d;will-change:transform;overflow:visible}.code-view .line{height:var(--code-line);min-height:var(--code-line);display:block;white-space:pre;min-width:100%;}.code-view .kw{color:#075f88;font-weight:650}.code-view .str{color:#397442}.code-view .comment{color:#708594;font-style:italic}.code-view .num{color:#9257a2}.code-view .op{color:#986000}.code-view .fn{color:#975028}.editor-wrap textarea{position:absolute;inset:0 0 0 61px;width:calc(100% - 61px);height:100%;padding:16px 20px 80px;border:0;border-radius:0;resize:none;outline:0;background:transparent;color:transparent;-webkit-text-fill-color:transparent;caret-color:var(--ink);font:var(--code-size)/var(--code-line) var(--mono);tab-size:4;white-space:pre;overflow:auto;letter-spacing:0}.editor-wrap textarea::selection{background:#2f8db338}.gutter-window{position:absolute;top:0;left:0;bottom:0;width:61px;background:#f9fbfc;border-right:1px solid #e9eef1;overflow:hidden;user-select:none}.gutter{padding-top:16px;will-change:transform}.gutter button{position:relative;display:flex;align-items:center;justify-content:flex-end;gap:4px;width:60px;height:var(--code-line);font:11px/var(--code-line) var(--mono);padding:0 11px 0 4px;background:none;border:0;color:#7c909e}.gutter button:hover{background:#edf3f5}.gutter button.bp:before{content:'';position:absolute;left:7px;top:calc(50% - 4px);width:8px;height:8px;border-radius:50%;background:#d2485b}.gutter button.next{background:#e0f1ed;color:var(--accent);font-weight:bold}.gutter button.next:after{content:'▶';position:absolute;left:18px;top:0;font-size:8px}.gutter button.error{color:var(--red);background:var(--red-bg)}.line-band{position:absolute;left:0;right:0;height:var(--code-line);background:#e7f4f080;border-left:3px solid #129685;display:none;pointer-events:none}.line-band.error{background:#ffe4e780;border-color:#d65165}.editorfoot{height:31px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 14px;border-top:1px solid #ebf0f3;font-size:10px;color:var(--muted);gap:8px}.dot-legend{display:inline-block;width:6px;height:6px;background:#d2485b;border-radius:50%;margin-right:4px}.editorfoot .right{display:flex;gap:12px}.lockhint{background:var(--orange-bg);color:var(--orange);font-size:10px;padding:3px 8px;border-radius:4px;display:none}.inspection{min-height:0}.tabs{display:flex;align-items:center;gap:14px;height:44px;flex-shrink:0;padding:0 15px;border-bottom:1px solid var(--line);background:#fbfcfd}.tab{height:44px;padding:0 2px;border:0;border-bottom:2px solid transparent;background:none;font-size:11px;color:var(--muted);font-weight:600}.tab.active{border-bottom-color:var(--accent);color:var(--accent)}.tab:hover{color:var(--ink)}.pane{flex:1;overflow:auto;min-height:0;padding:15px}.pane[hidden]{display:none}.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:145px;height:100%;color:var(--muted);text-align:center;padding:20px 28px;line-height:1.8}.empty-icon{width:43px;height:43px;border-radius:12px;background:#f0f5f6;display:grid;place-items:center;color:#668490;margin-bottom:12px}.empty-icon svg{width:23px;height:23px}.empty strong{color:var(--ink);font-weight:650;display:block;font-size:12px}.empty p{font-size:11px;margin:6px 0 0;max-width:275px}.scope-title{color:var(--muted);font-size:9px;font-weight:750;letter-spacing:1.2px;display:flex;justify-content:space-between;margin:0 0 10px;text-transform:uppercase}.scope-title:not(:first-child){margin-top:17px}.vars{width:100%;border-collapse:separate;border-spacing:0;font-size:12px}.vars th{padding:0 9px 8px;text-align:left;font-size:9px;letter-spacing:.6px;text-transform:uppercase;color:#7a8d98;font-weight:600}.vars th:last-child{text-align:right}.vars td{padding:9px;border-top:1px solid #eef2f4;vertical-align:top}.vars .varname{font-family:var(--mono);font-size:11px;font-weight:600;max-width:150px;word-break:break-word}.vars .value{text-align:right;font-family:var(--mono);font-size:12px;white-space:pre-wrap;overflow-wrap:anywhere;max-width:180px}.value.changed{background:#fff1ce;color:#92590a;box-shadow:inset 3px 0 #e0ad4f}.var-type{font-size:9px;font-weight:600;color:#6a8190;letter-spacing:.25px}.tiny{font-size:9px;color:#8a9ca6;font-weight:400}.uninit{font-size:10px;color:#8999a3;font-family:inherit}.arraybox{border:1px solid #dfE8ec;border-radius:8px;overflow:hidden;margin-top:10px}.arraybox summary{padding:10px 12px;font-size:11px;cursor:pointer;font-weight:650;background:#f8fafb;font-family:var(--mono)}.arraybox summary span{font-size:9px;color:var(--muted);font-family:inherit;font-weight:400;margin-left:8px}.arraygrid{display:flex;gap:5px;flex-wrap:wrap;padding:10px;max-height:240px;overflow:auto}.arraycell{border:1px solid #dce7eb;background:#fff;border-radius:5px;min-width:46px;flex:0 0 auto;text-align:center;padding:3px 7px 5px;max-width:110px;white-space:pre-wrap;word-break:break-word;font:11px var(--mono)}.arraycell small{display:block;font:8px var(--mono);color:#78909b;margin-bottom:5px}.arraycell.changed{background:var(--orange-bg);border-color:#d9b66d}.arraymatrix{border-collapse:separate;border-spacing:5px;margin:4px;font-family:var(--mono);font-size:11px}.arraymatrix th{font-weight:400;font-size:9px;color:#78909b;min-width:25px}.arraymatrix td{border:1px solid #dce7eb;border-radius:4px;padding:7px 10px;text-align:center;min-width:42px;max-width:180px;word-break:break-word}.arraymatrix td.changed{background:var(--orange-bg);border-color:#d9b66d}.array-scroll{overflow:auto;max-height:270px}.subnote{font-size:10px;color:var(--muted);padding:7px 11px;line-height:1.6}.watchform{display:flex;gap:7px;margin-bottom:9px}.watchform input{min-width:0;flex:1;border:1px solid var(--line);border-radius:7px;padding:9px 10px;font-family:var(--mono);font-size:11px}.hint{font-size:10px;color:var(--muted);line-height:1.7;margin:8px 0 12px}.watchrow{display:flex;gap:6px;align-items:center;justify-content:space-between;border:1px solid var(--line);padding:8px 10px;border-radius:7px;margin-bottom:7px}.watchrow code{font-size:11px;word-break:break-word}.watchrow .watchvalue{font-family:var(--mono);font-size:11px;max-width:55%;text-align:right;word-break:break-word}.watchrow .watchvalue.err{font-family:inherit;color:#9b5d36;font-size:10px}.stackrow{border:1px solid var(--line);padding:12px;border-radius:8px;display:flex;align-items:center;gap:11px;margin-bottom:7px}.stackrow.current{border-color:#9bcac4;background:#f2faf8}.stacknum{display:grid;place-items:center;width:25px;height:25px;background:#e7eff3;color:#557483;font:11px var(--mono);border-radius:6px}.stackrow strong{display:block;font-family:var(--mono);font-size:11px}.stackrow small{display:block;font-size:10px;color:var(--muted);margin-top:4px}.filetools{display:flex;gap:6px;margin-bottom:12px}.filerow{display:flex;align-items:center;gap:8px;padding:10px 0;border-top:1px solid #edf1f4}.filedesc{flex:1;min-width:0}.filedesc strong{font:11px var(--mono);overflow-wrap:anywhere;display:block}.filedesc small{font-size:9px;color:var(--muted);display:block;margin-top:4px}.console{background:#142b37;border-color:#142b37}.console .panelhead{border-color:#2b424c;color:#d3e3e9;background:#19303d}.console .panelhead h2 svg{color:#94afb9}.console .iconbtn{color:#a4bdc6}.console .iconbtn:hover{background:#2a424e;color:white}.console .faded{color:#88a3af}.consolebody{flex:1;overflow:auto;min-height:0;padding:13px 17px;font:12px/1.85 var(--mono);color:#def0f1;white-space:pre-wrap;overflow-wrap:anywhere}.console-placeholder{font-family:inherit;font-size:11px;color:#86a5b3;line-height:1.9}.consoleline.input{color:#96d2c0}.consoleline.input:before{content:'› ';color:#5daa99}.input-area{flex-shrink:0;padding:11px 14px;background:#213d49;border-top:1px solid #36515d}.input-area[hidden]{display:none}.input-label{font-size:10px;color:#bee0d6;font-family:var(--mono);margin-bottom:6px}.inputform{display:flex;gap:7px}.inputform input{flex:1;min-width:0;background:#f5fbfa;border:1px solid #74978e;border-radius:5px;padding:7px 9px;color:var(--ink);font-family:var(--mono);font-size:12px}.inputform .btn{background:#a7e1ce;color:#183b35;border:0;padding:5px 12px;font-size:11px}.input-error{font-size:10px;color:#ffcc9b;margin-top:5px}.execution-summary{padding:10px 14px;background:#f4f9f9;border-bottom:1px solid #e3ecee;font-size:11px;line-height:1.65;flex-shrink:0;max-height:68px;overflow:auto}.execution-summary.error{background:var(--red-bg);color:var(--red)}.execution-summary strong{font-weight:650}.trace-scroll{flex:1;overflow:auto;min-height:0;padding:0 13px 7px}.trace-mini{border-collapse:collapse;width:100%;font-size:10px}.trace-mini th{text-align:left;font-weight:600;color:#8498a3;font-size:9px;padding:8px 6px 5px;position:sticky;top:0;background:white}.trace-mini td{padding:5px 6px;border-top:1px solid #eef3f5;vertical-align:top}.trace-mini td:first-child{color:#8a9ba4;font-family:var(--mono);width:36px}.trace-mini td:nth-child(2){color:var(--accent);font-family:var(--mono);width:39px}.trace-mini td:nth-child(3){word-break:break-word;line-height:1.6}.trace-mini tr:last-child td{background:#f5faf9}.trace-mini .line-link{font:inherit;color:var(--accent);background:transparent;padding:0;border:0;text-decoration:underline;text-underline-offset:2px}.bottom{height:33px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;color:#748b98;font-size:10px;gap:12px}.bottom .left{display:flex;gap:14px}.online-dot{display:inline-block;background:#3a9381;width:5px;height:5px;border-radius:50%;margin-right:5px}.help-link{color:var(--muted);background:transparent;border:0;font-size:10px;padding:3px 0;text-decoration:underline;text-underline-offset:2px}.bottom .right{font-size:9px}dialog{border:1px solid #d3e0e4;border-radius:16px;box-shadow:0 24px 100px #112a3b36;padding:0;color:var(--ink);width:min(900px,calc(100vw - 40px));max-height:calc(100dvh - 70px);background:white}dialog::backdrop{background:#142c3b63;backdrop-filter:blur(3px)}.modalhead{position:sticky;top:0;background:white;z-index:2;border-bottom:1px solid var(--line);padding:19px 23px;display:flex;align-items:center;justify-content:space-between;gap:12px}.modalhead h2{font-size:19px;margin:0;letter-spacing:-.4px}.modalhead p{font-size:11px;color:var(--muted);margin:5px 0 0}.modalbody{padding:22px 24px;overflow:auto}.example-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.example-card{padding:17px;border:1px solid var(--line);background:white;border-radius:10px;display:flex;flex-direction:column;align-items:flex-start;text-align:left;white-space:normal;min-height:172px;color:var(--ink)}.example-card:hover{border-color:#7bb4ae;background:#f6fbfa}.example-card .level{font-size:9px;color:var(--accent);background:var(--tint);padding:3px 6px;border-radius:4px;margin-bottom:11px}.example-card .level.advanced{color:#805097;background:#f5edf9}.example-card .level.intermediate{color:#3867ac;background:#edf2fb}.example-card strong{font-size:13px;margin-bottom:7px}.example-card p{font-size:11px;line-height:1.65;color:var(--muted);margin:0 0 10px}.example-card small{font-size:9px;color:#6c8990;line-height:1.5;margin-top:auto}.guide-nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:17px}.guide-nav a{font-size:10px;color:var(--accent);text-decoration:none;padding:6px 9px;border-radius:5px;background:var(--tint)}.guide-content{font-size:12px;line-height:1.85}.guide-content h3{font-size:15px;margin:25px 0 8px;scroll-margin-top:90px;letter-spacing:-.2px}.guide-content h3:first-child{margin-top:0}.guide-content p{margin:8px 0}.guide-content code{font:11px/1.9 var(--mono);background:#f0f5f7;padding:2px 4px;border-radius:4px}.guide-content pre{background:#f6f9fa;border:1px solid var(--line);padding:12px 15px;border-radius:8px;overflow:auto;font:11px/1.9 var(--mono);color:#27556c}.guide-content table{border-collapse:collapse;width:100%;margin:9px 0 15px;font-size:11px}.guide-content th,.guide-content td{text-align:left;border-bottom:1px solid var(--line);padding:8px;vertical-align:top}.guide-content th{font-size:10px;background:#f6f9fa}.guide-callout{padding:11px 14px;background:var(--tint);border-left:3px solid #60a89c;border-radius:0 7px 7px 0;font-size:11px}.guide-content a{color:var(--accent)}.trace-dialog{width:min(1300px,calc(100vw - 36px))}.trace-dialog .modalbody{padding:0;max-height:60vh}.fulltrace{width:100%;border-collapse:collapse;font-size:11px;white-space:nowrap}.fulltrace th{position:sticky;top:0;background:#edf5f5;text-align:left;padding:11px 13px;font-size:10px;color:var(--accent);z-index:1;border-bottom:1px solid #cbdcde}.fulltrace td{border-bottom:1px solid #e6eef1;padding:8px 13px;max-width:400px;white-space:pre-wrap;overflow-wrap:anywhere;font-family:var(--mono)}.fulltrace td.change{background:#fff5df}.fulltrace td.action{min-width:250px;font-family:inherit;color:var(--muted);white-space:normal;font-size:10px}.bytecode pre{font:11px/1.9 var(--mono);margin:0;padding:0;white-space:pre-wrap}.bytecode .current-op{display:block;background:var(--tint);color:var(--accent);font-weight:bold}.file-dialog{width:min(700px,calc(100vw - 40px))}.file-dialog label{display:block;font-size:11px;font-weight:600;margin-bottom:6px}.file-dialog input{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:6px;margin-bottom:15px}.file-dialog textarea{width:100%;height:230px;padding:12px;font:12px/1.8 var(--mono);border:1px solid var(--line);border-radius:7px;resize:vertical;color:var(--ink);background:white}.modalfoot{display:flex;justify-content:flex-end;gap:8px;padding:14px 23px;border-top:1px solid var(--line)}.toast{position:fixed;bottom:38px;left:50%;transform:translateX(-50%) translateY(15px);background:#16333e;color:#f0fbf8;padding:11px 18px;border-radius:9px;font-size:12px;box-shadow:0 5px 20px #142b372b;z-index:30;opacity:0;transition:opacity .18s,transform .18s;pointer-events:none;max-width:calc(100vw - 40px);text-align:center;line-height:1.5}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.more-menu{position:relative}.snippet-select{max-width:118px;font-size:10px;border:0;background:transparent;padding:4px;color:var(--muted)}.confirm-dialog{width:420px}.confirm-dialog .modalbody{line-height:1.9;font-size:12px}.muted{color:var(--muted)}[hidden]{display:none!important}a{color:var(--accent)}
+@media(min-width:1550px){:root{--code-size:15px;--code-line:27px}.workspace{grid-template-columns:minmax(0,1.7fr) minmax(420px,1fr);grid-template-rows:minmax(320px,1fr) 260px}.app{padding:0 35px}.pane{padding:18px}.consolebody{font-size:13px}.trace-mini{font-size:11px}}
+@media(max-width:1120px){.app{padding:0 14px}.school{display:none}.toolbar{gap:5px;padding:11px}.toolbar .btn{padding:7px 9px;font-size:12px}.toolbar kbd{display:none}.workspace{grid-template-columns:minmax(0,1.4fr) minmax(315px,1fr);gap:10px}.filename{display:none}.editor-tools .format-label{display:none}.top-actions .btn{padding:7px 10px}.toolbar .status-pill{display:none}.topbar{min-height:78px}.panelhead{padding:0 12px}.snippet-select{max-width:98px}}
+@media(max-width:800px){.app{height:auto;min-height:100dvh;padding:0 12px}.topbar{min-height:83px;gap:8px;align-items:center}.brand h1{font-size:18px}.brand .sub{font-size:9px;letter-spacing:0}.brandmark{width:35px;height:35px;border-radius:10px}.brandmark svg{width:23px}.top-actions{gap:1px}.top-actions .btn{padding:5px 7px;font-size:10px;gap:3px}.top-actions .btn .txt{display:none}.top-actions .btn svg{width:16px}.workspace{display:flex;flex-direction:column;gap:12px}.editor-panel{height:435px}.inspection{height:340px}.console{height:260px;order:1}.execution{height:255px;order:2}.toolbar{margin-bottom:12px;gap:6px;padding:10px;justify-content:flex-start}.toolbar .spacer{flex:0}.toolbar .rule{display:none}.toolbar .btn{padding:6px 8px;font-size:11px;gap:5px}.toolbar .btn svg{width:15px}.toolbar label.speed{font-size:10px;margin-left:auto}.toolbar label.speed select{font-size:10px;padding:5px;max-width:96px}.toolbar .status-pill{display:none}.bottom{height:auto;min-height:48px;flex-wrap:wrap;padding:11px 0;gap:6px}.bottom .right{display:none}.example-grid{grid-template-columns:repeat(2,1fr)}.modalhead{padding:15px}.modalbody{padding:16px}.modalhead h2{font-size:17px}.editorfoot .right .support-label{display:none}.trace-dialog .modalhead{flex-wrap:wrap}.panelhead h2{font-size:12px}}
+@media(max-width:450px){.brand .sub{max-width:180px;line-height:1.5}.brandmark{display:none}.brand{gap:0}.top-actions .btn .examples-label{display:none}.example-grid{grid-template-columns:1fr}.toolbar .overbutton{display:none}.toolbar label.speed{width:100%;justify-content:flex-end}.toolbar .btn{font-size:10px}.editorfoot{font-size:9px;padding:0 9px}.code-view,.editor-wrap textarea{padding-left:12px;padding-right:12px}.editor-tools .snippet-select{display:none}.editor-panel{height:390px}.modalhead h2{font-size:16px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* RGSV identity: embedded crest keeps this page entirely self-contained. */
+.rgsv-logo{display:block;width:46px;height:52px;object-fit:contain;flex:none;border-radius:3px}
+.school{color:#14264d;font-size:9px;letter-spacing:.8px}
+@media(max-width:800px){.rgsv-logo{width:38px;height:43px}.brand{gap:10px}}
+@media(max-width:450px){.rgsv-logo{width:32px;height:36px}.brand{gap:8px}.brand h1{font-size:16px;letter-spacing:-.6px}.brand .sub{display:none}.top-actions .btn{padding:5px}.topbar{gap:7px}}
+</style>
+</head>
+<body>
+<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
+<symbol id="i-code" viewBox="0 0 24 24"><path d="m8 5-6 7 6 7m8-14 6 7-6 7M14 3l-4 18"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="m7 4 14 8-14 8Z"/></symbol>
+<symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14" stroke-width="3"/></symbol>
+<symbol id="i-step" viewBox="0 0 24 24"><path d="m4 6 10 6-10 6ZM19 5v14"/></symbol>
+<symbol id="i-over" viewBox="0 0 24 24"><path d="M3 14a8 8 0 0 1 16 0m-4-3 4 4 3-4M5 19h14"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24"><path d="m17 6-10 6 10 6ZM3 5v14"/></symbol>
+<symbol id="i-reset" viewBox="0 0 24 24"><path d="M3 4v6h6M3 10a9 9 0 1 1 1 8"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6M20 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h8"/></symbol>
+<symbol id="i-open" viewBox="0 0 24 24"><path d="M3 19V6a2 2 0 0 1 2-2h5l3 3h6a2 2 0 0 1 2 2v2M3 19l3-8h16l-3 8Z"/></symbol>
+<symbol id="i-save" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+<symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 8a2.5 2.5 0 1 1 4 2c-1 .7-1.5 1-1.5 3M12 17h.01"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+<symbol id="i-memory" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></symbol>
+<symbol id="i-terminal" viewBox="0 0 24 24"><path d="m4 6 6 6-6 6M13 18h7"/></symbol>
+<symbol id="i-trace" viewBox="0 0 24 24"><path d="M7 3h14M7 9h14M7 15h14M7 21h14M3 3h.01M3 9h.01M3 15h.01M3 21h.01"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V3H3v13h5"/></symbol>
+<symbol id="i-expand" viewBox="0 0 24 24"><path d="M14 3h7v7M21 3l-7 7M10 21H3v-7M3 21l7-7"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol>
+<symbol id="i-edit" viewBox="0 0 24 24"><path d="m16 3 5 5-13 13H3v-5ZM13 6l5 5"/></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H5v20h14V7ZM14 2v6h5M8 12h8M8 16h8"/></symbol>
+<symbol id="i-format" viewBox="0 0 24 24"><path d="M3 5h18M9 10h12M9 15h12M3 20h18m0-11 4 4-4 4"/></symbol>
+</defs></svg>
+<div class="app">
+<header class="topbar">
+<div class="brand"><img class="rgsv-logo" src="data:image/png;base64,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" alt="Reigate Grammar School Vietnam crest" width="46" height="52"><div><h1>Pseudocode Studio</h1><div class="sub">Make your thinking executable. One step at a time.</div></div><div class="school">REIGATE GRAMMAR<br>SCHOOL VIETNAM</div></div>
+<div class="top-actions"><button class="btn soft" id="examplesBtn"><svg aria-hidden="true"><use href="#i-grid"/></svg><span class="examples-label">Examples</span></button><button class="btn ghost" id="openBtn" title="Open a .pseudo or .txt source file" aria-label="Open source file"><svg aria-hidden="true"><use href="#i-open"/></svg><span class="txt">Open</span></button><button class="btn ghost" id="saveBtn" title="Save source (Ctrl/Cmd + S)" aria-label="Save source file"><svg aria-hidden="true"><use href="#i-save"/></svg><span class="txt">Save</span></button><button class="btn" id="guideBtn" title="Syntax & debugging guide" aria-label="Open syntax and debugging guide"><svg aria-hidden="true"><use href="#i-help"/></svg><span class="txt">Guide</span></button></div>
+</header>
+<div class="toolbar" role="toolbar" aria-label="Execution controls">
+<button class="btn primary" id="runBtn" title="Run or continue (Ctrl/Cmd + Enter)"><svg aria-hidden="true"><use href="#i-play"/></svg><span id="runLabel">Run</span></button>
+<button class="btn" id="pauseBtn" disabled title="Pause execution (Esc)"><svg aria-hidden="true"><use href="#i-pause"/></svg>Pause</button>
+<div class="rule"></div>
+<button class="btn soft" id="stepBtn" title="Execute the next source step (F10)"><svg aria-hidden="true"><use href="#i-step"/></svg>Step <kbd>F10</kbd></button>
+<button class="btn overbutton" id="overBtn" title="Run a subprogram call without stepping into it (Shift + F10)"><svg aria-hidden="true"><use href="#i-over"/></svg>Step over</button>
+<button class="btn" id="backBtn" disabled title="Undo an execution step (Alt + Left)"><svg aria-hidden="true"><use href="#i-back"/></svg>Back</button>
+<button class="btn" id="resetBtn" title="Reset execution; keep source and breakpoints"><svg aria-hidden="true"><use href="#i-reset"/></svg>Reset</button>
+<div class="rule"></div>
+<button class="btn" id="compileBtn" title="Check syntax and prepare the program, without running"><svg aria-hidden="true"><use href="#i-check"/></svg>Compile</button>
+<div class="spacer"></div>
+<label class="speed" for="speed">Speed <select id="speed"><option value="0">Instant</option><option value="125">8 steps / sec</option><option value="250">4 steps / sec</option><option value="500">2 steps / sec</option><option value="1000">1 step / sec</option><option value="2000">1 step / 2 sec</option></select></label>
+<span class="status-pill" id="status" role="status" aria-live="polite">Ready</span>
+</div>
+<main class="workspace">
+<section class="panel editor-panel" aria-label="Pseudocode editor">
+<div class="panelhead"><h2><svg aria-hidden="true"><use href="#i-code"/></svg>Source code</h2><span class="filename" id="filename">running-total.pseudo</span><span class="grow"></span><span class="lockhint" id="lockhint">Running · editor locked</span><div class="editor-tools"><select class="snippet-select" id="snippet" aria-label="Insert a code snippet"><option value="">+ Snippet</option value="declare">DECLARE</option><option value="if">IF / ELSE</option><option value="for">FOR / NEXT</option><option value="while">WHILE</option><option value="repeat">REPEAT / UNTIL</option><option value="array">ARRAY</option><option value="function">FUNCTION</option></select><button class="iconbtn" id="arrowBtn" title="Insert assignment arrow ←" aria-label="Insert assignment arrow">←</button><button class="iconbtn" id="formatBtn" title="Format indentation" aria-label="Format indentation"><svg aria-hidden="true"><use href="#i-format"/></svg></button><button class="iconbtn" id="fontDownBtn" title="Smaller code text" aria-label="Smaller code text">A−</button><button class="iconbtn" id="fontUpBtn" title="Larger code text" aria-label="Larger code text">A+</button></div></div>
+<div class="editor-wrap" id="editorWrap"><div class="gutter-window"><div class="gutter" id="gutter" aria-label="Line numbers and breakpoints"></div></div><div class="code-window"><div class="line-band" id="lineBand"></div><pre class="code-view" id="codeView" aria-hidden="true"></pre></div><textarea id="editor" wrap="off" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" aria-label="Pseudocode source editor" aria-describedby="editorHelp"></textarea></div>
+<div class="editorfoot"><span id="editorHelp"><span class="dot-legend"></span>Click a line number to set a breakpoint.</span><span class="right"><span class="support-label">← or &lt;- to assign</span><span id="cursor">Ln 1, Col 1</span></span></div>
+</section>
+<section class="panel inspection" aria-label="Debugger inspector"><div class="panelhead"><h2><svg aria-hidden="true"><use href="#i-memory"/></svg>Inspector</h2><span class="grow"></span><span class="faded" id="memoryCount">Live variables & arrays</span></div>
+<div class="tabs" role="tablist" aria-label="Inspector tabs"><button class="tab active" role="tab" id="tab-memory" aria-selected="true" aria-controls="memoryPane" data-tab="memory">Variables</button><button class="tab" role="tab" id="tab-watch" aria-selected="false" aria-controls="watchPane" data-tab="watch">Watch</button><button class="tab" role="tab" id="tab-stack" aria-selected="false" aria-controls="stackPane" data-tab="stack">Stack</button><button class="tab" role="tab" id="tab-files" aria-selected="false" aria-controls="filesPane" data-tab="files">Files</button></div>
+<div class="pane" id="memoryPane" role="tabpanel" aria-labelledby="tab-memory"></div>
+<div class="pane" id="watchPane" role="tabpanel" aria-labelledby="tab-watch" hidden><form class="watchform" id="watchForm"><label for="watchInput" class="sr-only">Watch expression</label><input id="watchInput" placeholder="e.g. Total + Number" autocomplete="off"><button class="btn small" type="submit">+ Add</button></form><p class="hint">Evaluate expressions without changing the program. Values update after every step.</p><div id="watchList"></div></div>
+<div class="pane" id="stackPane" role="tabpanel" aria-labelledby="tab-stack" hidden></div>
+<div class="pane" id="filesPane" role="tabpanel" aria-labelledby="tab-files" hidden><div class="filetools"><button class="btn small" id="newFileBtn"><svg aria-hidden="true"><use href="#i-plus"/></svg>New file</button><button class="btn small" id="importFileBtn"><svg aria-hidden="true"><use href="#i-open"/></svg>Import .txt</button></div><div id="filesList"></div><p class="hint">These are virtual text files in this page, not direct access to your computer. Reset restores the starting files; export written files before resetting.</p></div>
+</section>
+<section class="panel console" aria-label="Program console"><div class="panelhead"><h2><svg aria-hidden="true"><use href="#i-terminal"/></svg>Console</h2><span class="faded">OUTPUT / INPUT</span><span class="grow"></span><button class="iconbtn" id="copyOutputBtn" title="Copy output" aria-label="Copy console output"><svg aria-hidden="true"><use href="#i-copy"/></svg></button><button class="iconbtn" id="exportOutputBtn" title="Save output as text" aria-label="Save console output"><svg aria-hidden="true"><use href="#i-save"/></svg></button></div><div class="consolebody" id="consoleBody" role="log" aria-label="Program output"></div><div class="input-area" id="inputArea" hidden><div class="input-label" id="inputLabel"></div><form class="inputform" id="inputForm"><label class="sr-only" for="consoleInput">Value for INPUT statement</label><input id="consoleInput" autocomplete="off" placeholder="Enter a value without quotes"><button class="btn" type="submit">Send ↵</button></form><div class="input-error" id="inputError" role="alert"></div></div></section>
+<section class="panel execution" aria-label="Execution trace"><div class="panelhead"><h2><svg aria-hidden="true"><use href="#i-trace"/></svg>Execution trace</h2><span class="grow"></span><button class="btn small" id="bytecodeBtn" title="View compiled bytecode">Bytecode</button><button class="iconbtn" id="traceBtn" title="Open full trace table and export CSV" aria-label="Open full trace table"><svg aria-hidden="true"><use href="#i-expand"/></svg></button></div><div class="execution-summary" id="executionSummary" aria-live="polite"></div><div class="trace-scroll" id="traceScroll"><table class="trace-mini" id="traceMini"><thead><tr><th>Step</th><th>Line</th><th>What changed?</th></tr></thead><tbody id="traceBody"></tbody></table></div></section>
+</main>
+<footer class="bottom"><div class="left"><span><span class="online-dot"></span>Runs locally · no account needed</span><span id="saveState">Autosave ready</span></div><span id="stepState">0 steps · not compiled</span><div class="right">Cambridge-style teaching dialect · <button class="help-link" id="scopeBtn">Supported syntax</button> · v1.0</div></footer>
+</div>
+<dialog id="examplesDialog" aria-labelledby="examplesTitle"><div class="modalhead"><div><h2 id="examplesTitle">Choose your next experiment</h2><p>Small programs. Visible thinking. Pick one, then press Step.</p></div><button class="iconbtn" data-close="examplesDialog" aria-label="Close examples"><svg aria-hidden="true"><use href="#i-close"/></svg></button></div><div class="modalbody"><div class="example-grid" id="exampleGrid"></div></div></dialog>
+<dialog id="guideDialog" aria-labelledby="guideTitle"><div class="modalhead"><div><h2 id="guideTitle">Pseudocode, made executable</h2><p>Syntax reference & a quick guide to debugging.</p></div><button class="iconbtn" data-close="guideDialog" aria-label="Close guide"><svg aria-hidden="true"><use href="#i-close"/></svg></button></div><div class="modalbody guide-content">
+<div class="guide-nav"><a href="#guide-debug">Debugging</a><a href="#guide-basics">Basics</a><a href="#guide-control">Control flow</a><a href="#guide-arrays">Arrays</a><a href="#guide-functions">Subprograms</a><a href="#guide-builtins">Built-ins</a><a href="#guide-files">Files</a><a href="#guide-limits">Dialect & limits</a></div>
+<h3 id="guide-debug">1. See what the algorithm is doing</h3>
+<p><strong>Compile</strong> checks the syntax, declared names and calls, then translates the program into source-mapped bytecode. It does not execute the source. Type, initialisation, array-bound and file-mode checks also run during execution. <strong>Bytecode</strong> shows the actual instructions executed by this page’s virtual machine.</p>
+<p><strong>Step (F10)</strong> executes the next source step. The green line is the <strong>next</strong> step, not the one just completed. Changed values are highlighted in amber. Structural-only endings such as ENDIF, comments and blank lines are skipped. Loop conditions and NEXT are executable steps.</p>
+<p><strong>Run (Ctrl/Cmd + Enter)</strong> continues until the end, an INPUT, an error or a breakpoint. Choose a slower speed for a live demonstration. A breakpoint stops <em>before</em> the marked line. <strong>Pause (Esc)</strong> stops between steps. Use <strong>Step over (Shift + F10)</strong> to execute a call without visiting its body; breakpoints inside it still apply.</p>
+<p><strong>Back (Alt + Left)</strong> restores the previous execution state, including variables, arrays, the call stack, output, virtual files and the random seed. Up to 80 recent steps are retained, within a memory budget. <strong>Reset</strong> clears execution and restores starting files, but keeps source and breakpoints.</p>
+<p><strong>Watch</strong> accepts expressions such as <code>Total / Number</code> or <code>Values[Index]</code>. It cannot call user functions or random functions. <strong>Stack</strong> displays active calls and local scopes. Expand <strong>Execution trace</strong> to see variable snapshots and export a CSV trace table.</p>
+<div class="guide-callout">A function call can suspend its caller mid-expression. The debugger steps into the function, then highlights the caller again to finish that expression. An inline CASE label may likewise have a test step and a statement step. Use Step over for a single caller-level action.</div>
+<h3 id="guide-basics">2. Declarations, assignment and input/output</h3>
+<pre>DECLARE Score : INTEGER
+DECLARE Name : STRING
+DECLARE Price : REAL
+DECLARE Ready : BOOLEAN
+DECLARE Grade : CHAR
+CONSTANT PassMark = 50
+
+Score ← 75
+Name ← "Mai"
+Grade ← 'A'
+Ready ← TRUE
+OUTPUT Name, " scored ", Score
+INPUT Score</pre>
+<p>Declare variables before executing code that uses them. <code>CHARACTER</code> is accepted as an alias for <code>CHAR</code>. A declaration creates an <em>uninitialised</em> value, not an automatic zero. <code>DECLARE A, B : INTEGER</code> is supported. Constants must contain a literal, not an expression. Identifiers and keywords are case-insensitive; text values are case-sensitive.</p>
+<p>Use <code>←</code>, <code>&lt;-</code>, <code>&lt;--</code> or <code>:=</code> for assignment. Use <code>=</code> for comparison. Single quotes hold exactly one character; double quotes hold a string. Comments start with <code>//</code>. Tab indents four spaces. Enter preserves indentation; the format button re-indents structured blocks.</p>
+<p>Each OUTPUT adds a line. Comma-separated values are joined <strong>without extra spaces</strong>; include spaces inside text. INPUT pauses in the console. Type values without quotes. Boolean input must be TRUE or FALSE. Invalid input can be corrected without resetting.</p>
+<table><thead><tr><th>Purpose</th><th>Operators</th></tr></thead><tbody><tr><td>Arithmetic</td><td><code>+ - * / DIV MOD ^</code></td></tr><tr><td>Compare</td><td><code>= &lt;&gt; &lt; &gt; &lt;= &gt;=</code></td></tr><tr><td>Boolean</td><td><code>AND OR NOT XOR</code></td></tr><tr><td>Concatenate text</td><td><code>"Hello " &amp; Name</code></td></tr></tbody></table>
+<p><code>/</code> always returns REAL, even for <code>4 / 2</code>. INTEGER values may be assigned to REAL variables, but the reverse needs <code>INT()</code>. <code>DIV</code> truncates towards zero; <code>MOD</code> uses the corresponding remainder. <code>&amp;</code> requires text operands, not numbers; use <code>NUM_TO_STR()</code> or separate OUTPUT values. AND and OR short-circuit. Use parentheses to make Boolean intent clear.</p>
+<h3 id="guide-control">3. Decisions and loops</h3>
+<pre>IF Score >= 50 THEN
+    OUTPUT "Pass"
+ELSE
+    OUTPUT "Keep practising"
+ENDIF
+
+FOR Number ← 1 TO 5
+    OUTPUT Number
+NEXT Number
+
+WHILE Number > 0
+    Number ← Number - 1
+ENDWHILE
+
+REPEAT
+    INPUT Score
+UNTIL Score >= 0 AND Score <= 100</pre>
+<p>THEN may be on its own line. <code>ELSEIF … THEN</code> and <code>ELSE IF … THEN</code> chains are accepted. An optional <code>DO</code> is allowed after a WHILE condition. FOR bounds are inclusive and evaluated once on entry; STEP defaults to 1 and may be negative but not zero. The counter must be INTEGER. NEXT increments the counter before its limit test, leaving it one increment beyond the range on normal exit.</p>
+<pre>CASE OF Score
+    80 TO 100 : OUTPUT "Distinction"
+    50 TO 79 : OUTPUT "Pass"
+    OTHERWISE : OUTPUT "Try again"
+ENDCASE</pre>
+<p>CASE executes the first matching branch, with no fall-through. Labels can be values, comma-separated values, or ranges. A branch may contain several statements on following lines. OTHERWISE is optional and must be last.</p>
+<h3 id="guide-arrays">4. Arrays with explicit bounds</h3>
+<pre>DECLARE Marks : ARRAY[1:5] OF INTEGER
+DECLARE Board : ARRAY[0:2, 0:2] OF CHAR
+Marks[1] ← 85
+Board[0,2] ← 'X'
+OUTPUT Marks[1]</pre>
+<p>One- and two-dimensional arrays are supported. Indices must be INTEGER and within the declared bounds, which may use previously initialised constants or variables. Expand an array in the Variables tab to inspect cells. Use loops to initialise or output its elements. Whole-array assignment copies an array with matching bounds and element type.</p>
+<h3 id="guide-functions">5. Procedures, functions and scope</h3>
+<pre>FUNCTION Double(Number : INTEGER) RETURNS INTEGER
+    RETURN Number * 2
+ENDFUNCTION
+
+PROCEDURE Increase(BYREF Value : INTEGER)
+    Value ← Value + 1
+ENDPROCEDURE
+
+DECLARE Answer : INTEGER
+Answer ← Double(5)
+CALL Increase(Answer)
+OUTPUT Answer</pre>
+<p>Definitions are top-level and can appear before or after their calls. Parameters default to BYVAL (copy). BYREF is available for procedures and refers to a writable caller variable or array element. Once specified, BYVAL or BYREF continues to following parameters until changed. Array parameters require explicit, matching bounds; scalar parameters can be used in those bounds. Functions return scalar values and may recurse.</p>
+<p>Main-scope variables are global. Subprogram parameters and declarations are local to that call. A local identifier hides a global one with the same name. Variables belong to the main/subprogram scope, not individual IF or loop blocks. RETURN exits immediately. Every executed path through a function must return a value.</p>
+<h3 id="guide-builtins">6. Built-in functions in this teaching dialect</h3>
+<table><thead><tr><th>Functions</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><code>LENGTH(S)</code></td><td>Number of characters in text.</td></tr>
+<tr><td><code>LEFT(S,N)</code>, <code>RIGHT(S,N)</code></td><td>First/last N characters. N may be zero.</td></tr>
+<tr><td><code>MID(S,Start,Length)</code>, <code>SUBSTRING(S,Start,Length)</code></td><td>Extract text. Positions start at 1; the third argument is a length, not an end position.</td></tr>
+<tr><td><code>UCASE(S)</code>, <code>LCASE(S)</code><br><code>TO_UPPER(S)</code>, <code>TO_LOWER(S)</code></td><td>Upper/lower case; accepts STRING or CHAR.</td></tr>
+<tr><td><code>INT(N)</code>, <code>ABS(N)</code>, <code>SQRT(N)</code></td><td>Truncate towards zero; absolute value; square root.</td></tr>
+<tr><td><code>ROUND(N,Places)</code></td><td>Round to 0–12 decimal places; omitted Places means 0. Returns REAL. Ties round away from zero.</td></tr>
+<tr><td><code>RAND(Max)</code></td><td>REAL from 0 inclusive to positive INTEGER Max exclusive.</td></tr>
+<tr><td><code>RANDOM()</code>, <code>RND()</code></td><td>REAL from 0 inclusive to 1 exclusive.</td></tr>
+<tr><td><code>RANDOM_INT(Low,High)</code></td><td>INTEGER between inclusive bounds. These random helpers use a repeatable seed for debugging.</td></tr>
+<tr><td><code>ASC(C)</code>, <code>CHR(N)</code></td><td>ASCII character ↔ code, 0–127.</td></tr>
+<tr><td><code>NUM_TO_STR(N)</code></td><td>Convert a number to text.</td></tr>
+<tr><td><code>STR_TO_NUM(S)</code>, <code>IS_NUM(S)</code></td><td>Convert numeric text to REAL; test whether text is numeric.</td></tr>
+<tr><td><code>EOF(FileName)</code></td><td>TRUE when an open READ file has no unread lines.</td></tr>
+</tbody></table>
+<h3 id="guide-files">7. Virtual text files</h3>
+<pre>DECLARE LineText : STRING
+OPENFILE "names.txt" FOR READ
+WHILE NOT EOF("names.txt")
+    READFILE "names.txt", LineText
+    OUTPUT LineText
+ENDWHILE
+CLOSEFILE "names.txt"</pre>
+<p>Create or import starting files in the Files tab. READFILE reads one line into a STRING. <code>OPENFILE "results.txt" FOR WRITE</code> creates or truncates a file; APPEND preserves existing text. <code>WRITEFILE "results.txt", "Some text"</code> writes a line. Use NUM_TO_STR for numeric data. CLOSEFILE closes the handle. Export files to keep generated data outside this page.</p>
+<h3 id="guide-limits">8. What this version does and does not support</h3>
+<p>This is an independent <strong>Cambridge-style teaching dialect</strong>, not an official Cambridge product or a universal natural-language pseudocode parser. The supported syntax above is the contract. It follows common Cambridge control-flow, declaration, array and subprogram conventions; convenience aliases and built-ins are explicitly documented here. It does not claim complete IGCSE, A Level or IB language conformance.</p>
+<p>Not supported: records and user-defined types, DATE values, classes/objects, pointers, sets, random-access/binary files, networking, free-form English instructions, or arbitrary programming-language code. Put each statement on one source line, except the supported CASE label form. <code>STOP</code> is a convenience extension that ends the program.</p>
+<p>Safety limits: 120,000 source characters; two array dimensions; 10,000 elements per array and 20,000 live cells; call depth 100; one million bytecode operations or 100,000 source steps. Exact INTEGER range is ±9,007,199,254,740,991; REAL uses browser floating-point arithmetic. These are teaching/runtime choices, not examination requirements.</p>
+<p>Back retains at most 80 steps within an estimated 12 MB snapshot budget. The trace retains the latest 2,000 records and up to 60 visible variable names per snapshot; the on-page mini trace shows the latest 150. Arrays appear as compact values in traces and full cells in the inspector (up to 400 displayed). The console retains at most 1,000 lines or 250,000 characters. Older records are removed to keep the page responsive.</p>
+<p>Your source and starting files are autosaved in this browser where local storage is available. Source and data are never sent to a server by this page. Execution is local, uses a custom virtual machine, and never evaluates source as JavaScript. Save a source file for a reliable backup. Editing source resets the current execution; the editor is locked during Run.</p>
+<p class="muted">Syntax reference consulted: Cambridge International, <a href="https://www.cambridgeinternational.org/Images/697401-2026-pseudocode-guide-for-teachers.pdf" target="_blank" rel="noopener noreferrer">Computer Science 9618 Pseudocode Guide for Teachers, exams in 2026</a>, especially declarations, arrays, operators, control flow, subprograms and text files. This reference link needs internet access; the application does not.</p>
+</div></dialog>
+<dialog id="traceDialog" class="trace-dialog" aria-labelledby="traceTitle"><div class="modalhead"><div><h2 id="traceTitle">Trace table</h2><p id="traceCaption">Variable values after each source step.</p></div><div class="top-actions"><button class="btn small" id="csvBtn"><svg aria-hidden="true"><use href="#i-save"/></svg>Export CSV</button><button class="iconbtn" data-close="traceDialog" aria-label="Close trace table"><svg aria-hidden="true"><use href="#i-close"/></svg></button></div></div><div class="modalbody" id="fullTraceWrap"></div></dialog>
+<dialog id="bytecodeDialog" aria-labelledby="bytecodeTitle"><div class="modalhead"><div><h2 id="bytecodeTitle">Compiled bytecode</h2><p id="bytecodeCaption">Source → tokens → syntax tree → bytecode → virtual machine</p></div><button class="iconbtn" data-close="bytecodeDialog" aria-label="Close bytecode"><svg aria-hidden="true"><use href="#i-close"/></svg></button></div><div class="modalbody bytecode"><pre id="bytecodeText"></pre></div></dialog>
+<dialog id="fileDialog" class="file-dialog" aria-labelledby="fileTitle"><div class="modalhead"><h2 id="fileTitle">Virtual text file</h2><button class="iconbtn" data-close="fileDialog" aria-label="Close file editor"><svg aria-hidden="true"><use href="#i-close"/></svg></button></div><div class="modalbody"><label for="virtualName">File name</label><input id="virtualName" placeholder="data.txt" maxlength="160"><label for="virtualContent">Text content · one record per line</label><textarea id="virtualContent" spellcheck="false"></textarea><p class="hint" id="virtualHint">Saving changes resets the debugger and updates your starting files.</p></div><div class="modalfoot"><button class="btn" id="exportVirtualBtn">Export .txt</button><button class="btn primary" id="saveVirtualBtn">Save starting file</button></div></dialog>
+<dialog id="confirmDialog" class="confirm-dialog" aria-labelledby="confirmTitle"><div class="modalhead"><h2 id="confirmTitle">Replace current program?</h2></div><div class="modalbody" id="confirmText">Your current editor contents will be replaced. Save your source first to keep a separate copy.</div><div class="modalfoot"><button class="btn" id="confirmNo">Cancel</button><button class="btn primary" id="confirmYes">Continue</button></div></dialog>
+<input type="file" id="sourceFileInput" accept=".pseudo,.psc,.pseudocode,.txt,text/plain" hidden>
+<input type="file" id="virtualFileInput" accept=".txt,.csv,text/plain,text/csv" hidden>
+<div class="toast" id="toast" role="status"></div>
+<noscript><div style="padding:20px;background:#fff1d7">Please enable JavaScript. The pseudocode compiler and debugger run locally in your browser.</div></noscript>
+<script>
+/* Pseudocode Studio — independent, dependency-free educational compiler + VM.
+   Pipeline: tokens -> syntax tree -> source-mapped stack bytecode -> virtual machine.
+   Source text is never passed to eval(), Function(), or the browser's JS parser. */
+'use strict';
+const Pseudo = (() => {
+const KEYWORDS = new Set(('DECLARE CONSTANT ARRAY OF INTEGER REAL STRING CHAR CHARACTER BOOLEAN INPUT OUTPUT IF THEN ELSE ELSEIF ENDIF CASE OTHERWISE ENDCASE FOR TO STEP NEXT ENDFOR WHILE DO ENDWHILE REPEAT UNTIL PROCEDURE ENDPROCEDURE FUNCTION RETURNS ENDFUNCTION CALL RETURN BYREF BYVAL TRUE FALSE AND OR NOT XOR DIV MOD OPENFILE READFILE WRITEFILE CLOSEFILE READ WRITE APPEND STOP').split(' '));
+const ARITIES = {LENGTH:[1],LEFT:[2],RIGHT:[2],MID:[3],SUBSTRING:[3],UCASE:[1],LCASE:[1],TO_UPPER:[1],TO_LOWER:[1],INT:[1],ROUND:[1,2],ABS:[1],SQRT:[1],RAND:[1],RANDOM:[0],RND:[0],RANDOM_INT:[2],ASC:[1],CHR:[1],NUM_TO_STR:[1],STR_TO_NUM:[1],IS_NUM:[1],EOF:[1]};
+const V = (type,value) => ({type,value});
+const bool = v => {if(!v || v.type!=='BOOLEAN')throw new Error('A BOOLEAN value (TRUE or FALSE) is required.');return v.value;};
+const numeric = v => {if(!v || !['INTEGER','REAL'].includes(v.type))throw new Error('A numeric value is required.');return v.value;};
+const integer = v => {if(!v || v.type!=='INTEGER' || !Number.isSafeInteger(v.value))throw new Error('An INTEGER value is required.');return v.value;};
+const text = v => {if(!v || !['CHAR','STRING'].includes(v.type))throw new Error('A STRING or CHAR value is required.');return v.value;};
+function number(type,n){if(!Number.isFinite(n))throw new Error('The result is not a finite number.');if(type==='INTEGER'&&!Number.isSafeInteger(n))throw new Error('Integer outside the exact range ±9,007,199,254,740,991.');return V(type,n);}
+function display(v,quotes=false){if(v==null)return '—';if(v.type==='BOOLEAN')return v.value?'TRUE':'FALSE';if(v.type==='ARRAY'){return '['+v.items.slice(0,16).map(x=>display(x,true)).join(', ')+(v.items.length>16?', …':'')+']';}if(quotes&&['STRING','CHAR'].includes(v.type))return JSON.stringify(v.value);return String(v.value);}
+class PseudoError extends Error{constructor(message,line=1,column=1,kind='Compile'){super(message);this.name='PseudoError';this.line=line;this.column=column;this.kind=kind;}}
+function lex(src){
+ if(src.length>120000)throw new PseudoError('Source limit: 120,000 characters.');
+ const ts=[]; let i=0,line=1,col=1;
+ const add=(kind,v,raw,l=line,c=col)=>ts.push({kind,v,raw,line:l,col:c});
+ while(i<src.length){const c=src[i];
+  if(c==='\r'){i++;continue;}if(c==='\n'){add('nl','\n','\n');i++;line++;col=1;continue;}
+  if(/\s/.test(c)){i++;col++;continue;}
+  if(c==='/'&&src[i+1]==='/'){while(i<src.length&&src[i]!=='\n'){i++;col++;}continue;}
+  if('"\'“‘ꞌ'.includes(c)){const end=({'“':'”','‘':'’','ꞌ':'ꞌ'})[c]||c;let raw=c,value='',l=line,start=col;i++;col++;let closed=false;
+   while(i<src.length&&src[i]!=='\n'){
+    const q=src[i++];col++;raw+=q;if(q===end){closed=true;break;}
+    if(q==='\\'&&i<src.length&&src[i]!=='\n') {const e=src[i]; const escapes={n:'\n',t:'\t',r:'\r','\\':'\\','"':'"',"'":"'"}; if(Object.hasOwn(escapes,e)){value+=escapes[e];raw+=e;i++;col++;}else value+='\\';}
+    else value+=q;
+   }
+   if(!closed)throw new PseudoError('Unclosed quoted text. Add the closing quote.',l,start);
+   const kind="'‘ꞌ".includes(c)?'char':'str';if(kind==='char'&&Array.from(value).length!==1)throw new PseudoError('Single quotes contain exactly one character. Use double quotes for a STRING.',l,start);
+   add(kind,value,raw,l,start);continue;
+  }
+  const rest=src.slice(i);let m;
+  if((m=rest.match(/^(?:\d+(?:\.\d+)?|\.\d+)(?:[eE][+-]?\d+)?/))){add('num',Number(m[0]),m[0]);i+=m[0].length;col+=m[0].length;continue;}
+  if((m=rest.match(/^[A-Za-z][A-Za-z0-9_]*/))){add('id',m[0].toUpperCase(),m[0]);i+=m[0].length;col+=m[0].length;continue;}
+  if((m=rest.match(/^(<--|<-|:=|<=|>=|<>|!=|==|\*\*|[←≤≥≠−–×÷+\-*/^&=<>()[\],:])/))){let s=m[0];s=({'<--':'←','<-':'←',':=':'←','≤':'<=','≥':'>=','≠':'<>','!=':'<>','==':'=','−':'-','–':'-','×':'*','÷':'/','**':'^'})[s]||s;add('sym',s,m[0]);i+=m[0].length;col+=m[0].length;continue;}
+  throw new PseudoError(`Unexpected character “${c}”.`,line,col);
+ }
+ add('nl','\n','\n');add('eof','EOF','');if(ts.length>45000)throw new PseudoError('This program has too many tokens (limit 45,000).');return ts;
+}
+const PRECEDENCE={OR:1,XOR:2,AND:3,'=':4,'<>':4,'<':4,'>':4,'<=':4,'>=':4,'&':5,'+':6,'-':6,'*':7,'/':7,DIV:7,MOD:7,'^':8};
+class Parser{
+ constructor(src){this.src=src;this.tokens=lex(src);this.i=0;this.depth=0;this.exprDepth=0;}
+ p(n=0){return this.tokens[Math.min(this.i+n,this.tokens.length-1)];}
+ at(v){return this.p().v===v;}
+ take(){return this.tokens[this.i++];}
+ match(v){if(this.at(v))return this.take();return null;}
+ err(message,t=this.p()){throw new PseudoError(message,t.line,t.col);}
+ expect(v){if(!this.at(v))this.err(`Expected ${v==='\n'?'the end of the line':v}; found “${this.p().raw||'end of program'}”.`);return this.take();}
+ id(){const t=this.p();if(t.kind!=='id'||KEYWORDS.has(t.v)||Object.hasOwn(ARITIES,t.v))this.err('Expected an identifier (not a keyword or built-in function name).');this.i++;return {name:t.raw,key:t.v,line:t.line};}
+ nl(){if(this.p().kind!=='nl'&&this.p().kind!=='eof')this.err('Unexpected text after this statement. Put each statement on its own line.');while(this.p().kind==='nl')this.i++;}
+ expr(min=0){if(++this.exprDepth>150)this.err('Expression nesting limit exceeded.');try{
+  let t=this.take(),a;
+  if(t.kind==='num'){const type=/[.eE]/.test(t.raw)?'REAL':'INTEGER';if(!Number.isFinite(t.v)||(type==='INTEGER'&&!Number.isSafeInteger(t.v)))this.err('Numeric literal is outside the supported range.',t);a={k:'lit',value:V(type,t.v),line:t.line};}
+  else if(t.kind==='str'||t.kind==='char')a={k:'lit',value:V(t.kind==='str'?'STRING':'CHAR',t.v),line:t.line};
+  else if(t.v==='TRUE'||t.v==='FALSE')a={k:'lit',value:V('BOOLEAN',t.v==='TRUE'),line:t.line};
+  else if(t.v==='('){a=this.expr();this.expect(')');}
+  else if(['+','-','NOT'].includes(t.v))a={k:'un',op:t.v,a:this.expr(t.v==='NOT'?4:8),line:t.line};
+  else if(t.kind==='id'&&(!KEYWORDS.has(t.v)||t.v==='EOF')){
+   a={k:'var',key:t.v,name:t.raw,line:t.line};
+   if(this.match('(')){const args=[];if(!this.at(')')){do{args.push(this.expr());}while(this.match(','));}this.expect(')');a={k:'call',key:t.v,name:t.raw,args,line:t.line};}
+   else if(this.match('[')){const idx=[];do{idx.push(this.expr());}while(this.match(','));this.expect(']');a={...a,k:'index',idx};}
+  }else this.err('Expected a value, variable, or expression.',t);
+  while(Object.hasOwn(PRECEDENCE,this.p().v)&&PRECEDENCE[this.p().v]>=min){const op=this.take().v,prec=PRECEDENCE[op];a={k:'bin',op,a,b:this.expr(prec+(op==='^'?0:1)),line:a.line};}
+  return a;
+ }finally{this.exprDepth--;}}
+ target(){const n=this.id();if(this.match('[')){const idx=[];do{idx.push(this.expr());}while(this.match(','));this.expect(']');return {k:'index',...n,idx};}return {k:'var',...n};}
+ type(){const t=this.take();if(t.v==='ARRAY'){this.expect('[');const bounds=[];do{const lo=this.expr();this.expect(':');const hi=this.expr();bounds.push([lo,hi]);}while(this.match(','));this.expect(']');this.expect('OF');const element=this.type();if(element.kind==='ARRAY')this.err('Use ARRAY[low:high, low:high] OF TYPE for two dimensions.',t);if(bounds.length>2)this.err('This version supports one- and two-dimensional arrays.',t);return {kind:'ARRAY',element:element.kind,bounds};}
+  const kind=t.v==='CHARACTER'?'CHAR':t.v;if(!['INTEGER','REAL','STRING','CHAR','BOOLEAN'].includes(kind))this.err('Supported data types: INTEGER, REAL, STRING, CHAR and BOOLEAN.',t);return {kind};}
+ block(stop,top=false){if(++this.depth>100)this.err('Block nesting limit exceeded.');const b=[];try{while(this.p().kind!=='eof'&&!stop()){if(this.p().kind==='nl'){this.nl();continue;}b.push(this.statement(top));}return b;}finally{this.depth--;}}
+ then(){if(this.match('THEN')){this.nl();return;}if(this.p().kind==='nl'){this.nl();this.expect('THEN');this.nl();return;}this.err('IF needs THEN, followed by a new line.');}
+ isLabel(){const t=this.p();if(t.kind==='id'&&KEYWORDS.has(t.v)&&!['TRUE','FALSE'].includes(t.v))return false;let nesting=0;for(let n=0;n<200;n++){const p=this.p(n);if(p.kind==='nl'||p.kind==='eof')return false;if(p.v==='←')return false;if(['(','['].includes(p.v))nesting++;if([')',']'].includes(p.v))nesting--;if(p.v===':'&&nesting===0)return true;}return false;}
+ statement(top=false){const t=this.p(),line=t.line,k=t.v;this.i++;
+  if(k==='DECLARE'){const names=[this.id()];while(this.match(','))names.push(this.id());this.expect(':');const type=this.type();this.nl();return {k:'declare',names,type,line};}
+  if(k==='CONSTANT'){const name=this.id();this.expect('=');const value=this.expr();if(value.k!=='lit'&&!(value.k==='un'&&['+','-'].includes(value.op)&&value.a.k==='lit'&&['INTEGER','REAL'].includes(value.a.value.type)))this.err('A CONSTANT must be a literal value, such as 10, -2, or "Hello".',t);this.nl();return {k:'constant',...name,value,line};}
+  if(k==='OUTPUT'){const values=[];if(this.p().kind!=='nl'){do{values.push(this.expr());}while(this.match(','));}this.nl();return {k:'output',values,line};}
+  if(k==='INPUT'){const target=this.target();this.nl();return {k:'input',target,line};}
+  if(k==='IF'){const arms=[];let test=this.expr();this.then();arms.push({test,line,body:this.block(()=>['ELSE','ELSEIF','ENDIF'].includes(this.p().v))});
+   while(this.at('ELSEIF')||(this.at('ELSE')&&this.p(1).v==='IF')){const l=this.take().line;if(this.tokens[this.i-1].v==='ELSE')this.expect('IF');test=this.expr();this.then();arms.push({test,line:l,body:this.block(()=>['ELSE','ELSEIF','ENDIF'].includes(this.p().v))});}
+   let otherwise=[];if(this.match('ELSE')){this.nl();otherwise=this.block(()=>this.at('ENDIF'));}const end=this.expect('ENDIF');this.nl();return {k:'if',arms,otherwise,line,end:end.line};}
+  if(k==='FOR'){const variable=this.target();if(variable.k!=='var')this.err('Use a scalar INTEGER as the FOR loop counter.',t);this.expect('←');const start=this.expr();this.expect('TO');const finish=this.expr();const increment=this.match('STEP')?this.expr():{k:'lit',value:V('INTEGER',1),line};this.nl();const body=this.block(()=>['NEXT','ENDFOR'].includes(this.p().v));if(this.p().kind==='eof')this.err('FOR is missing NEXT.',t);const end=this.take();if(this.p().kind==='id'&&!KEYWORDS.has(this.p().v)){const id=this.id();if(id.key!==variable.key)this.err(`NEXT ${id.name} does not match FOR ${variable.name}.`,end);}this.nl();return {k:'for',variable,start,finish,increment,body,line,end:end.line};}
+  if(k==='WHILE'){const test=this.expr();this.match('DO');this.nl();const body=this.block(()=>this.at('ENDWHILE'));const end=this.expect('ENDWHILE');this.nl();return {k:'while',test,body,line,end:end.line};}
+  if(k==='REPEAT'){this.nl();const body=this.block(()=>this.at('UNTIL'));const end=this.expect('UNTIL');const test=this.expr();this.nl();return {k:'repeat',test,body,line,end:end.line};}
+  if(k==='CASE'){this.expect('OF');const value=this.expr();this.nl();const arms=[];let otherwise=null;
+   while(!this.at('ENDCASE')&&this.p().kind!=='eof'){const l=this.p().line;if(this.match('OTHERWISE')){this.match(':');if(this.p().kind==='nl')this.nl();otherwise={line:l,body:this.block(()=>this.at('ENDCASE'))};break;}
+    const labels=[];do{const lo=this.expr();const hi=this.match('TO')?this.expr():null;labels.push({lo,hi});}while(this.match(','));this.expect(':');if(this.p().kind==='nl')this.nl();const body=this.block(()=>this.at('ENDCASE')||this.at('OTHERWISE')||this.isLabel());arms.push({labels,body,line:l});}
+   const end=this.expect('ENDCASE');this.nl();return {k:'case',value,arms,otherwise,line,end:end.line};}
+  if(k==='PROCEDURE'||k==='FUNCTION'){if(!top)this.err('Define procedures and functions at the top level, not inside another block.',t);const name=this.id(),params=[];let mode='BYVAL';
+   if(this.match('(')){if(!this.at(')')){do{if(this.at('BYVAL')||this.at('BYREF'))mode=this.take().v;const names=[this.id()];while(this.match(','))names.push(this.id());this.expect(':');const type=this.type();for(const n of names)params.push({...n,type,mode});}while(this.match(','));}this.expect(')');}
+   let returns=null;if(k==='FUNCTION'){this.expect('RETURNS');returns=this.type();if(returns.kind==='ARRAY')this.err('This version supports scalar function return types only.',t);if(params.some(p=>p.mode==='BYREF'))this.err('Use BYREF in a PROCEDURE, not a FUNCTION.',t);}
+   this.nl();const endWord=k==='FUNCTION'?'ENDFUNCTION':'ENDPROCEDURE';const body=this.block(()=>this.at(endWord));const end=this.expect(endWord);this.nl();return {k:'routine',routineKind:k,...name,params,returns,body,line,end:end.line};}
+  if(k==='CALL'){const name=this.id(),args=[];if(this.match('(')){if(!this.at(')')){do{args.push(this.expr());}while(this.match(','));}this.expect(')');}this.nl();return {k:'callstmt',...name,args,line};}
+  if(k==='RETURN'){const value=this.p().kind==='nl'?null:this.expr();this.nl();return {k:'return',value,line};}
+  if(k==='OPENFILE'){const file=this.expr();this.expect('FOR');const mode=this.take();if(!['READ','WRITE','APPEND'].includes(mode.v))this.err('OPENFILE mode must be READ, WRITE or APPEND.',mode);this.nl();return {k:'openfile',file,mode:mode.v,line};}
+  if(k==='READFILE'){const file=this.expr();this.expect(',');const target=this.target();this.nl();return {k:'readfile',file,target,line};}
+  if(k==='WRITEFILE'){const file=this.expr();this.expect(',');const value=this.expr();this.nl();return {k:'writefile',file,value,line};}
+  if(k==='CLOSEFILE'){const file=this.expr();this.nl();return {k:'closefile',file,line};}
+  if(k==='STOP'){this.nl();return {k:'stop',line};}
+  this.i--;if(t.kind==='id'&&!KEYWORDS.has(k)){const target=this.target();if(this.at('='))this.err('Use ← or <- for assignment. The = symbol is used for comparison.');this.expect('←');const value=this.expr();this.nl();return {k:'assign',target,value,line};}
+  this.err(`Unexpected ${t.raw}. Check that your block endings match, or open the Syntax guide.`,t);
+ }
+ parse(){return this.block(()=>false,true);}
+}
+function walk(nodes,fn){for(const n of nodes){fn(n);if(n.k==='routine')continue;if(n.body)walk(n.body,fn);if(n.arms)for(const a of n.arms)walk(a.body,fn);if(Array.isArray(n.otherwise))walk(n.otherwise,fn);else if(n.otherwise?.body)walk(n.otherwise.body,fn);}}
+class Compiler{
+ constructor(src){this.source=src;this.tree=new Parser(src).parse();this.code=[];this.routines=new Map();this.globals=new Map();this.scope=this.globals;this.routine=null;this.line=1;this.serial=0;}
+ fail(msg,line=this.line){throw new PseudoError(msg,line);}
+ emit(op,args={}){this.code.push({op,...args,line:this.line});return this.code.length-1;}
+ mark(line,phase='statement'){this.line=line;return this.emit('LINE',{phase});}
+ patch(i,target=this.code.length){this.code[i].target=target;}
+ collect(nodes,scope){walk(nodes,n=>{if(n.k==='declare')for(const x of n.names)this.addSymbol(scope,x,{...x,type:n.type,line:n.line,constant:false});if(n.k==='constant')this.addSymbol(scope,n,{...n,type:{kind:'CONSTANT'},constant:true});});}
+ addSymbol(scope,n,spec){if(scope.has(n.key))this.fail(`“${n.name}” is already declared in this scope.`,n.line);if(this.routines.has(n.key))this.fail(`“${n.name}” is already a subprogram name.`,n.line);scope.set(n.key,spec);if(scope.size>500)this.fail('Limit: 500 named variables per scope.',n.line);}
+ symbol(node){const spec=this.scope.get(node.key)||this.globals.get(node.key);if(!spec)this.fail(`“${node.name}” has not been declared. Add DECLARE ${node.name} : TYPE.`,node.line);return spec;}
+ ref(n){if(!['var','index'].includes(n.k))this.fail('BYREF and assignment targets must be variables or array elements.',n.line);const spec=this.symbol(n);if(spec.constant)this.fail(`“${n.name}” is a constant and cannot be changed.`,n.line);if(n.k==='index')for(const e of n.idx)this.expr(e);this.emit('REF',{key:n.key,count:n.idx?.length||0});}
+ expr(n){switch(n.k){
+  case 'lit':this.emit('PUSH',{value:n.value});break;
+  case 'var':this.symbol(n);this.emit('LOAD',{key:n.key,count:0});break;
+  case 'index':this.symbol(n);for(const x of n.idx)this.expr(x);this.emit('LOAD',{key:n.key,count:n.idx.length});break;
+  case 'un':this.expr(n.a);this.emit('UNARY',{operator:n.op});break;
+  case 'bin':this.expr(n.a);if(n.op==='AND'||n.op==='OR'){const j=this.emit('SHORT',{when:n.op==='OR'});this.expr(n.b);this.emit('BOOL');this.patch(j);}else{this.expr(n.b);this.emit('BINARY',{operator:n.op});}break;
+  case 'call':this.call(n,false);break;
+  default:this.fail('Unknown expression.',n.line);
+ }}
+ call(n,statement){if(Object.hasOwn(ARITIES,n.key)){if(statement)this.fail('Built-in functions are used inside expressions, not with CALL.',n.line);if(!ARITIES[n.key].includes(n.args.length))this.fail(`${n.name} expects ${ARITIES[n.key].join(' or ')} argument(s).`,n.line);for(const x of n.args)this.expr(x);this.emit('BUILTIN',{key:n.key,count:n.args.length});return;}
+  const r=this.routines.get(n.key);if(!r)this.fail(`Unknown ${statement?'procedure':'function'} “${n.name}”.`,n.line);if(statement!==(r.routineKind==='PROCEDURE'))this.fail(r.routineKind==='FUNCTION'?`Use ${n.name}(...) inside an expression, without CALL.`:`Use CALL ${n.name}(...) for a procedure.`,n.line);
+  if(n.args.length!==r.params.length)this.fail(`${n.name} expects ${r.params.length} argument(s), not ${n.args.length}.`,n.line);
+  n.args.forEach((a,i)=>r.params[i].mode==='BYREF'?this.ref(a):this.expr(a));this.emit('CALL',{key:n.key,count:n.args.length});if(!statement)this.mark(n.line,'resume');
+ }
+ block(nodes){for(const n of nodes){if(n.k==='routine')continue;this.mark(n.line);switch(n.k){
+  case 'declare':for(const x of n.names){if(n.type.kind==='ARRAY'){for(const [lo,hi] of n.type.bounds){this.expr(lo);this.expr(hi);}this.emit('DECLARE_ARRAY',{key:x.key,name:x.name,element:n.type.element,count:n.type.bounds.length});}else this.emit('DECLARE',{key:x.key,name:x.name,type:n.type.kind});}break;
+  case 'constant':this.expr(n.value);this.emit('CONSTANT',{key:n.key,name:n.name});break;
+  case 'assign':this.ref(n.target);this.expr(n.value);this.emit('STORE');break;
+  case 'input':this.ref(n.target);this.emit('INPUT');break;
+  case 'output':for(const x of n.values)this.expr(x);this.emit('OUTPUT',{count:n.values.length});break;
+  case 'if':{const exits=[];for(let i=0;i<n.arms.length;i++){const a=n.arms[i];if(i)this.mark(a.line);this.expr(a.test);const no=this.emit('BR_FALSE',{describe:true});this.block(a.body);exits.push(this.emit('JUMP'));this.patch(no);}this.block(n.otherwise);exits.forEach(j=>this.patch(j));break;}
+  case 'while':{const top=this.code.length-1;this.expr(n.test);const no=this.emit('BR_FALSE',{describe:true});this.block(n.body);this.mark(n.end);this.emit('JUMP',{target:top,explain:'Return to the WHILE condition.'});this.patch(no);break;}
+  case 'repeat':{const top=this.code.length-1;this.emit('NOTE',{text:'Enter the REPEAT loop.'});this.block(n.body);this.mark(n.end);this.expr(n.test);this.emit('BR_FALSE',{target:top,describe:true,until:true});break;}
+  case 'for':{this.ref(n.variable);this.expr(n.start);this.expr(n.finish);this.expr(n.increment);const id=++this.serial,init=this.emit('FOR_INIT',{id});const top=this.code.length;this.block(n.body);this.mark(n.end);this.emit('FOR_NEXT',{id,target:top});this.patch(init);break;}
+  case 'case':{const id=++this.serial;this.expr(n.value);this.emit('TEMP_SET',{id});const exits=[];for(const a of n.arms){this.mark(a.line);const yes=[];for(const label of a.labels){this.emit('TEMP_GET',{id});this.expr(label.lo);if(label.hi){this.emit('BINARY',{operator:'>='});this.emit('TEMP_GET',{id});this.expr(label.hi);this.emit('BINARY',{operator:'<='});this.emit('BINARY',{operator:'AND'});}else this.emit('BINARY',{operator:'='});yes.push(this.emit('BR_TRUE'));}const no=this.emit('JUMP');yes.forEach(j=>this.patch(j));this.block(a.body);exits.push(this.emit('JUMP'));this.patch(no);}if(n.otherwise)this.block(n.otherwise.body);exits.forEach(j=>this.patch(j));break;}
+  case 'callstmt':this.call(n,true);break;
+  case 'return':if(!this.routine)this.fail('RETURN is only valid inside a procedure or function.',n.line);if(this.routine.returns&&!n.value)this.fail('A function must RETURN a value.',n.line);if(!this.routine.returns&&n.value)this.fail('A procedure does not return a value. Use a FUNCTION.',n.line);if(n.value)this.expr(n.value);this.emit('RETURN',{hasValue:!!n.value});break;
+  case 'openfile':this.expr(n.file);this.emit('OPEN_FILE',{mode:n.mode});break;
+  case 'readfile':this.expr(n.file);this.ref(n.target);this.emit('READ_FILE');break;
+  case 'writefile':this.expr(n.file);this.expr(n.value);this.emit('WRITE_FILE');break;
+  case 'closefile':this.expr(n.file);this.emit('CLOSE_FILE');break;
+  case 'stop':this.emit('HALT');break;
+  default:this.fail('Unrecognised statement.',n.line);
+ }}}
+ compile(){for(const n of this.tree)if(n.k==='routine'){if(this.routines.has(n.key))this.fail(`Duplicate subprogram “${n.name}”.`,n.line);this.routines.set(n.key,n);}
+  this.collect(this.tree,this.globals);for(const r of this.routines.values()){r.symbols=new Map();for(const p of r.params)this.addSymbol(r.symbols,p,{...p,constant:false});this.collect(r.body,r.symbols);}
+  this.block(this.tree);this.emit('HALT');for(const r of this.routines.values()){this.scope=r.symbols;this.routine=r;r.entry=this.code.length;this.mark(r.line,'entry');this.emit('NOTE',{text:`Enter ${r.name}. Parameters are in the local scope.`});this.block(r.body);this.mark(r.end);this.emit(r.returns?'MISSING_RETURN':'RETURN',{hasValue:false});}
+  return {code:this.code,routines:this.routines,globals:this.globals,source:this.source,lines:this.source.split('\n'),executable:new Set(this.code.filter(x=>x.op==='LINE').map(x=>x.line))};
+ }
+}
+function unary(op,a){if(op==='NOT')return V('BOOLEAN',!bool(a));const n=numeric(a);return number(a.type,op==='-'?-n:n);}
+function binary(op,a,b){
+ if(['AND','OR','XOR'].includes(op)){const x=bool(a),y=bool(b);return V('BOOLEAN',op==='AND'?x&&y:op==='OR'?x||y:x!==y);}
+ if(['=','<>','<','>','<=','>='].includes(op)){let x,y;if(['INTEGER','REAL'].includes(a?.type)&&['INTEGER','REAL'].includes(b?.type)){x=a.value;y=b.value;}else if(['STRING','CHAR'].includes(a?.type)&&['STRING','CHAR'].includes(b?.type)){x=a.value;y=b.value;}else if(a?.type==='BOOLEAN'&&b?.type==='BOOLEAN'&&['=','<>'].includes(op)){x=a.value;y=b.value;}else throw new Error('Cannot compare these data types. Check both sides of the comparison.');return V('BOOLEAN',({'=':()=>x===y,'<>':()=>x!==y,'<':()=>x<y,'>':()=>x>y,'<=':()=>x<=y,'>=':()=>x>=y})[op]());}
+ if(op==='&'){const s=text(a)+text(b);if(s.length>100000)throw new Error('String limit: 100,000 characters.');return V('STRING',s);}
+ const x=numeric(a),y=numeric(b);if(['/','DIV','MOD'].includes(op)&&y===0)throw new Error('Division by zero. Check the divisor before dividing.');
+ if(op==='DIV'||op==='MOD'){integer(a);integer(b);return number('INTEGER',op==='DIV'?Math.trunc(x/y):x-Math.trunc(x/y)*y);}
+ const n=({'+':()=>x+y,'-':()=>x-y,'*':()=>x*y,'/':()=>x/y,'^':()=>x**y})[op]();return number(op==='/'||a.type==='REAL'||b.type==='REAL'||(op==='^'&&y<0)?'REAL':'INTEGER',n);
+}
+function coerce(v,type){if(v==null)throw new Error('This value has not been initialised.');if(type==='REAL'&&v.type==='INTEGER')return V('REAL',v.value);if(type==='STRING'&&v.type==='CHAR')return V('STRING',v.value);if(type!==v.type)throw new Error(`Expected ${type}, received ${v.type}.`);if(type==='INTEGER')integer(v);if(type==='REAL')numeric(v);return v;}
+class VM{
+ constructor(program,files={}){this.program=program;this.history=[];this.historyBytes=0;this.trace=[];this.state={pc:0,stack:[],frames:[{id:0,name:'Main',key:null,vars:new Map(),loops:new Map(),temps:new Map(),returnPC:null,stackBase:0,callLine:null}],nextCell:1,nextFrame:1,files:new Map(Object.entries(files)),handles:new Map(),output:[],outputDropped:0,steps:0,ops:0,lastLine:null,notes:[],changes:[],pending:null,done:false,error:null,seed:0x1a2b3c4d};this.normalise();}
+ get s(){return this.state;}
+ get frame(){return this.s.frames[this.s.frames.length-1];}
+ next(){if(this.s.pending)return {line:this.s.pending.line,phase:'input',pc:this.s.pc};if(this.s.done||this.s.error)return null;return this.program.code[this.s.pc]?.op==='LINE'?{...this.program.code[this.s.pc],pc:this.s.pc}:null;}
+ normalise(){while(!this.s.done&&!this.s.pending&&!this.s.error&&this.program.code[this.s.pc]?.op!=='LINE'){const ins=this.program.code[this.s.pc++];if(!ins){this.s.done=true;break;}this.execute(ins);}}
+ save(){const snap=structuredClone(this.s);let bytes=1000+snap.stack.length*100+snap.output.reduce((n,x)=>n+x.text.length*2+100,0);for(const f of snap.frames)for(const r of f.vars.values()){const v=r.cell.value;bytes+=200+(v?.type==='ARRAY'?v.items.length*80:typeof v?.value==='string'?v.value.length*2:40);}for(const content of snap.files.values())bytes+=content.length*2;this.history.push({snap,bytes});this.historyBytes+=bytes;while(this.history.length>80||this.historyBytes>12000000){const removed=this.history.shift();this.historyBytes-=removed.bytes;}}
+ undo(){const item=this.history.pop();if(!item)return false;this.historyBytes-=item.bytes;this.state=item.snap;this.trace=this.trace.filter(t=>t.step<=this.s.steps);return true;}
+ pop(){if(!this.s.stack.length)throw new Error('Internal stack error. Reset and compile again.');return this.s.stack.pop();}
+ popMany(n){return n?this.s.stack.splice(this.s.stack.length-n,n):[];}
+ resolve(key){return this.frame.vars.get(key)||this.s.frames[0].vars.get(key)||null;}
+ resolveRequired(key){const r=this.resolve(key);if(!r)throw new Error(`“${key}” has not been declared on this execution path yet.`);return r;}
+ refName(r){if(r.offset==null)return r.label||r.cell.name;return `${r.label||r.cell.name}[${this.coords(r.cell.value,r.offset).join(',')}]`;}
+ coords(v,offset){const out=[];for(let i=v.bounds.length-1;i>=0;i--){const [lo,hi]=v.bounds[i],n=hi-lo+1;out.unshift(lo+offset%n);offset=Math.floor(offset/n);}return out;}
+ reference(key,indices=[]){const r=this.resolveRequired(key);if(!indices.length)return r;if(r.offset!=null)throw new Error('This parameter is an array element, not an array.');const a=r.cell.value;if(a?.type!=='ARRAY')throw new Error(`“${r.label||r.cell.name}” is not an array.`);if(indices.length!==a.bounds.length)throw new Error(`This array needs ${a.bounds.length} index value(s).`);let offset=0;indices.forEach((v,i)=>{const ix=integer(v),[lo,hi]=a.bounds[i];if(ix<lo||ix>hi)throw new Error(`Array index ${ix} is outside ${lo}..${hi} in dimension ${i+1}.`);offset=offset*(hi-lo+1)+(ix-lo);});return {cell:r.cell,offset,label:r.label};}
+ read(r){const value=r.offset==null?r.cell.value:r.cell.value.items[r.offset];if(value==null)throw new Error(`“${this.refName(r)}” has not been initialised. Assign a value before using it.`);return value;}
+ refType(r){return r.offset==null?r.cell.type:r.cell.value.element;}
+ write(r,value){if(r.cell.constant)throw new Error(`“${r.cell.name}” is a constant and cannot be changed.`);const type=this.refType(r);let next;if(type==='ARRAY'){const old=r.cell.value;if(value.type!=='ARRAY'||old.element!==value.element||JSON.stringify(old.bounds)!==JSON.stringify(value.bounds))throw new Error('Array assignment requires matching element types and bounds.');next=structuredClone(value);}else next=coerce(value,type);
+  const before=r.offset==null?r.cell.value:r.cell.value.items[r.offset];if(r.offset==null)r.cell.value=next;else r.cell.value.items[r.offset]=next;
+  this.s.changes.push({id:r.cell.id,offset:r.offset??null,name:this.refName(r),before:display(before,true),after:display(next,true)});
+ }
+ newCell(key,name,type,value=null,constant=false){const cell={id:this.s.nextCell++,name,type,value,constant};this.frame.vars.set(key,{cell,offset:null,label:name});return cell;}
+ memoryUse(){const seen=new Set();let n=0;for(const frame of this.s.frames)for(const ref of frame.vars.values()){if(!seen.has(ref.cell.id)){seen.add(ref.cell.id);n+=ref.cell.value?.type==='ARRAY'?ref.cell.value.items.length:1;}}return n;}
+ makeArray(element,values){const bounds=[];let size=1;for(let i=0;i<values.length;i+=2){const lo=integer(values[i]),hi=integer(values[i+1]);if(hi<lo)throw new Error('An array upper bound cannot be less than its lower bound.');size*=hi-lo+1;bounds.push([lo,hi]);}if(size>10000||size+this.memoryUse()>20000)throw new Error('Array safety limit: 10,000 cells per array; 20,000 live cells in total.');return {type:'ARRAY',element,bounds,items:Array(size).fill(null)};}
+ note(msg){this.s.notes.push(msg);}
+ append(text,kind='output'){if(text.length>100000)throw new Error('Output line exceeds 100,000 characters.');this.s.output.push({text,kind,line:this.s.lastLine});let total=this.s.output.reduce((n,x)=>n+x.text.length,0);while(this.s.output.length>1000||total>250000){total-=this.s.output.shift().text.length;this.s.outputDropped++;}}
+ rng(){this.s.seed=(Math.imul(1664525,this.s.seed)+1013904223)>>>0;return this.s.seed/4294967296;}
+ builtin(key,args,pure=false){const a=args[0],b=args[1],c=args[2];if(!ARITIES[key]?.includes(args.length))throw new Error(`${key} has the wrong number of arguments.`);
+  if(pure&&['RAND','RANDOM','RND','RANDOM_INT'].includes(key))throw new Error('Random functions are disabled in watches (watches must not change execution).');
+  if(key==='LENGTH')return V('INTEGER',Array.from(text(a)).length);
+  if(['LEFT','RIGHT','MID','SUBSTRING'].includes(key)){const s=Array.from(text(a));let start=0,len=integer(b);if(key==='MID'||key==='SUBSTRING'){start=len-1;len=integer(c);}else if(key==='RIGHT')start=s.length-len;if(start<0||len<0||start+len>s.length)throw new Error('String position/length is out of range. Positions start at 1.');return V('STRING',s.slice(start,start+len).join(''));}
+  if(['UCASE','LCASE','TO_UPPER','TO_LOWER'].includes(key)){const s=text(a),result=['UCASE','TO_UPPER'].includes(key)?s.toUpperCase():s.toLowerCase();if(a.type==='CHAR'&&Array.from(result).length!==1)throw new Error('This case conversion produces more than one character.');return V(a.type,result);}
+  if(key==='INT')return number('INTEGER',Math.trunc(numeric(a)));
+  if(key==='ROUND'){const n=numeric(a),places=b?integer(b):0;if(places<0||places>12)throw new Error('ROUND decimal places must be from 0 to 12.');const factor=10**places;return number('REAL',Math.sign(n)*Math.round((Math.abs(n)+Number.EPSILON)*factor)/factor);}
+  if(key==='ABS')return number(a.type,Math.abs(numeric(a)));
+  if(key==='SQRT'){const n=numeric(a);if(n<0)throw new Error('SQRT requires a non-negative number.');return number('REAL',Math.sqrt(n));}
+  if(key==='RAND'){const max=integer(a);if(max<=0)throw new Error('RAND requires a positive INTEGER upper bound.');return V('REAL',this.rng()*max);}
+  if(key==='RANDOM'||key==='RND')return V('REAL',this.rng());
+  if(key==='RANDOM_INT'){const lo=integer(a),hi=integer(b);if(hi<lo||!Number.isSafeInteger(hi-lo+1))throw new Error('Invalid RANDOM_INT bounds.');return number('INTEGER',lo+Math.floor(this.rng()*(hi-lo+1)));}
+  if(key==='ASC'){const s=Array.from(text(a));if(s.length!==1||s[0].codePointAt(0)>127)throw new Error('ASC requires one ASCII character (0–127).');return V('INTEGER',s[0].codePointAt(0));}
+  if(key==='CHR'){const n=integer(a);if(n<0||n>127)throw new Error('CHR requires an ASCII code from 0 to 127.');return V('CHAR',String.fromCodePoint(n));}
+  if(key==='NUM_TO_STR'){numeric(a);return V('STRING',String(a.value));}
+  if(key==='STR_TO_NUM'||key==='IS_NUM'){const s=text(a).trim(),ok=/^[+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:[eE][+-]?\d+)?$/.test(s)&&Number.isFinite(Number(s));if(key==='IS_NUM')return V('BOOLEAN',ok);if(!ok)throw new Error('STR_TO_NUM received text that is not a number.');return number('REAL',Number(s));}
+  if(key==='EOF'){const filename=text(a),handle=this.s.handles.get(filename);if(!handle||handle.mode!=='READ')throw new Error(`Open “${filename}” FOR READ before using EOF.`);return V('BOOLEAN',handle.index>=handle.lines.length);}
+  throw new Error(`Unsupported built-in ${key}.`);
+ }
+ pureExpr(n){switch(n.k){case 'lit':return n.value;case 'var':return this.read(this.reference(n.key));case 'index':return this.read(this.reference(n.key,n.idx.map(x=>this.pureExpr(x))));case 'un':return unary(n.op,this.pureExpr(n.a));case 'bin':{const a=this.pureExpr(n.a);if(n.op==='AND'&&!bool(a))return V('BOOLEAN',false);if(n.op==='OR'&&bool(a))return V('BOOLEAN',true);return binary(n.op,a,this.pureExpr(n.b));}case 'call':if(!Object.hasOwn(ARITIES,n.key))throw new Error('Watches cannot call user-defined functions.');return this.builtin(n.key,n.args.map(x=>this.pureExpr(x)),true);default:throw new Error('Unsupported watch expression.');}}
+ watch(source){const p=new Parser(source),ast=p.expr();p.nl();if(p.p().kind!=='eof')throw new Error('Enter one expression, not a statement.');return this.pureExpr(ast);}
+ call(ins){const r=this.program.routines.get(ins.key),args=this.popMany(ins.count);if(this.s.frames.length>=100)throw new Error('Call depth limit (100). Check the base case of recursive functions.');const frame={id:this.s.nextFrame++,name:r.name,key:r.key,vars:new Map(),loops:new Map(),temps:new Map(),returnPC:this.s.pc,stackBase:this.s.stack.length,callLine:ins.line};this.s.frames.push(frame);
+  // Scalar parameters are installed first, so array bounds may use earlier scalar parameters.
+  for(let i=0;i<r.params.length;i++){const p=r.params[i],a=args[i];if(p.type.kind==='ARRAY')continue;if(p.mode==='BYREF'){if(!a?.cell||a.cell.constant||this.refType(a)!==p.type.kind)throw new Error(`BYREF ${p.name} requires a writable ${p.type.kind} variable.`);frame.vars.set(p.key,{...a,label:p.name});}else this.newCell(p.key,p.name,p.type.kind,structuredClone(coerce(a,p.type.kind)));}
+  for(let i=0;i<r.params.length;i++){const p=r.params[i];if(p.type.kind!=='ARRAY')continue;const a=args[i],v=p.mode==='BYREF'?this.read(a):a,bounds=p.type.bounds.map(pair=>pair.map(e=>integer(this.pureExpr(e))));if(v?.type!=='ARRAY'||v.element!==p.type.element||JSON.stringify(v.bounds)!==JSON.stringify(bounds))throw new Error(`Array parameter ${p.name} needs matching element types and bounds.`);if(p.mode==='BYREF'){if(!a?.cell||a.cell.constant||a.offset!=null)throw new Error('BYREF array needs a writable whole array.');frame.vars.set(p.key,{...a,label:p.name});}else{if(this.memoryUse()+v.items.length>20000)throw new Error('Live array memory limit exceeded.');this.newCell(p.key,p.name,'ARRAY',structuredClone(v));}}
+  this.s.pc=r.entry;this.note(`Call ${r.name}.`);
+ }
+ execute(x){const s=this.s,st=s.stack;switch(x.op){
+  case 'PUSH':st.push(x.value);break;
+  case 'LOAD':{const r=this.reference(x.key,this.popMany(x.count));st.push(this.read(r));break;}
+  case 'REF':st.push(this.reference(x.key,this.popMany(x.count)));break;
+  case 'STORE':{const v=this.pop(),r=this.pop();this.write(r,v);break;}
+  case 'DECLARE':this.newCell(x.key,x.name,x.type);this.note(`Declare ${x.name} as ${x.type}; not initialised yet.`);break;
+  case 'DECLARE_ARRAY':{const a=this.makeArray(x.element,this.popMany(x.count*2));this.newCell(x.key,x.name,'ARRAY',a);this.note(`Declare ${x.name}: ${a.items.length} ${x.element} cells.`);break;}
+  case 'CONSTANT':{const v=this.pop();this.newCell(x.key,x.name,v.type,v,true);this.note(`${x.name} is the constant ${display(v,true)}.`);break;}
+  case 'UNARY':st.push(unary(x.operator,this.pop()));break;
+  case 'BINARY':{const b=this.pop(),a=this.pop();st.push(binary(x.operator,a,b));break;}
+  case 'BOOL':bool(st[st.length-1]);break;
+  case 'SHORT':if(bool(st[st.length-1])===x.when)s.pc=x.target;else st.pop();break;
+  case 'BUILTIN':st.push(this.builtin(x.key,this.popMany(x.count)));break;
+  case 'OUTPUT':{const values=this.popMany(x.count);if(values.some(v=>v?.type==='ARRAY'))throw new Error('Output individual array elements inside a loop, not a whole array.');const out=values.map(v=>display(v)).join('');this.append(out);this.note(`Output: ${out}`);break;}
+  case 'INPUT':{const r=this.pop();if(this.refType(r)==='ARRAY')throw new Error('INPUT needs one scalar variable or array element.');if(r.cell.constant)throw new Error('Cannot INPUT into a constant.');s.pending={ref:r,line:x.line,name:this.refName(r),type:this.refType(r)};this.note(`Waiting for INPUT ${this.refName(r)}.`);break;}
+  case 'JUMP':s.pc=x.target;if(x.explain)this.note(x.explain);break;
+  case 'BR_FALSE':{const v=bool(this.pop());if(!v)s.pc=x.target;if(x.describe)this.note(x.until?`UNTIL is ${v?'TRUE — exit':'FALSE — repeat'}.`:`Condition is ${v?'TRUE — enter this branch':'FALSE — skip this branch'}.`);break;}
+  case 'BR_TRUE':{const v=bool(this.pop());if(v)s.pc=x.target;this.note(`CASE match: ${v?'TRUE':'FALSE'}.`);break;}
+  case 'FOR_INIT':{const delta=integer(this.pop()),end=integer(this.pop()),start=integer(this.pop()),ref=this.pop();if(this.refType(ref)!=='INTEGER')throw new Error('A FOR loop counter must be declared as INTEGER.');if(delta===0)throw new Error('STEP cannot be zero: the loop would never progress.');this.write(ref,V('INTEGER',start));this.frame.loops.set(x.id,{ref,end,delta});const run=delta>0?start<=end:start>=end;if(!run){s.pc=x.target;this.frame.loops.delete(x.id);}this.note(`FOR: ${start} to ${end}, step ${delta}${run?'':' — no iterations'}.`);break;}
+  case 'FOR_NEXT':{const loop=this.frame.loops.get(x.id);if(!loop)throw new Error('FOR loop state is missing.');const next=integer(this.read(loop.ref))+loop.delta;this.write(loop.ref,number('INTEGER',next));if(loop.delta>0?next<=loop.end:next>=loop.end){s.pc=x.target;this.note('NEXT: continue the loop.');}else{this.frame.loops.delete(x.id);this.note('NEXT: limit passed; exit the loop.');}break;}
+  case 'TEMP_SET':this.frame.temps.set(x.id,this.pop());break;
+  case 'TEMP_GET':st.push(this.frame.temps.get(x.id));break;
+  case 'CALL':this.call(x);break;
+  case 'RETURN':{const f=this.frame,r=this.program.routines.get(f.key),v=x.hasValue?this.pop():null;if(r?.returns&&!x.hasValue)throw new Error('A function ended without returning a value.');const result=r?.returns?structuredClone(coerce(v,r.returns.kind)):null;st.length=f.stackBase;this.s.frames.pop();s.pc=f.returnPC;if(r?.returns)st.push(result);this.note(`Return from ${f.name}${result?' with '+display(result,true):''}.`);break;}
+  case 'MISSING_RETURN':throw new Error(`Function ${this.frame.name} reached ENDFUNCTION without RETURN.`);
+  case 'NOTE':this.note(x.text);break;
+  case 'OPEN_FILE':{const filename=text(this.pop());if(!filename||filename.length>160)throw new Error('Use a file name of 1–160 characters.');if(s.handles.has(filename))throw new Error(`“${filename}” is already open.`);if(x.mode==='READ'&&!s.files.has(filename))throw new Error(`Virtual file “${filename}” not found. Add it in the Files tab.`);if(x.mode==='WRITE'||!s.files.has(filename))s.files.set(filename,'');if(s.files.size>30)throw new Error('Virtual file limit: 30 files.');let content=s.files.get(filename).replace(/\r\n?/g,'\n'),lines=content?content.split('\n'):[];if(content.endsWith('\n'))lines.pop();s.handles.set(filename,{mode:x.mode,index:0,lines});this.note(`Open ${filename} FOR ${x.mode}.`);break;}
+  case 'READ_FILE':{const ref=this.pop(),filename=text(this.pop()),h=s.handles.get(filename);if(!h||h.mode!=='READ')throw new Error(`Open “${filename}” FOR READ first.`);if(h.index>=h.lines.length)throw new Error('End of file reached. Check NOT EOF(filename) before READFILE.');if(this.refType(ref)!=='STRING')throw new Error('READFILE reads a line of text into a STRING. Use STR_TO_NUM for conversion.');this.write(ref,V('STRING',h.lines[h.index++]));this.note(`Read line ${h.index} from ${filename}.`);break;}
+  case 'WRITE_FILE':{const value=text(this.pop()),filename=text(this.pop()),h=s.handles.get(filename);if(!h||!['WRITE','APPEND'].includes(h.mode))throw new Error(`Open “${filename}” FOR WRITE or APPEND first.`);const old=s.files.get(filename);const out=old+(old&&!old.endsWith('\n')?'\n':'')+value+'\n';if(out.length>200000)throw new Error('Virtual file size limit: 200,000 characters.');s.files.set(filename,out);this.note(`Write one line to ${filename}.`);break;}
+  case 'CLOSE_FILE':{const filename=text(this.pop());if(!s.handles.has(filename))throw new Error(`“${filename}” is not open.`);s.handles.delete(filename);this.note(`Close ${filename}.`);break;}
+  case 'HALT':s.done=true;s.handles.clear();this.note('Program finished.');break;
+  default:throw new Error(`Internal instruction ${x.op} is not supported.`);
+ }}
+ flat(){const vars={};for(let i=0;i<this.s.frames.length;i++){const f=this.s.frames[i];for(const [key,r] of f.vars){const name=(i===0?'':f.name+'#'+f.id+'.')+(r.label||key),value=r.offset==null?r.cell.value:r.cell.value.items[r.offset];vars[name]=display(value,true);if(Object.keys(vars).length>=60)return vars;}}return vars;}
+ record(replace=false){const s=this.s,entry={step:s.steps,line:s.lastLine,scope:this.frame?.name||'Main',changes:s.changes.map(c=>`${c.name}: ${c.before} → ${c.after}`).join('; '),action:s.error?'ERROR: '+s.error.message:s.notes.join(' '),vars:this.flat()};if(replace&&this.trace.length&&this.trace[this.trace.length-1].step===entry.step)this.trace[this.trace.length-1]=entry;else this.trace.push(entry);if(this.trace.length>2000)this.trace.shift();}
+ step(){const s=this.s;if(s.done||s.error||s.pending)return false;this.save();s.changes=[];s.notes=[];try{const mark=this.program.code[s.pc];if(mark?.op!=='LINE')throw new Error('Debugger is not positioned at a source line.');s.lastLine=mark.line;s.pc++;s.steps++;let budget=0;while(!s.done&&!s.pending&&this.program.code[s.pc]?.op!=='LINE'){if(++budget>40000||++s.ops>1000000||s.steps>100000)throw new Error('Execution safety limit reached. Check for an infinite loop or reset the debugger.');const ins=this.program.code[s.pc++];if(!ins){s.done=true;break;}this.execute(ins);}}
+ catch(e){s.error={line:s.lastLine||1,message:e.message};}this.record();return true;}
+ provideInput(raw){const s=this.s,p=s.pending;if(!p)throw new Error('The program is not waiting for input.');if(raw.length>100000)throw new Error('Input is too long.');let v;const trimmed=raw.trim();if(p.type==='INTEGER'){if(!/^[+-]?\d+$/.test(trimmed))throw new Error('Enter a whole number, such as 12 or -3.');v=number('INTEGER',Number(trimmed));}else if(p.type==='REAL'){if(!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$/.test(trimmed))throw new Error('Enter a real number, such as 12.5.');v=number('REAL',Number(trimmed));}else if(p.type==='BOOLEAN'){if(!/^(TRUE|FALSE)$/i.test(trimmed))throw new Error('Enter TRUE or FALSE.');v=V('BOOLEAN',trimmed.toUpperCase()==='TRUE');}else if(p.type==='CHAR'){if(Array.from(raw).length!==1)throw new Error('Enter exactly one character, without quotes.');v=V('CHAR',raw);}else v=V('STRING',raw);
+  this.write(p.ref,v);this.append(raw,'input');s.pending=null;s.notes=[`INPUT ${p.name} = ${display(v,true)}.`];try{this.normalise();}catch(e){s.error={line:p.line,message:e.message};}this.record(true);return true;
+ }
+}
+function compile(src){return new Compiler(src).compile();}
+return {compile,VM,Parser,lex,display,V,KEYWORDS,ARITIES,PseudoError};
+})();
+if(typeof module!=='undefined'&&module.exports)module.exports=Pseudo;
+
+</script>
+<script>
+const EXAMPLES = [
+{id:'total',title:'Running total',level:'Start here',detail:'Step through a loop. Watch the counter and accumulator change.',expected:'Final total: 15',source:`// Add the first five whole numbers.
+// Press Step and watch Number and Total.
+DECLARE Number : INTEGER
+DECLARE Total : INTEGER
+
+Total ← 0
+FOR Number ← 1 TO 5
+    Total ← Total + Number
+    OUTPUT "After ", Number, ": total = ", Total
+NEXT Number
+
+OUTPUT "Final total: ", Total`},
+{id:'input',title:'Cinema tickets',level:'Beginner',detail:'Enter an age and follow an IF / ELSE decision.',expected:'Try ages 8, 16 and 30.',source:`// Which branch will your age follow?
+DECLARE Age : INTEGER
+DECLARE Price : REAL
+
+OUTPUT "How old are you?"
+INPUT Age
+
+IF Age < 12 THEN
+    Price ← 5.50
+ELSE
+    IF Age < 18 THEN
+        Price ← 7.00
+    ELSE
+        Price ← 9.50
+    ENDIF
+ENDIF
+
+OUTPUT "Your ticket costs £", Price`},
+{id:'repeat',title:'Input validation',level:'Beginner',detail:'Use REPEAT / UNTIL to accept only a mark from 0 to 100.',expected:'Try -3, 120, then 85.',source:`DECLARE Mark : INTEGER
+REPEAT
+    OUTPUT "Enter a mark from 0 to 100:"
+    INPUT Mark
+    IF Mark < 0 OR Mark > 100 THEN
+        OUTPUT "That mark is out of range. Try again."
+    ENDIF
+UNTIL Mark >= 0 AND Mark <= 100
+OUTPUT "Accepted: ", Mark`},
+{id:'while',title:'Countdown',level:'Beginner',detail:'A pre-condition loop. Change the starting value to zero.',expected:'5, 4, 3, 2, 1, Launch!',source:`DECLARE Countdown : INTEGER
+Countdown ← 5
+
+WHILE Countdown > 0
+    OUTPUT Countdown
+    Countdown ← Countdown - 1
+ENDWHILE
+
+OUTPUT "Launch!"`},
+{id:'case',title:'Grade boundaries',level:'Intermediate',detail:'Explore CASE ranges and the OTHERWISE branch.',expected:'Try 85, 65 and 120.',source:`DECLARE Mark : INTEGER
+OUTPUT "Enter a mark:"
+INPUT Mark
+
+CASE OF Mark
+    80 TO 100 : OUTPUT "Distinction"
+    60 TO 79 : OUTPUT "Merit"
+    40 TO 59 : OUTPUT "Pass"
+    0 TO 39 : OUTPUT "Keep practising"
+    OTHERWISE : OUTPUT "Invalid mark"
+ENDCASE`},
+{id:'bubble',title:'Bubble sort',level:'Intermediate',detail:'See neighbouring array elements swap into order.',expected:'3, 9, 17, 25, 42',source:`// Open the array in Variables to watch each swap.
+DECLARE Values : ARRAY[1:5] OF INTEGER
+DECLARE Pass, Index, Temp : INTEGER
+
+Values[1] ← 25
+Values[2] ← 9
+Values[3] ← 42
+Values[4] ← 3
+Values[5] ← 17
+
+FOR Pass ← 1 TO 4
+    FOR Index ← 1 TO 5 - Pass
+        IF Values[Index] > Values[Index + 1] THEN
+            Temp ← Values[Index]
+            Values[Index] ← Values[Index + 1]
+            Values[Index + 1] ← Temp
+        ENDIF
+    NEXT Index
+NEXT Pass
+
+OUTPUT "Sorted values:"
+FOR Index ← 1 TO 5
+    OUTPUT Values[Index]
+NEXT Index`},
+{id:'binary',title:'Binary search',level:'Intermediate',detail:'Follow Low, High and Middle through a sorted array.',expected:'Target 23 is found at index 4.',source:`DECLARE Values : ARRAY[1:7] OF INTEGER
+DECLARE Low, High, Middle, Target : INTEGER
+DECLARE Found : BOOLEAN
+Values[1] ← 4
+Values[2] ← 9
+Values[3] ← 16
+Values[4] ← 23
+Values[5] ← 38
+Values[6] ← 45
+Values[7] ← 60
+
+Target ← 23
+Low ← 1
+High ← 7
+Found ← FALSE
+
+WHILE Low <= High AND NOT Found
+    Middle ← (Low + High) DIV 2
+    IF Values[Middle] = Target THEN
+        Found ← TRUE
+    ELSE
+        IF Values[Middle] < Target THEN
+            Low ← Middle + 1
+        ELSE
+            High ← Middle - 1
+        ENDIF
+    ENDIF
+ENDWHILE
+
+IF Found THEN
+    OUTPUT "Found at index ", Middle
+ELSE
+    OUTPUT "Not found"
+ENDIF`},
+{id:'matrix',title:'Two-dimensional array',level:'Intermediate',detail:'Build a small multiplication table with nested loops.',expected:'Rows: 1–4, 2–8 and 3–12.',source:`DECLARE Table : ARRAY[1:3, 1:4] OF INTEGER
+DECLARE Row, Column : INTEGER
+
+FOR Row ← 1 TO 3
+    FOR Column ← 1 TO 4
+        Table[Row, Column] ← Row * Column
+    NEXT Column
+NEXT Row
+
+FOR Row ← 1 TO 3
+    OUTPUT Table[Row,1], "  ", Table[Row,2], "  ", Table[Row,3], "  ", Table[Row,4]
+NEXT Row`},
+{id:'function',title:'Functions & local variables',level:'Intermediate',detail:'Step into a function, or use Step over to run the call.',expected:'Area = 24',source:`FUNCTION RectangleArea(Width : REAL, Height : REAL) RETURNS REAL
+    DECLARE Area : REAL
+    Area ← Width * Height
+    RETURN Area
+ENDFUNCTION
+
+DECLARE Result : REAL
+Result ← RectangleArea(6, 4)
+OUTPUT "Area = ", Result`},
+{id:'swap',title:'Pass by reference',level:'Advanced',detail:'A procedure swaps two caller variables through BYREF.',expected:'Before: 10, 20 → After: 20, 10',source:`PROCEDURE Swap(BYREF First : INTEGER, Second : INTEGER)
+    DECLARE Temporary : INTEGER
+    Temporary ← First
+    First ← Second
+    Second ← Temporary
+ENDPROCEDURE
+
+DECLARE A, B : INTEGER
+A ← 10
+B ← 20
+OUTPUT "Before: ", A, ", ", B
+CALL Swap(A, B)
+OUTPUT "After: ", A, ", ", B`},
+{id:'recursion',title:'Recursive factorial',level:'Advanced',detail:'Use the Stack tab to see each recursive call and return.',expected:'6! = 720',source:`FUNCTION Factorial(N : INTEGER) RETURNS INTEGER
+    IF N <= 1 THEN
+        RETURN 1
+    ELSE
+        RETURN N * Factorial(N - 1)
+    ENDIF
+ENDFUNCTION
+
+DECLARE Answer : INTEGER
+Answer ← Factorial(6)
+OUTPUT "6! = ", Answer`},
+{id:'files',title:'Text files & EOF',level:'Advanced',detail:'Read a virtual text file, convert marks, and calculate a mean.',expected:'Read 3 marks. Mean = 75.67',files:{'marks.txt':'64\n88\n75\n'},source:`// marks.txt is in the Files tab, not on your computer.
+DECLARE LineText : STRING
+DECLARE Total, Mean : REAL
+DECLARE Count : INTEGER
+Total ← 0
+Count ← 0
+
+OPENFILE "marks.txt" FOR READ
+WHILE NOT EOF("marks.txt")
+    READFILE "marks.txt", LineText
+    Total ← Total + STR_TO_NUM(LineText)
+    Count ← Count + 1
+ENDWHILE
+CLOSEFILE "marks.txt"
+
+IF Count > 0 THEN
+    Mean ← Total / Count
+    OUTPUT "Read ", Count, " marks. Mean = ", ROUND(Mean, 2)
+ENDIF`}
+];
+if(typeof module!=='undefined'&&module.exports)module.exports=EXAMPLES;
+
+</script>
+<script>
+(() => {
+'use strict';
+const $=id=>document.getElementById(id);
+const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const icon=id=>`<svg aria-hidden="true"><use href="#i-${id}"/></svg>`;
+const editor=$('editor'),KEY='rgsv.pseudocode.studio.v1';
+let vm=null,program=null,compileError=null,running=false,timer=null,activeMode=null,pendingResume=null;
+let skipBreakpoint=null,overDepth=0,overSteps=0,pauseReason='',notice='Choose Compile to check your source, or Step to start exploring.';
+let breakpoints=new Set(),watches=[],seedFiles=Object.create(null),filename='running-total.pseudo',baseline=EXAMPLES[0].source,lastSource=baseline,dirty=false;
+let saveTimer=null,toastTimer=null,activeTab='memory',lastInputKey='',openArrays=new Map(),lastConsoleKey='',lastTraceCount=-1;
+let editFileOriginal=null,storageOK=true;
+let codeSize=window.innerWidth>=1550?15:14,lineHeight=window.innerWidth>=1550?27:25;
+function toast(message){$('toast').textContent=message;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),3200);}
+function readStorage(){try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(!saved||typeof saved.source!=='string'||saved.source.length>120000)return null;return saved;}catch{storageOK=false;return null;}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify({source:editor.value,filename,files:seedFiles,watches,breakpoints:[...breakpoints],font:codeSize}));storageOK=true;$('saveState').textContent='Saved in this browser';}catch{storageOK=false;$('saveState').textContent='Autosave unavailable · use Save';}}
+function queueSave(){clearTimeout(saveTimer);$('saveState').textContent=storageOK?'Saving…':'Use Save for a backup';saveTimer=setTimeout(persist,350);}
+function haltRun(){clearTimeout(timer);timer=null;running=false;activeMode=null;pendingResume=null;skipBreakpoint=null;}
+function pause(){const wasActive=running||pendingResume;haltRun();pauseReason='paused';if(wasActive)notice='Paused. Step through the next line, or Run to continue.';renderAll();}
+function invalidate(message='Source changed. Compile or Step to restart the debugger.'){haltRun();vm=null;program=null;compileError=null;pauseReason='';notice=message;lastInputKey='';lastConsoleKey='';lastTraceCount=-1;}
+function highlightLine(line){const re=/(\/\/.*|"(?:\\.|[^"\\])*"?|'(?:\\.|[^'\\])*'?|“[^”]*”?|‘[^’]*’?|\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b|\b[A-Za-z][A-Za-z0-9_]*\b|←|<--?|:=|<=|>=|<>|[+*/^&=<>-])/g;let html='',last=0,m;while((m=re.exec(line))){html+=esc(line.slice(last,m.index));const t=m[0],u=t.toUpperCase();let cls='';if(t.startsWith('//'))cls='comment';else if(/^['"“‘]/.test(t))cls='str';else if(/^\d/.test(t))cls='num';else if(Pseudo.KEYWORDS.has(u))cls='kw';else if(Object.hasOwn(Pseudo.ARITIES,u)||(/^[A-Za-z]/.test(t)&&/^\s*\(/.test(line.slice(m.index+t.length))))cls='fn';else if(!/^[A-Za-z]/.test(t))cls='op';html+=cls?`<span class="${cls}">${esc(t)}</span>`:esc(t);last=m.index+t.length;}return html+esc(line.slice(last));}
+function renderSource(){const lines=editor.value.split('\n');$('codeView').innerHTML=lines.map(l=>`<span class="line">${highlightLine(l)||' '}</span>`).join('');$('gutter').innerHTML=lines.map((_,i)=>`<button type="button" data-line="${i+1}" title="Toggle breakpoint at line ${i+1}" aria-label="Toggle breakpoint at line ${i+1}">${i+1}</button>`).join('');$('filename').textContent=filename;syncScroll();renderMarkers();updateCursor();}
+function activeLine(){return compileError?.line||vm?.s.error?.line||vm?.next()?.line||null;}
+function renderMarkers(){const line=activeLine(),isError=!!compileError||!!vm?.s.error;for(const b of $('gutter').children){const n=Number(b.dataset.line);b.classList.toggle('bp',breakpoints.has(n));b.classList.toggle('next',n===line&&!isError);b.classList.toggle('error',n===line&&isError);b.setAttribute('aria-pressed',String(breakpoints.has(n)));}const band=$('lineBand');band.style.display=line?'block':'none';band.classList.toggle('error',isError);if(line)band.style.top=(16+(line-1)*lineHeight-editor.scrollTop)+'px';}
+function syncScroll(){$('codeView').style.transform=`translate(${-editor.scrollLeft}px, ${-editor.scrollTop}px)`;$('gutter').style.transform=`translateY(${-editor.scrollTop}px)`;const line=activeLine();if(line)$('lineBand').style.top=(16+(line-1)*lineHeight-editor.scrollTop)+'px';}
+function updateCursor(){const before=editor.value.slice(0,editor.selectionStart),lines=before.split('\n');$('cursor').textContent=`Ln ${lines.length}, Col ${lines.at(-1).length+1}`;}
+function revealLine(line,force=false){if(!line)return;const top=16+(line-1)*lineHeight,bottom=top+lineHeight;if(force||top<editor.scrollTop+lineHeight||bottom>editor.scrollTop+editor.clientHeight-lineHeight){editor.scrollTop=Math.max(0,top-(force?editor.clientHeight*.35:lineHeight*3));syncScroll();}}
+function remapBreakpoints(oldSource,newSource){const a=oldSource.split('\n'),b=newSource.split('\n');if(a.length===b.length)return;let head=0,tail=0;while(head<a.length&&head<b.length&&a[head]===b[head])head++;while(tail<a.length-head&&tail<b.length-head&&a[a.length-1-tail]===b[b.length-1-tail])tail++;const delta=b.length-a.length,next=new Set();for(const n of breakpoints){if(n<=head)next.add(n);else if(n>a.length-tail)next.add(n+delta);}breakpoints=next;}
+function edited(){if(editor.value===lastSource)return;remapBreakpoints(lastSource,editor.value);lastSource=editor.value;dirty=editor.value!==baseline;invalidate();queueSave();renderSource();renderAll();}
+function insertText(text){if(editor.readOnly)return;editor.focus();const start=editor.selectionStart,end=editor.selectionEnd;editor.setRangeText(text,start,end,'end');edited();updateCursor();}
+function setCodeSize(size){codeSize=Math.max(11,Math.min(23,size));lineHeight=codeSize+11;document.documentElement.style.setProperty('--code-size',codeSize+'px');document.documentElement.style.setProperty('--code-line',lineHeight+'px');syncScroll();renderMarkers();}
+function compile(showToast=false){haltRun();compileError=null;pauseReason='';openArrays.clear();try{program=Pseudo.compile(editor.value);vm=new Pseudo.VM(program,seedFiles);notice=`Compiled ${program.code.length} bytecode instructions. ${vm.s.done?'No executable main statements.':'The green line is next to execute.'}`;breakpoints=new Set([...breakpoints].filter(n=>program.executable.has(n)));if(showToast)toast('Compilation successful. Ready to run or step.');lastConsoleKey='';lastInputKey='';lastTraceCount=-1;renderAll();revealLine(activeLine());return true;}catch(e){program=null;vm=null;compileError={line:e.line||1,column:e.column||1,message:e.message};notice='';renderAll();revealLine(compileError.line,true);return false;}}
+function ensureVM(){if(!vm||vm.s.done||vm.s.error)return compile(false);return true;}
+function singleStep(){haltRun();pauseReason='';if(!ensureVM()||vm.s.pending||vm.s.done)return;vm.step();notice='';renderAll();revealLine(activeLine());}
+function bpKey(){return vm?`${vm.s.pc}:${vm.frame.id}`:'';}
+function startRun(mode='run'){if(running)return;if(!ensureVM()||vm.s.pending||vm.s.done)return;const resumeBP=pauseReason==='breakpoint';pauseReason='';notice='';running=true;activeMode=mode;overDepth=vm.s.frames.length;overSteps=vm.s.steps;skipBreakpoint=resumeBP||mode==='over'?bpKey():null;renderAll();timer=setTimeout(pump,0);}
+function pump(){if(!running||!vm)return;const mode=activeMode,delay=Number($('speed').value),started=performance.now();let iterations=0;
+ while(running&&vm&&!vm.s.done&&!vm.s.error&&!vm.s.pending){const next=vm.next(),key=bpKey();if(next&&breakpoints.has(next.line)&&key!==skipBreakpoint){running=false;activeMode=null;pauseReason='breakpoint';notice=`Breakpoint reached before line ${next.line}. Press Step or Run to continue.`;break;}skipBreakpoint=null;
+  vm.step();iterations++;
+  if(mode==='over'&&!vm.s.pending&&vm.s.steps>overSteps&&vm.s.frames.length<=overDepth&&vm.next()?.phase!=='resume'){running=false;activeMode=null;pauseReason='paused';notice='Step over completed.';break;}
+  if(delay>0||iterations>=80||performance.now()-started>12)break;
+ }
+ if(vm.s.pending){pendingResume=mode;running=false;activeMode=null;}
+ if(vm.s.done||vm.s.error){running=false;activeMode=null;pendingResume=null;}
+ renderAll();revealLine(activeLine());if(running)timer=setTimeout(pump,delay||10);
+}
+function back(){haltRun();pauseReason='paused';compileError=null;if(vm?.undo()){notice='Restored the previous execution state. The green line is next.';lastInputKey='';lastConsoleKey='';renderAll();revealLine(activeLine());}else toast('No earlier execution state is available.');}
+function reset(){invalidate('Execution reset. Source and breakpoints are unchanged.');openArrays.clear();renderAll();toast('Reset. Your source is unchanged.');}
+function renderControls(){const s=vm?.s,pending=!!s?.pending,error=!!compileError||!!s?.error;let label='Ready',cls='';if(error){label='Error';cls='error';}else if(pending){label='Input needed';cls='waiting';}else if(running){label='Running';cls='running';}else if(s?.done){label='Finished';cls='done';}else if(pauseReason==='breakpoint'){label='Breakpoint';cls='breakpoint';}else if(vm){label=s.steps?'Paused':'Compiled';cls='ready';}$('status').textContent=label;$('status').className='status-pill '+cls;
+ $('runLabel').textContent=vm&&!s.done&&!s.error&&s.steps?'Continue':'Run';$('runBtn').disabled=running||pending;$('pauseBtn').disabled=!running&&!pendingResume;$('stepBtn').disabled=running||pending;$('overBtn').disabled=running||pending;$('backBtn').disabled=running||!vm?.history.length;$('compileBtn').disabled=running;
+ editor.readOnly=running;$('lockhint').style.display=running?'inline-block':'none';['snippet','arrowBtn','formatBtn','openBtn','examplesBtn','newFileBtn','importFileBtn'].forEach(id=>$(id).disabled=running);
+ $('stepState').textContent=vm?`${s.steps.toLocaleString()} step${s.steps===1?'':'s'} · ${s.error?'error at line '+s.error.line:s.done?'finished':s.pending?'input at line '+s.pending.line:'next line '+(vm.next()?.line||'—')}`:error?`Compile error · line ${compileError.line}`:'0 steps · not compiled';
+}
+function emptyHTML(title,detail,which='memory'){return `<div class="empty"><div class="empty-icon">${icon(which)}</div><strong>${esc(title)}</strong><p>${esc(detail)}</p></div>`;}
+function valueOf(r){return r.offset==null?r.cell.value:r.cell.value.items[r.offset];}
+function isChanged(r){return !!vm?.s.changes.some(c=>c.id===r.cell.id&&(r.offset==null||c.offset===r.offset));}
+function arrayChanged(cell,offset){return !!vm?.s.changes.some(c=>c.id===cell.id&&(c.offset==null||c.offset===offset));}
+function arrayHTML(r,frame){const v=r.cell.value,key=`${frame.id}:${r.label}:${r.cell.id}`,open=openArrays.has(key)?openArrays.get(key):v.items.length<=100;const caption=`ARRAY[${v.bounds.map(b=>b.join(':')).join(', ')}] OF ${v.element}`;let cells='';if(v.bounds.length===2){const [rb,cb]=v.bounds,cols=cb[1]-cb[0]+1,maxCols=Math.min(cols,30),rows=Math.min(rb[1]-rb[0]+1,Math.max(1,Math.floor(400/maxCols)));cells='<div class="array-scroll"><table class="arraymatrix"><thead><tr><th></th>';for(let c=0;c<maxCols;c++)cells+=`<th>${cb[0]+c}</th>`;cells+='</tr></thead><tbody>';for(let row=0;row<rows;row++){cells+=`<tr><th>${rb[0]+row}</th>`;for(let c=0;c<maxCols;c++){const i=row*cols+c;cells+=`<td class="${arrayChanged(r.cell,i)?'changed':''}" title="${esc(r.label)}[${rb[0]+row},${cb[0]+c}]">${esc(Pseudo.display(v.items[i],true))}</td>`;}cells+='</tr>';}cells+='</tbody></table></div>';if(rows*maxCols<v.items.length)cells+=`<div class="subnote">Showing ${rows} rows × ${maxCols} columns of ${v.items.length} cells. Use Watch for other indices.</div>`;}
+ else{cells='<div class="arraygrid">';v.items.slice(0,400).forEach((x,i)=>cells+=`<div class="arraycell ${arrayChanged(r.cell,i)?'changed':''}" title="${esc(r.label)}[${v.bounds[0][0]+i}]"><small>[${v.bounds[0][0]+i}]</small>${esc(Pseudo.display(x,true))}</div>`);cells+='</div>';if(v.items.length>400)cells+='<div class="subnote">Showing the first 400 cells. Use Watch for other indices.</div>';}
+ return `<details class="arraybox" data-array="${esc(key)}" ${open?'open':''}><summary>${esc(r.label||r.cell.name)}<span>${esc(caption)}</span></summary>${cells}</details>`;
+}
+function renderMemory(){const pane=$('memoryPane'),scroll=pane.scrollTop;if(!vm){pane.innerHTML=emptyHTML('Your variables will appear here','Press Step to declare the first variable, then watch its value change.');$('memoryCount').textContent='Live variables & arrays';return;}const frames=vm.s.frames.length>1?[vm.frame,vm.s.frames[0]]:[vm.frame];let html='',count=0;for(const frame of frames){const vars=[...frame.vars.values()];if(!vars.length)continue;count+=vars.length;html+=`<div class="scope-title"><span>${frame.id===0?'Global · Main':'Local · '+esc(frame.name)+' #'+frame.id}</span><span>${vars.length} item${vars.length===1?'':'s'}</span></div>`;const scalars=vars.filter(r=>valueOf(r)?.type!=='ARRAY');if(scalars.length){html+='<table class="vars"><thead><tr><th>Name</th><th>Type</th><th>Value</th></tr></thead><tbody>';for(const r of scalars){const v=valueOf(r);html+=`<tr><td class="varname">${esc(r.label||r.cell.name)}${r.cell.constant?' <span class="tiny">const</span>':''}${r.label!==r.cell.name?' <span class="tiny">ref</span>':''}</td><td><span class="var-type">${esc(r.offset==null?r.cell.type:r.cell.value.element)}</span></td><td class="value ${isChanged(r)?'changed':''}" title="${v==null?'Declared, but not initialised':esc(Pseudo.display(v,true))}">${v==null?'<span class="uninit">not initialised</span>':esc(Pseudo.display(v,true))}</td></tr>`;}html+='</tbody></table>';}for(const r of vars.filter(r=>valueOf(r)?.type==='ARRAY'))html+=arrayHTML(r,frame);}
+ pane.innerHTML=html||emptyHTML('No variables declared yet','The next DECLARE statement creates a variable. Subprogram parameters appear when a call starts.');pane.scrollTop=scroll;$('memoryCount').textContent=`${count} visible item${count===1?'':'s'} · amber = changed`;for(const el of pane.querySelectorAll('details[data-array]'))el.addEventListener('toggle',()=>openArrays.set(el.dataset.array,el.open));
+}
+function renderWatches(){if(!watches.length){$('watchList').innerHTML=emptyHTML('Keep an eye on an expression','Add a variable, array element, or calculation above.','code');return;}$('watchList').innerHTML=watches.map((w,i)=>{let value='Not running',err=false;try{if(vm)value=Pseudo.display(vm.watch(w),true);}catch(e){value=e.message;err=true;}return `<div class="watchrow"><code>${esc(w)}</code><span class="watchvalue ${err?'err':''}">${esc(value)}</span><button class="iconbtn" data-remove-watch="${i}" aria-label="Remove watch ${esc(w)}" title="Remove watch">${icon('close')}</button></div>`;}).join('');}
+function renderStack(){if(!vm){$('stackPane').innerHTML=emptyHTML('Follow the calls','Functions and procedures will appear here when they are called.','trace');return;}$('stackPane').innerHTML=[...vm.s.frames].reverse().map((f,i)=>`<div class="stackrow ${i===0?'current':''}"><span class="stacknum">${f.id}</span><div><strong>${esc(f.name)}${f.key?'()':''}</strong><small>${f.id===0?'Global execution scope':`Called from line ${f.callLine} · ${f.vars.size} local item(s)`}${i===0?' · active':''}</small></div></div>`).join('')+'<p class="hint">The active call is at the top. Variables shows the active call’s locals plus the globals.</p>';}
+function currentFiles(){return vm?vm.s.files:new Map(Object.entries(seedFiles));}
+function renderFiles(){const files=[...currentFiles()];$('filesList').innerHTML=files.length?files.map(([name,content])=>{const h=vm?.s.handles.get(name);return `<div class="filerow">${icon('file')}<div class="filedesc"><strong>${esc(name)}</strong><small>${content.length.toLocaleString()} characters${h?' · open '+h.mode+(h.mode==='READ'?' · '+h.index+' lines read':''):''}</small></div><button class="iconbtn" data-file-action="edit" data-name="${esc(name)}" title="View or edit file" aria-label="View or edit ${esc(name)}">${icon('edit')}</button><button class="iconbtn" data-file-action="export" data-name="${esc(name)}" title="Export file" aria-label="Export ${esc(name)}">${icon('save')}</button><button class="iconbtn" data-file-action="delete" data-name="${esc(name)}" title="Remove starting file" aria-label="Remove ${esc(name)}">${icon('trash')}</button></div>`;}).join(''):emptyHTML('A small virtual filing cabinet','Create a text file or try the “Text files & EOF” example.','file');for(const s of $('filesList').querySelectorAll('.filerow>svg')){s.style.width='18px';s.style.height='18px';s.style.color='var(--muted)';s.style.flexShrink='0';}}
+function renderConsole(){const output=vm?.s.output||[],key=`${vm?.s.outputDropped||0}|${output.length}|${output.at(-1)?.text||''}`;if(key!==lastConsoleKey){lastConsoleKey=key;$('consoleBody').innerHTML=output.length?`${vm.s.outputDropped?`<div class="console-placeholder">… ${vm.s.outputDropped} older console lines removed.</div>`:''}`+output.map(x=>`<div class="consoleline ${x.kind}">${esc(x.text)||' '}</div>`).join(''):'<div class="console-placeholder">Your program’s output will appear here.<br>Use OUTPUT to display a message and INPUT to ask for a value.</div>';$('consoleBody').scrollTop=$('consoleBody').scrollHeight;}
+ const pending=vm?.s.pending;$('inputArea').hidden=!pending;if(pending){$('inputLabel').textContent=`INPUT ${pending.name} : ${pending.type}`;const key=`${pending.line}:${vm.frame.id}:${vm.s.steps}`;if(lastInputKey!==key){lastInputKey=key;$('consoleInput').value='';$('inputError').textContent='';requestAnimationFrame(()=>$('consoleInput').focus({preventScroll:true}));}}else{lastInputKey='';$('inputError').textContent='';}
+}
+function renderTrace(){const error=compileError||vm?.s.error,summary=$('executionSummary');summary.classList.toggle('error',!!error);if(error)summary.innerHTML=`<strong>${compileError?'Compile':'Runtime'} error · line ${error.line}${compileError?', column '+error.column:''}</strong><br>${esc(error.message)}`;else if(vm?.s.pending)summary.innerHTML=`<strong>Waiting for input · line ${vm.s.pending.line}</strong><br>Enter a ${esc(vm.s.pending.type)} value in the console.`;else if(pauseReason==='breakpoint')summary.innerHTML=`<strong>Breakpoint · next is line ${vm?.next()?.line}</strong><br>${esc(notice)}`;else if(vm?.s.done)summary.innerHTML=`<strong>Program finished · ${vm.s.steps} source steps</strong><br>${esc(vm.s.notes.filter(n=>n!=='Program finished.').join(' ')||'Review the trace, or press Back to revisit execution.')}`;else if(vm?.s.steps){const msg=vm.s.notes.join(' ')||vm.s.changes.map(c=>`${c.name} ← ${c.after}`).join(' · ')||'Step complete.';summary.innerHTML=`<strong>Executed line ${vm.s.lastLine}</strong> <span class="muted">→ next ${vm.next()?.line||'—'}</span><br>${esc(notice||msg)}`;}else summary.innerHTML=`<strong>${vm?'Compiled and ready':'Start with a single step'}</strong><br>${esc(notice)}`;
+ const trace=vm?.trace||[];$('traceBody').innerHTML=trace.slice(-150).map(t=>`<tr><td>${t.step}</td><td><button class="line-link" data-goto="${t.line}" title="Show source line ${t.line}">${t.line}</button></td><td>${esc(t.changes||t.action||'Continue.')}</td></tr>`).join('');if(trace.length!==lastTraceCount){$('traceScroll').scrollTop=$('traceScroll').scrollHeight;lastTraceCount=trace.length;}
+}
+function renderAll(){renderControls();renderMarkers();renderMemory();renderWatches();renderStack();renderFiles();renderConsole();renderTrace();}
+function setTab(name){activeTab=name;document.querySelectorAll('[data-tab]').forEach(b=>{const on=b.dataset.tab===name;b.classList.toggle('active',on);b.setAttribute('aria-selected',String(on));b.tabIndex=on?0:-1;});['memory','watch','stack','files'].forEach(t=>$(t+'Pane').hidden=t!==name);}
+function saveFile(name,content,type='text/plain;charset=utf-8'){const safe=(name||'program.txt').replace(/[\\/:*?"<>|]/g,'_');const blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=safe;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);}
+function saveSource(){saveFile(filename.endsWith('.pseudo')||filename.endsWith('.txt')||filename.endsWith('.psc')?filename:filename+'.pseudo',editor.value);baseline=editor.value;dirty=false;toast('Source file saved.');}
+async function copyText(value){try{if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(value);else{const t=document.createElement('textarea');t.value=value;t.style.position='fixed';t.style.opacity='0';document.body.append(t);t.select();const ok=document.execCommand('copy');t.remove();if(!ok)throw new Error('Clipboard unavailable');}toast('Copied to clipboard.');}catch{toast('Clipboard access is unavailable. Use the output Save button.');}}
+function confirmAction(message,title='Replace current program?'){return new Promise(resolve=>{$('confirmTitle').textContent=title;$('confirmText').textContent=message;const d=$('confirmDialog');d.returnValue='';d.addEventListener('close',()=>resolve(d.returnValue==='yes'),{once:true});d.showModal();});}
+function openDialog(id){if(running)pause();$(id).showModal();}
+async function loadExample(example){if(dirty&&!await confirmAction('This replaces your current source and resets execution. Save your source first to keep a separate copy.'))return;invalidate(`Loaded “${example.title}”. ${example.expected}`);editor.value=example.source;baseline=lastSource=example.source;dirty=false;filename=example.id==='total'?'running-total.pseudo':example.id+'.pseudo';breakpoints.clear();seedFiles=Object.assign(Object.create(null),example.files||{});openArrays.clear();editor.scrollTop=editor.scrollLeft=0;renderSource();renderAll();persist();$('examplesDialog').close();}
+function formatSource(){if(editor.readOnly)return;const stack=[],lines=editor.value.split('\n'),out=[];const depth=()=>stack.reduce((n,s)=>n+1+(s.k==='CASE'&&s.arm?1:0),0);for(const raw of lines){const line=raw.trim();if(!line){out.push('');continue;}let tag='';try{tag=Pseudo.lex(line)[0]?.v;}catch{tag=(line.match(/^\w+/)||[''])[0].toUpperCase();}
+ const close=['ENDIF','NEXT','ENDFOR','ENDWHILE','UNTIL','ENDPROCEDURE','ENDFUNCTION','ENDCASE'].includes(tag);if(close)stack.pop();let indent=depth();if(['ELSE','ELSEIF','THEN'].includes(tag))indent=Math.max(0,indent-1);
+ let label=false;const current=stack.at(-1);if(current?.k==='CASE'){try{label=tag==='OTHERWISE'||new Pseudo.Parser(line).isLabel();}catch{label=tag==='OTHERWISE';}if(label){current.arm=false;indent=depth();}}
+ out.push('    '.repeat(Math.max(0,indent))+line);if(label)current.arm=true;
+ if(['IF','FOR','WHILE','REPEAT','PROCEDURE','FUNCTION','CASE'].includes(tag))stack.push({k:tag,arm:false});}
+ const next=out.join('\n');if(next!==editor.value){const scroll=editor.scrollTop;editor.value=next;edited();editor.scrollTop=scroll;}toast('Indentation formatted.');}
+const snippets={declare:'DECLARE Name : INTEGER',if:'IF Condition THEN\n    OUTPUT "True branch"\nELSE\n    OUTPUT "False branch"\nENDIF',for:'FOR Index ← 1 TO 5\n    OUTPUT Index\nNEXT Index',while:'WHILE Condition\n    // Add statements here\nENDWHILE',repeat:'REPEAT\n    // Add statements here\nUNTIL Condition',array:'DECLARE Values : ARRAY[1:5] OF INTEGER',function:'FUNCTION Double(Number : INTEGER) RETURNS INTEGER\n    RETURN Number * 2\nENDFUNCTION'};
+function traceColumns(limit){const names=[];for(const t of vm?.trace||[])for(const k of Object.keys(t.vars)){if(!names.includes(k))names.push(k);if(names.length>=limit)return names;}return names;}
+function showTrace(){if(running)pause();const all=vm?.trace||[],rows=all.slice(-500),cols=traceColumns(40);$('traceCaption').textContent=`${all.length.toLocaleString()} retained steps · ${rows.length} shown · values after each step${cols.length>=40?' · first 40 variable names':''}. CSV includes up to 2,000 steps and 120 variable names.`;if(!rows.length)$('fullTraceWrap').innerHTML=emptyHTML('No trace yet','Run a program or execute a few steps to build a trace table.','trace');else{let previous=all[all.length-rows.length-1]?.vars||{};$('fullTraceWrap').innerHTML='<table class="fulltrace"><thead><tr><th>Step</th><th>Line</th><th>Scope</th>'+cols.map(c=>`<th>${esc(c)}</th>`).join('')+'<th>Action / changes</th></tr></thead><tbody>'+rows.map(t=>{const row=`<tr><td>${t.step}</td><td>${t.line}</td><td>${esc(t.scope)}</td>`+cols.map(c=>`<td class="${t.vars[c]!==undefined&&t.vars[c]!==previous[c]?'change':''}">${esc(t.vars[c]??'')}</td>`).join('')+`<td class="action">${esc([t.changes,t.action].filter(Boolean).join(' · '))}</td></tr>`;previous=t.vars;return row;}).join('')+'</tbody></table>';}openDialog('traceDialog');}
+function csvCell(value){let s=String(value??'');if(/^[=+\-@\t\r]/.test(s)&&!/^[-+]?\d+(\.\d+)?$/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"';}
+function exportTrace(){const rows=vm?.trace||[];if(!rows.length){toast('Run a program first to create a trace.');return;}const cols=traceColumns(120),table=[['Step','Line','Scope',...cols,'Changes','Action'],...rows.map(t=>[t.step,t.line,t.scope,...cols.map(c=>t.vars[c]??''),t.changes,t.action])];saveFile(filename.replace(/\.[^.]+$/,'')+'-trace.csv','\ufeff'+table.map(row=>row.map(csvCell).join(',')).join('\r\n'),'text/csv;charset=utf-8');}
+function showBytecode(){if(running)pause();if(!program&&!compile(false))return;const code=program.code;$('bytecodeCaption').textContent=`${code.length} instructions · LINE instructions mark debugger stops · highlighted = next instruction`;const text=code.map((x,i)=>{const args=Object.entries(x).filter(([k])=>!['op','line'].includes(k)).map(([k,v])=>`${k}=${typeof v==='object'?JSON.stringify(v):String(v)}`).join(' '),line=`${String(i).padStart(4,'0')}  L${String(x.line).padEnd(4,' ')} ${x.op.padEnd(14,' ')} ${args}`;return `<span${vm?.s.pc===i?' class="current-op"':''}>${esc(line)}</span>`;}).join('\n');$('bytecodeText').innerHTML=text;openDialog('bytecodeDialog');}
+function openVirtual(name=null){if(running)pause();editFileOriginal=name;$('virtualName').value=name||'';$('virtualContent').value=name==null?'':currentFiles().get(name)||'';$('fileTitle').textContent=name?'Virtual file · '+name:'New virtual text file';$('virtualHint').textContent=vm?.s.steps?'Saving changes resets execution and stores this content as a starting file. Export first to keep a separate copy.':'Saving updates your starting files. No real file is changed until you choose Export.';openDialog('fileDialog');}
+async function saveVirtual(){const name=$('virtualName').value.trim(),content=$('virtualContent').value;if(!name||name.length>160){toast('Use a file name of 1–160 characters.');return;}if(content.length>200000){toast('Virtual files are limited to 200,000 characters.');return;}if(name!==editFileOriginal&&Object.hasOwn(seedFiles,name)&&!await confirmAction(`Replace starting file “${name}”?`,'Replace file?'))return;if(Object.keys(seedFiles).length>=30&&!Object.hasOwn(seedFiles,name)){toast('Limit: 30 virtual files.');return;}if(editFileOriginal&&editFileOriginal!==name)delete seedFiles[editFileOriginal];seedFiles[name]=content;invalidate('Starting file saved. Compile or Step to begin again.');persist();renderAll();$('fileDialog').close();toast('Virtual starting file saved.');}
+function indentSelection(unindent){if(editor.readOnly)return;const source=editor.value,start=editor.selectionStart,end=editor.selectionEnd;if(start===end&&!unindent){insertText('    ');return;}const lineStart=source.lastIndexOf('\n',start-1)+1;let lineEnd=source.indexOf('\n',end);if(lineEnd<0)lineEnd=source.length;if(end>start&&source[end-1]==='\n')lineEnd=end-1;const block=source.slice(lineStart,lineEnd),oldLines=block.split('\n');let firstChange=0,totalChange=0;const next=oldLines.map((l,i)=>{let n;if(unindent){const m=l.match(/^(?: {1,4}|\t)/);n=m?l.slice(m[0].length):l;}else n='    '+l;const delta=n.length-l.length;if(i===0)firstChange=delta;totalChange+=delta;return n;}).join('\n');editor.setRangeText(next,lineStart,lineEnd,'preserve');editor.setSelectionRange(Math.max(lineStart,start+firstChange),Math.max(lineStart,end+totalChange));edited();}
+// Event wiring. All code and program output are escaped before entering HTML.
+$('runBtn').onclick=()=>startRun('run');$('pauseBtn').onclick=pause;$('stepBtn').onclick=singleStep;$('overBtn').onclick=()=>startRun('over');$('backBtn').onclick=back;$('resetBtn').onclick=reset;$('compileBtn').onclick=()=>compile(true);
+$('examplesBtn').onclick=()=>openDialog('examplesDialog');$('guideBtn').onclick=()=>openDialog('guideDialog');$('scopeBtn').onclick=()=>{openDialog('guideDialog');$('guide-limits').scrollIntoView({block:'start'});};$('openBtn').onclick=()=>$('sourceFileInput').click();$('saveBtn').onclick=saveSource;$('arrowBtn').onclick=()=>insertText('←');$('formatBtn').onclick=formatSource;$('fontDownBtn').onclick=()=>{setCodeSize(codeSize-1);queueSave();};$('fontUpBtn').onclick=()=>{setCodeSize(codeSize+1);queueSave();};
+$('snippet').onchange=e=>{if(snippets[e.target.value])insertText(snippets[e.target.value]);e.target.value='';};
+editor.addEventListener('input',edited);editor.addEventListener('scroll',syncScroll);['click','keyup','select'].forEach(type=>editor.addEventListener(type,updateCursor));editor.addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();indentSelection(e.shiftKey);}if(e.key==='Enter'&&!e.ctrlKey&&!e.metaKey&&!editor.readOnly){e.preventDefault();const before=editor.value.slice(0,editor.selectionStart),line=before.slice(before.lastIndexOf('\n')+1),indent=(line.match(/^\s*/)||[''])[0];let extra=/^\s*(FOR\b|WHILE\b|REPEAT\b|PROCEDURE\b|FUNCTION\b|CASE\b|ELSE\s*$|.*\bTHEN\s*$)/i.test(line)?'    ':'';insertText('\n'+indent+extra);}});
+$('gutter').onclick=e=>{const button=e.target.closest('button[data-line]');if(!button)return;const n=Number(button.dataset.line),text=editor.value.split('\n')[n-1]?.trim();if(!text||text.startsWith('//')||(program&&!program.executable.has(n))){toast('This line has no executable instruction. Choose a statement.');return;}if(breakpoints.has(n))breakpoints.delete(n);else breakpoints.add(n);renderMarkers();queueSave();};
+$('watchForm').onsubmit=e=>{e.preventDefault();const value=$('watchInput').value.trim();if(!value)return;if(value.length>500){toast('Watch expressions are limited to 500 characters.');return;}if(watches.length>=16){toast('Limit: 16 watch expressions.');return;}if(!watches.includes(value))watches.push(value);$('watchInput').value='';renderWatches();queueSave();};$('watchList').onclick=e=>{const b=e.target.closest('[data-remove-watch]');if(b){watches.splice(Number(b.dataset.removeWatch),1);renderWatches();queueSave();}};
+$('inputForm').onsubmit=e=>{e.preventDefault();if(!vm?.s.pending)return;try{vm.provideInput($('consoleInput').value);const resume=pendingResume;pendingResume=null;lastInputKey='';const overComplete=resume==='over'&&vm.s.frames.length<=overDepth&&vm.next()?.phase!=='resume';notice=overComplete?'Step over completed.':'';if(overComplete)pauseReason='paused';renderAll();revealLine(activeLine());if(resume&&!overComplete&&!vm.s.done&&!vm.s.error){running=true;activeMode=resume;renderControls();timer=setTimeout(pump,Math.min(200,Number($('speed').value)));}}catch(err){$('inputError').textContent=err.message;$('consoleInput').focus();}};
+$('copyOutputBtn').onclick=()=>copyText((vm?.s.output||[]).map(x=>(x.kind==='input'?'› ':'')+x.text).join('\n'));$('exportOutputBtn').onclick=()=>saveFile(filename.replace(/\.[^.]+$/,'')+'-output.txt',(vm?.s.output||[]).map(x=>(x.kind==='input'?'› ':'')+x.text).join('\n'));
+$('traceBtn').onclick=showTrace;$('csvBtn').onclick=exportTrace;$('bytecodeBtn').onclick=showBytecode;$('traceBody').onclick=e=>{const b=e.target.closest('[data-goto]');if(b)revealLine(Number(b.dataset.goto),true);};
+document.querySelectorAll('[data-tab]').forEach(b=>{b.onclick=()=>setTab(b.dataset.tab);b.onkeydown=e=>{if(!['ArrowLeft','ArrowRight'].includes(e.key))return;e.preventDefault();const tabs=[...document.querySelectorAll('[data-tab]')],index=tabs.indexOf(b),next=tabs[(index+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length];setTab(next.dataset.tab);next.focus();};});
+document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());document.querySelectorAll('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();}}));
+$('confirmNo').onclick=()=>$('confirmDialog').close('no');$('confirmYes').onclick=()=>$('confirmDialog').close('yes');
+$('exampleGrid').innerHTML=EXAMPLES.map(ex=>`<button class="example-card" data-example="${ex.id}"><span class="level ${ex.level.toLowerCase()}">${esc(ex.level)}</span><strong>${esc(ex.title)}</strong><p>${esc(ex.detail)}</p><small>${esc(ex.expected)}</small></button>`).join('');$('exampleGrid').onclick=e=>{const b=e.target.closest('[data-example]');if(b)loadExample(EXAMPLES.find(x=>x.id===b.dataset.example));};
+$('sourceFileInput').onchange=async e=>{const file=e.target.files[0];e.target.value='';if(!file)return;if(file.size>500000){toast('Source file is too large. Limit: 120,000 characters.');return;}try{const source=(await file.text()).replace(/^\uFEFF/,'').replace(/\r\n?/g,'\n');if(source.length>120000){toast('Source limit: 120,000 characters.');return;}if(dirty&&!await confirmAction('Opening this file replaces the current source. Save a separate copy first to keep it.'))return;invalidate('Source file opened. Compile or Step to begin.');editor.value=source;baseline=lastSource=source;dirty=false;filename=file.name;breakpoints.clear();editor.scrollTop=editor.scrollLeft=0;renderSource();renderAll();persist();}catch(err){toast('Could not read that file: '+err.message);}};
+$('newFileBtn').onclick=()=>openVirtual();$('importFileBtn').onclick=()=>$('virtualFileInput').click();$('saveVirtualBtn').onclick=saveVirtual;$('exportVirtualBtn').onclick=()=>saveFile($('virtualName').value||'data.txt',$('virtualContent').value);
+$('virtualFileInput').onchange=async e=>{const file=e.target.files[0];e.target.value='';if(!file)return;if(file.size>800000){toast('File is too large. Limit: 200,000 characters.');return;}try{const content=(await file.text()).replace(/^\uFEFF/,'').replace(/\r\n?/g,'\n');if(content.length>200000){toast('File limit: 200,000 characters.');return;}openVirtual();$('virtualName').value=file.name;$('virtualContent').value=content;}catch(err){toast('Could not read that file: '+err.message);}};
+$('filesList').onclick=async e=>{const b=e.target.closest('[data-file-action]');if(!b)return;const name=b.dataset.name;if(b.dataset.fileAction==='edit')openVirtual(name);else if(b.dataset.fileAction==='export')saveFile(name,currentFiles().get(name)||'');else{if(running)pause();if(await confirmAction(`Remove “${name}” from starting files and reset execution? Export any generated files first to keep them.`,'Remove virtual file?')){delete seedFiles[name];invalidate('File removed. Execution reset.');persist();renderAll();}}};
+document.addEventListener('keydown',e=>{const dialogOpen=!!document.querySelector('dialog[open]');if(e.key==='Escape'&&!dialogOpen){if(running||pendingResume){e.preventDefault();pause();}return;}if(dialogOpen)return;if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();startRun('run');}else if(e.key==='F10'){e.preventDefault();if(!running&&!vm?.s.pending)e.shiftKey?startRun('over'):singleStep();}else if(e.altKey&&e.key==='ArrowLeft'){e.preventDefault();if(!running)back();}else if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();saveSource();}});
+window.addEventListener('beforeunload',()=>persist());window.addEventListener('resize',()=>{syncScroll();renderMarkers();});
+// Restore only bounded, correctly typed application data. A corrupt save cannot inject markup.
+const restored=readStorage();if(restored){baseline=lastSource=restored.source;filename=typeof restored.filename==='string'?restored.filename:'program.pseudo';watches=Array.isArray(restored.watches)?restored.watches.filter(w=>typeof w==='string'&&w.length<=500).slice(0,16):[];breakpoints=new Set(Array.isArray(restored.breakpoints)?restored.breakpoints.filter(n=>Number.isInteger(n)&&n>0&&n<=baseline.split('\n').length):[]);if(restored.files&&typeof restored.files==='object')for(const [n,v] of Object.entries(restored.files).slice(0,30))if(n.length<=160&&typeof v==='string'&&v.length<=200000)seedFiles[n]=v;if(Number.isFinite(restored.font))setCodeSize(restored.font);notice='Restored your source from this browser. Compile or Step to start a fresh execution.';}
+editor.value=baseline;editor.maxLength=120000;renderSource();renderAll();setTab('memory');$('saveState').textContent=restored?'Restored from this browser':storageOK?'Source autosaves here':'Autosave unavailable · use Save';
+// A small public API is useful for teachers embedding the page and for automated regression tests.
+window.PseudocodeStudio={compiler:Pseudo,examples:EXAMPLES,get vm(){return vm;},get program(){return program;},get running(){return running;},get breakpoints(){return [...breakpoints];},compile,step:singleStep,run:startRun,pause,back,reset,loadSource(source,name='program.pseudo'){if(typeof source!=='string'||source.length>120000)throw new Error('Source must be a string of at most 120,000 characters.');invalidate();editor.value=source;baseline=lastSource=source;dirty=false;filename=name;breakpoints.clear();renderSource();renderAll();persist();}};
+})();
+
+</script>
+</body></html>
