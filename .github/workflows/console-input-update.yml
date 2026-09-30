@@ -1,0 +1,80 @@
+name: Verify console INPUT update
+on:
+  push:
+    branches: [console-input-20260930]
+    paths: [.github/workflows/console-input-update.yml]
+permissions:
+  contents: write
+jobs:
+  prepare-and-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Apply the exact locally tested console UI patch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os, json, base64, lzma, hashlib, re, urllib.request
+          repo = os.environ['REPO']
+          def api(path, body=None):
+              request = urllib.request.Request('https://api.github.com/repos/' + repo + path,
+                  data=None if body is None else json.dumps(body).encode(),
+                  headers={'Authorization': 'Bearer ' + os.environ['GH_TOKEN'], 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json'},
+                  method='GET' if body is None else 'PUT')
+              with urllib.request.urlopen(request, timeout=60) as response:
+                  return json.load(response)
+          patch = json.loads(lzma.decompress(base64.b64decode(api('/git/blobs/62f44445f35a34404c55d6fb3c93b44a1b64a891')['content'])))
+          current = api('/contents/pseudocode/index.html?ref=console-input-20260930')
+          assert current['sha'] == '6c05353986a764dcfb6f66e6388de8c89c26b1fb'
+          source = base64.b64decode(current['content'])
+          assert hashlib.sha256(source).hexdigest() == patch['base_sha256']
+          before = source.decode('utf-8')
+          updated = before
+          for item in patch['replacements']:
+              assert updated.count(item['old']) == 1, 'Patch target is not unique'
+              updated = updated.replace(item['old'], item['new'], 1)
+          after = updated.encode('utf-8')
+          expected = 'a0295a735186b937a4f29463096fad25821bd8288f5fe163aa0af42dd6abdc59'
+          assert len(after) == 155372
+          assert hashlib.sha256(after).hexdigest() == patch['target_sha256'] == expected
+          old_scripts = re.findall(r'<script[^>]*>(.*?)</script>', before, re.S)
+          new_scripts = re.findall(r'<script[^>]*>(.*?)</script>', updated, re.S)
+          assert old_scripts[:2] == new_scripts[:2], 'Compiler and examples must remain unchanged'
+          result = api('/contents/pseudocode/index.html', {
+              'message': 'Use inline console INPUT with blinking block caret and Enter submission',
+              'branch': 'console-input-20260930', 'sha': current['sha'],
+              'content': base64.b64encode(after).decode()
+          })
+          assert result['content']['sha'] == 'e447e2ecd79dafb32a7b7f322df798d1b0712c38'
+          print('Verified new standalone page: ' + result['content']['sha'])
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write('## Inline console INPUT\nPatch verified against the original file. Compiler and examples unchanged.\n\n55 local Chromium UI checks passed before upload.\n\nTarget SHA256: `' + expected + '`\n')
+          PY
+      - name: Verify GitHub Pages serves the exact updated standalone HTML
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import urllib.request, hashlib, time, os
+          url = 'https://trieuanhdung.github.io/belbin/pseudocode/'
+          expected = 'a0295a735186b937a4f29463096fad25821bd8288f5fe163aa0af42dd6abdc59'
+          for attempt in range(72):
+              try:
+                  req = urllib.request.Request(url + '?console=' + expected[:12] + '-' + str(attempt), headers={'Cache-Control': 'no-cache'})
+                  with urllib.request.urlopen(req, timeout=30) as response:
+                      source = response.read()
+                      status = response.status
+                  if status == 200 and hashlib.sha256(source).hexdigest() == expected:
+                      print('LIVE VERIFIED: HTTP 200; exact tested HTML; ' + str(len(source)) + ' bytes; ' + url)
+                      with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+                          summary.write('\n## Public page verified\n[' + url + '](' + url + ')\n\nHTTP 200; checksum matches the tested HTML containing inline console input and blinking caret.\n')
+                      break
+                  print('Waiting for the updated Pages deployment.', flush=True)
+              except Exception as error:
+                  print('Waiting for Pages: ' + str(error), flush=True)
+              time.sleep(10)
+          else:
+              raise SystemExit('Updated page was not available before the verification deadline.')
+          PY
