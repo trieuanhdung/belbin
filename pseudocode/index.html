@@ -22,6 +22,30 @@
 @media(max-width:800px){.rgsv-logo{width:38px;height:43px}.brand{gap:10px}}
 @media(max-width:450px){.rgsv-logo{width:32px;height:36px}.brand{gap:8px}.brand h1{font-size:16px;letter-spacing:-.6px}.brand .sub{display:none}.top-actions .btn{padding:5px}.topbar{gap:7px}}
 </style>
+<style id="console-input-style">
+/* Console INPUT is an editable terminal line, not a separate form panel. */
+.consolebody{cursor:text}
+.consoleline.input:before{content:none}
+.input-area{padding:0;margin:0;border:0;background:transparent;flex-shrink:0}
+.inputform{display:block;margin:0}
+.console-entry{position:relative;min-width:0;overflow:hidden;white-space:normal;font:inherit;line-height:inherit;letter-spacing:0;font-variant-ligatures:none}
+.inputform #consoleInput{display:block;width:100%;min-width:0;height:1.85em;min-height:0;padding:0 1ch 0 0;margin:0;border:0;border-radius:0;outline:none;box-shadow:none;appearance:none;background:transparent;color:#96d2c0;font:inherit;line-height:inherit;letter-spacing:inherit;caret-color:transparent;direction:ltr}
+.inputform #consoleInput:focus-visible{outline:none}
+.inputform #consoleInput::selection{background:#426d76;color:#fff}
+.console-caret{position:absolute;top:.32em;left:0;width:1ch;height:1.2em;border:1px solid #a9ead2;background:transparent;opacity:.75;pointer-events:none}
+.console-entry:focus-within .console-caret{background:#a9ead2;mix-blend-mode:screen;animation:console-caret-blink 1s step-end infinite}
+.console-entry.has-selection .console-caret,.console-entry.composing .console-caret{visibility:hidden}
+.console-entry.composing #consoleInput{caret-color:#a9ead2}
+.console-measure{position:absolute;top:0;left:0;display:inline-block;width:max-content;max-width:none;visibility:hidden;white-space:pre;pointer-events:none;font:inherit;line-height:inherit;letter-spacing:inherit}
+.input-error{font:11px/1.6 var(--mono);color:#ffcc9b;margin:3px 0 5px;white-space:normal}
+.input-error:empty{display:none}
+.console.waiting-input .panelhead .faded{color:#a9ead2}
+@keyframes console-caret-blink{0%,100%{opacity:.9}50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.console-entry:focus-within .console-caret{animation:none;opacity:.9}}
+@media(forced-colors:active){.inputform #consoleInput{caret-color:auto}.console-caret{display:none}}
+@media(max-width:800px){.consolebody{font-size:16px}}
+</style>
+
 </head>
 <body>
 <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
@@ -81,7 +105,7 @@
 <div class="pane" id="stackPane" role="tabpanel" aria-labelledby="tab-stack" hidden></div>
 <div class="pane" id="filesPane" role="tabpanel" aria-labelledby="tab-files" hidden><div class="filetools"><button class="btn small" id="newFileBtn"><svg aria-hidden="true"><use href="#i-plus"/></svg>New file</button><button class="btn small" id="importFileBtn"><svg aria-hidden="true"><use href="#i-open"/></svg>Import .txt</button></div><div id="filesList"></div><p class="hint">These are virtual text files in this page, not direct access to your computer. Reset restores the starting files; export written files before resetting.</p></div>
 </section>
-<section class="panel console" aria-label="Program console"><div class="panelhead"><h2><svg aria-hidden="true"><use href="#i-terminal"/></svg>Console</h2><span class="faded">OUTPUT / INPUT</span><span class="grow"></span><button class="iconbtn" id="copyOutputBtn" title="Copy output" aria-label="Copy console output"><svg aria-hidden="true"><use href="#i-copy"/></svg></button><button class="iconbtn" id="exportOutputBtn" title="Save output as text" aria-label="Save console output"><svg aria-hidden="true"><use href="#i-save"/></svg></button></div><div class="consolebody" id="consoleBody" role="log" aria-label="Program output"></div><div class="input-area" id="inputArea" hidden><div class="input-label" id="inputLabel"></div><form class="inputform" id="inputForm"><label class="sr-only" for="consoleInput">Value for INPUT statement</label><input id="consoleInput" autocomplete="off" placeholder="Enter a value without quotes"><button class="btn" type="submit">Send ↵</button></form><div class="input-error" id="inputError" role="alert"></div></div></section>
+<section class="panel console" aria-label="Program console"><div class="panelhead"><h2><svg aria-hidden="true"><use href="#i-terminal"/></svg>Console</h2><span class="faded" id="consoleMode">OUTPUT / INPUT</span><span class="grow"></span><button class="iconbtn" id="copyOutputBtn" title="Copy output" aria-label="Copy console output"><svg aria-hidden="true"><use href="#i-copy"/></svg></button><button class="iconbtn" id="exportOutputBtn" title="Save output as text" aria-label="Save console output"><svg aria-hidden="true"><use href="#i-save"/></svg></button></div><div class="consolebody" id="consoleBody"><div id="consoleOutput" role="log" aria-label="Program output" aria-live="polite"></div><div class="input-area" id="inputArea" hidden><form class="inputform" id="inputForm"><label class="sr-only" id="inputLabel" for="consoleInput">Type a value and press Enter</label><div class="console-entry" id="consoleEntry"><input id="consoleInput" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" maxlength="100000" aria-describedby="inputError" dir="ltr"><span class="console-caret" id="consoleCaret" aria-hidden="true"></span><span class="console-measure" id="consoleMeasure" aria-hidden="true"></span></div></form><div class="input-error" id="inputError" role="alert"></div></div></div></section>
 <section class="panel execution" aria-label="Execution trace"><div class="panelhead"><h2><svg aria-hidden="true"><use href="#i-trace"/></svg>Execution trace</h2><span class="grow"></span><button class="btn small" id="bytecodeBtn" title="View compiled bytecode">Bytecode</button><button class="iconbtn" id="traceBtn" title="Open full trace table and export CSV" aria-label="Open full trace table"><svg aria-hidden="true"><use href="#i-expand"/></svg></button></div><div class="execution-summary" id="executionSummary" aria-live="polite"></div><div class="trace-scroll" id="traceScroll"><table class="trace-mini" id="traceMini"><thead><tr><th>Step</th><th>Line</th><th>What changed?</th></tr></thead><tbody id="traceBody"></tbody></table></div></section>
 </main>
 <footer class="bottom"><div class="left"><span><span class="online-dot"></span>Runs locally · no account needed</span><span id="saveState">Autosave ready</span></div><span id="stepState">0 steps · not compiled</span><div class="right">Cambridge-style teaching dialect · <button class="help-link" id="scopeBtn">Supported syntax</button> · v1.0</div></footer>
@@ -112,7 +136,7 @@ OUTPUT Name, " scored ", Score
 INPUT Score</pre>
 <p>Declare variables before executing code that uses them. <code>CHARACTER</code> is accepted as an alias for <code>CHAR</code>. A declaration creates an <em>uninitialised</em> value, not an automatic zero. <code>DECLARE A, B : INTEGER</code> is supported. Constants must contain a literal, not an expression. Identifiers and keywords are case-insensitive; text values are case-sensitive.</p>
 <p>Use <code>←</code>, <code>&lt;-</code>, <code>&lt;--</code> or <code>:=</code> for assignment. Use <code>=</code> for comparison. Single quotes hold exactly one character; double quotes hold a string. Comments start with <code>//</code>. Tab indents four spaces. Enter preserves indentation; the format button re-indents structured blocks.</p>
-<p>Each OUTPUT adds a line. Comma-separated values are joined <strong>without extra spaces</strong>; include spaces inside text. INPUT pauses in the console. Type values without quotes. Boolean input must be TRUE or FALSE. Invalid input can be corrected without resetting.</p>
+<p>Each OUTPUT adds a line. Comma-separated values are joined <strong>without extra spaces</strong>; include spaces inside text. INPUT pauses at a blinking block caret in the console. Type directly on that line and press <strong>Enter</strong> to submit; there is no separate input box. Click the input line to refocus it. Type values without quotes. Boolean input must be TRUE or FALSE. Invalid input can be corrected without resetting.</p>
 <table><thead><tr><th>Purpose</th><th>Operators</th></tr></thead><tbody><tr><td>Arithmetic</td><td><code>+ - * / DIV MOD ^</code></td></tr><tr><td>Compare</td><td><code>= &lt;&gt; &lt; &gt; &lt;= &gt;=</code></td></tr><tr><td>Boolean</td><td><code>AND OR NOT XOR</code></td></tr><tr><td>Concatenate text</td><td><code>"Hello " &amp; Name</code></td></tr></tbody></table>
 <p><code>/</code> always returns REAL, even for <code>4 / 2</code>. INTEGER values may be assigned to REAL variables, but the reverse needs <code>INT()</code>. <code>DIV</code> truncates towards zero; <code>MOD</code> uses the corresponding remainder. <code>&amp;</code> requires text operands, not numbers; use <code>NUM_TO_STR()</code> or separate OUTPUT values. AND and OR short-circuit. Use parentheses to make Boolean intent clear.</p>
 <h3 id="guide-control">3. Decisions and loops</h3>
@@ -725,8 +749,59 @@ function renderWatches(){if(!watches.length){$('watchList').innerHTML=emptyHTML(
 function renderStack(){if(!vm){$('stackPane').innerHTML=emptyHTML('Follow the calls','Functions and procedures will appear here when they are called.','trace');return;}$('stackPane').innerHTML=[...vm.s.frames].reverse().map((f,i)=>`<div class="stackrow ${i===0?'current':''}"><span class="stacknum">${f.id}</span><div><strong>${esc(f.name)}${f.key?'()':''}</strong><small>${f.id===0?'Global execution scope':`Called from line ${f.callLine} · ${f.vars.size} local item(s)`}${i===0?' · active':''}</small></div></div>`).join('')+'<p class="hint">The active call is at the top. Variables shows the active call’s locals plus the globals.</p>';}
 function currentFiles(){return vm?vm.s.files:new Map(Object.entries(seedFiles));}
 function renderFiles(){const files=[...currentFiles()];$('filesList').innerHTML=files.length?files.map(([name,content])=>{const h=vm?.s.handles.get(name);return `<div class="filerow">${icon('file')}<div class="filedesc"><strong>${esc(name)}</strong><small>${content.length.toLocaleString()} characters${h?' · open '+h.mode+(h.mode==='READ'?' · '+h.index+' lines read':''):''}</small></div><button class="iconbtn" data-file-action="edit" data-name="${esc(name)}" title="View or edit file" aria-label="View or edit ${esc(name)}">${icon('edit')}</button><button class="iconbtn" data-file-action="export" data-name="${esc(name)}" title="Export file" aria-label="Export ${esc(name)}">${icon('save')}</button><button class="iconbtn" data-file-action="delete" data-name="${esc(name)}" title="Remove starting file" aria-label="Remove ${esc(name)}">${icon('trash')}</button></div>`;}).join(''):emptyHTML('A small virtual filing cabinet','Create a text file or try the “Text files & EOF” example.','file');for(const s of $('filesList').querySelectorAll('.filerow>svg')){s.style.width='18px';s.style.height='18px';s.style.color='var(--muted)';s.style.flexShrink='0';}}
-function renderConsole(){const output=vm?.s.output||[],key=`${vm?.s.outputDropped||0}|${output.length}|${output.at(-1)?.text||''}`;if(key!==lastConsoleKey){lastConsoleKey=key;$('consoleBody').innerHTML=output.length?`${vm.s.outputDropped?`<div class="console-placeholder">… ${vm.s.outputDropped} older console lines removed.</div>`:''}`+output.map(x=>`<div class="consoleline ${x.kind}">${esc(x.text)||' '}</div>`).join(''):'<div class="console-placeholder">Your program’s output will appear here.<br>Use OUTPUT to display a message and INPUT to ask for a value.</div>';$('consoleBody').scrollTop=$('consoleBody').scrollHeight;}
- const pending=vm?.s.pending;$('inputArea').hidden=!pending;if(pending){$('inputLabel').textContent=`INPUT ${pending.name} : ${pending.type}`;const key=`${pending.line}:${vm.frame.id}:${vm.s.steps}`;if(lastInputKey!==key){lastInputKey=key;$('consoleInput').value='';$('inputError').textContent='';requestAnimationFrame(()=>$('consoleInput').focus({preventScroll:true}));}}else{lastInputKey='';$('inputError').textContent='';}
+// A real text input retains native editing, selection, paste and IME support.
+// The overlay follows the native insertion point, including horizontal scrolling.
+let consoleCaretFrame=0,consoleComposing=false;
+function syncConsoleCaret(){
+ const input=$('consoleInput'),entry=$('consoleEntry'),caret=$('consoleCaret');
+ if($('inputArea').hidden)return;
+ const position=input.selectionStart??input.value.length;
+ $('consoleMeasure').textContent=input.value.slice(0,position);
+ const left=$('consoleMeasure').getBoundingClientRect().width-input.scrollLeft;
+ const maxLeft=Math.max(0,input.clientWidth-caret.getBoundingClientRect().width);
+ caret.style.left=Math.max(0,Math.min(maxLeft,left))+'px';
+ entry.classList.toggle('has-selection',input.selectionStart!==input.selectionEnd);
+ entry.classList.toggle('composing',consoleComposing);
+}
+function queueConsoleCaret(){
+ if(consoleCaretFrame)return;
+ consoleCaretFrame=requestAnimationFrame(()=>{consoleCaretFrame=0;syncConsoleCaret();});
+}
+function renderConsole(){
+ const output=vm?.s.output||[],pending=vm?.s.pending,body=$('consoleBody'),input=$('consoleInput');
+ const key=JSON.stringify([vm?.s.outputDropped||0,output.length,output.at(-1)?.kind,output.at(-1)?.text,!output.length&&!!pending]);
+ const outputChanged=key!==lastConsoleKey;
+ if(outputChanged){
+  lastConsoleKey=key;
+  $('consoleOutput').innerHTML=output.length?
+   `${vm.s.outputDropped?`<div class="console-placeholder">… ${vm.s.outputDropped} older console lines removed.</div>`:''}`+
+   output.map(x=>`<div class="consoleline ${x.kind}">${esc(x.text)||' '}</div>`).join(''):
+   pending?'':'<div class="console-placeholder">Your program’s output will appear here.<br>Use OUTPUT to display a message and INPUT to ask for a value.</div>';
+ }
+ $('inputArea').hidden=!pending;
+ body.closest('.console').classList.toggle('waiting-input',!!pending);
+ $('consoleMode').textContent=pending?'INPUT · Enter ↵':'OUTPUT / INPUT';
+ if(pending){
+  $('inputLabel').textContent=`INPUT ${pending.name} (${pending.type}). Type a value and press Enter.`;
+  const inputKey=`${pending.line}:${vm.frame.id}:${vm.s.steps}`;
+  if(lastInputKey!==inputKey){
+   lastInputKey=inputKey;input.value='';input.scrollLeft=0;
+   $('inputError').textContent='';input.removeAttribute('aria-invalid');consoleComposing=false;
+   const inputVM=vm;
+   requestAnimationFrame(()=>{
+    if(vm!==inputVM||!vm?.s.pending||lastInputKey!==inputKey)return;
+    body.scrollTop=body.scrollHeight;
+    const rect=input.getBoundingClientRect();
+    if(rect.bottom>window.innerHeight-24||rect.top<24)$('inputArea').scrollIntoView({block:'center',inline:'nearest'});
+    input.focus({preventScroll:true});syncConsoleCaret();
+   });
+  }
+  queueConsoleCaret();
+ }else{
+  lastInputKey='';input.value='';$('inputError').textContent='';input.removeAttribute('aria-invalid');consoleComposing=false;
+  if(document.activeElement===input)input.blur();
+ }
+ if(outputChanged)body.scrollTop=body.scrollHeight;
 }
 function renderTrace(){const error=compileError||vm?.s.error,summary=$('executionSummary');summary.classList.toggle('error',!!error);if(error)summary.innerHTML=`<strong>${compileError?'Compile':'Runtime'} error · line ${error.line}${compileError?', column '+error.column:''}</strong><br>${esc(error.message)}`;else if(vm?.s.pending)summary.innerHTML=`<strong>Waiting for input · line ${vm.s.pending.line}</strong><br>Enter a ${esc(vm.s.pending.type)} value in the console.`;else if(pauseReason==='breakpoint')summary.innerHTML=`<strong>Breakpoint · next is line ${vm?.next()?.line}</strong><br>${esc(notice)}`;else if(vm?.s.done)summary.innerHTML=`<strong>Program finished · ${vm.s.steps} source steps</strong><br>${esc(vm.s.notes.filter(n=>n!=='Program finished.').join(' ')||'Review the trace, or press Back to revisit execution.')}`;else if(vm?.s.steps){const msg=vm.s.notes.join(' ')||vm.s.changes.map(c=>`${c.name} ← ${c.after}`).join(' · ')||'Step complete.';summary.innerHTML=`<strong>Executed line ${vm.s.lastLine}</strong> <span class="muted">→ next ${vm.next()?.line||'—'}</span><br>${esc(notice||msg)}`;}else summary.innerHTML=`<strong>${vm?'Compiled and ready':'Start with a single step'}</strong><br>${esc(notice)}`;
  const trace=vm?.trace||[];$('traceBody').innerHTML=trace.slice(-150).map(t=>`<tr><td>${t.step}</td><td><button class="line-link" data-goto="${t.line}" title="Show source line ${t.line}">${t.line}</button></td><td>${esc(t.changes||t.action||'Continue.')}</td></tr>`).join('');if(trace.length!==lastTraceCount){$('traceScroll').scrollTop=$('traceScroll').scrollHeight;lastTraceCount=trace.length;}
@@ -761,8 +836,33 @@ $('snippet').onchange=e=>{if(snippets[e.target.value])insertText(snippets[e.targ
 editor.addEventListener('input',edited);editor.addEventListener('scroll',syncScroll);['click','keyup','select'].forEach(type=>editor.addEventListener(type,updateCursor));editor.addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();indentSelection(e.shiftKey);}if(e.key==='Enter'&&!e.ctrlKey&&!e.metaKey&&!editor.readOnly){e.preventDefault();const before=editor.value.slice(0,editor.selectionStart),line=before.slice(before.lastIndexOf('\n')+1),indent=(line.match(/^\s*/)||[''])[0];let extra=/^\s*(FOR\b|WHILE\b|REPEAT\b|PROCEDURE\b|FUNCTION\b|CASE\b|ELSE\s*$|.*\bTHEN\s*$)/i.test(line)?'    ':'';insertText('\n'+indent+extra);}});
 $('gutter').onclick=e=>{const button=e.target.closest('button[data-line]');if(!button)return;const n=Number(button.dataset.line),text=editor.value.split('\n')[n-1]?.trim();if(!text||text.startsWith('//')||(program&&!program.executable.has(n))){toast('This line has no executable instruction. Choose a statement.');return;}if(breakpoints.has(n))breakpoints.delete(n);else breakpoints.add(n);renderMarkers();queueSave();};
 $('watchForm').onsubmit=e=>{e.preventDefault();const value=$('watchInput').value.trim();if(!value)return;if(value.length>500){toast('Watch expressions are limited to 500 characters.');return;}if(watches.length>=16){toast('Limit: 16 watch expressions.');return;}if(!watches.includes(value))watches.push(value);$('watchInput').value='';renderWatches();queueSave();};$('watchList').onclick=e=>{const b=e.target.closest('[data-remove-watch]');if(b){watches.splice(Number(b.dataset.removeWatch),1);renderWatches();queueSave();}};
-$('inputForm').onsubmit=e=>{e.preventDefault();if(!vm?.s.pending)return;try{vm.provideInput($('consoleInput').value);const resume=pendingResume;pendingResume=null;lastInputKey='';const overComplete=resume==='over'&&vm.s.frames.length<=overDepth&&vm.next()?.phase!=='resume';notice=overComplete?'Step over completed.':'';if(overComplete)pauseReason='paused';renderAll();revealLine(activeLine());if(resume&&!overComplete&&!vm.s.done&&!vm.s.error){running=true;activeMode=resume;renderControls();timer=setTimeout(pump,Math.min(200,Number($('speed').value)));}}catch(err){$('inputError').textContent=err.message;$('consoleInput').focus();}};
-$('copyOutputBtn').onclick=()=>copyText((vm?.s.output||[]).map(x=>(x.kind==='input'?'› ':'')+x.text).join('\n'));$('exportOutputBtn').onclick=()=>saveFile(filename.replace(/\.[^.]+$/,'')+'-output.txt',(vm?.s.output||[]).map(x=>(x.kind==='input'?'› ':'')+x.text).join('\n'));
+$('inputForm').onsubmit=e=>{
+ e.preventDefault();if(!vm?.s.pending||consoleComposing)return;
+ try{
+  vm.provideInput($('consoleInput').value);
+  const resume=pendingResume;pendingResume=null;lastInputKey='';
+  const overComplete=resume==='over'&&vm.s.frames.length<=overDepth&&vm.next()?.phase!=='resume';
+  notice=overComplete?'Step over completed.':'';if(overComplete)pauseReason='paused';
+  renderAll();revealLine(activeLine());
+  if(resume&&!overComplete&&!vm.s.done&&!vm.s.error){running=true;activeMode=resume;renderControls();timer=setTimeout(pump,Math.min(200,Number($('speed').value)));}
+ }catch(err){
+  $('inputError').textContent=err.message;$('consoleInput').setAttribute('aria-invalid','true');
+  $('consoleInput').focus({preventScroll:true});$('consoleBody').scrollTop=$('consoleBody').scrollHeight;queueConsoleCaret();
+ }
+};
+['input','keyup','click','scroll','select','focus','blur'].forEach(type=>$('consoleInput').addEventListener(type,queueConsoleCaret));
+$('consoleInput').addEventListener('input',()=>{$('inputError').textContent='';$('consoleInput').removeAttribute('aria-invalid');});
+$('consoleInput').addEventListener('compositionstart',()=>{consoleComposing=true;queueConsoleCaret();});
+$('consoleInput').addEventListener('compositionend',()=>{consoleComposing=false;queueConsoleCaret();});
+$('consoleInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.isComposing||e.keyCode===229||consoleComposing))e.preventDefault();});
+document.addEventListener('selectionchange',()=>{if(document.activeElement===$('consoleInput'))queueConsoleCaret();});
+$('consoleBody').addEventListener('click',e=>{
+ if(!vm?.s.pending||e.target===$('consoleInput')||document.querySelector('dialog[open]')||window.getSelection()?.toString())return;
+ $('consoleInput').focus({preventScroll:true});queueConsoleCaret();
+});
+window.addEventListener('resize',queueConsoleCaret);
+if(typeof ResizeObserver!=='undefined')new ResizeObserver(queueConsoleCaret).observe($('consoleEntry'));
+$('copyOutputBtn').onclick=()=>copyText((vm?.s.output||[]).map(x=>x.text).join('\n'));$('exportOutputBtn').onclick=()=>saveFile(filename.replace(/\.[^.]+$/,'')+'-output.txt',(vm?.s.output||[]).map(x=>x.text).join('\n'));
 $('traceBtn').onclick=showTrace;$('csvBtn').onclick=exportTrace;$('bytecodeBtn').onclick=showBytecode;$('traceBody').onclick=e=>{const b=e.target.closest('[data-goto]');if(b)revealLine(Number(b.dataset.goto),true);};
 document.querySelectorAll('[data-tab]').forEach(b=>{b.onclick=()=>setTab(b.dataset.tab);b.onkeydown=e=>{if(!['ArrowLeft','ArrowRight'].includes(e.key))return;e.preventDefault();const tabs=[...document.querySelectorAll('[data-tab]')],index=tabs.indexOf(b),next=tabs[(index+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length];setTab(next.dataset.tab);next.focus();};});
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());document.querySelectorAll('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();}}));
