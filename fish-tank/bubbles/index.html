@@ -1,95 +1,12 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Animated underwater bubbles with a transparent background. Preview and save a looping GIF for your Scratch fish tank.">
-<title>Underwater Bubbles · Scratch Fish Tank</title>
-<style>
-:root{color-scheme:light;--ink:#173f4c;--muted:#56747d;--teal:#007d85;--line:#cee3e5}*{box-sizing:border-box}body{margin:0;background:#eef8f8;color:var(--ink);font:16px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{max-width:1100px;margin:auto;padding:34px 24px 48px}.eyebrow{font-size:12px;font-weight:750;letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}h1{font-size:clamp(34px,6vw,58px);line-height:1.07;letter-spacing:-.045em;margin:12px 0 16px}header p{max-width:640px;color:var(--muted);margin:0 0 27px;font-size:18px}.layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.85fr);gap:24px;align-items:start}.panel{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden}.preview{position:relative;aspect-ratio:1;isolation:isolate;background:linear-gradient(180deg,#82cbed,#3675ab 80%,#426979);overflow:hidden}.preview:before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at 30% -15%,#fff7,transparent 65%)}.preview.checker{background-color:#fff;background-image:conic-gradient(#e3e9ec 25%,transparent 0 50%,#e3e9ec 0 75%,transparent 0);background-size:24px 24px}.preview.checker:before,.preview.dark:before{display:none}.preview.dark{background:#173039}.preview img{display:block;width:100%;height:100%;object-fit:contain}.preview canvas{display:none;width:100%;height:100%}.preview.paused img{display:none}.preview.paused canvas{display:block}.badge{position:absolute;left:17px;top:17px;color:#fff;background:#174956ac;border:1px solid #fff4;backdrop-filter:blur(8px);font-size:11px;font-weight:800;letter-spacing:.08em;padding:6px 10px;border-radius:99px;pointer-events:none}.controls{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:13px 15px;flex-wrap:wrap}.swatches{display:flex;gap:5px}button,a.button{font:inherit;font-size:14px;font-weight:700;border-radius:10px;padding:9px 13px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;text-decoration:none;text-align:center}button:hover,a.button:hover{background:#eaf6f6}button[aria-pressed="true"]{background:#e0f4f3;border-color:#88c6c8;color:#006c73}button:focus-visible,a:focus-visible{outline:3px solid #f2b13d;outline-offset:3px}button:disabled{opacity:.5;cursor:wait}.download-box{padding:26px}.download-box h2{font-size:24px;letter-spacing:-.025em;margin:0 0 9px}.download-box p{color:var(--muted);margin:0 0 20px}.pills{display:flex;gap:7px;flex-wrap:wrap;margin:21px 0}.pill{font-size:12px;background:#f0f7f7;border:1px solid #e2eeee;padding:5px 9px;border-radius:99px}.primary{width:100%;background:var(--teal)!important;color:#fff!important;border-color:var(--teal)!important;padding:14px!important;font-size:16px!important;box-shadow:0 4px 12px #007d8526}.secondary{display:block;width:100%;margin-top:9px}#status{font-size:13px;min-height:40px;line-height:1.4;margin:13px 0 0}.note{border-top:1px solid var(--line);margin-top:22px;padding-top:20px}.note h3{font-size:15px;margin:0 0 6px}.note p{font-size:14px;margin:0}.foot{font-size:13px;color:var(--muted);margin-top:23px}.loading{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-weight:700}.loading[hidden]{display:none}footer{font-size:12px;color:var(--muted);margin-top:23px}footer a{color:inherit}noscript{display:block;background:#fff4db;padding:16px;border-radius:12px;margin-bottom:20px}@media(max-width:740px){main{padding:25px 16px}.layout{grid-template-columns:1fr}.download-box{padding:23px}header p{font-size:16px}.preview{max-height:70vh}.controls{font-size:13px}}
-</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>White bubbles</title>
+<meta http-equiv="refresh" content="0;url=../?v=white-bubbles#underwater-bubbles">
 </head>
 <body>
-<main>
-<header><div class="eyebrow">Scratch Fish Tank · Animation Asset</div><h1>A little life<br>under the water.</h1><p>Rising bubbles for your fish tank. Preview the animation, then save the transparent GIF to use in your project.</p></header>
-<noscript>This self-contained page needs JavaScript to prepare the downloadable GIF. Please enable JavaScript and reload.</noscript>
-<div class="layout">
-<section class="panel" aria-label="Bubbles animation preview">
-<div id="preview" class="preview"><img id="animation" alt="Small pale-blue bubbles rising and gently swaying upwards" hidden><canvas id="still" width="512" height="512" aria-hidden="true"></canvas><span class="badge">ANIMATION PREVIEW</span><div class="loading" id="loading">Preparing your GIF…</div></div>
-<div class="controls"><div class="swatches" role="group" aria-label="Preview background"><button data-bg="water" aria-pressed="true">Water</button><button data-bg="checker" aria-pressed="false">Transparent</button><button data-bg="dark" aria-pressed="false">Dark</button></div><button id="pause" disabled aria-pressed="false">Pause</button></div>
-</section>
-<section class="panel download-box"><h2>Underwater bubbles</h2><p>A ready-to-use looping animation. Only the bubbles are saved — the preview background is not included.</p><div class="pills"><span class="pill">512 × 512 pixels</span><span class="pill">Transparent</span><span class="pill">Loops forever</span></div><button id="download" class="primary" disabled>Download animated GIF ↓</button><button id="save-page" class="secondary">Save this HTML page</button><p id="status" role="status" aria-live="polite">Preparing animation…</p><div class="note"><h3>Made for layering</h3><p>Place the bubbles over your aquarium backdrop. Switch the preview to <strong>Transparent</strong> to see the empty background.</p></div><div class="note"><h3>One file. No extra libraries.</h3><p>This HTML also works offline. The GIF is built in your browser; nothing is uploaded.</p></div></section>
-</div>
-<footer>Scratch classroom materials · <a href="https://github.com/trieuanhdung/belbin/tree/main/fish-tank/bubbles">View source on GitHub</a></footer>
-</main>
-<script>
-'use strict';
-// A small, dependency-free GIF89a encoder. Palette index 0 is transparent.
-const WIDTH=512, HEIGHT=512, FRAME_COUNT=72, DELAY=8;
-const PALETTE=[[0,0,0],[120,210,255],[220,245,255],[255,255,255],[165,225,255],[73,157,206],[196,236,255],[230,249,255]];
-function lzw(pixels){
- const output=[];let bits=0,held=0,width=4,next=10;let dictionary=new Map();
- const emit=code=>{held|=code<<bits;bits+=width;while(bits>=8){output.push(held&255);held>>>=8;bits-=8;}};
- emit(8);let prefix=pixels[0];
- for(let i=1;i<pixels.length;i++){
-  const value=pixels[i],key=prefix*8+value,found=dictionary.get(key);
-  if(found!==undefined){prefix=found;continue;}
-  emit(prefix);dictionary.set(key,next++);
-  if(next>(1<<width)&&width<12)width++;
-  if(next>=4096){emit(8);dictionary=new Map();width=4;next=10;}
-  prefix=value;
- }
- emit(prefix);if(next===(1<<width)&&width<12)width++;emit(9);if(bits)output.push(held&255);
- return new Uint8Array(output);
-}
-function gifHeader(){
- const bytes=[];const word=n=>bytes.push(n&255,n>>8);
- for(const c of 'GIF89a')bytes.push(c.charCodeAt(0));word(WIDTH);word(HEIGHT);bytes.push(0xF2,0,0);
- for(const rgb of PALETTE)bytes.push(...rgb);
- bytes.push(0x21,0xFF,11);for(const c of 'NETSCAPE2.0')bytes.push(c.charCodeAt(0));bytes.push(3,1,0,0,0);
- return new Uint8Array(bytes);
-}
-function gifFrame(pixels){
- const bytes=[0x21,0xF9,4,9,DELAY,0,0,0,0x2C,0,0,0,0,WIDTH&255,WIDTH>>8,HEIGHT&255,HEIGHT>>8,0,3];
- const packed=lzw(pixels);
- for(let i=0;i<packed.length;i+=255){const end=Math.min(i+255,packed.length);bytes.push(end-i);for(let j=i;j<end;j++)bytes.push(packed[j]);}
- bytes.push(0);return new Uint8Array(bytes);
-}
-// All paths complete an integer number of cycles, so the loop has no reset jump.
-let seed=7;function random(){seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;}
-const bubbles=Array.from({length:38},(_,i)=>({x:34+random()*444,r:i<14?8+Math.floor(random()*17):3+Math.floor(random()*5),phase:random()*576,sway:3+random()*10,angle:random()*Math.PI*2}));
-function disk(pixels,x,y,r,colour){
- for(let dy=-r;dy<=r;dy++){const yy=y+dy;if(yy<0||yy>=HEIGHT)continue;const half=Math.floor(Math.sqrt(r*r-dy*dy));const left=Math.max(0,x-half),right=Math.min(WIDTH-1,x+half);if(right>=left)pixels.fill(colour,yy*WIDTH+left,yy*WIDTH+right+1);}
-}
-function renderFrame(frame){
- const pixels=new Uint8Array(WIDTH*HEIGHT);const t=frame/FRAME_COUNT;
- for(const b of bubbles){
-  const y=Math.round(HEIGHT+32-((b.phase+t*576)%576));const x=Math.round(b.x+Math.sin(t*Math.PI*2+b.angle)*b.sway);const rim=Math.max(1,Math.floor(b.r/7));
-  disk(pixels,x,y,b.r,1);disk(pixels,x,y,Math.max(1,b.r-rim),4);
-  if(b.r>7){const r=Math.round(b.r*.75);for(let a=210;a<=340;a+=4){const angle=a*Math.PI/180;const xx=x+Math.round(Math.cos(angle)*r),yy=y+Math.round(Math.sin(angle)*r);if(xx>=0&&xx<WIDTH&&yy>=0&&yy<HEIGHT)pixels[yy*WIDTH+xx]=2;}}
-  const hr=Math.max(1,Math.round(b.r*.20));disk(pixels,x-Math.round(b.r*.30),y-Math.round(b.r*.32),hr,3);
- }
- return pixels;
-}
-function paintStill(pixels){
- const context=document.getElementById('still').getContext('2d');const data=context.createImageData(WIDTH,HEIGHT);
- for(let i=0;i<pixels.length;i++){const k=pixels[i];if(k){data.data.set(PALETTE[k],i*4);data.data[i*4+3]=255;}}context.putImageData(data,0,0);
-}
-function saveBlob(blob,name){const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=name;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);}
-let gifBlob=null,paused=false;
-function togglePause(value){paused=value;document.getElementById('preview').classList.toggle('paused',paused);const button=document.getElementById('pause');button.textContent=paused?'Play':'Pause';button.setAttribute('aria-pressed',String(paused));}
-document.getElementById('pause').addEventListener('click',()=>togglePause(!paused));
-document.querySelectorAll('[data-bg]').forEach(button=>button.addEventListener('click',()=>{document.getElementById('preview').classList.remove('checker','dark');if(button.dataset.bg!=='water')document.getElementById('preview').classList.add(button.dataset.bg);document.querySelectorAll('[data-bg]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));}));
-document.getElementById('download').addEventListener('click',()=>{if(gifBlob)saveBlob(gifBlob,'bubbles_underwater.gif');});
-document.getElementById('save-page').addEventListener('click',()=>{
- const clone=document.documentElement.cloneNode(true);clone.querySelector('#animation').removeAttribute('src');clone.querySelector('#animation').hidden=true;clone.querySelector('#loading').hidden=false;clone.querySelector('#preview').className='preview';clone.querySelectorAll('[data-bg]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.bg==='water')));clone.querySelector('#download').disabled=true;clone.querySelector('#pause').disabled=true;clone.querySelector('#pause').textContent='Pause';clone.querySelector('#pause').setAttribute('aria-pressed','false');clone.querySelector('#status').textContent='Preparing animation…';saveBlob(new Blob(['<!doctype html>\n'+clone.outerHTML],{type:'text/html;charset=utf-8'}),'underwater_bubbles.html');
-});
-async function prepare(){
- const parts=[gifHeader()];
- for(let frame=0;frame<FRAME_COUNT;frame++){const pixels=renderFrame(frame);if(frame===0)paintStill(pixels);parts.push(gifFrame(pixels));if(frame%8===0){document.getElementById('status').textContent='Preparing animation… '+Math.round(frame/FRAME_COUNT*100)+'%';await new Promise(resolve=>setTimeout(resolve,0));}}
- parts.push(new Uint8Array([0x3B]));gifBlob=new Blob(parts,{type:'image/gif'});const img=document.getElementById('animation');img.src=URL.createObjectURL(gifBlob);img.hidden=false;document.getElementById('loading').hidden=true;document.getElementById('download').disabled=false;document.getElementById('pause').disabled=false;document.getElementById('status').textContent='Ready · '+FRAME_COUNT+' frames · '+(FRAME_COUNT*DELAY/100).toFixed(2)+' second loop · '+Math.round(gifBlob.size/1024)+' KB';
- if(matchMedia('(prefers-reduced-motion: reduce)').matches)togglePause(true);
-}
-prepare().catch(error=>{console.error(error);document.getElementById('loading').textContent='Unable to prepare animation.';document.getElementById('status').textContent='Please reload the page or try a current browser.';});
-</script>
+<a href="../?v=white-bubbles#underwater-bubbles">White bubbles — Download GIF</a>
 </body>
 </html>
