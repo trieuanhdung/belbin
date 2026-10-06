@@ -410,7 +410,27 @@
       .shortlist-slot{border:1px solid #999;background:#fff;color:#000}
       .slot-card{border:1px solid #bbb}
     }
-  </style>
+  
+    /* Tabbed student journey */
+    .eca-app{padding-top:3rem}
+    .tab-bar{display:flex;gap:.45rem;overflow-x:auto;padding:.5rem;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow-soft);position:sticky;top:84px;z-index:30}
+    .eca-tab{border:0;background:transparent;color:#5b6475;border-radius:16px;padding:.75rem .85rem;min-width:max-content;font-weight:900;display:flex;align-items:center;gap:.45rem;transition:.18s ease}
+    .eca-tab span{width:1.7rem;height:1.7rem;border-radius:50%;display:grid;place-items:center;background:#f2ece7;color:var(--burgundy);font-size:.78rem}
+    .eca-tab:hover{background:#faf6f1;color:var(--burgundy)}
+    .eca-tab.active{background:var(--burgundy);color:#fff;box-shadow:0 8px 18px rgba(122,24,56,.2)}
+    .eca-tab.active span{background:var(--gold);color:var(--burgundy-dark)}
+    .tab-progress{height:5px;background:#eee8e1;border-radius:999px;margin:.65rem 1rem 1.5rem;overflow:hidden}
+    .tab-progress span{display:block;height:100%;width:16.66%;background:linear-gradient(90deg,var(--burgundy),var(--gold));border-radius:999px;transition:.25s ease}
+    .eca-panel{display:none;animation:tabIn .22s ease}.eca-panel.active{display:block}
+    @keyframes tabIn{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:none}}
+    .panel-card{background:#fff;border:1px solid rgba(122,24,56,.12);border-radius:28px;box-shadow:var(--shadow);overflow:hidden}
+    .panel-card>.quiz-step{border:0!important;padding:2.5rem}.panel-card>.quiz-step h3{font-size:1.45rem}
+    .quiz-vibe-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.quiz-vibe-grid .quiz-step{padding:1.7rem 2rem;border-bottom:1px solid var(--line)}.quiz-vibe-grid .quiz-step:nth-child(odd){border-right:1px solid var(--line)}
+    .panel-actions{padding:1.25rem 1.6rem;background:#fffcf7;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:1rem}.panel-actions p{margin:0;color:var(--muted);font-size:.86rem;max-width:620px}.panel-action-group{display:flex;gap:.55rem;flex-wrap:wrap;justify-content:flex-end}
+    #tab-matches>.results-wrap{display:block}#tab-shortlist,#tab-explore{margin-left:-1rem;margin-right:-1rem}#tab-explore>.section{padding-top:2rem}
+    @media(max-width:800px){.tab-bar{top:72px}.quiz-vibe-grid{grid-template-columns:1fr}.quiz-vibe-grid .quiz-step:nth-child(odd){border-right:0}.panel-actions{align-items:stretch;flex-direction:column}.panel-action-group{justify-content:stretch}.panel-action-group .btn{flex:1}}
+    @media(max-width:600px){.tab-bar{margin-left:-.25rem;margin-right:-.25rem;border-radius:17px}.eca-tab{padding:.65rem .7rem;font-size:.78rem}.eca-tab span{width:1.45rem;height:1.45rem}.panel-card>.quiz-step,.quiz-vibe-grid .quiz-step{padding:1.4rem}#tab-shortlist,#tab-explore{margin-left:-.5rem;margin-right:-.5rem}}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#matcher">Skip to the ECA matcher</a>
@@ -422,8 +442,8 @@
       <span class="brand-copy"><small>Secondary • Round 1</small><strong>ECA Explorer</strong></span>
     </a>
     <div class="nav-links">
-      <a href="#matcher">Find my matches</a>
-      <a href="#browse">Browse all</a>
+      <button type="button" data-tab-nav="year">Find my matches</button>
+      <button type="button" data-tab-nav="explore">Browse all</button>
       <button class="shortlist-nav" type="button" data-scroll-shortlist>
         <span aria-hidden="true">⭐</span><span class="nav-label">My shortlist</span><span class="count-bubble" id="navShortlistCount">0</span>
       </button>
@@ -438,7 +458,7 @@
       <h1>Your next favourite hour <em>starts here.</em></h1>
       <p>Choose what you enjoy, tell us your preferred vibe, and build a Tuesday–Thursday ECA plan that feels like you.</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="#matcher">✨ Find my ECA matches</a>
+        <button class="btn btn-primary" type="button" data-tab-nav="year">✨ Find my ECA matches</button>
         <button class="btn btn-secondary" type="button" id="heroSurprise">🎲 Surprise me</button>
       </div>
       <div class="hero-stats" aria-label="Timetable summary">
@@ -462,20 +482,18 @@
     </div>
   </section>
 
-  <section class="section" id="matcher">
-    <div class="section-heading">
-      <span class="eyebrow">Your ECA matchmaker</span>
-      <h2>What lights you up?</h2>
-      <p>Pick a few interests. The matcher checks your year group, day, energy and social style against the actual RGSV Round 1 timetable.</p>
-    </div>
-
-    <div class="quiz-shell">
-      <div class="quiz-top">
-        <strong>Build your RGSV activity profile</strong>
-        <span>About 30 seconds • no sign-in</span>
-      </div>
-      <div class="quiz-grid">
-        <div class="quiz-step">
+  <section class="section eca-app" id="matcher">
+  <div class="section-heading"><span class="eyebrow">Your ECA matchmaker</span><h2>Find something that feels like you.</h2><p>Take it one step at a time. Your choices stay in this browser and are used only to rank the RGSV Round 1 timetable.</p></div>
+  <div class="tab-bar" role="tablist" aria-label="ECA Explorer">
+    <button class="eca-tab active" type="button" role="tab" aria-selected="true" data-tab="year"><span>1</span> Year group</button>
+    <button class="eca-tab" type="button" role="tab" aria-selected="false" data-tab="hobbies"><span>2</span> Hobbies</button>
+    <button class="eca-tab" type="button" role="tab" aria-selected="false" data-tab="vibe"><span>3</span> Your vibe</button>
+    <button class="eca-tab" type="button" role="tab" aria-selected="false" data-tab="matches"><span>4</span> My matches</button>
+    <button class="eca-tab" type="button" role="tab" aria-selected="false" data-tab="shortlist"><span>5</span> Shortlist</button>
+    <button class="eca-tab" type="button" role="tab" aria-selected="false" data-tab="explore"><span>6</span> Explore all</button>
+  </div>
+  <div class="tab-progress"><span id="tabProgressBar"></span></div>
+  <div class="eca-panel active" id="tab-year" role="tabpanel"><div class="panel-card"><div class="quiz-step">
           <div class="step-label"><span class="step-number">1</span><h3>Choose your year group</h3></div>
           <p class="hint">We will hide activities outside their listed age range.</p>
           <div class="year-picker" id="yearPicker" role="group" aria-label="Year group">
@@ -487,9 +505,8 @@
             <button class="year-btn" type="button" data-year="12" aria-pressed="false">Y12</button>
             <button class="year-btn" type="button" data-year="13" aria-pressed="false">Y13</button>
           </div>
-        </div>
-
-        <div class="quiz-step">
+        <div class="panel-actions"><p>Start here — your year group determines which activities can be recommended.</p><button class="btn btn-primary" type="button" data-next-tab="hobbies">Next: choose hobbies →</button></div></div></div>
+  <div class="eca-panel" id="tab-hobbies" role="tabpanel"><div class="panel-card"><div class="quiz-step">
           <div class="step-label"><span class="step-number">2</span><h3>Choose your interests</h3></div>
           <p class="hint">Pick as many as you like — three or four usually gives the best mix.</p>
           <div class="chip-grid" id="interestPicker" role="group" aria-label="Interests">
@@ -504,9 +521,8 @@
             <button class="chip" type="button" data-interest="culture" aria-pressed="false">🌍 Culture & the world</button>
             <button class="chip" type="button" data-interest="wellbeing" aria-pressed="false">🧘 Calm & wellbeing</button>
           </div>
-        </div>
-
-        <div class="quiz-step">
+        <div class="panel-actions"><p>Pick the things you genuinely enjoy. You can choose several.</p><div class="panel-action-group"><button class="btn btn-secondary" type="button" data-prev-tab="year">← Year group</button><button class="btn btn-primary" type="button" data-next-tab="vibe">Next: your vibe →</button></div></div></div></div>
+  <div class="eca-panel" id="tab-vibe" role="tabpanel"><div class="panel-card"><div class="quiz-vibe-grid"><div class="quiz-step">
           <div class="step-label"><span class="step-number">3</span><h3>Choose your ideal energy</h3></div>
           <p class="hint">How do you want the ECA session to feel?</p>
           <div class="segments" role="radiogroup" aria-label="Energy preference">
@@ -514,8 +530,6 @@
             <div class="segment"><input type="radio" name="energy" id="energy-balanced" value="3" checked><label for="energy-balanced"><span>☀️</span>Balanced</label></div>
             <div class="segment"><input type="radio" name="energy" id="energy-active" value="5"><label for="energy-active"><span>⚡</span>Active</label></div>
           </div>
-        </div>
-
         <div class="quiz-step">
           <div class="step-label"><span class="step-number">4</span><h3>Choose your social style</h3></div>
           <p class="hint">There is no wrong answer — this just helps rank the matches.</p>
@@ -524,8 +538,6 @@
             <div class="segment"><input type="radio" name="social" id="social-mixed" value="2" checked><label for="social-mixed"><span>🙂</span>A bit of both</label></div>
             <div class="segment"><input type="radio" name="social" id="social-team" value="3"><label for="social-team"><span>🙌</span>Team energy</label></div>
           </div>
-        </div>
-
         <div class="quiz-step">
           <div class="step-label"><span class="step-number">5</span><h3>Which day should we plan?</h3></div>
           <p class="hint">Choose both to build a complete two-day shortlist.</p>
@@ -534,39 +546,15 @@
             <div class="segment"><input type="radio" name="day" id="day-tuesday" value="Tuesday"><label for="day-tuesday"><span>🟡</span>Tuesday</label></div>
             <div class="segment"><input type="radio" name="day" id="day-thursday" value="Thursday"><label for="day-thursday"><span>🩷</span>Thursday</label></div>
           </div>
-        </div>
-
         <div class="quiz-step">
           <div class="step-label"><span class="step-number">6</span><h3>Ready to explore?</h3></div>
           <p class="hint">The score is a fun guide, not a judgement. The best ECA is one you are excited to try.</p>
           <div class="data-note" style="margin:0">
             <strong>Good to know:</strong> Round 1 numbers show current interest only. They do not mean an activity is full or that a place is guaranteed.
           </div>
-        </div>
-      </div>
-      <div class="quiz-actions">
-        <p>This page makes suggestions only. Official registration and staff confirmation still apply.</p>
-        <div class="quiz-action-buttons">
-          <button class="btn btn-secondary" type="button" id="surpriseButton">🎲 Surprise me</button>
-          <button class="btn btn-primary" type="button" id="matchButton">Show my matches →</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section results-wrap" id="results" aria-live="polite">
-    <div class="results-summary">
-      <div>
-        <span class="eyebrow">Your personalised line-up</span>
-        <h2 id="resultsHeading">Strong matches for you</h2>
-        <p id="resultsText"></p>
-      </div>
-      <button class="btn btn-secondary" type="button" id="editChoices">↥ Edit choices</button>
-    </div>
-    <div id="resultsContent"></div>
-  </section>
-
-  <section class="shortlist-section" id="shortlist">
+        </div><div class="panel-actions"><p>The score is a fun guide, not a judgement. The best ECA is one you are excited to try.</p><div class="panel-action-group"><button class="btn btn-secondary" type="button" data-prev-tab="hobbies">← Hobbies</button><button class="btn btn-secondary" type="button" id="surpriseButton">🎲 Surprise me</button><button class="btn btn-primary" type="button" id="matchButton">Show my matches →</button></div></div></div></div>
+  <div class="eca-panel" id="tab-matches" role="tabpanel"><section class="section results-wrap visible" id="results" aria-live="polite"><div class="results-summary"><div><span class="eyebrow">Your personalised line-up</span><h2 id="resultsHeading">Strong matches for you</h2><p id="resultsText">Choose your year group and hobbies first, then we will build your line-up.</p></div><button class="btn btn-secondary" type="button" id="editChoices">↥ Edit choices</button></div><div id="resultsContent"><div class="empty-panel"><span>✨</span>Your best-fit ECAs will appear here.</div></div></section></div>
+  <div class="eca-panel" id="tab-shortlist" role="tabpanel"><section class="shortlist-section" id="shortlist">
     <div class="section">
       <div class="section-heading">
         <span class="eyebrow" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.18);color:#fff">Your two-day plan</span>
@@ -591,7 +579,8 @@
     </div>
   </section>
 
-  <section class="section" id="browse">
+  </div>
+  <div class="eca-panel" id="tab-explore" role="tabpanel"><section class="section" id="browse">
     <div class="section-heading">
       <span class="eyebrow">All Round 1 options</span>
       <h2>Browse every ECA</h2>
@@ -625,7 +614,8 @@
       <strong>Timetable note:</strong> This explorer uses the age ranges and days from the ECA Overview. Some specialist or newly listed activities require confirmation from the Secondary Office. The page does not submit registrations.
     </div>
   </section>
-</main>
+</main></div>
+</section>
 
 <footer>
   <div class="footer-inner">
@@ -659,6 +649,9 @@
     day:"Both",
     shortlist:loadShortlist()
   };
+  const tabOrder=["year","hobbies","vibe","matches","shortlist","explore"];
+  function activateTab(name){if(!tabOrder.includes(name))name="year";$(".eca-tab").forEach(tab=>{const active=tab.dataset.tab===name;tab.classList.toggle("active",active);tab.setAttribute("aria-selected",String(active));});$(".eca-panel").forEach(panel=>panel.classList.toggle("active",panel.id==="tab-"+name));const bar=$("#tabProgressBar");if(bar)bar.style.width=(((tabOrder.indexOf(name)+1)/tabOrder.length)*100)+"%";}
+
 
   const $ = (selector, root=document) => root.querySelector(selector);
   const $$ = (selector, root=document) => [...root.querySelectorAll(selector)];
@@ -885,7 +878,7 @@
       ? "A playful set of eligible options — sometimes the unexpected choice becomes the best one."
       : `Based on ${interests.join(", ").toLowerCase()}, your preferred energy and social style.`;
     $("#results").classList.add("visible");
-    $("#results").scrollIntoView({behavior:"smooth",block:"start"});
+    activateTab("matches");
     createConfetti();
   }
 
@@ -1055,12 +1048,9 @@
 
   $("#matchButton").addEventListener("click", () => renderRecommendations(false));
   $("#surpriseButton").addEventListener("click", randomiseProfile);
-  $("#heroSurprise").addEventListener("click", () => {
-    $("#matcher").scrollIntoView({behavior:"smooth"});
-    setTimeout(randomiseProfile,250);
-  });
-  $("#editChoices").addEventListener("click", () => $("#matcher").scrollIntoView({behavior:"smooth",block:"start"}));
-  $$("[data-scroll-shortlist]").forEach(button => button.addEventListener("click", () => $("#shortlist").scrollIntoView({behavior:"smooth"})));
+  $("#heroSurprise").addEventListener("click", () => { activateTab("vibe"); setTimeout(randomiseProfile,80); });
+  $("#editChoices").addEventListener("click", () => activateTab("vibe"));
+  $("[data-scroll-shortlist]").forEach(button => button.addEventListener("click", () => activateTab("shortlist")));
 
   document.addEventListener("click", event => {
     const addButton = event.target.closest("[data-add]");
@@ -1087,7 +1077,10 @@
   // Initial render
   $("#openSessionCount").textContent = activities.filter(item => item.open).length;
   $("#studentLedCount").textContent = activities.filter(item => item.leadType !== "Teacher-led" && item.open).length;
+  $(".eca-tab").forEach(tab=>tab.addEventListener("click",()=>activateTab(tab.dataset.tab)));
+  $("[data-next-tab],[data-prev-tab],[data-tab-nav]").forEach(button=>button.addEventListener("click",()=>activateTab(button.dataset.nextTab||button.dataset.prevTab||button.dataset.tabNav)));
   populateBrowseFilters();
+  activateTab("year");
   renderShortlist();
   renderBrowse();
 })();
