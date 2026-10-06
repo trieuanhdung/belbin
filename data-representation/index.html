@@ -151,13 +151,15 @@
 <div class="notice" style="margin-top:14px" data-en="No information is discarded. The code length changes according to symbol frequency." data-vi="Không bỏ dữ liệu. Độ dài mã thay đổi theo tần suất xuất hiện.">No information is discarded. The code length changes according to symbol frequency.</div></div>
 </div></div>
 
-<div style="display:flex;gap:7px;flex-wrap:wrap;margin:0 0 14px">
-  <span class="hint" style="align-self:center">Sample image:</span>
-  <button class="small jpeg-sample active" data-jpeg-sample="gradient">Soft gradient</button>
-  <button class="small jpeg-sample" data-jpeg-sample="edges">Sharp edges</button>
-  <button class="small jpeg-sample" data-jpeg-sample="checker">Checkerboard</button>
-  <button class="small jpeg-sample" data-jpeg-sample="rings">Rings</button>
-</div><div id="compress-jpeg" class="compress-screen" hidden>
+<div id="compress-jpeg" class="compress-screen" hidden>
+<div class="panel" style="margin-bottom:14px">
+<div class="panel-head"><h3><span class="step-number">1</span>Sample images</h3><span class="hint">Click an image to compress it</span></div>
+<div style="display:grid;grid-template-columns:repeat(4,minmax(100px,1fr));gap:10px">
+  <button class="jpeg-sample active" data-jpeg-sample="gradient" style="display:block;padding:7px"><canvas id="jpeg-sample-gradient" width="128" height="128" style="width:100%;aspect-ratio:1;display:block;border-radius:6px"></canvas><span style="display:block;font-size:10px;margin-top:5px">Soft gradient</span></button>
+  <button class="jpeg-sample" data-jpeg-sample="edges" style="display:block;padding:7px"><canvas id="jpeg-sample-edges" width="128" height="128" style="width:100%;aspect-ratio:1;display:block;border-radius:6px"></canvas><span style="display:block;font-size:10px;margin-top:5px">Sharp edges</span></button>
+  <button class="jpeg-sample" data-jpeg-sample="checker" style="display:block;padding:7px"><canvas id="jpeg-sample-checker" width="128" height="128" style="width:100%;aspect-ratio:1;display:block;border-radius:6px"></canvas><span style="display:block;font-size:10px;margin-top:5px">Checkerboard</span></button>
+  <button class="jpeg-sample" data-jpeg-sample="rings" style="display:block;padding:7px"><canvas id="jpeg-sample-rings" width="128" height="128" style="width:100%;aspect-ratio:1;display:block;border-radius:6px"></canvas><span style="display:block;font-size:10px;margin-top:5px">Rings</span></button>
+</div></div>
 <div class="panel">
 <div class="panel-head"><h3><span class="step-number">1</span><span data-en="JPEG-style quantisation" data-vi="Lượng tử hoá kiểu JPEG">JPEG-style quantisation</span></h3><span class="tag amber">LOSSY</span></div>
 <div class="lossy-flow"><b>Image</b> → <b>8×8 blocks</b> → <b>DCT</b> → <b>Quantise</b> → <b>Store fewer coefficients</b> → <b>Rebuild</b></div>
@@ -571,7 +573,15 @@ $('[data-compress-screen]').forEach(btn=>btn.addEventListener('click',()=>{compr
 $('rle-run').addEventListener('click',renderRLE);$('rle-input').addEventListener('input',renderRLE);$('rle-reset').addEventListener('click',()=>{$('rle-input').value='AAAAABBBCCDAAAAAA';renderRLE();});
 $('.rle-example').forEach(b=>b.addEventListener('click',()=>{$('rle-input').value=b.textContent;renderRLE();}));
 $('huffman-run').addEventListener('click',renderHuffman);$('huffman-input').addEventListener('input',renderHuffman);
-document.querySelectorAll('.jpeg-sample').forEach(b=>b.addEventListener('click',()=>{jpegSample=b.dataset.jpegSample;jpegOriginal=null;document.querySelectorAll('.jpeg-sample').forEach(x=>x.classList.toggle('active',x===b));renderJPEG();}));
+document.querySelectorAll('.jpeg-sample').forEach(b=>b.addEventListener('click',()=>{jpegSample=b.dataset.jpegSample;jpegOriginal=null;document.querySelectorAll('.jpeg-sample').forEach(x=>x.classList.toggle('active',x.dataset.jpegSample===jpegSample));renderJPEG();}));
+function drawJpegSamples(){
+ ['gradient','edges','checker','rings'].forEach(name=>{
+  const oldSample=jpegSample;jpegSample=name;jpegOriginal=makeJpegBlock();
+  drawJpegCanvas('jpeg-sample-'+name,jpegOriginal);
+  jpegSample=oldSample;jpegOriginal=null;
+ });
+}
+drawJpegSamples();
 $('jpeg-quality-range').addEventListener('input',renderJPEG);
 renderCompression();
 
