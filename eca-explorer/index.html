@@ -1,0 +1,1096 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#7a1838">
+  <meta name="description" content="RGSV ECA Explorer — a fun, student-friendly way to discover Tuesday and Thursday activities.">
+  <title>RGSV ECA Explorer</title>
+  <style>
+    :root{
+      --burgundy:#7a1838;
+      --burgundy-dark:#4d0d24;
+      --gold:#e7bb45;
+      --gold-soft:#fff0b8;
+      --navy:#17243b;
+      --blue:#315c8d;
+      --purple:#702b90;
+      --rose:#f7d9e1;
+      --cream:#fffaf0;
+      --paper:#ffffff;
+      --ink:#182238;
+      --muted:#667085;
+      --line:#e6dfd4;
+      --success:#19724c;
+      --danger:#aa2845;
+      --shadow:0 18px 48px rgba(35,24,35,.13);
+      --shadow-soft:0 10px 28px rgba(35,24,35,.09);
+      --radius:24px;
+      --radius-sm:16px;
+      --max:1180px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 10% 12%, rgba(231,187,69,.22), transparent 26rem),
+        radial-gradient(circle at 92% 9%, rgba(112,43,144,.12), transparent 28rem),
+        linear-gradient(180deg,#fffaf0 0%,#fff 35%,#f9f5f7 100%);
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      line-height:1.5;
+      overflow-x:hidden;
+    }
+    button,input,select{font:inherit}
+    button{cursor:pointer}
+    a{color:inherit}
+    .skip-link{
+      position:fixed;left:1rem;top:-4rem;z-index:9999;background:#fff;color:var(--burgundy);
+      padding:.75rem 1rem;border-radius:10px;box-shadow:var(--shadow)
+    }
+    .skip-link:focus{top:1rem}
+    .site-header{
+      position:sticky;top:0;z-index:100;
+      background:rgba(255,250,240,.86);
+      border-bottom:1px solid rgba(122,24,56,.1);
+      backdrop-filter:blur(18px);
+    }
+    .nav{
+      width:min(var(--max),calc(100% - 2rem));margin:auto;min-height:72px;
+      display:flex;align-items:center;gap:1rem;justify-content:space-between
+    }
+    .brand{display:flex;align-items:center;gap:.75rem;text-decoration:none;font-weight:900}
+    .brand-mark{
+      width:46px;height:52px;display:grid;place-items:center;color:#fff;
+      background:linear-gradient(145deg,var(--burgundy),var(--burgundy-dark));
+      clip-path:polygon(9% 0,91% 0,100% 18%,87% 78%,50% 100%,13% 78%,0 18%);
+      border:3px solid var(--gold);filter:drop-shadow(0 8px 10px rgba(74,13,35,.22));
+      font-size:.78rem;letter-spacing:.04em
+    }
+    .brand-copy{display:grid;line-height:1.05}
+    .brand-copy small{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--burgundy)}
+    .brand-copy strong{font-size:1.08rem}
+    .nav-links{display:flex;align-items:center;gap:.35rem}
+    .nav-links a,.nav-links button{
+      border:0;background:transparent;text-decoration:none;color:var(--ink);font-weight:750;
+      padding:.7rem .85rem;border-radius:999px
+    }
+    .nav-links a:hover,.nav-links button:hover{background:#fff}
+    .shortlist-nav{
+      display:flex!important;align-items:center;gap:.5rem!important;background:var(--burgundy)!important;color:#fff!important
+    }
+    .count-bubble{
+      min-width:1.4rem;height:1.4rem;padding:0 .35rem;border-radius:999px;background:var(--gold);
+      color:var(--burgundy-dark);display:grid;place-items:center;font-size:.75rem;font-weight:900
+    }
+    main{display:block}
+    .section{width:min(var(--max),calc(100% - 2rem));margin:0 auto;padding:5rem 0}
+    .hero{
+      width:min(var(--max),calc(100% - 2rem));margin:0 auto;padding:5.4rem 0 3.6rem;
+      display:grid;grid-template-columns:minmax(0,1.15fr) minmax(330px,.85fr);gap:4rem;align-items:center
+    }
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:.55rem;padding:.55rem .8rem;border-radius:999px;
+      background:#fff;border:1px solid rgba(122,24,56,.13);box-shadow:0 8px 20px rgba(74,13,35,.06);
+      color:var(--burgundy);font-size:.82rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase
+    }
+    .eyebrow::before{content:"";width:.55rem;height:.55rem;border-radius:50%;background:var(--gold);box-shadow:0 0 0 5px rgba(231,187,69,.2)}
+    h1,h2,h3,p{margin-top:0}
+    .hero h1{
+      max-width:780px;margin:.95rem 0 1.1rem;font-size:clamp(3rem,7.4vw,6.4rem);
+      line-height:.91;letter-spacing:-.065em;color:var(--navy)
+    }
+    .hero h1 em{font-style:normal;color:var(--burgundy);position:relative;white-space:nowrap}
+    .hero h1 em::after{
+      content:"";position:absolute;left:.02em;right:.02em;bottom:-.08em;height:.17em;
+      background:var(--gold);border-radius:999px;transform:rotate(-1.5deg);z-index:-1
+    }
+    .hero-copy>p{font-size:clamp(1.05rem,2vw,1.25rem);color:#4f5b70;max-width:720px}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.5rem 0}
+    .btn{
+      border:0;border-radius:999px;padding:.95rem 1.25rem;font-weight:900;display:inline-flex;
+      align-items:center;justify-content:center;gap:.55rem;text-decoration:none;transition:.2s ease;
+      box-shadow:none
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn:focus-visible,.chip:focus-visible,.year-btn:focus-visible,.segment input:focus-visible+label,
+    input:focus-visible,select:focus-visible,summary:focus-visible{
+      outline:3px solid rgba(49,92,141,.35);outline-offset:3px
+    }
+    .btn-primary{background:var(--burgundy);color:#fff;box-shadow:0 12px 24px rgba(122,24,56,.22)}
+    .btn-primary:hover{background:var(--burgundy-dark)}
+    .btn-secondary{background:#fff;color:var(--burgundy);border:1px solid rgba(122,24,56,.18)}
+    .btn-ghost{background:#f7f1f3;color:var(--burgundy)}
+    .hero-stats{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.4rem}
+    .stat-pill{
+      background:rgba(255,255,255,.82);border:1px solid rgba(122,24,56,.12);border-radius:18px;
+      padding:.75rem .95rem;display:flex;align-items:center;gap:.6rem;box-shadow:0 10px 24px rgba(30,35,50,.05)
+    }
+    .stat-pill strong{font-size:1.15rem;color:var(--burgundy)}
+    .stat-pill span{color:var(--muted);font-size:.88rem}
+    .hero-art{position:relative;min-height:450px;display:grid;place-items:center}
+    .hero-orbit{
+      width:min(420px,88vw);aspect-ratio:1;border-radius:50%;position:relative;
+      background:
+        radial-gradient(circle at 38% 32%,#fff 0 8%,transparent 8.5%),
+        radial-gradient(circle at 50% 50%,#fff8dc 0 31%,transparent 31.5%),
+        conic-gradient(from 20deg,#f6d5df,#fff2bd,#dce8fa,#eadcf4,#f6d5df);
+      box-shadow:var(--shadow);border:1px solid rgba(122,24,56,.12)
+    }
+    .hero-orbit::before,.hero-orbit::after{
+      content:"";position:absolute;border:1px dashed rgba(122,24,56,.28);border-radius:50%;inset:11%
+    }
+    .hero-orbit::after{inset:24%;border-color:rgba(49,92,141,.24)}
+    .orbit-centre{
+      position:absolute;inset:31%;border-radius:50%;display:grid;place-items:center;text-align:center;
+      background:linear-gradient(145deg,var(--burgundy),var(--burgundy-dark));color:#fff;
+      border:7px solid var(--gold);box-shadow:0 18px 38px rgba(74,13,35,.28);z-index:2;padding:1rem
+    }
+    .orbit-centre strong{font-size:clamp(1.5rem,4vw,2.4rem);line-height:.95}
+    .orbit-centre span{font-size:.76rem;opacity:.8;text-transform:uppercase;letter-spacing:.12em;margin-top:.45rem}
+    .orbit-icon{
+      position:absolute;width:66px;height:66px;border-radius:22px;background:#fff;display:grid;place-items:center;
+      font-size:2rem;box-shadow:0 14px 30px rgba(30,35,50,.15);border:1px solid rgba(122,24,56,.1);
+      animation:float 5s ease-in-out infinite;z-index:3
+    }
+    .orbit-icon:nth-child(2){left:5%;top:17%;animation-delay:-.8s}
+    .orbit-icon:nth-child(3){right:3%;top:20%;animation-delay:-2.1s}
+    .orbit-icon:nth-child(4){right:8%;bottom:13%;animation-delay:-3.2s}
+    .orbit-icon:nth-child(5){left:8%;bottom:10%;animation-delay:-1.7s}
+    .orbit-icon:nth-child(6){left:42%;top:-3%;animation-delay:-4.1s}
+    .orbit-icon:nth-child(7){left:42%;bottom:-3%;animation-delay:-2.7s}
+    @keyframes float{50%{transform:translateY(-10px) rotate(2deg)}}
+    .notice{
+      position:absolute;right:-.5rem;bottom:1rem;max-width:210px;background:#fff;border-radius:18px;
+      padding:.85rem 1rem;box-shadow:var(--shadow-soft);border-left:5px solid var(--gold);
+      font-size:.82rem;color:#4d586a;z-index:5
+    }
+    .notice strong{display:block;color:var(--burgundy);margin-bottom:.15rem}
+    .section-heading{max-width:760px;margin-bottom:2rem}
+    .section-heading h2{font-size:clamp(2.1rem,5vw,4rem);line-height:1;letter-spacing:-.045em;margin:.7rem 0;color:var(--navy)}
+    .section-heading p{color:var(--muted);font-size:1.05rem}
+    .quiz-shell{
+      border-radius:32px;background:#fff;border:1px solid rgba(122,24,56,.12);
+      box-shadow:var(--shadow);overflow:hidden
+    }
+    .quiz-top{
+      padding:1.2rem 1.45rem;background:linear-gradient(100deg,var(--burgundy),#9b244e 55%,var(--purple));
+      color:#fff;display:flex;align-items:center;justify-content:space-between;gap:1rem
+    }
+    .quiz-top strong{font-size:1.12rem}
+    .quiz-top span{font-size:.85rem;opacity:.82}
+    .quiz-grid{display:grid;grid-template-columns:1fr 1fr}
+    .quiz-step{padding:2rem;border-bottom:1px solid var(--line)}
+    .quiz-step:nth-child(odd){border-right:1px solid var(--line)}
+    .step-label{display:flex;align-items:center;gap:.65rem;margin-bottom:.85rem}
+    .step-number{
+      width:2rem;height:2rem;border-radius:50%;display:grid;place-items:center;background:var(--gold-soft);
+      color:var(--burgundy);font-weight:950
+    }
+    .step-label h3{margin:0;font-size:1.05rem}
+    .hint{font-size:.86rem;color:var(--muted);margin:.25rem 0 1rem}
+    .year-picker{display:flex;flex-wrap:wrap;gap:.55rem}
+    .year-btn{
+      width:3.25rem;height:3.25rem;border-radius:15px;background:#faf7f2;border:1px solid var(--line);
+      color:var(--navy);font-weight:900;transition:.18s ease
+    }
+    .year-btn:hover{border-color:var(--gold);transform:translateY(-2px)}
+    .year-btn.active{background:var(--burgundy);border-color:var(--burgundy);color:#fff;box-shadow:0 9px 18px rgba(122,24,56,.2)}
+    .chip-grid{display:flex;flex-wrap:wrap;gap:.55rem}
+    .chip{
+      border:1px solid var(--line);background:#faf7f2;border-radius:999px;padding:.7rem .85rem;
+      display:inline-flex;gap:.45rem;align-items:center;font-weight:800;color:#3e485a;transition:.18s ease
+    }
+    .chip:hover{border-color:var(--gold);background:#fff}
+    .chip.active{background:var(--gold-soft);border-color:var(--gold);color:var(--burgundy-dark);box-shadow:0 6px 15px rgba(231,187,69,.2)}
+    .segments{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}
+    .segment{position:relative}
+    .segment input{position:absolute;opacity:0;pointer-events:none}
+    .segment label{
+      min-height:78px;border:1px solid var(--line);border-radius:16px;background:#faf7f2;
+      display:grid;place-items:center;text-align:center;padding:.65rem;font-weight:850;color:#4c5668;transition:.18s ease
+    }
+    .segment label span{font-size:1.45rem;display:block;line-height:1;margin-bottom:.3rem}
+    .segment input:checked+label{background:#f7e7ed;border-color:var(--burgundy);color:var(--burgundy);box-shadow:inset 0 0 0 1px var(--burgundy)}
+    .quiz-actions{
+      padding:1.4rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;
+      background:#fffcf7
+    }
+    .quiz-actions p{margin:0;font-size:.85rem;color:var(--muted);max-width:560px}
+    .quiz-action-buttons{display:flex;gap:.65rem;flex-wrap:wrap;justify-content:flex-end}
+    .results-wrap{display:none}
+    .results-wrap.visible{display:block}
+    .results-summary{
+      display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:1.2rem
+    }
+    .results-summary h2{font-size:clamp(2rem,4vw,3.4rem);letter-spacing:-.04em;line-height:1;margin:.45rem 0}
+    .results-summary p{color:var(--muted);margin:0}
+    .day-result{margin-top:2rem}
+    .day-title{
+      display:flex;align-items:center;gap:.7rem;margin-bottom:1rem;font-size:1.15rem
+    }
+    .day-dot{width:.75rem;height:.75rem;border-radius:50%;background:#ffe600;box-shadow:0 0 0 6px rgba(255,230,0,.18)}
+    .day-title.thursday .day-dot{background:#e9b9c7;box-shadow:0 0 0 6px rgba(233,185,199,.25)}
+    .card-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}
+    .activity-card{
+      position:relative;display:flex;flex-direction:column;min-height:100%;
+      background:#fff;border:1px solid rgba(122,24,56,.11);border-radius:22px;padding:1.15rem;
+      box-shadow:var(--shadow-soft);transition:.2s ease;overflow:hidden
+    }
+    .activity-card:hover{transform:translateY(-4px);box-shadow:0 18px 38px rgba(35,24,35,.14);border-color:rgba(122,24,56,.28)}
+    .activity-card::before{
+      content:"";position:absolute;left:0;right:0;top:0;height:5px;
+      background:linear-gradient(90deg,var(--burgundy),var(--gold))
+    }
+    .card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.7rem}
+    .activity-icon{
+      width:3.3rem;height:3.3rem;border-radius:17px;display:grid;place-items:center;font-size:1.75rem;
+      background:linear-gradient(145deg,#fff6cf,#f9e5eb);border:1px solid rgba(122,24,56,.08)
+    }
+    .match-score{
+      border-radius:999px;padding:.35rem .55rem;font-size:.75rem;font-weight:950;background:#e8f6ee;color:var(--success)
+    }
+    .card-badges{display:flex;flex-wrap:wrap;gap:.35rem;margin:.8rem 0 .55rem}
+    .badge{
+      border-radius:999px;padding:.28rem .48rem;font-size:.68rem;font-weight:900;letter-spacing:.02em;
+      background:#f4eff1;color:var(--burgundy)
+    }
+    .badge.day-tuesday{background:#fff5a6;color:#5e5000}
+    .badge.day-thursday{background:#f5dbe3;color:#72203e}
+    .badge.student{background:#eee5f6;color:var(--purple)}
+    .badge.check{background:#fff0d6;color:#7a4a00}
+    .badge.closed{background:#fce4e9;color:var(--danger)}
+    .activity-card h3{font-size:1.15rem;line-height:1.12;margin:.15rem 0 .45rem;color:var(--navy)}
+    .activity-card h3 small{display:block;font-size:.72rem;color:var(--muted);font-weight:800;margin-top:.28rem}
+    .activity-card .desc{color:#5d6779;font-size:.88rem;min-height:4em}
+    .reason-list{display:flex;flex-wrap:wrap;gap:.35rem;margin:.2rem 0 .9rem}
+    .reason{font-size:.67rem;background:#f2f6fb;color:var(--blue);padding:.3rem .45rem;border-radius:999px;font-weight:800}
+    .card-info{display:grid;gap:.42rem;font-size:.78rem;color:#596376;margin-top:auto}
+    .info-row{display:grid;grid-template-columns:1.05rem 1fr;gap:.35rem;align-items:start}
+    .info-row strong{color:#3f4858}
+    .interest-meter{margin:.85rem 0 .7rem}
+    .interest-line{display:flex;align-items:center;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-bottom:.32rem}
+    .meter{height:6px;background:#f0ebe5;border-radius:999px;overflow:hidden}
+    .meter span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--gold),var(--burgundy));min-width:5%}
+    .card-actions{display:flex;gap:.45rem;margin-top:.8rem}
+    .card-actions .btn{padding:.68rem .78rem;font-size:.78rem;flex:1}
+    details.card-details{margin-top:.7rem;border-top:1px dashed var(--line);padding-top:.55rem}
+    details.card-details summary{cursor:pointer;color:var(--burgundy);font-size:.76rem;font-weight:900}
+    details.card-details p{font-size:.76rem;color:var(--muted);margin:.55rem 0 0}
+    .empty-panel{
+      padding:2.4rem;background:#fff;border:1px dashed rgba(122,24,56,.3);border-radius:22px;
+      text-align:center;color:var(--muted)
+    }
+    .empty-panel span{font-size:2.4rem;display:block;margin-bottom:.5rem}
+    .shortlist-section{
+      background:linear-gradient(135deg,var(--navy),#243a5f);color:#fff;position:relative;overflow:hidden
+    }
+    .shortlist-section::before{
+      content:"";position:absolute;inset:auto -12rem -15rem auto;width:35rem;height:35rem;border-radius:50%;
+      background:radial-gradient(circle,rgba(231,187,69,.2),transparent 65%)
+    }
+    .shortlist-section .section-heading h2{color:#fff}
+    .shortlist-section .section-heading p{color:#cbd5e1}
+    .shortlist-board{display:grid;grid-template-columns:1fr 1fr;gap:1rem;position:relative}
+    .shortlist-slot{
+      min-height:230px;border-radius:24px;padding:1.15rem;background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(10px)
+    }
+    .slot-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:.8rem}
+    .slot-head strong{font-size:1.1rem}
+    .slot-day{font-size:.75rem;font-weight:900;padding:.35rem .55rem;border-radius:999px;background:var(--gold);color:var(--burgundy-dark)}
+    .slot-empty{height:150px;display:grid;place-items:center;text-align:center;color:#cbd5e1;border:1px dashed rgba(255,255,255,.25);border-radius:18px;padding:1rem}
+    .slot-card{display:grid;grid-template-columns:auto 1fr auto;gap:.85rem;align-items:center;background:#fff;color:var(--ink);border-radius:18px;padding:1rem}
+    .slot-card .activity-icon{width:3rem;height:3rem}
+    .slot-card h3{margin:0 0 .2rem;font-size:1rem}
+    .slot-card p{margin:0;color:var(--muted);font-size:.78rem}
+    .icon-btn{
+      border:0;width:2.2rem;height:2.2rem;border-radius:50%;background:#f6e7ec;color:var(--burgundy);
+      display:grid;place-items:center;font-weight:950
+    }
+    .shortlist-actions{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:1rem;position:relative}
+    .shortlist-actions .btn-secondary{background:#fff}
+    .browse-toolbar{
+      display:grid;grid-template-columns:minmax(220px,1.6fr) repeat(3,minmax(150px,.65fr));gap:.7rem;
+      background:#fff;padding:.8rem;border-radius:20px;border:1px solid var(--line);box-shadow:var(--shadow-soft);
+      position:sticky;top:84px;z-index:20;margin-bottom:1.2rem
+    }
+    .field{display:grid;gap:.3rem}
+    .field label{font-size:.7rem;font-weight:900;color:#596376;text-transform:uppercase;letter-spacing:.06em}
+    .field input,.field select{
+      width:100%;border:1px solid var(--line);border-radius:13px;padding:.78rem .85rem;background:#fff;color:var(--ink)
+    }
+    .browse-count{color:var(--muted);font-size:.86rem;margin:.2rem 0 1rem}
+    .browse-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+    .browse-grid .activity-card .desc{min-height:auto}
+    .data-note{
+      margin-top:2rem;background:#fff9e4;border:1px solid #efd98c;border-radius:18px;padding:1rem 1.1rem;
+      color:#65531b;font-size:.85rem
+    }
+    footer{
+      background:#160a11;color:#d9cfd4;padding:2.6rem 0
+    }
+    .footer-inner{width:min(var(--max),calc(100% - 2rem));margin:auto;display:grid;grid-template-columns:1.3fr .7fr;gap:2rem}
+    footer strong{color:#fff}
+    footer p{font-size:.84rem;max-width:720px}
+    .footer-badge{justify-self:end;align-self:start;display:flex;align-items:center;gap:.7rem}
+    .footer-badge .brand-mark{width:42px;height:48px}
+    .toast{
+      position:fixed;left:50%;bottom:1.2rem;z-index:1000;transform:translate(-50%,150%);
+      background:#1c2433;color:#fff;border-radius:999px;padding:.85rem 1.05rem;box-shadow:var(--shadow);
+      font-weight:800;font-size:.88rem;transition:.25s ease;max-width:calc(100% - 2rem);text-align:center
+    }
+    .toast.show{transform:translate(-50%,0)}
+    .confetti-piece{
+      position:fixed;top:-2rem;z-index:999;width:9px;height:16px;border-radius:3px;pointer-events:none;
+      animation:confetti-fall 1.8s linear forwards
+    }
+    @keyframes confetti-fall{
+      to{transform:translate(var(--drift),110vh) rotate(760deg);opacity:.25}
+    }
+    .sr-only{
+      position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;
+      overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important
+    }
+    @media(max-width:1040px){
+      .hero{grid-template-columns:1fr;gap:2rem;padding-top:4rem}
+      .hero-art{min-height:390px}
+      .card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .browse-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .browse-toolbar{grid-template-columns:1fr 1fr;top:78px}
+    }
+    @media(max-width:760px){
+      .section{padding:3.6rem 0}
+      .nav{min-height:64px}
+      .nav-links a{display:none}
+      .brand-copy small{display:none}
+      .hero{padding-top:3rem}
+      .hero h1{font-size:clamp(3.1rem,17vw,5rem)}
+      .hero-art{min-height:330px}
+      .hero-orbit{width:min(330px,88vw)}
+      .orbit-icon{width:52px;height:52px;border-radius:17px;font-size:1.55rem}
+      .notice{right:0;bottom:-1.5rem}
+      .quiz-grid{grid-template-columns:1fr}
+      .quiz-step:nth-child(odd){border-right:0}
+      .quiz-step{padding:1.35rem}
+      .quiz-actions{align-items:stretch;flex-direction:column;padding:1.25rem}
+      .quiz-action-buttons{justify-content:stretch}
+      .quiz-action-buttons .btn{flex:1}
+      .segments{grid-template-columns:1fr}
+      .segment label{min-height:58px;display:flex;gap:.5rem}
+      .segment label span{margin:0}
+      .results-summary{align-items:flex-start;flex-direction:column}
+      .card-grid,.browse-grid,.shortlist-board{grid-template-columns:1fr}
+      .browse-toolbar{grid-template-columns:1fr;position:relative;top:auto}
+      .footer-inner{grid-template-columns:1fr}
+      .footer-badge{justify-self:start}
+    }
+    @media(max-width:430px){
+      .nav{width:min(var(--max),calc(100% - 1rem))}
+      .section,.hero,.footer-inner{width:min(var(--max),calc(100% - 1.1rem))}
+      .shortlist-nav{padding:.65rem!important}
+      .shortlist-nav .nav-label{display:none}
+      .hero-actions .btn{width:100%}
+      .hero-stats{display:grid;grid-template-columns:1fr 1fr}
+      .stat-pill{padding:.65rem}
+      .card-actions{flex-direction:column}
+      .quiz-action-buttons{flex-direction:column}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+    }
+    @media print{
+      body{background:#fff}
+      .site-header,.hero,#matcher,#browse,.shortlist-actions,.data-note,footer,.toast{display:none!important}
+      .shortlist-section{background:#fff;color:#000;padding:0}
+      .shortlist-section .section{padding:1rem;width:100%}
+      .shortlist-section .section-heading h2,.shortlist-section .section-heading p{color:#000}
+      .shortlist-slot{border:1px solid #999;background:#fff;color:#000}
+      .slot-card{border:1px solid #bbb}
+    }
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#matcher">Skip to the ECA matcher</a>
+
+<header class="site-header">
+  <nav class="nav" aria-label="Main navigation">
+    <a class="brand" href="#top" aria-label="RGSV ECA Explorer home">
+      <span class="brand-mark" aria-hidden="true">RGSV</span>
+      <span class="brand-copy"><small>Secondary • Round 1</small><strong>ECA Explorer</strong></span>
+    </a>
+    <div class="nav-links">
+      <a href="#matcher">Find my matches</a>
+      <a href="#browse">Browse all</a>
+      <button class="shortlist-nav" type="button" data-scroll-shortlist>
+        <span aria-hidden="true">⭐</span><span class="nav-label">My shortlist</span><span class="count-bubble" id="navShortlistCount">0</span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="eyebrow">Find your place at RGSV</span>
+      <h1>Your next favourite hour <em>starts here.</em></h1>
+      <p>Choose what you enjoy, tell us your preferred vibe, and build a Tuesday–Thursday ECA plan that feels like you.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#matcher">✨ Find my ECA matches</a>
+        <button class="btn btn-secondary" type="button" id="heroSurprise">🎲 Surprise me</button>
+      </div>
+      <div class="hero-stats" aria-label="Timetable summary">
+        <div class="stat-pill"><strong id="openSessionCount">49</strong><span>open sessions</span></div>
+        <div class="stat-pill"><strong>2</strong><span>ECA afternoons</span></div>
+        <div class="stat-pill"><strong id="studentLedCount">18</strong><span>student-led options</span></div>
+        <div class="stat-pill"><strong>Y7–13</strong><span>secondary years</span></div>
+      </div>
+    </div>
+    <div class="hero-art" aria-label="Illustration showing different ECA interests">
+      <div class="hero-orbit">
+        <div class="orbit-centre"><strong>Try.<br>Grow.<br>Belong.</strong><span>RGSV ECA</span></div>
+        <span class="orbit-icon" aria-hidden="true">⚽</span>
+        <span class="orbit-icon" aria-hidden="true">♟️</span>
+        <span class="orbit-icon" aria-hidden="true">🎨</span>
+        <span class="orbit-icon" aria-hidden="true">🤖</span>
+        <span class="orbit-icon" aria-hidden="true">🎭</span>
+        <span class="orbit-icon" aria-hidden="true">🧪</span>
+      </div>
+      <div class="notice"><strong>No pressure.</strong>These are friendly suggestions — you stay in charge of your choices.</div>
+    </div>
+  </section>
+
+  <section class="section" id="matcher">
+    <div class="section-heading">
+      <span class="eyebrow">Your ECA matchmaker</span>
+      <h2>What lights you up?</h2>
+      <p>Pick a few interests. The matcher checks your year group, day, energy and social style against the actual RGSV Round 1 timetable.</p>
+    </div>
+
+    <div class="quiz-shell">
+      <div class="quiz-top">
+        <strong>Build your RGSV activity profile</strong>
+        <span>About 30 seconds • no sign-in</span>
+      </div>
+      <div class="quiz-grid">
+        <div class="quiz-step">
+          <div class="step-label"><span class="step-number">1</span><h3>Choose your year group</h3></div>
+          <p class="hint">We will hide activities outside their listed age range.</p>
+          <div class="year-picker" id="yearPicker" role="group" aria-label="Year group">
+            <button class="year-btn" type="button" data-year="7" aria-pressed="false">Y7</button>
+            <button class="year-btn" type="button" data-year="8" aria-pressed="false">Y8</button>
+            <button class="year-btn" type="button" data-year="9" aria-pressed="false">Y9</button>
+            <button class="year-btn" type="button" data-year="10" aria-pressed="false">Y10</button>
+            <button class="year-btn" type="button" data-year="11" aria-pressed="false">Y11</button>
+            <button class="year-btn" type="button" data-year="12" aria-pressed="false">Y12</button>
+            <button class="year-btn" type="button" data-year="13" aria-pressed="false">Y13</button>
+          </div>
+        </div>
+
+        <div class="quiz-step">
+          <div class="step-label"><span class="step-number">2</span><h3>Choose your interests</h3></div>
+          <p class="hint">Pick as many as you like — three or four usually gives the best mix.</p>
+          <div class="chip-grid" id="interestPicker" role="group" aria-label="Interests">
+            <button class="chip" type="button" data-interest="sport" aria-pressed="false">🏅 Sports & fitness</button>
+            <button class="chip" type="button" data-interest="strategy" aria-pressed="false">♟️ Chess & strategy</button>
+            <button class="chip" type="button" data-interest="tech" aria-pressed="false">🎮 Gaming & technology</button>
+            <button class="chip" type="button" data-interest="science" aria-pressed="false">🔬 Science & engineering</button>
+            <button class="chip" type="button" data-interest="art" aria-pressed="false">🎨 Arts & making</button>
+            <button class="chip" type="button" data-interest="performance" aria-pressed="false">🎭 Music, dance & performance</button>
+            <button class="chip" type="button" data-interest="media" aria-pressed="false">🎬 Reading, film & media</button>
+            <button class="chip" type="button" data-interest="leadership" aria-pressed="false">🎙️ Leadership, debate & service</button>
+            <button class="chip" type="button" data-interest="culture" aria-pressed="false">🌍 Culture & the world</button>
+            <button class="chip" type="button" data-interest="wellbeing" aria-pressed="false">🧘 Calm & wellbeing</button>
+          </div>
+        </div>
+
+        <div class="quiz-step">
+          <div class="step-label"><span class="step-number">3</span><h3>Choose your ideal energy</h3></div>
+          <p class="hint">How do you want the ECA session to feel?</p>
+          <div class="segments" role="radiogroup" aria-label="Energy preference">
+            <div class="segment"><input type="radio" name="energy" id="energy-calm" value="1"><label for="energy-calm"><span>🌿</span>Calm</label></div>
+            <div class="segment"><input type="radio" name="energy" id="energy-balanced" value="3" checked><label for="energy-balanced"><span>☀️</span>Balanced</label></div>
+            <div class="segment"><input type="radio" name="energy" id="energy-active" value="5"><label for="energy-active"><span>⚡</span>Active</label></div>
+          </div>
+        </div>
+
+        <div class="quiz-step">
+          <div class="step-label"><span class="step-number">4</span><h3>Choose your social style</h3></div>
+          <p class="hint">There is no wrong answer — this just helps rank the matches.</p>
+          <div class="segments" role="radiogroup" aria-label="Social preference">
+            <div class="segment"><input type="radio" name="social" id="social-solo" value="1"><label for="social-solo"><span>🎧</span>Independent</label></div>
+            <div class="segment"><input type="radio" name="social" id="social-mixed" value="2" checked><label for="social-mixed"><span>🙂</span>A bit of both</label></div>
+            <div class="segment"><input type="radio" name="social" id="social-team" value="3"><label for="social-team"><span>🙌</span>Team energy</label></div>
+          </div>
+        </div>
+
+        <div class="quiz-step">
+          <div class="step-label"><span class="step-number">5</span><h3>Which day should we plan?</h3></div>
+          <p class="hint">Choose both to build a complete two-day shortlist.</p>
+          <div class="segments" role="radiogroup" aria-label="Day preference">
+            <div class="segment"><input type="radio" name="day" id="day-both" value="Both" checked><label for="day-both"><span>🗓️</span>Both days</label></div>
+            <div class="segment"><input type="radio" name="day" id="day-tuesday" value="Tuesday"><label for="day-tuesday"><span>🟡</span>Tuesday</label></div>
+            <div class="segment"><input type="radio" name="day" id="day-thursday" value="Thursday"><label for="day-thursday"><span>🩷</span>Thursday</label></div>
+          </div>
+        </div>
+
+        <div class="quiz-step">
+          <div class="step-label"><span class="step-number">6</span><h3>Ready to explore?</h3></div>
+          <p class="hint">The score is a fun guide, not a judgement. The best ECA is one you are excited to try.</p>
+          <div class="data-note" style="margin:0">
+            <strong>Good to know:</strong> Round 1 numbers show current interest only. They do not mean an activity is full or that a place is guaranteed.
+          </div>
+        </div>
+      </div>
+      <div class="quiz-actions">
+        <p>This page makes suggestions only. Official registration and staff confirmation still apply.</p>
+        <div class="quiz-action-buttons">
+          <button class="btn btn-secondary" type="button" id="surpriseButton">🎲 Surprise me</button>
+          <button class="btn btn-primary" type="button" id="matchButton">Show my matches →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section results-wrap" id="results" aria-live="polite">
+    <div class="results-summary">
+      <div>
+        <span class="eyebrow">Your personalised line-up</span>
+        <h2 id="resultsHeading">Strong matches for you</h2>
+        <p id="resultsText"></p>
+      </div>
+      <button class="btn btn-secondary" type="button" id="editChoices">↥ Edit choices</button>
+    </div>
+    <div id="resultsContent"></div>
+  </section>
+
+  <section class="shortlist-section" id="shortlist">
+    <div class="section">
+      <div class="section-heading">
+        <span class="eyebrow" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.18);color:#fff">Your two-day plan</span>
+        <h2>My RGSV shortlist</h2>
+        <p>Keep one Tuesday choice and one Thursday choice. Adding another activity on the same day replaces the earlier one.</p>
+      </div>
+      <div class="shortlist-board">
+        <div class="shortlist-slot">
+          <div class="slot-head"><strong>Tuesday choice</strong><span class="slot-day">TUESDAY</span></div>
+          <div id="slotTuesday"></div>
+        </div>
+        <div class="shortlist-slot">
+          <div class="slot-head"><strong>Thursday choice</strong><span class="slot-day" style="background:#f5dbe3;color:#72203e">THURSDAY</span></div>
+          <div id="slotThursday"></div>
+        </div>
+      </div>
+      <div class="shortlist-actions">
+        <button class="btn btn-secondary" type="button" id="copyPlan">📋 Copy my plan</button>
+        <button class="btn btn-secondary" type="button" id="printPlan">🖨️ Print</button>
+        <button class="btn btn-ghost" type="button" id="clearPlan" style="background:rgba(255,255,255,.12);color:#fff">Clear shortlist</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="browse">
+    <div class="section-heading">
+      <span class="eyebrow">All Round 1 options</span>
+      <h2>Browse every ECA</h2>
+      <p>Search by name, filter by day or category, and check the listed year group before shortlisting.</p>
+    </div>
+    <div class="browse-toolbar">
+      <div class="field">
+        <label for="searchActivities">Search</label>
+        <input id="searchActivities" type="search" placeholder="Try “chess”, “football”, “science”…">
+      </div>
+      <div class="field">
+        <label for="filterDay">Day</label>
+        <select id="filterDay"><option value="All">All days</option><option>Tuesday</option><option>Thursday</option></select>
+      </div>
+      <div class="field">
+        <label for="filterCategory">Category</label>
+        <select id="filterCategory"><option value="All">All categories</option></select>
+      </div>
+      <div class="field">
+        <label for="filterYear">Year group</label>
+        <select id="filterYear">
+          <option value="All">All years</option>
+          <option value="7">Year 7</option><option value="8">Year 8</option><option value="9">Year 9</option>
+          <option value="10">Year 10</option><option value="11">Year 11</option><option value="12">Year 12</option><option value="13">Year 13</option>
+        </select>
+      </div>
+    </div>
+    <p class="browse-count" id="browseCount"></p>
+    <div class="browse-grid" id="browseGrid"></div>
+    <div class="data-note">
+      <strong>Timetable note:</strong> This explorer uses the age ranges and days from the ECA Overview. Some specialist or newly listed activities require confirmation from the Secondary Office. The page does not submit registrations.
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <strong>RGSV ECA Explorer</strong>
+      <p>Built from the uploaded Secondary ECA Round 1 timetable. It contains activity details and aggregate registration counts only; no student names are included. Final ECA arrangements may change.</p>
+    </div>
+    <div class="footer-badge"><span class="brand-mark" aria-hidden="true">RGSV</span><span><strong>Explore. Try. Grow.</strong><br><small>Student activity helper</small></span></div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script id="activity-data" type="application/json">[{"id":"gaelic-football","name":"Gaelic Football","day":"Thursday","teacher":"Aine Mc Connell & Philip Chetwode","location":"Football Field","minYear":7,"maxYear":9,"leadType":"Teacher-led","round1Count":19,"open":true,"icon":"🏐","category":"Sports & Fitness","interests":["sport"],"energy":5,"social":3,"description":"Fast, friendly team play with plenty of movement and a new sporting challenge.","yearLabel":"Years 7–9","popularity":"Popular","facilitator":"Aine Mc Connell & Philip Chetwode"},{"id":"musical-theatre-choir","name":"Musical Theatre Concert Choir","day":"Thursday","teacher":"Canice Gleeson","location":"Music Room","minYear":7,"maxYear":13,"leadType":"Teacher-led","round1Count":1,"open":true,"icon":"🎭","category":"Music & Performance","interests":["performance","media"],"energy":3,"social":3,"description":"Sing, perform and help build a concert-ready ensemble with other RGSV students.","yearLabel":"Years 7–13","popularity":"Small group","checkNote":"Please confirm current availability with the Secondary Office.","facilitator":"Canice Gleeson"},{"id":"reading-tue-senior","name":"Reading for Pleasure","day":"Tuesday","teacher":"Christopher Walker","location":"C209","minYear":10,"maxYear":13,"leadType":"Teacher-led","round1Count":9,"open":true,"icon":"📚","category":"Reading & Media","interests":["media","wellbeing"],"energy":1,"social":1,"description":"A calm space to choose a good book, read at your own pace and share recommendations.","yearLabel":"Years 10–13","popularity":"Growing","subtitle":"Tuesday • Y10–13","facilitator":"Christopher Walker"},{"id":"reading-thu-senior","name":"Reading for Pleasure","day":"Thursday","teacher":"Charlie Pham","location":"C204","minYear":10,"maxYear":13,"leadType":"Teacher-led","round1Count":20,"open":true,"icon":"📖","category":"Reading & Media","interests":["media","wellbeing"],"energy":1,"social":1,"description":"Slow down with a book, discover new authors and enjoy relaxed reading time.","yearLabel":"Years 10–13","popularity":"Very popular","subtitle":"Thursday • Y10–13","facilitator":"Charlie Pham"},{"id":"girls-football","name":"Girls’ Football","day":"Thursday","teacher":"Dylan Hillion","location":"Football Field","minYear":7,"maxYear":13,"leadType":"Teacher-led","round1Count":15,"open":true,"icon":"⚽","category":"Sports & Fitness","interests":["sport"],"energy":5,"social":3,"description":"Build football skills, teamwork and match confidence in an encouraging group.","yearLabel":"Years 7–13","popularity":"Popular","facilitator":"Dylan Hillion"},{"id":"mindfulness-colouring","name":"Mindfulness Colouring","day":"Thursday","teacher":"Elretha Koch","location":"C313","minYear":7,"maxYear":9,"leadType":"Teacher-led","round1Count":6,"open":true,"icon":"🖍️","category":"Calm & Wellbeing","interests":["wellbeing","art"],"energy":1,"social":1,"description":"Unwind through colour, pattern and quiet creativity after a busy school day.","yearLabel":"Years 7–9","popularity":"Growing","facilitator":"Elretha Koch"},{"id":"dj-tue","name":"DJ Club","day":"Tuesday","teacher":"Joe Marquez","location":"C408","minYear":11,"maxYear":13,"leadType":"Teacher-led","round1Count":6,"open":true,"icon":"🎧","category":"Music & Performance","interests":["performance","tech"],"energy":3,"social":2,"description":"Explore beats, mixes and the technology behind creating a great set.","yearLabel":"Years 11–13","popularity":"Growing","subtitle":"Tuesday","facilitator":"Joe Marquez"},{"id":"dj-thu","name":"DJ Club","day":"Thursday","teacher":"Joe Marquez","location":"C408","minYear":11,"maxYear":13,"leadType":"Teacher-led","round1Count":10,"open":true,"icon":"🎛️","category":"Music & Performance","interests":["performance","tech"],"energy":3,"social":2,"description":"Experiment with tracks, transitions and digital music-making in a creative group.","yearLabel":"Years 11–13","popularity":"Growing","subtitle":"Thursday","facilitator":"Joe Marquez"},{"id":"table-tennis","name":"Table Tennis","day":"Thursday","teacher":"Manrik Thiara","location":"Activities Room","minYear":10,"maxYear":13,"leadType":"Teacher-led","round1Count":14,"open":true,"icon":"🏓","category":"Sports & Fitness","interests":["sport","strategy"],"energy":4,"social":2,"description":"Quick reactions, clever placement and friendly competition around the table.","yearLabel":"Years 10–13","popularity":"Popular","facilitator":"Manrik Thiara"},{"id":"pickleball","name":"Pickleball","day":"Tuesday","teacher":"Manrik Thiara & Philip Chetwode","location":"Pickleball Court","minYear":10,"maxYear":13,"leadType":"Teacher-led","round1Count":17,"open":true,"icon":"🥒","category":"Sports & Fitness","interests":["sport"],"energy":4,"social":3,"description":"Learn a lively racket sport that is social, tactical and easy to start enjoying.","yearLabel":"Years 10–13","popularity":"Popular","facilitator":"Manrik Thiara & Philip Chetwode"},{"id":"reading-thu-junior","name":"Reading for Pleasure","day":"Thursday","teacher":"Preston Dukes","location":"C211","minYear":7,"maxYear":9,"leadType":"Teacher-led","round1Count":4,"open":true,"icon":"📚","category":"Reading & Media","interests":["media","wellbeing"],"energy":1,"social":1,"description":"Find stories you enjoy and build a relaxed reading habit with fellow book lovers.","yearLabel":"Years 7–9","popularity":"Small group","subtitle":"Thursday • Y7–9","facilitator":"Preston Dukes"},{"id":"badminton","name":"Badminton","day":"Tuesday","teacher":"Preston Dukes","location":"Gym","minYear":7,"maxYear":13,"leadType":"Teacher-led","round1Count":22,"open":true,"icon":"🏸","category":"Sports & Fitness","interests":["sport","strategy"],"energy":4,"social":2,"description":"Develop movement, control and match tactics through energetic court play.","yearLabel":"Years 7–13","popularity":"Very popular","facilitator":"Preston Dukes"},{"id":"geography","name":"Geography Club","day":"Tuesday","teacher":"Kenta Watson","location":"C312","minYear":7,"maxYear":13,"leadType":"Teacher-led","round1Count":2,"open":true,"icon":"🌍","category":"Culture & World","interests":["culture","science"],"energy":2,"social":2,"description":"Investigate places, people and the changing planet through curious conversations and activities.","yearLabel":"Years 7–13","popularity":"Small group","facilitator":"Kenta Watson"},{"id":"running","name":"Running Club","day":"Tuesday","teacher":"Kieran Smith","location":"Football Field / outdoor route","minYear":7,"maxYear":13,"leadType":"Teacher-led","round1Count":16,"open":true,"icon":"🏃","category":"Sports & Fitness","interests":["sport","wellbeing"],"energy":5,"social":2,"description":"Build stamina, clear your head and enjoy moving outdoors with a supportive group.","yearLabel":"Years 7–13","popularity":"Popular","facilitator":"Kieran Smith"},{"id":"mun","name":"Model United Nations (MUN)","day":"Thursday","teacher":"Albert Clayton","location":"B206","minYear":7,"maxYear":13,"leadType":"Teacher-led","round1Count":20,"open":true,"icon":"🌐","category":"Leadership & Service","interests":["leadership","culture"],"energy":3,"social":3,"description":"Represent countries, debate global issues and practise confident diplomacy.","yearLabel":"Years 7–13","popularity":"Very popular","facilitator":"Albert Clayton"},{"id":"meditation","name":"Meditation","day":"Tuesday","teacher":"Sarah Frances Telford","location":"B206","minYear":7,"maxYear":13,"leadType":"Teacher-led","round1Count":5,"open":true,"icon":"🧘","category":"Calm & Wellbeing","interests":["wellbeing"],"energy":1,"social":1,"description":"Learn simple ways to focus, reset and feel calmer during a busy school week.","yearLabel":"Years 7–13","popularity":"Growing","facilitator":"Sarah Frances Telford"},{"id":"game-development","name":"Game Development Studio","day":"Thursday","teacher":"Aleksandr Vu & Redhemer Payad","location":"B407","minYear":7,"maxYear":13,"leadType":"Teacher-led","round1Count":18,"open":true,"icon":"🎮","category":"Gaming & Technology","interests":["tech","art"],"energy":3,"social":2,"description":"Turn game ideas into playable projects through design, coding and creative teamwork.","yearLabel":"Years 7–13","popularity":"Popular","facilitator":"Aleksandr Vu & Redhemer Payad"},{"id":"film-tue","name":"Film Studies","day":"Tuesday","teacher":"Cian McNerney","location":"C207","minYear":7,"maxYear":13,"leadType":"Teacher-led","round1Count":10,"open":true,"icon":"🎬","category":"Reading & Media","interests":["media","art"],"energy":2,"social":2,"description":"Watch closely, discuss meaning and discover how films tell powerful stories.","yearLabel":"Years 7–13","popularity":"Growing","subtitle":"Tuesday","facilitator":"Cian McNerney"},{"id":"film-thu","name":"Film Studies","day":"Thursday","teacher":"Cian McNerney","location":"C207","minYear":7,"maxYear":13,"leadType":"Teacher-led","round1Count":8,"open":true,"icon":"🍿","category":"Reading & Media","interests":["media","art"],"energy":2,"social":2,"description":"Explore characters, themes and filmmaking choices with other movie enthusiasts.","yearLabel":"Years 7–13","popularity":"Growing","subtitle":"Thursday","facilitator":"Cian McNerney"},{"id":"card-games","name":"Card Games Club","day":"Tuesday","teacher":"Ben Madeley","location":"C317","minYear":7,"maxYear":13,"leadType":"Teacher-led","round1Count":25,"open":true,"icon":"🃏","category":"Chess & Strategy","interests":["strategy"],"energy":2,"social":3,"description":"Learn new card games, plan clever moves and enjoy friendly competition.","yearLabel":"Years 7–13","popularity":"Very popular","facilitator":"Ben Madeley"},{"id":"puzzles","name":"Puzzles","day":"Tuesday","teacher":"Chi Lan Tuong","location":"B201","minYear":7,"maxYear":13,"leadType":"Teacher-led","round1Count":7,"open":true,"icon":"🧩","category":"Chess & Strategy","interests":["strategy","wellbeing"],"energy":1,"social":1,"description":"Stretch your brain with logic, patterns and satisfying problems to solve.","yearLabel":"Years 7–13","popularity":"Growing","facilitator":"Chi Lan Tuong"},{"id":"chess-tue","name":"Chess","day":"Tuesday","teacher":"Jonathan Chan","location":"C411","minYear":7,"maxYear":13,"leadType":"Teacher-led","round1Count":17,"open":true,"icon":"♟️","category":"Chess & Strategy","interests":["strategy"],"energy":1,"social":2,"description":"Improve your chess thinking through tactics, games and friendly challenges.","yearLabel":"Years 7–13","popularity":"Popular","subtitle":"Tuesday","facilitator":"Jonathan Chan"},{"id":"handmade-tue","name":"Handmade Club","day":"Tuesday","teacher":"Binh Linh","location":"B203","minYear":7,"maxYear":13,"leadType":"Teacher-led","round1Count":19,"open":true,"icon":"🧵","category":"Arts & Making","interests":["art","wellbeing"],"energy":2,"social":2,"description":"Make something by hand, learn practical creative skills and enjoy a calm social space.","yearLabel":"Years 7–13","popularity":"Popular","subtitle":"Tuesday","facilitator":"Binh Linh"},{"id":"handmade-thu","name":"Handmade Club","day":"Thursday","teacher":"Binh Linh & Huong Thu Ngo","location":"B203","minYear":7,"maxYear":13,"leadType":"Teacher-led","round1Count":20,"open":true,"icon":"✂️","category":"Arts & Making","interests":["art","wellbeing"],"energy":2,"social":2,"description":"Create, craft and experiment with materials in a relaxed workshop atmosphere.","yearLabel":"Years 7–13","popularity":"Very popular","subtitle":"Thursday","facilitator":"Binh Linh & Huong Thu Ngo"},{"id":"vietnamese-dance","name":"Vietnamese Dance Club","day":"Tuesday","teacher":"Hiền Phan","location":"Activities Room","minYear":7,"maxYear":13,"leadType":"Teacher-led","round1Count":3,"open":true,"icon":"💃","category":"Music & Performance","interests":["performance","culture","sport"],"energy":4,"social":3,"description":"Celebrate Vietnamese culture through movement, rhythm and group performance.","yearLabel":"Years 7–13","popularity":"Small group","facilitator":"Hiền Phan"},{"id":"drama-movie","name":"Drama & Movie Club","day":"Tuesday","teacher":"Hien Nguyen","location":"B204","minYear":7,"maxYear":9,"leadType":"Teacher-led","round1Count":14,"open":true,"icon":"🎥","category":"Music & Performance","interests":["performance","media"],"energy":3,"social":3,"description":"Act, imagine and enjoy film-inspired activities with a lively creative group.","yearLabel":"Years 7–9","popularity":"Popular","facilitator":"Hien Nguyen"},{"id":"east-asian-culture","name":"Japanese & East Asian Culture","day":"Thursday","teacher":"Kenta Watson","location":"C312","minYear":7,"maxYear":13,"leadType":"Teacher-led","round1Count":5,"open":true,"icon":"🏮","category":"Culture & World","interests":["culture"],"energy":2,"social":2,"description":"Explore traditions, language, media and everyday life across East Asia.","yearLabel":"Years 7–13","popularity":"Growing","facilitator":"Kenta Watson"},{"id":"vietnamese-reading","name":"Vietnamese Reading Book Club","day":"Thursday","teacher":"Hien Nguyen","location":"B204","minYear":7,"maxYear":9,"leadType":"Teacher-led","round1Count":0,"open":true,"icon":"📕","category":"Culture & World","interests":["culture","media"],"energy":1,"social":2,"description":"Enjoy Vietnamese texts, stories and discussion in a welcoming reading group.","yearLabel":"Years 7–9","popularity":"New / check list","checkNote":"Please confirm current availability with the Secondary Office.","facilitator":"Hien Nguyen"},{"id":"glow-box","name":"Glow Box Workshop","day":"Tuesday","teacher":"Huong Thu Ngo","location":"C306","minYear":7,"maxYear":13,"leadType":"Teacher-led","round1Count":4,"open":true,"icon":"💡","category":"Arts & Making","interests":["art","science"],"energy":2,"social":2,"description":"Combine light, design and hands-on making to create an eye-catching glow box.","yearLabel":"Years 7–13","popularity":"Small group","facilitator":"Huong Thu Ngo"},{"id":"chess-thu","name":"Chess","day":"Thursday","teacher":"Ann Fin","location":"C102","minYear":7,"maxYear":8,"leadType":"Teacher-led","round1Count":7,"open":true,"icon":"♜","category":"Chess & Strategy","interests":["strategy"],"energy":1,"social":2,"description":"Practise chess tactics and enjoy thoughtful games in a junior-friendly group.","yearLabel":"Years 7–8","popularity":"Growing","subtitle":"Thursday • Y7–8","facilitator":"Ann Fin"},{"id":"ict-practical","name":"ICT IGCSE Practical Skills","day":"Tuesday","teacher":"Ian Stuckey","location":"C413","minYear":11,"maxYear":11,"leadType":"Teacher-led","round1Count":3,"open":true,"icon":"🖥️","category":"Gaming & Technology","interests":["tech"],"energy":2,"social":1,"description":"Strengthen practical IGCSE ICT skills through focused, useful computer work.","yearLabel":"Year 11 IGCSE ICT students only","popularity":"Small group","restriction":"Year 11 IGCSE ICT students only","facilitator":"Ian Stuckey"},{"id":"strength-conditioning","name":"Strength & Conditioning","day":"Thursday","teacher":"Quang Anh","location":"Weight Room","minYear":9,"maxYear":13,"leadType":"Teacher-led","round1Count":9,"open":true,"icon":"🏋️","category":"Sports & Fitness","interests":["sport","wellbeing"],"energy":5,"social":2,"description":"Improve safe movement, strength and fitness with structured training.","yearLabel":"Years 9–13","popularity":"Growing","facilitator":"Quang Anh"},{"id":"clayground","name":"Clayground","day":"Tuesday","teacher":"Michael Keane","location":"C308","minYear":7,"maxYear":13,"leadType":"Student-led","round1Count":14,"open":true,"icon":"🏺","category":"Arts & Making","interests":["art","wellbeing"],"energy":2,"social":2,"description":"Shape ideas in clay and enjoy the satisfying process of making by hand.","yearLabel":"Years 7–13","popularity":"Popular","facilitator":"Student-led • Supervisor: Michael Keane"},{"id":"mural","name":"Canteen Wall Mural Project","day":"Thursday","teacher":"Michael Keane","location":"Canteen","minYear":7,"maxYear":13,"leadType":"Student-led","round1Count":26,"open":true,"icon":"🎨","category":"Arts & Making","interests":["art","leadership"],"energy":3,"social":3,"description":"Leave a positive mark on RGSV by helping design and paint a shared school mural.","yearLabel":"Years 7–13","popularity":"Very popular","facilitator":"Student-led • Supervisor: Michael Keane"},{"id":"dnd","name":"Dungeons & Dragons","day":"Tuesday","teacher":"Ludovic Pirolley","location":"C212","minYear":10,"maxYear":13,"leadType":"Student-led","round1Count":11,"open":true,"icon":"🐉","category":"Chess & Strategy","interests":["strategy","media"],"energy":2,"social":3,"description":"Create characters, solve problems and tell an adventure together around the table.","yearLabel":"Years 10–13","popularity":"Growing","facilitator":"Student-led • Supervisor: Ludovic Pirolley"},{"id":"sciences-for-all","name":"Sciences for All","day":"Tuesday","teacher":"Albert Clayton","location":"B305","minYear":7,"maxYear":9,"leadType":"Student-led","round1Count":7,"open":true,"icon":"🔬","category":"Science & Engineering","interests":["science"],"energy":3,"social":3,"description":"Explore science through accessible activities, demonstrations and shared curiosity.","yearLabel":"Years 7–9","popularity":"Growing","facilitator":"Student-led • Supervisor: Albert Clayton"},{"id":"shadow-puppet","name":"Shadow Puppet","day":"Thursday","teacher":"Huong Thu Ngo","location":"C306","minYear":7,"maxYear":8,"leadType":"Student-led","round1Count":5,"open":true,"icon":"🪆","category":"Arts & Making","interests":["art","performance","culture"],"energy":3,"social":3,"description":"Design characters and bring stories to life through shadow-puppet performance.","yearLabel":"Years 7–8","popularity":"Growing","facilitator":"Student-led • Supervisor: Huong Thu Ngo"},{"id":"recycled-architecture","name":"Recycled Architecture & Building","day":"Thursday","teacher":"James Gorman","location":"B308","minYear":7,"maxYear":13,"leadType":"Student-led","round1Count":9,"open":true,"icon":"🏗️","category":"Science & Engineering","interests":["science","art","leadership"],"energy":3,"social":3,"description":"Design and build imaginative structures while giving recycled materials a new purpose.","yearLabel":"Years 7–13","popularity":"Growing","facilitator":"Student-led • Supervisor: James Gorman"},{"id":"business-analytics","name":"Business Analytics Club","day":"Tuesday","teacher":"Ralph","location":"C208","minYear":7,"maxYear":9,"leadType":"Student-led","round1Count":7,"open":true,"icon":"📊","category":"Leadership & Service","interests":["leadership","tech","strategy"],"energy":2,"social":2,"description":"Use data and business thinking to spot patterns, explain ideas and make decisions.","yearLabel":"Years 7–9","popularity":"Growing","facilitator":"Student-led • Supervisor: Ralph"},{"id":"physics-explorers","name":"Physics Explorers Club","day":"Tuesday","teacher":"James Gorman","location":"B308","minYear":7,"maxYear":8,"leadType":"Student-led","round1Count":2,"open":true,"icon":"⚛️","category":"Science & Engineering","interests":["science"],"energy":3,"social":2,"description":"Investigate how the world works through physics questions and practical exploration.","yearLabel":"Years 7–8","popularity":"Small group","facilitator":"Student-led • Supervisor: James Gorman"},{"id":"media-club","name":"RGSV Media Club","day":"Tuesday","teacher":"Aleksandr Vu","location":"B407","minYear":7,"maxYear":13,"leadType":"Student-led","round1Count":4,"open":true,"icon":"📸","category":"Reading & Media","interests":["media","tech","leadership"],"energy":3,"social":3,"description":"Capture RGSV life through stories, images and media made by students.","yearLabel":"Years 7–13","popularity":"Small group","facilitator":"Student-led • Supervisor: Aleksandr Vu"},{"id":"robotics","name":"Robotics","day":"Thursday","teacher":"Ian Stuckey","location":"C410","minYear":7,"maxYear":13,"leadType":"Student-led","round1Count":12,"open":true,"icon":"🤖","category":"Science & Engineering","interests":["tech","science"],"energy":3,"social":3,"description":"Build, test and improve robotic ideas through coding and hands-on problem solving.","yearLabel":"Years 7–13","popularity":"Popular","facilitator":"Student-led • Supervisor: Ian Stuckey"},{"id":"weather-station","name":"Weather Station","day":"Thursday","teacher":"Ian Stuckey","location":"C410","minYear":7,"maxYear":13,"leadType":"Student-led","round1Count":2,"open":false,"icon":"🌦️","category":"Science & Engineering","interests":["science","tech"],"energy":2,"social":2,"description":"A specialist project using weather observations, instruments and data.","yearLabel":"Special project — not open to registration","popularity":"Special project","restriction":"Special project — not open to registration","facilitator":"Student-led • Supervisor: Ian Stuckey"},{"id":"jv-basketball","name":"JV/Varsity Basketball","day":"Thursday","teacher":"Aidan","location":"Outdoor Court","minYear":10,"maxYear":13,"leadType":"Student-led","round1Count":26,"open":true,"icon":"🏀","category":"Sports & Fitness","interests":["sport"],"energy":5,"social":3,"description":"Train seriously, strengthen teamwork and develop competitive basketball skills.","yearLabel":"Years 10–13","popularity":"Very popular","facilitator":"Student-led • Supervisor: Aidan"},{"id":"kpop-dance","name":"K-pop Dance","day":"Tuesday","teacher":"Jackie","location":"Prep Hub","minYear":7,"maxYear":8,"leadType":"Student-led","round1Count":5,"open":true,"icon":"✨","category":"Music & Performance","interests":["performance","culture","sport"],"energy":5,"social":3,"description":"Learn energetic choreography, perform together and share a love of K-pop.","yearLabel":"Years 7–8","popularity":"Growing","facilitator":"Student-led • Supervisor: Jackie"},{"id":"debate","name":"Debate Club","day":"Thursday","teacher":"Owen Thomas","location":"C215","minYear":7,"maxYear":8,"leadType":"Student-led","round1Count":8,"open":true,"icon":"🎙️","category":"Leadership & Service","interests":["leadership","strategy"],"energy":3,"social":3,"description":"Build persuasive arguments, listen closely and speak with confidence.","yearLabel":"Years 7–8","popularity":"Growing","facilitator":"Student-led • Supervisor: Owen Thomas"},{"id":"science-experiment","name":"Science Experiment Society","day":"Thursday","teacher":"Nicholas Smith","location":"B310","minYear":7,"maxYear":13,"leadType":"Student-led","round1Count":14,"open":true,"icon":"🧪","category":"Science & Engineering","interests":["science"],"energy":3,"social":3,"description":"Plan and try practical experiments with a curious, collaborative science team.","yearLabel":"Years 7–13","popularity":"Popular","facilitator":"Student-led • Supervisor: Nicholas Smith"},{"id":"yss","name":"Youth Service Society (YSS)","day":"Tuesday","teacher":"Owen Thomas","location":"C215","minYear":10,"maxYear":13,"leadType":"Student-led","round1Count":13,"open":true,"icon":"🤝","category":"Leadership & Service","interests":["leadership"],"energy":3,"social":3,"description":"Work with others on service ideas that can make a positive difference.","yearLabel":"Years 10–13","popularity":"Popular","facilitator":"Student-led • Supervisor: Owen Thomas"},{"id":"girls-basketball","name":"Girls’ Basketball","day":"Tuesday","teacher":"Quang Anh","location":"Outdoor Court","minYear":7,"maxYear":13,"leadType":"Student-led","round1Count":19,"open":true,"icon":"⛹️‍♀️","category":"Sports & Fitness","interests":["sport"],"energy":5,"social":3,"description":"Grow basketball skills, confidence and team spirit in an active, supportive group.","yearLabel":"Years 7–13","popularity":"Popular","facilitator":"Student-led • Supervisor: Quang Anh"},{"id":"digital-game-makers","name":"Digital Game Makers","day":"Tuesday","teacher":"Redhemer Payad","location":"C415","minYear":7,"maxYear":13,"leadType":"Student co-led","round1Count":14,"open":true,"icon":"🕹️","category":"Gaming & Technology","interests":["tech","art"],"energy":3,"social":2,"description":"Design digital games and learn how creative ideas become interactive experiences.","yearLabel":"Years 7–13","popularity":"Popular","facilitator":"Student co-led • Teacher: Redhemer Payad"}]</script>
+<script>
+(() => {
+  "use strict";
+
+  const activities = JSON.parse(document.getElementById("activity-data").textContent);
+  const interestLabels = {
+    sport:"Sports & fitness", strategy:"Chess & strategy", tech:"Gaming & technology",
+    science:"Science & engineering", art:"Arts & making", performance:"Music & performance",
+    media:"Reading, film & media", leadership:"Leadership & service", culture:"Culture & world",
+    wellbeing:"Calm & wellbeing"
+  };
+  const state = {
+    year:null,
+    interests:new Set(),
+    energy:3,
+    social:2,
+    day:"Both",
+    shortlist:loadShortlist()
+  };
+
+  const $ = (selector, root=document) => root.querySelector(selector);
+  const $$ = (selector, root=document) => [...root.querySelectorAll(selector)];
+  const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, ch => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  })[ch]);
+
+  const toastEl = $("#toast");
+  let toastTimer;
+  function toast(message){
+    toastEl.textContent = message;
+    toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2600);
+  }
+
+  function loadShortlist(){
+    try{
+      const saved = JSON.parse(localStorage.getItem("rgsv-eca-shortlist-v1") || "{}");
+      return {Tuesday:saved.Tuesday || null, Thursday:saved.Thursday || null};
+    }catch(_error){
+      return {Tuesday:null, Thursday:null};
+    }
+  }
+  function saveShortlist(){
+    try{
+      localStorage.setItem("rgsv-eca-shortlist-v1", JSON.stringify(state.shortlist));
+    }catch(_error){
+      // The shortlist still works in memory when browser storage is unavailable.
+    }
+  }
+
+  function selectedValue(name, fallback){
+    const input = document.querySelector(`input[name="${name}"]:checked`);
+    return input ? input.value : fallback;
+  }
+
+  function syncStateFromControls(){
+    state.energy = Number(selectedValue("energy", 3));
+    state.social = Number(selectedValue("social", 2));
+    state.day = selectedValue("day", "Both");
+  }
+
+  function eligibility(activity, year=state.year){
+    return year !== null && year >= activity.minYear && year <= activity.maxYear;
+  }
+
+  function activityScore(activity){
+    let score = 12;
+    const overlaps = activity.interests.filter(item => state.interests.has(item));
+    score += overlaps.length * 28;
+    if(state.interests.size && !overlaps.length) score -= 14;
+
+    const energyDistance = Math.abs(activity.energy - state.energy);
+    score += Math.max(0, 15 - energyDistance * 5);
+
+    const socialDistance = Math.abs(activity.social - state.social);
+    score += Math.max(0, 10 - socialDistance * 5);
+
+    if(activity.leadType !== "Teacher-led") score += 2;
+    if(activity.round1Count > 0 && activity.round1Count < 12) score += 2;
+    if(activity.checkNote) score -= 2;
+
+    return {score, overlaps};
+  }
+
+  function matchPercent(score){
+    return Math.max(61, Math.min(98, Math.round(52 + score * .45)));
+  }
+
+  function reasonsFor(activity, overlaps){
+    const reasons = overlaps.slice(0,2).map(key => interestLabels[key]);
+    if(Math.abs(activity.energy - state.energy) <= 1){
+      reasons.push(state.energy <= 1 ? "Calm pace" : state.energy >= 5 ? "High energy" : "Balanced vibe");
+    }
+    if(Math.abs(activity.social - state.social) === 0){
+      reasons.push(state.social === 1 ? "Independent-friendly" : state.social === 3 ? "Team energy" : "Flexible social style");
+    }
+    if(activity.leadType !== "Teacher-led") reasons.push("Student-led");
+    return [...new Set(reasons)].slice(0,3);
+  }
+
+  function activityCard(activity, options={}){
+    const scored = activityScore(activity);
+    const showScore = Boolean(options.showScore);
+    const reasons = options.reasons || reasonsFor(activity, scored.overlaps);
+    const isSelected = state.shortlist[activity.day] === activity.id;
+    const meter = Math.min(100, Math.max(5, Math.round((activity.round1Count / 28) * 100)));
+    const dayClass = activity.day.toLowerCase();
+    const statusBadge = !activity.open
+      ? `<span class="badge closed">Not open</span>`
+      : activity.checkNote
+        ? `<span class="badge check">Check details</span>`
+        : "";
+    const leadBadge = activity.leadType !== "Teacher-led"
+      ? `<span class="badge student">${escapeHtml(activity.leadType)}</span>` : "";
+    const reasonHtml = reasons.length
+      ? `<div class="reason-list">${reasons.map(reason => `<span class="reason">${escapeHtml(reason)}</span>`).join("")}</div>`
+      : "";
+    const scoreHtml = showScore
+      ? `<span class="match-score">${matchPercent(scored.score)}% match</span>` : "";
+    const subtitle = activity.subtitle ? `<small>${escapeHtml(activity.subtitle)}</small>` : "";
+    const checkText = activity.checkNote ? `<p><strong>Check:</strong> ${escapeHtml(activity.checkNote)}</p>` : "";
+    const restrictionText = activity.restriction ? `<p><strong>Restriction:</strong> ${escapeHtml(activity.restriction)}</p>` : "";
+    const buttonText = isSelected ? "✓ Shortlisted" : activity.open ? "Add to shortlist" : "Unavailable";
+    return `
+      <article class="activity-card" data-activity-id="${escapeHtml(activity.id)}">
+        <div class="card-top">
+          <span class="activity-icon" aria-hidden="true">${escapeHtml(activity.icon)}</span>
+          ${scoreHtml}
+        </div>
+        <div class="card-badges">
+          <span class="badge day-${dayClass}">${escapeHtml(activity.day)}</span>
+          <span class="badge">${escapeHtml(activity.category)}</span>
+          ${leadBadge}${statusBadge}
+        </div>
+        <h3>${escapeHtml(activity.name)}${subtitle}</h3>
+        <p class="desc">${escapeHtml(activity.description)}</p>
+        ${reasonHtml}
+        <div class="card-info">
+          <div class="info-row"><span aria-hidden="true">📍</span><span><strong>${escapeHtml(activity.location)}</strong></span></div>
+          <div class="info-row"><span aria-hidden="true">🎓</span><span>${escapeHtml(activity.yearLabel)}</span></div>
+          <div class="info-row"><span aria-hidden="true">👤</span><span>${escapeHtml(activity.facilitator)}</span></div>
+        </div>
+        <div class="interest-meter" title="Aggregate Round 1 registration count; not a live capacity figure">
+          <div class="interest-line"><span>${escapeHtml(activity.popularity)}</span><span>Round 1 list: ${activity.round1Count}</span></div>
+          <div class="meter"><span style="width:${meter}%"></span></div>
+        </div>
+        <div class="card-actions">
+          <button class="btn ${isSelected ? "btn-ghost" : "btn-primary"}" type="button" data-add="${escapeHtml(activity.id)}" ${activity.open ? "" : "disabled"}>${buttonText}</button>
+        </div>
+        <details class="card-details">
+          <summary>More details</summary>
+          <p>${escapeHtml(activity.leadType)} • ${escapeHtml(activity.day)} • ${escapeHtml(activity.location)}</p>
+          ${restrictionText}${checkText}
+        </details>
+      </article>`;
+  }
+
+  function chooseDiverse(list, limit=4){
+    const output = [];
+    const categoryCounts = new Map();
+    for(const item of list){
+      const used = categoryCounts.get(item.activity.category) || 0;
+      if(used >= 2 && output.length < limit - 1) continue;
+      output.push(item);
+      categoryCounts.set(item.activity.category, used + 1);
+      if(output.length === limit) break;
+    }
+    if(output.length < limit){
+      for(const item of list){
+        if(!output.includes(item)){
+          output.push(item);
+          if(output.length === limit) break;
+        }
+      }
+    }
+    return output;
+  }
+
+  function renderDayResults(day, ranked, randomMode=false){
+    if(!ranked.length){
+      return `<div class="day-result"><div class="day-title ${day.toLowerCase()}"><span class="day-dot"></span><strong>${day}</strong></div>
+        <div class="empty-panel"><span>🧭</span>No listed activities match this combination yet. Try a different interest or browse all options.</div></div>`;
+    }
+    const chosen = randomMode ? ranked.slice(0,4) : chooseDiverse(ranked,4);
+    return `<div class="day-result">
+      <div class="day-title ${day.toLowerCase()}"><span class="day-dot"></span><strong>${day} matches</strong></div>
+      <div class="card-grid">${chosen.map(item => activityCard(item.activity,{showScore:!randomMode,reasons:item.reasons})).join("")}</div>
+    </div>`;
+  }
+
+  function createConfetti(){
+    const colours = ["#7a1838","#e7bb45","#702b90","#315c8d","#f08aa6"];
+    for(let i=0;i<34;i++){
+      const piece = document.createElement("span");
+      piece.className = "confetti-piece";
+      piece.style.left = `${Math.random()*100}vw`;
+      piece.style.background = colours[i % colours.length];
+      piece.style.setProperty("--drift", `${(Math.random()-.5)*220}px`);
+      piece.style.animationDelay = `${Math.random()*.35}s`;
+      piece.style.transform = `rotate(${Math.random()*180}deg)`;
+      document.body.appendChild(piece);
+      setTimeout(() => piece.remove(), 2400);
+    }
+  }
+
+  function renderRecommendations(randomMode=false){
+    syncStateFromControls();
+    if(state.year === null){
+      toast("Choose your year group first.");
+      $("#yearPicker").scrollIntoView({behavior:"smooth",block:"center"});
+      return;
+    }
+    if(!randomMode && state.interests.size === 0){
+      toast("Choose at least one interest — or use Surprise me.");
+      $("#interestPicker").scrollIntoView({behavior:"smooth",block:"center"});
+      return;
+    }
+
+    const eligible = activities.filter(activity =>
+      activity.open && eligibility(activity) && (state.day === "Both" || activity.day === state.day)
+    );
+
+    let ranked = eligible.map(activity => {
+      const scored = activityScore(activity);
+      return {activity,score:scored.score,reasons:reasonsFor(activity,scored.overlaps)};
+    });
+
+    if(randomMode){
+      ranked = ranked
+        .map(item => ({...item,random:Math.random() + (item.activity.round1Count < 12 ? .18 : 0)}))
+        .sort((a,b) => b.random-a.random);
+    }else{
+      ranked.sort((a,b) => b.score-a.score || a.activity.round1Count-b.activity.round1Count || a.activity.name.localeCompare(b.activity.name));
+    }
+
+    const days = state.day === "Both" ? ["Tuesday","Thursday"] : [state.day];
+    const content = days.map(day => renderDayResults(day, ranked.filter(item => item.activity.day === day), randomMode)).join("");
+    $("#resultsContent").innerHTML = content;
+    $("#resultsHeading").textContent = randomMode ? `A fresh mix for Year ${state.year}` : `Strong matches for Year ${state.year}`;
+    const interests = [...state.interests].map(key => interestLabels[key]);
+    $("#resultsText").textContent = randomMode
+      ? "A playful set of eligible options — sometimes the unexpected choice becomes the best one."
+      : `Based on ${interests.join(", ").toLowerCase()}, your preferred energy and social style.`;
+    $("#results").classList.add("visible");
+    $("#results").scrollIntoView({behavior:"smooth",block:"start"});
+    createConfetti();
+  }
+
+  function addToShortlist(id){
+    const activity = activities.find(item => item.id === id);
+    if(!activity || !activity.open) return;
+    const replaced = state.shortlist[activity.day];
+    state.shortlist[activity.day] = activity.id;
+    saveShortlist();
+    renderShortlist();
+    renderBrowse();
+    if($("#results").classList.contains("visible")){
+      renderVisibleResultButtons();
+    }
+    toast(replaced && replaced !== id
+      ? `${activity.day} choice updated to ${activity.name}.`
+      : `${activity.name} added to your ${activity.day} shortlist.`);
+  }
+
+  function removeFromShortlist(day){
+    state.shortlist[day] = null;
+    saveShortlist();
+    renderShortlist();
+    renderBrowse();
+    renderVisibleResultButtons();
+    toast(`${day} choice removed.`);
+  }
+
+  function slotMarkup(day){
+    const id = state.shortlist[day];
+    const activity = activities.find(item => item.id === id);
+    if(!activity){
+      return `<div class="slot-empty"><div><strong>No ${day} choice yet</strong><br><small>Add one from your matches or the full ECA list.</small></div></div>`;
+    }
+    return `<div class="slot-card">
+      <span class="activity-icon" aria-hidden="true">${escapeHtml(activity.icon)}</span>
+      <div><h3>${escapeHtml(activity.name)}</h3><p>${escapeHtml(activity.location)} • ${escapeHtml(activity.yearLabel)}</p></div>
+      <button class="icon-btn" type="button" data-remove-day="${day}" aria-label="Remove ${escapeHtml(activity.name)}">×</button>
+    </div>`;
+  }
+
+  function renderShortlist(){
+    $("#slotTuesday").innerHTML = slotMarkup("Tuesday");
+    $("#slotThursday").innerHTML = slotMarkup("Thursday");
+    const count = Object.values(state.shortlist).filter(Boolean).length;
+    $("#navShortlistCount").textContent = count;
+  }
+
+  function renderVisibleResultButtons(){
+    $$("#results .activity-card").forEach(card => {
+      const id = card.dataset.activityId;
+      const activity = activities.find(item => item.id === id);
+      const button = $("[data-add]", card);
+      if(!activity || !button) return;
+      const selected = state.shortlist[activity.day] === activity.id;
+      button.textContent = selected ? "✓ Shortlisted" : "Add to shortlist";
+      button.className = `btn ${selected ? "btn-ghost" : "btn-primary"}`;
+    });
+  }
+
+  function populateBrowseFilters(){
+    const categories = [...new Set(activities.map(item => item.category))].sort();
+    $("#filterCategory").insertAdjacentHTML("beforeend", categories.map(category =>
+      `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`
+    ).join(""));
+  }
+
+  function renderBrowse(){
+    const query = $("#searchActivities").value.trim().toLowerCase();
+    const day = $("#filterDay").value;
+    const category = $("#filterCategory").value;
+    const yearValue = $("#filterYear").value;
+    const year = yearValue === "All" ? null : Number(yearValue);
+
+    const filtered = activities.filter(activity => {
+      const haystack = `${activity.name} ${activity.subtitle || ""} ${activity.category} ${activity.description} ${activity.location}`.toLowerCase();
+      return (!query || haystack.includes(query))
+        && (day === "All" || activity.day === day)
+        && (category === "All" || activity.category === category)
+        && (year === null || (year >= activity.minYear && year <= activity.maxYear));
+    }).sort((a,b) => a.day.localeCompare(b.day) || a.category.localeCompare(b.category) || a.name.localeCompare(b.name));
+
+    $("#browseCount").textContent = `${filtered.length} ${filtered.length === 1 ? "session" : "sessions"} shown`;
+    $("#browseGrid").innerHTML = filtered.length
+      ? filtered.map(activity => activityCard(activity,{showScore:false,reasons:[]})).join("")
+      : `<div class="empty-panel" style="grid-column:1/-1"><span>🔎</span>No activities match those filters. Try clearing one filter.</div>`;
+  }
+
+  function shortlistText(){
+    const lines = ["My RGSV ECA shortlist"];
+    for(const day of ["Tuesday","Thursday"]){
+      const activity = activities.find(item => item.id === state.shortlist[day]);
+      lines.push(activity
+        ? `${day}: ${activity.name} — ${activity.location} (${activity.yearLabel})`
+        : `${day}: No choice yet`);
+    }
+    lines.push("Reminder: this shortlist is not an official registration.");
+    return lines.join("\n");
+  }
+
+  async function copyPlan(){
+    const text = shortlistText();
+    try{
+      await navigator.clipboard.writeText(text);
+      toast("Your shortlist has been copied.");
+    }catch(_error){
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      textarea.remove();      toast("Your shortlist has been copied.");
+    }
+  }
+
+  function randomiseProfile(){
+    if(state.year === null){
+      const years = [7,8,9,10,11,12,13];
+      setYear(years[Math.floor(Math.random()*years.length)]);
+    }
+    const interestKeys = Object.keys(interestLabels);
+    state.interests.clear();
+    const shuffled = [...interestKeys].sort(() => Math.random()-.5);
+    shuffled.slice(0,2+Math.floor(Math.random()*2)).forEach(key => state.interests.add(key));
+    $$(".chip").forEach(button => {
+      const active = state.interests.has(button.dataset.interest);
+      button.classList.toggle("active",active);
+      button.setAttribute("aria-pressed",String(active));
+    });
+    const energies = ["1","3","5"], socials = ["1","2","3"];
+    const energyValue = energies[Math.floor(Math.random()*energies.length)];
+    const socialValue = socials[Math.floor(Math.random()*socials.length)];
+    const energyInput = document.querySelector(`input[name="energy"][value="${energyValue}"]`);
+    const socialInput = document.querySelector(`input[name="social"][value="${socialValue}"]`);
+    if(energyInput) energyInput.checked = true;
+    if(socialInput) socialInput.checked = true;
+    $("#day-both").checked = true;
+    renderRecommendations(true);
+  }
+
+  function setYear(year){
+    state.year = Number(year);
+    $$(".year-btn").forEach(button => {
+      const active = Number(button.dataset.year) === state.year;
+      button.classList.toggle("active",active);
+      button.setAttribute("aria-pressed",String(active));
+    });
+    $("#filterYear").value = String(state.year);
+    renderBrowse();
+  }
+
+  // Interactions
+  $("#yearPicker").addEventListener("click", event => {
+    const button = event.target.closest("[data-year]");
+    if(button) setYear(button.dataset.year);
+  });
+
+  $("#interestPicker").addEventListener("click", event => {
+    const button = event.target.closest("[data-interest]");
+    if(!button) return;
+    const key = button.dataset.interest;
+    if(state.interests.has(key)) state.interests.delete(key); else state.interests.add(key);
+    const active = state.interests.has(key);
+    button.classList.toggle("active",active);
+    button.setAttribute("aria-pressed",String(active));
+  });
+
+  $("#matchButton").addEventListener("click", () => renderRecommendations(false));
+  $("#surpriseButton").addEventListener("click", randomiseProfile);
+  $("#heroSurprise").addEventListener("click", () => {
+    $("#matcher").scrollIntoView({behavior:"smooth"});
+    setTimeout(randomiseProfile,250);
+  });
+  $("#editChoices").addEventListener("click", () => $("#matcher").scrollIntoView({behavior:"smooth",block:"start"}));
+  $$("[data-scroll-shortlist]").forEach(button => button.addEventListener("click", () => $("#shortlist").scrollIntoView({behavior:"smooth"})));
+
+  document.addEventListener("click", event => {
+    const addButton = event.target.closest("[data-add]");
+    if(addButton) addToShortlist(addButton.dataset.add);
+    const removeButton = event.target.closest("[data-remove-day]");
+    if(removeButton) removeFromShortlist(removeButton.dataset.removeDay);
+  });
+
+  ["searchActivities","filterDay","filterCategory","filterYear"].forEach(id => {
+    document.getElementById(id).addEventListener(id === "searchActivities" ? "input" : "change", renderBrowse);
+  });
+
+  $("#copyPlan").addEventListener("click", copyPlan);
+  $("#printPlan").addEventListener("click", () => window.print());
+  $("#clearPlan").addEventListener("click", () => {
+    state.shortlist = {Tuesday:null,Thursday:null};
+    saveShortlist();
+    renderShortlist();
+    renderBrowse();
+    renderVisibleResultButtons();
+    toast("Shortlist cleared.");
+  });
+
+  // Initial render
+  $("#openSessionCount").textContent = activities.filter(item => item.open).length;
+  $("#studentLedCount").textContent = activities.filter(item => item.leadType !== "Teacher-led" && item.open).length;
+  populateBrowseFilters();
+  renderShortlist();
+  renderBrowse();
+})();
+</script>
+</body>
+</html>
