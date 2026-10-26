@@ -480,7 +480,7 @@ function unary(op,a){if(op==='NOT')return V('BOOLEAN',!bool(a));const n=numeric(
 function binary(op,a,b){
  if(['AND','OR','XOR'].includes(op)){const x=bool(a),y=bool(b);return V('BOOLEAN',op==='AND'?x&&y:op==='OR'?x||y:x!==y);}
  if(['=','<>','<','>','<=','>='].includes(op)){let x,y;if(['INTEGER','REAL'].includes(a?.type)&&['INTEGER','REAL'].includes(b?.type)){x=a.value;y=b.value;}else if(['STRING','CHAR'].includes(a?.type)&&['STRING','CHAR'].includes(b?.type)){x=a.value;y=b.value;}else if(a?.type==='BOOLEAN'&&b?.type==='BOOLEAN'&&['=','<>'].includes(op)){x=a.value;y=b.value;}else throw new Error('Cannot compare these data types. Check both sides of the comparison.');return V('BOOLEAN',({'=':()=>x===y,'<>':()=>x!==y,'<':()=>x<y,'>':()=>x>y,'<=':()=>x<=y,'>=':()=>x>=y})[op]());}
- if(op==='&'){const s=text(a)+text(b);if(s.length>100000)throw new Error('String limit: 100,000 characters.');return V('STRING',s);}
+ if(op==='&'||(op==='+'&&['STRING','CHAR'].includes(a?.type)&&['STRING','CHAR'].includes(b?.type))){const joined=text(a)+text(b);if(joined.length>100000)throw new Error('String limit: 100,000 characters.');return V('STRING',joined);}
  const x=numeric(a),y=numeric(b);if(['/','DIV','MOD'].includes(op)&&y===0)throw new Error('Division by zero. Check the divisor before dividing.');
  if(op==='DIV'||op==='MOD'){integer(a);integer(b);return number('INTEGER',op==='DIV'?Math.trunc(x/y):x-Math.trunc(x/y)*y);}
  const n=({'+':()=>x+y,'-':()=>x-y,'*':()=>x*y,'/':()=>x/y,'^':()=>x**y})[op]();return number(op==='/'||a.type==='REAL'||b.type==='REAL'||(op==='^'&&y<0)?'REAL':'INTEGER',n);
