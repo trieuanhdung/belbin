@@ -242,7 +242,7 @@ CLOSEFILE "names.txt"</pre>
    Source text is never passed to eval(), Function(), or the browser's JS parser. */
 'use strict';
 const Pseudo = (() => {
-const KEYWORDS = new Set(('DECLARE CONSTANT ARRAY OF INTEGER REAL STRING CHAR CHARACTER BOOLEAN INPUT OUTPUT PRINT END BEEP IF THEN ELSE ELSEIF ENDIF CASE OTHERWISE ENDCASE FOR TO STEP NEXT ENDFOR WHILE DO ENDWHILE REPEAT UNTIL PROCEDURE ENDPROCEDURE FUNCTION RETURNS ENDFUNCTION CALL RETURN BYREF BYVAL TRUE FALSE AND OR NOT XOR DIV MOD OPENFILE READFILE WRITEFILE CLOSEFILE READ WRITE APPEND STOP').split(' '));
+const KEYWORDS = new Set(('DECLARE CONSTANT ARRAY OF INTEGER REAL STRING CHAR CHARACTER BOOLEAN INPUT OUTPUT PRINT END BEEP IF THEN ELSE ELSEIF ENDIF CASE OTHERWISE ENDCASE FOR TO STEP NEXT ENDFOR WHILE DO ENDWHILE REPEAT UNTIL PROCEDURE ENDPROCEDURE FUNCTION RETURNS ENDFUNCTION CALL RETURN BYREF BYVAL TRUE FALSE AND OR NOT XOR DIV MOD OPENFILE READFILE WRITEFILE CLOSEFILE READ WRITE APPEND OPENWEB STOP').split(' '));
 const ARITIES = {LENGTH:[1],LEFT:[2],RIGHT:[2],MID:[3],SUBSTRING:[3],UCASE:[1],LCASE:[1],TO_UPPER:[1],TO_LOWER:[1],INT:[1],ROUND:[1,2],ABS:[1],SQRT:[1],RAND:[1],RANDOM:[0],RND:[0],RANDOM_INT:[2],ASC:[1],CHR:[1],NUM_TO_STR:[1],STR_TO_NUM:[1],IS_NUM:[1],EOF:[1]};
 const V = (type,value) => ({type,value});
 const bool = v => {if(!v || v.type!=='BOOLEAN')throw new Error('A BOOLEAN value (TRUE or FALSE) is required.');return v.value;};
@@ -323,6 +323,7 @@ class Parser{
   else if(t.kind==='str'||t.kind==='char')a={k:'lit',value:V(t.kind==='str'?'STRING':'CHAR',t.v),line:t.line};
   else if(t.v==='TRUE'||t.v==='FALSE')a={k:'lit',value:V('BOOLEAN',t.v==='TRUE'),line:t.line};
   else if(t.v==='('){a=this.expr();this.expect(')');}
+  else if(t.v==='['){const items=[];if(!this.at(']')){do{items.push(this.expr());}while(this.match(','));}this.expect(']');if(!items.length)this.err('An array literal must contain at least one value.',t);a={k:'arraylit',items,line:t.line};}
   else if(['+','-','NOT'].includes(t.v))a={k:'un',op:t.v,a:this.expr(t.v==='NOT'?4:8),line:t.line};
   else if(t.kind==='id'&&(!KEYWORDS.has(t.v)||t.v==='EOF')){
    a={k:'var',key:t.v,name:t.raw,line:t.line};
@@ -345,7 +346,7 @@ class Parser{
   if(k==='INPUT'||k==='READ'){const target=this.target();this.nl();return {k:'input',target,line};}
   if(k==='IF'){const arms=[];let test=this.expr();this.then();arms.push({test,line,body:this.block(()=>['ELSE','ELSEIF','ENDIF'].some(word=>this.at(word)))});
    while(this.at('ELSEIF')||(this.at('ELSE')&&this.p(1).v==='IF')){const l=this.take().line;if(this.tokens[this.i-1].v==='ELSE')this.expect('IF');test=this.expr();this.then();arms.push({test,line:l,body:this.block(()=>['ELSE','ELSEIF','ENDIF'].some(word=>this.at(word)))});}
-   let otherwise=[];if(this.match('ELSE')){this.nl();otherwise=this.block(()=>this.at('ENDIF'));}const end=this.expect('ENDIF');this.nl();return {k:'if',arms,otherwise,line,end:end.line};}
+   let otherwise=[];if(this.match('ELSE')){this.nl();otherwise=this.block(()=>this.at('ENDIF'));}if(this.p().kind==='eof')this.err('IF is missing ENDIF. Every IF block must be closed with ENDIF.',t);const end=this.expect('ENDIF');this.nl();return {k:'if',arms,otherwise,line,end:end.line};}
   if(k==='FOR'){const variable=this.target();if(variable.k!=='var')this.err('Use a scalar INTEGER as the FOR loop counter.',t);if(!this.match('←'))this.expect('=');const start=this.expr();this.expect('TO');const finish=this.expr();const increment=this.match('STEP')?this.expr():{k:'lit',value:V('INTEGER',1),line};this.nl();const body=this.block(()=>this.at('NEXT')||this.at('ENDFOR'));if(this.p().kind==='eof')this.err('FOR is missing NEXT.',t);const end=this.take();if(this.p().kind==='id'&&!KEYWORDS.has(this.p().v)){const id=this.id();if(id.key!==variable.key)this.err(`NEXT ${id.name} does not match FOR ${variable.name}.`,end);}this.nl();return {k:'for',variable,start,finish,increment,body,line,end:end.line};}
   if(k==='WHILE'){const test=this.expr();this.match('DO');this.nl();if(this.match('DO'))this.nl();const body=this.block(()=>this.at('ENDWHILE'));const end=this.expect('ENDWHILE');this.nl();return {k:'while',test,body,line,end:end.line};}
   if(k==='REPEAT'){this.nl();const body=this.block(()=>this.at('UNTIL'));const end=this.expect('UNTIL');const test=this.expr();this.nl();return {k:'repeat',test,body,line,end:end.line};}
@@ -357,6 +358,7 @@ class Parser{
    if(this.match('(')){if(!this.at(')')){do{if(this.at('BYVAL')||this.at('BYREF'))mode=this.take().v;const names=[this.id()];while(this.match(','))names.push(this.id());this.expect(':');const type=this.type();for(const n of names)params.push({...n,type,mode});}while(this.match(','));}this.expect(')');}
    let returns=null;if(k==='FUNCTION'){this.expect('RETURNS');returns=this.type();if(returns.kind==='ARRAY')this.err('This version supports scalar function return types only.',t);if(params.some(p=>p.mode==='BYREF'))this.err('Use BYREF in a PROCEDURE, not a FUNCTION.',t);}
    this.nl();const endWord=k==='FUNCTION'?'ENDFUNCTION':'ENDPROCEDURE';const body=this.block(()=>this.at(endWord));const end=this.expect(endWord);this.nl();return {k:'routine',routineKind:k,...name,params,returns,body,line,end:end.line};}
+  if(k==='OPENWEB'){const args=[];this.expect('(');if(!this.at(')')){do{args.push(this.expr());}while(this.match(','));}this.expect(')');this.nl();return {k:'callstmt',name:t.raw,key:'OPENWEB',args,line};}
   if(k==='CALL'){const name=this.id(),args=[];if(this.match('(')){if(!this.at(')')){do{args.push(this.expr());}while(this.match(','));}this.expect(')');}this.nl();return {k:'callstmt',...name,args,line};}
   if(k==='RETURN'){const value=this.p().kind==='nl'?null:this.expr();this.nl();return {k:'return',value,line};}
   if(k==='OPENFILE'){const file=this.expr();this.expect('FOR');const mode=this.take();if(!['READ','WRITE','APPEND'].includes(mode.v))this.err('OPENFILE mode must be READ, WRITE or APPEND.',mode);this.nl();return {k:'openfile',file,mode:mode.v,line};}
@@ -365,7 +367,7 @@ class Parser{
   if(k==='CLOSEFILE'){const file=this.expr();this.nl();return {k:'closefile',file,line};}
   if(k==='BEEP'){if(this.match('('))this.expect(')');this.nl();return {k:'beep',line};}
   if(k==='STOP'){this.nl();return {k:'stop',line};}
-  this.i--;if(t.kind==='id'&&!KEYWORDS.has(k)){if(this.p(1).v==='('||this.p(1).kind==='nl'){const name=this.id(),args=[];if(this.match('(')){if(!this.at(')')){do{args.push(this.expr());}while(this.match(','));}this.expect(')');}this.nl();return {k:'callstmt',...name,args,line};}const target=this.target();if(!this.match('←'))this.expect('=');const value=this.expr();this.nl();return {k:'assign',target,value,line};}
+  this.i--;if(t.kind==='id'&&!KEYWORDS.has(k)){if(this.p(1).v==='('||this.p(1).kind==='nl'){const name=this.id(),args=[];if(this.match('(')){if(!this.at(')')){do{args.push(this.expr());}while(this.match(','));}this.expect(')');}this.nl();return {k:'callstmt',...name,args,line};}const target=this.target();if(this.at('=')&&this.p(1).v==='[')this.take();else if(this.at('='))this.err('Use ← or <- for assignment, or = specifically before an array literal (for example Names = ["A", "B"]).');else this.expect('←');const value=this.expr();this.nl();return {k:'assign',target,value,line};}
   if(k==='END'&&this.p(1).v==='PROCEDURE')this.err('Use ENDPROCEDURE (one word) to close a PROCEDURE.',t);
   this.err(`Unexpected ${t.raw}. Check that your block endings match, or open the Syntax guide.`,t);
  }
@@ -438,9 +440,10 @@ class Compiler{
   case 'un':this.expr(n.a);this.emit('UNARY',{operator:n.op});break;
   case 'bin':this.expr(n.a);if(n.op==='AND'||n.op==='OR'){const j=this.emit('SHORT',{when:n.op==='OR'});this.expr(n.b);this.emit('BOOL');this.patch(j);}else{this.expr(n.b);this.emit('BINARY',{operator:n.op});}break;
   case 'call':this.call(n,false);break;
+  case 'arraylit':{for(const x of n.items)this.expr(x);this.emit('MAKE_ARRAY_LITERAL',{count:n.items.length,line:n.line});break;}
   default:this.fail('Unknown expression.',n.line);
  }}
- call(n,statement){if(Object.hasOwn(ARITIES,n.key)){if(statement)this.fail('Built-in functions are used inside expressions, not with CALL.',n.line);if(!ARITIES[n.key].includes(n.args.length))this.fail(`${n.name} expects ${ARITIES[n.key].join(' or ')} argument(s).`,n.line);for(const x of n.args)this.expr(x);this.emit('BUILTIN',{key:n.key,count:n.args.length});return;}
+ call(n,statement){if(n.key==='OPENWEB'){if(!statement)this.fail('OpenWeb is a statement; write OpenWeb(URL, TRUE, FALSE) on its own line.',n.line);if(n.args.length!==3)this.fail('OpenWeb expects exactly 3 arguments: URL, newtab, newwindow.',n.line);n.args.forEach(x=>this.expr(x));this.emit('OPEN_WEB',{count:3,line:n.line});return;}if(Object.hasOwn(ARITIES,n.key)){if(statement)this.fail('Built-in functions are used inside expressions, not with CALL.',n.line);if(!ARITIES[n.key].includes(n.args.length))this.fail(`${n.name} expects ${ARITIES[n.key].join(' or ')} argument(s).`,n.line);for(const x of n.args)this.expr(x);this.emit('BUILTIN',{key:n.key,count:n.args.length});return;}
   const r=this.routines.get(n.key);if(!r)this.fail(`Unknown ${statement?'procedure':'function'} “${n.name}”.`,n.line);if(statement!==(r.routineKind==='PROCEDURE'))this.fail(r.routineKind==='FUNCTION'?`Use ${n.name}(...) inside an expression, without CALL.`:`Use CALL ${n.name}(...) for a procedure.`,n.line);
   if(n.args.length!==r.params.length)this.fail(`${n.name} expects ${r.params.length} argument(s), not ${n.args.length}.`,n.line);
   n.args.forEach((a,i)=>r.params[i].mode==='BYREF'?this.ref(a):this.expr(a));this.emit('CALL',{key:n.key,count:n.args.length});if(!statement)this.mark(n.line,'resume');
@@ -561,6 +564,8 @@ class VM{
   case 'BOOL':bool(st[st.length-1]);break;
   case 'SHORT':if(bool(st[st.length-1])===x.when)s.pc=x.target;else st.pop();break;
   case 'BUILTIN':st.push(this.builtin(x.key,this.popMany(x.count)));break;
+  case 'MAKE_ARRAY_LITERAL':{const values=this.popMany(x.count);if(!values.length)throw new Error('An array literal must contain at least one value.');let element=values[0]?.type;if(!['INTEGER','REAL','STRING','CHAR','BOOLEAN'].includes(element))throw new Error('Array literals can contain only scalar values.');if(element==='INTEGER'&&values.some(v=>v.type==='REAL'))element='REAL';if(values.some(v=>!['INTEGER','REAL','STRING','CHAR','BOOLEAN'].includes(v.type)))throw new Error('Array literals can contain only scalar values.');if(!['INTEGER','REAL'].includes(element)&&values.some(v=>v.type!==element))throw new Error('All array literal values must have the same data type.');for(let i=0;i<values.length;i++)values[i]=coerce(values[i],element);st.push({type:'ARRAY',element,bounds:[[1,values.length]],items:values});break;}
+  case 'OPEN_WEB':{const [urlV,tabV,windowV]=this.popMany(3);if(urlV?.type!=='STRING'&&urlV?.type!=='CHAR')throw new Error('OpenWeb URL must be a STRING.');if(tabV?.type!=='BOOLEAN'||windowV?.type!=='BOOLEAN')throw new Error('OpenWeb second and third arguments must be BOOLEAN values (TRUE or FALSE).');const url=String(urlV.value).trim();let parsed;try{parsed=new URL(url);}catch{throw new Error('OpenWeb needs a valid absolute URL, such as https://example.com.');}if(!['http:','https:'].includes(parsed.protocol))throw new Error('OpenWeb only permits http:// and https:// URLs.');if(!tabV.value&&!windowV.value){window.location.assign(parsed.href);}else{const features=windowV.value?'popup=yes,width=1100,height=800':'';const opened=window.open(parsed.href,'_blank',features);if(!opened)throw new Error('The browser blocked the new tab/window. Allow pop-ups for this page, then run OpenWeb again.');try{opened.opener=null;}catch{}}this.note(`OpenWeb: requested ${parsed.href}${windowV.value?' in a new window':tabV.value?' in a new tab':' in this tab'}.`);break;}
   case 'OUTPUT':{const values=this.popMany(x.count);if(values.some(v=>v?.type==='ARRAY'))throw new Error('Output individual array elements inside a loop, not a whole array.');const out=values.map(v=>display(v)).join('');this.append(out);this.note(`Output: ${out}`);break;}
   case 'BEEP':this.append('♪ Beep (simulated)','bell');this.note('BEEP: simulated console bell.');break;
   case 'INPUT':{const r=this.pop();if(this.refType(r)==='ARRAY')throw new Error('INPUT needs one scalar variable or array element.');if(r.cell.constant)throw new Error('Cannot INPUT into a constant.');s.pending={ref:r,line:x.line,name:this.refName(r),type:this.refType(r)==='AUTO'?(r.cell.inputHint||'AUTO'):this.refType(r)};this.note(`Waiting for INPUT ${this.refName(r)}.`);break;}
