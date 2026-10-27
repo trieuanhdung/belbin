@@ -573,9 +573,14 @@ class VM{
    if(value.type==='ARRAY'&&value.items.length+this.memoryUse()>20000)throw new Error('Live array memory limit exceeded.');
    next=structuredClone(value);newType=value.type;
   }else if(type==='ARRAY'){
-   const old=r.cell.value,sameShape=value.type==='ARRAY'&&old.bounds.length===value.bounds.length&&old.bounds.every(([lo,hi],i)=>hi-lo===value.bounds[i][1]-value.bounds[i][0]);
-   if(!sameShape||old.element!==value.element)throw new Error('Array assignment requires the same dimension sizes and element type.');
-   next={...old,items:structuredClone(value.items)};
+   const old=r.cell.value;
+   if(value.type!=='ARRAY')throw new Error('An array variable must be assigned an array value.');
+   if(old?.element!==value.element)throw new Error(`Array element type mismatch: expected ${old?.element||'an array'}, received ${value.element}.`);
+   const used=this.memoryUse()-(old?.items?.length||0);
+   if(value.items.length+used>20000)throw new Error('Live array memory limit exceeded.');
+   // Array assignment behaves like Python list rebinding: retain the incoming
+   // array's bounds and shape, including a different number of elements.
+   next=structuredClone(value);
   }else if(r.cell.implicit&&r.offset==null&&type==='INTEGER'&&value.type==='REAL'){next=coerce(value,'REAL');newType='REAL';}
   else if(r.cell.implicit&&r.offset==null&&type==='CHAR'&&value.type==='STRING'){next=value;newType='STRING';}
   else next=coerce(value,type);
