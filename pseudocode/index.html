@@ -49,6 +49,62 @@
 <style>.syntax-label select{font:inherit;font-size:11px;border:1px solid var(--border,#dae1eb);border-radius:5px;background:var(--panel,#fff);color:var(--muted,#56677c);padding:3px 5px;max-width:150px}.consoleline.bell{color:#e7be79}.inferred-type{font-size:10px;color:var(--muted,#56677c)}
 @media(max-width:600px){.editorfoot{height:auto;min-height:31px;flex-wrap:wrap;gap:5px;padding-top:5px;padding-bottom:5px}.editorfoot .right{align-items:center}.syntax-label select{max-width:137px}}
 </style>
+<style id="wide-editor-layout">
+/* Desktop: code gets the full left column height; controls and inspector live on the right. */
+@media (min-width: 801px) {
+  html, body { width:100%; height:100%; overflow:hidden; }
+  .app { height:100dvh; min-height:0; max-width:none; padding:0; margin:0; display:block; }
+  .topbar { position:fixed; z-index:30; top:0; right:0; width:50%; height:70px; min-height:70px; padding:0 12px; gap:8px; background:var(--bg); border-bottom:1px solid var(--line); }
+  .brand { gap:9px; min-width:0; }
+  .brand h1 { font-size:17px; letter-spacing:-.4px; }
+  .brand .sub { display:none; }
+  .rgsv-logo { width:32px; height:37px; }
+  .school { display:none; }
+  .top-actions { gap:2px; flex-shrink:0; }
+  .top-actions .btn { padding:5px 7px; font-size:10px; gap:4px; }
+  .top-actions .btn svg { width:15px; height:15px; }
+  .toolbar { position:fixed; z-index:29; top:70px; right:0; width:50%; height:78px; min-height:78px; margin:0; border-radius:0; padding:6px 9px; gap:5px; flex-wrap:wrap; align-content:center; overflow-y:auto; box-shadow:none; }
+  .toolbar .btn { padding:5px 7px; font-size:10px; gap:4px; }
+  .toolbar .btn svg { width:14px; height:14px; }
+  .toolbar kbd { display:none; }
+  .toolbar .rule { display:none; }
+  .toolbar .spacer { display:none; }
+  .toolbar label.speed { margin-left:auto; font-size:10px; }
+  .toolbar label.speed select { padding:4px 5px; max-width:92px; font-size:10px; }
+  .toolbar .status-pill { padding:5px 7px; min-width:0; font-size:9px; }
+  .workspace { position:fixed; z-index:2; inset:0; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); grid-template-rows:148px minmax(150px,1fr) minmax(190px,.8fr); gap:8px; padding:8px; min-height:0; }
+  .editor-panel { grid-column:1; grid-row:1 / 4; height:auto; min-height:0; }
+  .inspection { grid-column:2; grid-row:2; height:auto; min-height:0; }
+  .output-tabs-panel { grid-column:2; grid-row:3; height:auto; min-height:0; padding:0; display:flex; flex-direction:column; }
+  .output-tabs { display:flex; flex-shrink:0; gap:4px; padding:7px 8px 0; background:#f5f8fa; border-bottom:1px solid var(--line); }
+  .output-tab { appearance:none; border:1px solid transparent; border-bottom:0; border-radius:7px 7px 0 0; padding:7px 11px; background:transparent; color:var(--muted); font:600 11px/1.2 inherit; cursor:pointer; }
+  .output-tab:hover { background:#eaf1f3; color:var(--ink); }
+  .output-tab.active { background:var(--paper); border-color:var(--line); color:var(--accent); }
+  .output-tab:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+  .output-tab-content { position:relative; display:flex; flex:1; min-height:0; overflow:hidden; }
+  .output-tab-content > .console, .output-tab-content > .execution { position:absolute; inset:0; width:100%; height:auto; min-height:0; border:0; border-radius:0; box-shadow:none; }
+  .output-tab-content > .execution[hidden] { display:none !important; }
+  .output-tab-content > .console[hidden] { display:none !important; }
+  .output-tabs-panel .panelhead { height:39px; }
+  .output-tabs-panel .consolebody { min-height:0; }
+  .bottom { display:none; }
+}
+@media (max-width: 800px) {
+  html, body { height:auto; overflow:auto; }
+  .app { position:relative; display:flex; flex-direction:column; height:auto; min-height:100dvh; max-width:none; padding:0 12px; margin:auto; }
+  .topbar { position:relative; inset:auto; width:auto; height:auto; min-height:83px; padding:0; border:0; background:transparent; }
+  .brand .sub { display:block; }
+  .toolbar { position:relative; inset:auto; width:auto; height:auto; min-height:0; max-height:none; margin-bottom:12px; border-radius:12px; padding:10px; overflow:visible; box-shadow:var(--shadow); }
+  .workspace { position:relative; inset:auto; display:flex; flex-direction:column; gap:12px; padding:0; min-height:0; }
+  .editor-panel { height:435px; min-height:390px; }
+  .inspection { height:340px; }
+  .output-tabs-panel { position:relative; height:520px; min-height:420px; flex:none; }
+  .output-tab-content { position:relative; display:flex; flex:1; min-height:0; }
+  .output-tab-content > .console, .output-tab-content > .execution { position:absolute; inset:0; width:100%; height:auto; min-height:0; border:0; border-radius:0; box-shadow:none; }
+  .output-tab-content > .execution[hidden], .output-tab-content > .console[hidden] { display:none !important; }
+  .bottom { display:flex; height:auto; min-height:48px; flex-wrap:wrap; padding:11px 0; gap:6px; }
+}
+</style>
 </head>
 <body>
 <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
@@ -108,8 +164,16 @@
 <div class="pane" id="stackPane" role="tabpanel" aria-labelledby="tab-stack" hidden></div>
 <div class="pane" id="filesPane" role="tabpanel" aria-labelledby="tab-files" hidden><div class="filetools"><button class="btn small" id="newFileBtn"><svg aria-hidden="true"><use href="#i-plus"/></svg>New file</button><button class="btn small" id="importFileBtn"><svg aria-hidden="true"><use href="#i-open"/></svg>Import .txt</button></div><div id="filesList"></div><p class="hint">These are virtual text files in this page, not direct access to your computer. Reset restores the starting files; export written files before resetting.</p></div>
 </section>
+<section class="panel output-tabs-panel" aria-label="Output console and execution trace">
+<div class="output-tabs" role="tablist" aria-label="Output panels">
+<button class="output-tab active" id="outputTabConsole" role="tab" aria-selected="true" aria-controls="console" data-output-tab="console">Output Console</button>
+<button class="output-tab" id="outputTabTrace" role="tab" aria-selected="false" aria-controls="execution" data-output-tab="trace">Execution Trace</button>
+</div>
+<div class="output-tab-content">
 <section class="panel console" aria-label="Program console"><div class="panelhead"><h2><svg aria-hidden="true"><use href="#i-terminal"/></svg>Console</h2><span class="faded" id="consoleMode">OUTPUT / INPUT</span><span class="grow"></span><button class="iconbtn" id="copyOutputBtn" title="Copy output" aria-label="Copy console output"><svg aria-hidden="true"><use href="#i-copy"/></svg></button><button class="iconbtn" id="exportOutputBtn" title="Save output as text" aria-label="Save console output"><svg aria-hidden="true"><use href="#i-save"/></svg></button></div><div class="consolebody" id="consoleBody"><div id="consoleOutput" role="log" aria-label="Program output" aria-live="polite"></div><div class="input-area" id="inputArea" hidden><form class="inputform" id="inputForm"><label class="sr-only" id="inputLabel" for="consoleInput">Type a value and press Enter</label><div class="console-entry" id="consoleEntry"><input id="consoleInput" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" maxlength="100000" aria-describedby="inputError" dir="ltr"><span class="console-caret" id="consoleCaret" aria-hidden="true"></span><span class="console-measure" id="consoleMeasure" aria-hidden="true"></span></div></form><div class="input-error" id="inputError" role="alert"></div></div></div></section>
-<section class="panel execution" aria-label="Execution trace"><div class="panelhead"><h2><svg aria-hidden="true"><use href="#i-trace"/></svg>Execution trace</h2><span class="grow"></span><button class="btn small" id="bytecodeBtn" title="View compiled bytecode">Bytecode</button><button class="iconbtn" id="traceBtn" title="Open full trace table and export CSV" aria-label="Open full trace table"><svg aria-hidden="true"><use href="#i-expand"/></svg></button></div><div class="execution-summary" id="executionSummary" aria-live="polite"></div><div class="trace-scroll" id="traceScroll"><table class="trace-mini" id="traceMini"><thead><tr><th>Step</th><th>Line</th><th>What changed?</th></tr></thead><tbody id="traceBody"></tbody></table></div></section>
+<section class="panel execution" id="execution" aria-label="Execution trace" hidden><div class="panelhead"><h2><svg aria-hidden="true"><use href="#i-trace"/></svg>Execution trace</h2><span class="grow"></span><button class="btn small" id="bytecodeBtn" title="View compiled bytecode">Bytecode</button><button class="iconbtn" id="traceBtn" title="Open full trace table and export CSV" aria-label="Open full trace table"><svg aria-hidden="true"><use href="#i-expand"/></svg></button></div><div class="execution-summary" id="executionSummary" aria-live="polite"></div><div class="trace-scroll" id="traceScroll"><table class="trace-mini" id="traceMini"><thead><tr><th>Step</th><th>Line</th><th>What changed?</th></tr></thead><tbody id="traceBody"></tbody></table></div></section>
+</div>
+</section>
 </main>
 <footer class="bottom"><div class="left"><span><span class="online-dot"></span>Runs locally · no account needed</span><span id="saveState">Autosave ready</span></div><span id="stepState">0 steps · not compiled</span><div class="right">Cambridge-style teaching dialect · <button class="help-link" id="scopeBtn">Supported syntax</button> · v1.2</div></footer>
 </div>
@@ -998,5 +1062,35 @@ editor.value=baseline;editor.maxLength=120000;renderSource();renderAll();setTab(
 window.PseudocodeStudio={compiler:Pseudo,examples:EXAMPLES,get vm(){return vm;},get program(){return program;},get running(){return running;},get breakpoints(){return [...breakpoints];},compile,step:singleStep,run:startRun,pause,back,reset,loadSource(source,name='program.pseudo'){if(typeof source!=='string'||source.length>120000)throw new Error('Source must be a string of at most 120,000 characters.');invalidate();editor.value=source;baseline=lastSource=source;dirty=false;filename=name;breakpoints.clear();renderSource();renderAll();persist();}};
 })();
 
+</script>
+<script id="output-tab-behaviour">
+(() => {
+  const consolePanel = document.getElementById('console');
+  const tracePanel = document.getElementById('execution');
+  const tabs = [...document.querySelectorAll('[data-output-tab]')];
+  function selectOutputTab(name) {
+    const trace = name === 'trace';
+    consolePanel.hidden = trace;
+    tracePanel.hidden = !trace;
+    for (const tab of tabs) {
+      const active = tab.dataset.outputTab === name;
+      tab.classList.toggle('active', active);
+      tab.setAttribute('aria-selected', String(active));
+      tab.tabIndex = active ? 0 : -1;
+    }
+  }
+  for (const tab of tabs) {
+    tab.addEventListener('click', () => selectOutputTab(tab.dataset.outputTab));
+    tab.addEventListener('keydown', event => {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault();
+        const next = tabs[(tabs.indexOf(tab) + (event.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+        selectOutputTab(next.dataset.outputTab);
+        next.focus();
+      }
+    });
+  }
+  selectOutputTab('console');
+})();
 </script>
 </body></html>
