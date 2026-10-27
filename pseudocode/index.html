@@ -150,6 +150,38 @@
   }
 }
 </style>
+<style id="console-scrollport-hard-fix">
+/* Hard-pin the console scroll viewport to the tab panel's actual bottom edge.
+   This avoids intrinsic/flex sizing shrinking it after output grows. */
+@media (min-width: 801px) {
+  .output-tab-content { position:relative !important; min-height:0 !important; overflow:hidden !important; }
+  .output-tab-content > #console {
+    position:absolute !important;
+    inset:0 !important;
+    display:block !important;
+    width:100% !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    overflow:hidden !important;
+  }
+  .output-tab-content > #console > .panelhead {
+    position:absolute !important;
+    top:0 !important; left:0 !important; right:0 !important;
+    width:auto !important;
+    height:39px !important; min-height:39px !important; max-height:39px !important;
+  }
+  .output-tab-content > #console > #consoleBody {
+    position:absolute !important;
+    top:39px !important; bottom:0 !important; left:0 !important; right:0 !important;
+    width:auto !important; height:auto !important;
+    min-height:0 !important; max-height:none !important;
+    margin:0 !important;
+    overflow-x:hidden !important; overflow-y:scroll !important;
+    overscroll-behavior:contain;
+  }
+}
+</style>
 </head>
 <body>
 <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
