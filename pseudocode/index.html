@@ -63,7 +63,8 @@
   .top-actions { gap:2px; flex-shrink:0; }
   .top-actions .btn { padding:5px 7px; font-size:10px; gap:4px; }
   .top-actions .btn svg { width:15px; height:15px; }
-  .toolbar { position:fixed; z-index:29; top:70px; right:0; width:50%; height:78px; min-height:78px; margin:0; border-radius:0; padding:6px 9px; gap:5px; flex-wrap:wrap; align-content:center; overflow-y:auto; box-shadow:none; }
+  /* Keep execution controls docked inside the right-hand workspace, never above the editor. */
+  .toolbar { position:fixed; z-index:31; top:70px; left:50%; right:0; width:auto; height:78px; min-height:78px; margin:0; border-radius:0 0 0 10px; padding:6px 9px; gap:5px; flex-wrap:wrap; align-content:center; overflow-y:auto; box-shadow:none; }
   .toolbar .btn { padding:5px 7px; font-size:10px; gap:4px; }
   .toolbar .btn svg { width:14px; height:14px; }
   .toolbar kbd { display:none; }
