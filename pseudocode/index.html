@@ -87,7 +87,14 @@
   .output-tab-content > .execution[hidden] { display:none !important; }
   .output-tab-content > .console[hidden] { display:none !important; }
   .output-tabs-panel .panelhead { height:39px; }
-  .output-tabs-panel .consolebody { min-height:0; }
+  /* Keep the terminal viewport stretched to the complete tab height.
+     The absolute tab panel plus a flex child with intrinsic content height could
+     otherwise leave an unscrollable dark area below the actual scroll viewport. */
+  .output-tab-content > .console { display:flex; flex-direction:column; overflow:hidden; }
+  .output-tab-content > .console > .panelhead { flex:0 0 39px; }
+  .output-tab-content > .console > .consolebody { display:block; flex:1 1 0%; height:0; min-height:0; max-height:none; overflow-x:hidden; overflow-y:auto; overscroll-behavior:contain; }
+  .output-tab-content > .console > .consolebody > #consoleOutput { display:block; min-height:0; }
+
   .bottom { display:none; }
 }
 @media (max-width: 800px) {
