@@ -654,11 +654,18 @@ class VM{
    const old=r.cell.value;
    if(value.type!=='ARRAY')throw new Error('An array variable must be assigned an array value.');
    if(old?.element!==value.element)throw new Error(`Array element type mismatch: expected ${old?.element||'an array'}, received ${value.element}.`);
-   const used=this.memoryUse()-(old?.items?.length||0);
-   if(value.items.length+used>20000)throw new Error('Live array memory limit exceeded.');
-   // Array assignment behaves like Python list rebinding: retain the incoming
-   // array's bounds and shape, including a different number of elements.
-   next=structuredClone(value);
+   if(value.literal){
+    if(old.bounds.length!==1)throw new Error('A one-dimensional array literal can only be copied into a one-dimensional array.');
+    if(value.items.length>old.items.length)throw new Error(`Too many values for array ${r.cell.name}: ${value.items.length} values supplied, but the array holds ${old.items.length} elements. The array will not be resized.`);
+    // A literal copies its values into the beginning of the existing array.
+    // Keep the declared bounds/size and leave all remaining elements unchanged.
+    next=structuredClone(old);
+    for(let i=0;i<value.items.length;i++)next.items[i]=structuredClone(value.items[i]);
+   }else{
+    const sameShape=old.bounds.length===value.bounds.length&&old.bounds.every(([lo,hi],i)=>hi-lo===value.bounds[i][1]-value.bounds[i][0]);
+    if(!sameShape)throw new Error('Array-to-array assignment requires matching dimensions. Use an array literal to copy values into the start of an existing array without resizing it.');
+    next={...old,items:structuredClone(value.items)};
+   }
   }else if(r.cell.implicit&&r.offset==null&&type==='INTEGER'&&value.type==='REAL'){next=coerce(value,'REAL');newType='REAL';}
   else if(r.cell.implicit&&r.offset==null&&type==='CHAR'&&value.type==='STRING'){next=value;newType='STRING';}
   else next=coerce(value,type);
@@ -711,7 +718,7 @@ class VM{
   case 'BOOL':bool(st[st.length-1]);break;
   case 'SHORT':if(bool(st[st.length-1])===x.when)s.pc=x.target;else st.pop();break;
   case 'BUILTIN':st.push(this.builtin(x.key,this.popMany(x.count)));break;
-  case 'MAKE_ARRAY_LITERAL':{const values=this.popMany(x.count);if(!values.length)throw new Error('An array literal must contain at least one value.');let element=values[0]?.type;if(!['INTEGER','REAL','STRING','CHAR','BOOLEAN'].includes(element))throw new Error('Array literals can contain only scalar values.');if(element==='INTEGER'&&values.some(v=>v.type==='REAL'))element='REAL';if(values.some(v=>!['INTEGER','REAL','STRING','CHAR','BOOLEAN'].includes(v.type)))throw new Error('Array literals can contain only scalar values.');if(!['INTEGER','REAL'].includes(element)&&values.some(v=>v.type!==element))throw new Error('All array literal values must have the same data type.');for(let i=0;i<values.length;i++)values[i]=coerce(values[i],element);st.push({type:'ARRAY',element,bounds:[[1,values.length]],items:values});break;}
+  case 'MAKE_ARRAY_LITERAL':{const values=this.popMany(x.count);if(!values.length)throw new Error('An array literal must contain at least one value.');let element=values[0]?.type;if(!['INTEGER','REAL','STRING','CHAR','BOOLEAN'].includes(element))throw new Error('Array literals can contain only scalar values.');if(element==='INTEGER'&&values.some(v=>v.type==='REAL'))element='REAL';if(values.some(v=>!['INTEGER','REAL','STRING','CHAR','BOOLEAN'].includes(v.type)))throw new Error('Array literals can contain only scalar values.');if(!['INTEGER','REAL'].includes(element)&&values.some(v=>v.type!==element))throw new Error('All array literal values must have the same data type.');for(let i=0;i<values.length;i++)values[i]=coerce(values[i],element);st.push({type:'ARRAY',element,bounds:[[1,values.length]],items:values,literal:true});break;}
   case 'OPEN_WEB':{const [urlV,tabV,windowV]=this.popMany(3);if(urlV?.type!=='STRING'&&urlV?.type!=='CHAR')throw new Error('OpenWeb URL must be a STRING.');if(tabV?.type!=='BOOLEAN'||windowV?.type!=='BOOLEAN')throw new Error('OpenWeb second and third arguments must be BOOLEAN values (TRUE or FALSE).');const url=String(urlV.value).trim();let parsed;try{parsed=new URL(url);}catch{throw new Error('OpenWeb needs a valid absolute URL, such as https://example.com.');}if(!['http:','https:'].includes(parsed.protocol))throw new Error('OpenWeb only permits http:// and https:// URLs.');if(!tabV.value&&!windowV.value){window.location.assign(parsed.href);}else{const features=windowV.value?'popup=yes,width=1100,height=800':'';const opened=window.open(parsed.href,'_blank',features);if(!opened)throw new Error('The browser blocked the new tab/window. Allow pop-ups for this page, then run OpenWeb again.');try{opened.opener=null;}catch{}}this.note(`OpenWeb: requested ${parsed.href}${windowV.value?' in a new window':tabV.value?' in a new tab':' in this tab'}.`);break;}
   case 'OUTPUT':{const values=this.popMany(x.count);if(values.some(v=>v?.type==='ARRAY'))throw new Error('Output individual array elements inside a loop, not a whole array.');const out=values.map(v=>display(v)).join('');this.append(out);this.note(`Output: ${out}`);break;}
   case 'BEEP':this.append('♪ Beep (simulated)','bell');this.note('BEEP: simulated console bell.');break;
