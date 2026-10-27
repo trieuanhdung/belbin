@@ -117,6 +117,39 @@
   .bottom { display:flex; height:auto; min-height:48px; flex-wrap:wrap; padding:11px 0; gap:6px; }
 }
 </style>
+<style id="console-viewport-final-fix">
+/* Final sizing fix: use an explicit grid so long output only enlarges the
+   scrollable console body, never the console panel itself. */
+@media (min-width: 801px) {
+  .output-tab-content { height:100%; min-height:0 !important; }
+  .output-tab-content > #console {
+    display:grid !important;
+    grid-template-rows:39px minmax(0,1fr) !important;
+    align-content:stretch !important;
+    height:100% !important;
+    min-height:0 !important;
+    max-height:100% !important;
+    overflow:hidden !important;
+  }
+  .output-tab-content > #console > .panelhead {
+    grid-row:1;
+    height:39px !important;
+    min-height:39px !important;
+    max-height:39px !important;
+    overflow:hidden;
+  }
+  .output-tab-content > #console > #consoleBody {
+    grid-row:2;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    align-self:stretch !important;
+    overflow-x:hidden !important;
+    overflow-y:auto !important;
+    overscroll-behavior:contain;
+  }
+}
+</style>
 </head>
 <body>
 <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
