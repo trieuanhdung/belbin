@@ -732,15 +732,15 @@ NEXT Row
 FOR Row ← 1 TO 3
     OUTPUT Table[Row,1], "  ", Table[Row,2], "  ", Table[Row,3], "  ", Table[Row,4]
 NEXT Row`},
-{id:'function',title:'Functions & local variables',level:'Intermediate',detail:'Step into a function, or use Step over to run the call.',expected:'Area = 24',source:`FUNCTION RectangleArea(Width : REAL, Height : REAL) RETURNS REAL
+{id:'function',title:'Functions inside expressions',level:'Intermediate',detail:'Use returned values in arithmetic expressions, combine two function calls, and step into or over each call.',expected:'Combined area = 30',source:`FUNCTION RectangleArea(Width : REAL, Height : REAL) RETURNS REAL
     DECLARE Area : REAL
     Area ← Width * Height
     RETURN Area
 ENDFUNCTION
 
 DECLARE Result : REAL
-Result ← RectangleArea(6, 4)
-OUTPUT "Area = ", Result`},
+Result ← RectangleArea(6, 4) + RectangleArea(2, 3)
+OUTPUT "Combined area = ", Result`},
 {id:'swap',title:'Pass by reference',level:'Advanced',detail:'A procedure swaps two caller variables through BYREF.',expected:'Before: 10, 20 → After: 20, 10',source:`PROCEDURE Swap(BYREF First : INTEGER, Second : INTEGER)
     DECLARE Temporary : INTEGER
     Temporary ← First
