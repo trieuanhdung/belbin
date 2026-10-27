@@ -182,6 +182,32 @@
   }
 }
 </style>
+<style id="strong-debug-line-highlight">
+/* Make the active debugger line substantially easier to spot. */
+.line-band {
+  background:#a9e1d3 !important;
+  border-left:6px solid #007b65 !important;
+  opacity:1 !important;
+}
+.gutter button.next {
+  background:#91d9c6 !important;
+  color:#004f42 !important;
+  box-shadow:inset 0 0 0 1px #65bda8;
+}
+.gutter button.next:after {
+  color:#004f42 !important;
+  font-size:10px !important;
+  font-weight:900 !important;
+}
+.line-band.error {
+  background:#ffc4c9 !important;
+  border-left-color:#c62840 !important;
+}
+.gutter button.error {
+  background:#ffc4c9 !important;
+  color:#8f1428 !important;
+}
+</style>
 </head>
 <body>
 <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
@@ -627,7 +653,7 @@ function binary(op,a,b){
  if(op==='DIV'||op==='MOD'){integer(a);integer(b);return number('INTEGER',op==='DIV'?Math.trunc(x/y):x-Math.trunc(x/y)*y);}
  const n=({'+':()=>x+y,'-':()=>x-y,'*':()=>x*y,'/':()=>x/y,'^':()=>x**y})[op]();return number(op==='/'||a.type==='REAL'||b.type==='REAL'||(op==='^'&&y<0)?'REAL':'INTEGER',n);
 }
-function coerce(v,type){if(v==null)throw new Error('This value has not been initialised.');if(type==='REAL'&&v.type==='INTEGER')return V('REAL',v.value);if(type==='STRING'&&v.type==='CHAR')return V('STRING',v.value);if(type!==v.type)throw new Error(`Expected ${type}, received ${v.type}.`);if(type==='INTEGER')integer(v);if(type==='REAL')numeric(v);return v;}
+function coerce(v,type){if(v==null)throw new Error('This value has not been initialised.');if(type==='REAL'&&v.type==='INTEGER')return V('REAL',v.value);if(type==='STRING'&&v.type==='CHAR')return V('STRING',v.value);if(type==='CHAR'&&v.type==='STRING'){if(Array.from(v.value).length===1)return V('CHAR',v.value);throw new Error(`Expected a single character for CHAR, received a STRING of ${Array.from(v.value).length} characters.`);}if(type!==v.type)throw new Error(`Expected ${type}, received ${v.type}.`);if(type==='INTEGER')integer(v);if(type==='REAL')numeric(v);return v;}
 class VM{
  constructor(program,files={}){this.program=program;this.history=[];this.historyBytes=0;this.trace=[];this.state={pc:0,stack:[],frames:[{id:0,name:'Main',key:null,vars:new Map(),loops:new Map(),temps:new Map(),returnPC:null,stackBase:0,callLine:null}],nextCell:1,nextFrame:1,files:new Map(Object.entries(files)),handles:new Map(),output:[],outputDropped:0,steps:0,ops:0,lastLine:null,notes:[],changes:[],pending:null,done:false,error:null,seed:0x1a2b3c4d};this.normalise();}
  get s(){return this.state;}
