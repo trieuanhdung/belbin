@@ -423,15 +423,16 @@ CLOSEFILE "names.txt"</pre>
    Source text is never passed to eval(), Function(), or the browser's JS parser. */
 'use strict';
 const Pseudo = (() => {
-const KEYWORDS = new Set(('DECLARE CONSTANT ARRAY OF INTEGER REAL STRING CHAR CHARACTER BOOLEAN INPUT OUTPUT PRINT END BEEP IF THEN ELSE ELSEIF ENDIF CASE OTHERWISE ENDCASE FOR TO STEP NEXT ENDFOR WHILE DO ENDWHILE REPEAT UNTIL PROCEDURE ENDPROCEDURE FUNCTION RETURNS ENDFUNCTION CALL RETURN BYREF BYVAL TRUE FALSE AND OR NOT XOR DIV MOD OPENFILE READFILE WRITEFILE CLOSEFILE READ WRITE APPEND OPENWEB STOP').split(' '));
+const KEYWORDS = new Set(('DECLARE CONSTANT ARRAY OF INTEGER REAL STRING CHAR CHARACTER BOOLEAN INPUT OUTPUT OUTPUT_INLINE PRINT END BEEP IF THEN ELSE ELSEIF ENDIF CASE OTHERWISE ENDCASE FOR TO STEP NEXT ENDFOR WHILE DO ENDWHILE REPEAT UNTIL PROCEDURE ENDPROCEDURE FUNCTION RETURNS ENDFUNCTION CALL RETURN BYREF BYVAL TRUE FALSE AND OR NOT XOR DIV MOD OPENFILE READFILE WRITEFILE CLOSEFILE READ WRITE APPEND OPENWEB STOP').split(' '));
 const ARITIES = {LENGTH:[1],LEFT:[2],RIGHT:[2],MID:[3],SUBSTRING:[3],UCASE:[1],LCASE:[1],TO_UPPER:[1],TO_LOWER:[1],INT:[1],ROUND:[1,2],ABS:[1],SQRT:[1],RAND:[1],RANDOM:[0],RND:[0],RANDOM_INT:[2],ASC:[1],CHR:[1],NUM_TO_STR:[1],STR_TO_NUM:[1],IS_NUM:[1],EOF:[1]};
 const V = (type,value) => ({type,value});
-const bool = v => {if(!v || v.type!=='BOOLEAN')throw new Error('A BOOLEAN value (TRUE or FALSE) is required.');return v.value;};
+const UNINITIALISED = Object.freeze({type:'UNINITIALISED'});
+const bool = v => {if(v===UNINITIALISED||v?.type==='UNINITIALISED')return false;if(!v || v.type!=='BOOLEAN')throw new Error('A BOOLEAN value (TRUE or FALSE) is required.');return v.value;};
 const numeric = v => {if(!v || !['INTEGER','REAL'].includes(v.type))throw new Error('A numeric value is required.');return v.value;};
 const integer = v => {if(!v || v.type!=='INTEGER' || !Number.isSafeInteger(v.value))throw new Error('An INTEGER value is required.');return v.value;};
 const text = v => {if(!v || !['CHAR','STRING'].includes(v.type))throw new Error('A STRING or CHAR value is required.');return v.value;};
 function number(type,n){if(!Number.isFinite(n))throw new Error('The result is not a finite number.');if(type==='INTEGER'&&!Number.isSafeInteger(n))throw new Error('Integer outside the exact range ±9,007,199,254,740,991.');return V(type,n);}
-function display(v,quotes=false){if(v==null)return '—';if(v.type==='BOOLEAN')return v.value?'TRUE':'FALSE';if(v.type==='ARRAY'){return '['+v.items.slice(0,16).map(x=>display(x,true)).join(', ')+(v.items.length>16?', …':'')+']';}if(quotes&&['STRING','CHAR'].includes(v.type))return JSON.stringify(v.value);return String(v.value);}
+function display(v,quotes=false){if(v==null||v===UNINITIALISED||v?.type==='UNINITIALISED')return '—';if(v.type==='BOOLEAN')return v.value?'TRUE':'FALSE';if(v.type==='ARRAY'){return '['+v.items.slice(0,16).map(x=>display(x,true)).join(', ')+(v.items.length>16?', …':'')+']';}if(quotes&&['STRING','CHAR'].includes(v.type))return JSON.stringify(v.value);return String(v.value);}
 class PseudoError extends Error{constructor(message,line=1,column=1,kind='Compile'){super(message);this.name='PseudoError';this.line=line;this.column=column;this.kind=kind;}}
 function lex(src){
  if(src.length>120000)throw new PseudoError('Source limit: 120,000 characters.');
@@ -457,7 +458,7 @@ function lex(src){
   const rest=src.slice(i);let m;
   if((m=rest.match(/^(?:\d+(?:\.\d+)?|\.\d+)(?:[eE][+-]?\d+)?/))){add('num',Number(m[0]),m[0]);i+=m[0].length;col+=m[0].length;continue;}
   if((m=rest.match(/^[A-Za-z][A-Za-z0-9_]*/))){add('id',m[0].toUpperCase(),m[0]);i+=m[0].length;col+=m[0].length;continue;}
-  if((m=rest.match(/^(<--|<-|:=|<=|>=|<>|!=|==|\*\*|[←≤≥≠−–×÷+\-*/^&=<>()[\],:])/))){let s=m[0];s=({'<--':'←','<-':'←',':=':'←','≤':'<=','≥':'>=','≠':'<>','!=':'<>','==':'=','−':'-','–':'-','×':'*','÷':'/','**':'^'})[s]||s;add('sym',s,m[0]);i+=m[0].length;col+=m[0].length;continue;}
+  if((m=rest.match(/^(<--|<-|:=|<=|>=|<>|!=|==|\*\*|[←≤≥≠−–×÷+\-*/^&=<>()[\],:;])/))){let s=m[0];s=({'<--':'←','<-':'←',':=':'←','≤':'<=','≥':'>=','≠':'<>','!=':'<>','==':'=','−':'-','–':'-','×':'*','÷':'/','**':'^'})[s]||s;add('sym',s,m[0]);i+=m[0].length;col+=m[0].length;continue;}
   throw new PseudoError(`Unexpected character “${c}”.`,line,col);
  }
  add('nl','\n','\n');add('eof','EOF','');if(ts.length>45000)throw new PseudoError('This program has too many tokens (limit 45,000).');
@@ -523,7 +524,7 @@ class Parser{
  statement(top=false){const t=this.p(),line=t.line,k=t.v;this.i++;
   if(k==='DECLARE'){const names=[this.id()];while(this.match(','))names.push(this.id());this.expect(':');const type=this.type();this.nl();return {k:'declare',names,type,line};}
   if(k==='CONSTANT'){const name=this.id();this.expect('=');const value=this.expr();if(value.k!=='lit'&&!(value.k==='un'&&['+','-'].includes(value.op)&&value.a.k==='lit'&&['INTEGER','REAL'].includes(value.a.value.type)))this.err('A CONSTANT must be a literal value, such as 10, -2, or "Hello".',t);this.nl();return {k:'constant',...name,value,line};}
-  if(k==='OUTPUT'||k==='PRINT'){const values=[];if(this.p().kind!=='nl'){do{values.push(this.expr());}while(this.match(','));}this.nl();return {k:'output',values,line};}
+  if(k==='OUTPUT'||k==='OUTPUT_INLINE'||k==='PRINT'){const values=[];if(this.p().kind!=='nl'&&this.p().v!==';'){do{values.push(this.expr());}while(this.match(','));}const inline=k==='OUTPUT_INLINE'||!!this.match(';');this.nl();return {k:'output',values,line,inline};}
   if(k==='INPUT'||k==='READ'){const target=this.target();this.nl();return {k:'input',target,line};}
   if(k==='IF'){const arms=[];let test=this.expr();this.then();arms.push({test,line,body:this.block(()=>['ELSE','ELSEIF','ENDIF'].some(word=>this.at(word)))});
    while(this.at('ELSEIF')||(this.at('ELSE')&&this.p(1).v==='IF')){const l=this.take().line;if(this.tokens[this.i-1].v==='ELSE')this.expect('IF');test=this.expr();this.then();arms.push({test,line:l,body:this.block(()=>['ELSE','ELSEIF','ENDIF'].some(word=>this.at(word)))});}
@@ -634,7 +635,7 @@ class Compiler{
   case 'constant':this.expr(n.value);this.emit('CONSTANT',{key:n.key,name:n.name});break;
   case 'assign':this.ref(n.target);this.expr(n.value);this.emit('STORE');break;
   case 'input':this.ref(n.target);this.emit('INPUT');break;
-  case 'output':for(const x of n.values)this.expr(x);this.emit('OUTPUT',{count:n.values.length});break;
+  case 'output':for(const x of n.values)this.expr(x);this.emit('OUTPUT',{count:n.values.length,inline:!!n.inline});break;
   case 'if':{const exits=[];for(let i=0;i<n.arms.length;i++){const a=n.arms[i];if(i)this.mark(a.line);this.expr(a.test);const no=this.emit('BR_FALSE',{describe:true});this.block(a.body);exits.push(this.emit('JUMP'));this.patch(no);}this.block(n.otherwise);exits.forEach(j=>this.patch(j));break;}
   case 'while':{const top=this.code.length-1;this.expr(n.test);const no=this.emit('BR_FALSE',{describe:true});this.block(n.body);this.mark(n.end);this.emit('JUMP',{target:top,explain:'Return to the WHILE condition.'});this.patch(no);break;}
   case 'repeat':{const top=this.code.length-1;this.emit('NOTE',{text:'Enter the REPEAT loop.'});this.block(n.body);this.mark(n.end);this.expr(n.test);this.emit('BR_FALSE',{target:top,describe:true,until:true});break;}
@@ -660,7 +661,7 @@ class Compiler{
 function unary(op,a){if(op==='NOT')return V('BOOLEAN',!bool(a));const n=numeric(a);return number(a.type,op==='-'?-n:n);}
 function binary(op,a,b){
  if(['AND','OR','XOR'].includes(op)){const x=bool(a),y=bool(b);return V('BOOLEAN',op==='AND'?x&&y:op==='OR'?x||y:x!==y);}
- if(['=','<>','<','>','<=','>='].includes(op)){let x,y;if(['INTEGER','REAL'].includes(a?.type)&&['INTEGER','REAL'].includes(b?.type)){x=a.value;y=b.value;}else if(['STRING','CHAR'].includes(a?.type)&&['STRING','CHAR'].includes(b?.type)){x=a.value;y=b.value;}else if(a?.type==='BOOLEAN'&&b?.type==='BOOLEAN'&&['=','<>'].includes(op)){x=a.value;y=b.value;}else throw new Error('Cannot compare these data types. Check both sides of the comparison.');return V('BOOLEAN',({'=':()=>x===y,'<>':()=>x!==y,'<':()=>x<y,'>':()=>x>y,'<=':()=>x<=y,'>=':()=>x>=y})[op]());}
+ if(['=','<>','<','>','<=','>='].includes(op)){if(a===UNINITIALISED||b===UNINITIALISED||a?.type==='UNINITIALISED'||b?.type==='UNINITIALISED')return V('BOOLEAN',false);let x,y;if(['INTEGER','REAL'].includes(a?.type)&&['INTEGER','REAL'].includes(b?.type)){x=a.value;y=b.value;}else if(['STRING','CHAR'].includes(a?.type)&&['STRING','CHAR'].includes(b?.type)){x=a.value;y=b.value;}else if(a?.type==='BOOLEAN'&&b?.type==='BOOLEAN'&&['=','<>'].includes(op)){x=a.value;y=b.value;}else throw new Error('Cannot compare these data types. Check both sides of the comparison.');return V('BOOLEAN',({'=':()=>x===y,'<>':()=>x!==y,'<':()=>x<y,'>':()=>x>y,'<=':()=>x<=y,'>=':()=>x>=y})[op]());}
  if(op==='&'||(op==='+'&&['STRING','CHAR'].includes(a?.type)&&['STRING','CHAR'].includes(b?.type))){const joined=text(a)+text(b);if(joined.length>100000)throw new Error('String limit: 100,000 characters.');return V('STRING',joined);}
  const x=numeric(a),y=numeric(b);if(['/','DIV','MOD'].includes(op)&&y===0)throw new Error('Division by zero. Check the divisor before dividing.');
  if(op==='DIV'||op==='MOD'){integer(a);integer(b);return number('INTEGER',op==='DIV'?Math.trunc(x/y):x-Math.trunc(x/y)*y);}
@@ -682,7 +683,7 @@ class VM{
  refName(r){if(r.offset==null)return r.label||r.cell.name;return `${r.label||r.cell.name}[${this.coords(r.cell.value,r.offset).join(',')}]`;}
  coords(v,offset){const out=[];for(let i=v.bounds.length-1;i>=0;i--){const [lo,hi]=v.bounds[i],n=hi-lo+1;out.unshift(lo+offset%n);offset=Math.floor(offset/n);}return out;}
  reference(key,indices=[]){const r=this.resolveRequired(key);if(!indices.length)return r;if(r.offset!=null)throw new Error('This parameter is an array element, not an array.');const a=r.cell.value;if(a?.type!=='ARRAY')throw new Error(`“${r.label||r.cell.name}” is not an array.`);if(indices.length!==a.bounds.length)throw new Error(`This array needs ${a.bounds.length} index value(s).`);let offset=0;indices.forEach((v,i)=>{const ix=integer(v),[lo,hi]=a.bounds[i];if(ix<lo||ix>hi)throw new Error(`Array index ${ix} is outside ${lo}..${hi} in dimension ${i+1}.`);offset=offset*(hi-lo+1)+(ix-lo);});return {cell:r.cell,offset,label:r.label};}
- read(r){const value=r.offset==null?r.cell.value:r.cell.value.items[r.offset];if(value==null)throw new Error(`“${this.refName(r)}” has not been initialised. Assign a value before using it.`);return value;}
+ read(r,allowUninitialised=false){const value=r.offset==null?r.cell.value:r.cell.value.items[r.offset];if(value==null){if(allowUninitialised)return UNINITIALISED;throw new Error(`“${this.refName(r)}” has not been initialised. Assign a value before using it.`);}return value;}
  refType(r){return r.offset==null?r.cell.type:r.cell.value.element;}
  write(r,value){if(r.cell.constant)throw new Error(`“${r.cell.name}” is a constant and cannot be changed.`);if(value==null)throw new Error('This value has not been initialised.');
   const type=this.refType(r);let next,newType=type;
@@ -715,7 +716,7 @@ class VM{
  memoryUse(){const seen=new Set();let n=0;for(const frame of this.s.frames)for(const ref of frame.vars.values()){if(!seen.has(ref.cell.id)){seen.add(ref.cell.id);n+=ref.cell.value?.type==='ARRAY'?ref.cell.value.items.length:1;}}return n;}
  makeArray(element,values){const bounds=[];let size=1;for(let i=0;i<values.length;i+=2){const lo=integer(values[i]),hi=integer(values[i+1]);if(hi<lo)throw new Error('An array upper bound cannot be less than its lower bound.');size*=hi-lo+1;bounds.push([lo,hi]);}if(size>10000||size+this.memoryUse()>20000)throw new Error('Array safety limit: 10,000 cells per array; 20,000 live cells in total.');return {type:'ARRAY',element,bounds,items:Array(size).fill(null)};}
  note(msg){this.s.notes.push(msg);}
- append(text,kind='output'){if(text.length>100000)throw new Error('Output line exceeds 100,000 characters.');this.s.output.push({text,kind,line:this.s.lastLine});let total=this.s.output.reduce((n,x)=>n+x.text.length,0);while(this.s.output.length>1000||total>250000){total-=this.s.output.shift().text.length;this.s.outputDropped++;}}
+ append(text,kind='output',inline=false){if(text.length>100000)throw new Error('Output line exceeds 100,000 characters.');const last=this.s.output.at(-1);if(kind==='output'&&last?.kind==='output'&&last.openLine){last.text+=text;last.line=this.s.lastLine;last.openLine=!!inline;}else this.s.output.push({text,kind,line:this.s.lastLine,openLine:kind==='output'&&!!inline});let total=this.s.output.reduce((n,x)=>n+x.text.length,0);while(this.s.output.length>1000||total>250000){total-=this.s.output.shift().text.length;this.s.outputDropped++;}}
  rng(){this.s.seed=(Math.imul(1664525,this.s.seed)+1013904223)>>>0;return this.s.seed/4294967296;}
  builtin(key,args,pure=false){const a=args[0],b=args[1],c=args[2];if(!ARITIES[key]?.includes(args.length))throw new Error(`${key} has the wrong number of arguments.`);
   if(pure&&['RAND','RANDOM','RND','RANDOM_INT'].includes(key))throw new Error('Random functions are disabled in watches (watches must not change execution).');
@@ -746,7 +747,7 @@ class VM{
  }
  execute(x){const s=this.s,st=s.stack;switch(x.op){
   case 'PUSH':st.push(x.value);break;
-  case 'LOAD':{const r=this.reference(x.key,this.popMany(x.count));st.push(this.read(r));break;}
+  case 'LOAD':{const r=this.reference(x.key,this.popMany(x.count));st.push(this.read(r,true));break;}
   case 'REF':{const indices=this.popMany(x.count);if(x.implicit&&!this.resolve(x.key)){this.newCell(x.key,x.name,'AUTO',null,false,x.global?s.frames[0]:this.frame,true,x.inputHint);this.note(`Infer ${x.name} from its first value (guide-compatible mode).`);}st.push(this.reference(x.key,indices));break;}
   case 'STORE':{const v=this.pop(),r=this.pop();this.write(r,v);break;}
   case 'DECLARE':this.newCell(x.key,x.name,x.type);this.note(`Declare ${x.name} as ${x.type}; not initialised yet.`);break;
@@ -759,7 +760,7 @@ class VM{
   case 'BUILTIN':st.push(this.builtin(x.key,this.popMany(x.count)));break;
   case 'MAKE_ARRAY_LITERAL':{const values=this.popMany(x.count);if(!values.length)throw new Error('An array literal must contain at least one value.');let element=values[0]?.type;if(!['INTEGER','REAL','STRING','CHAR','BOOLEAN'].includes(element))throw new Error('Array literals can contain only scalar values.');if(element==='INTEGER'&&values.some(v=>v.type==='REAL'))element='REAL';if(values.some(v=>!['INTEGER','REAL','STRING','CHAR','BOOLEAN'].includes(v.type)))throw new Error('Array literals can contain only scalar values.');if(!['INTEGER','REAL'].includes(element)&&values.some(v=>v.type!==element))throw new Error('All array literal values must have the same data type.');for(let i=0;i<values.length;i++)values[i]=coerce(values[i],element);st.push({type:'ARRAY',element,bounds:[[1,values.length]],items:values,literal:true});break;}
   case 'OPEN_WEB':{const [urlV,tabV,windowV]=this.popMany(3);if(urlV?.type!=='STRING'&&urlV?.type!=='CHAR')throw new Error('OpenWeb URL must be a STRING.');if(tabV?.type!=='BOOLEAN'||windowV?.type!=='BOOLEAN')throw new Error('OpenWeb second and third arguments must be BOOLEAN values (TRUE or FALSE).');const url=String(urlV.value).trim();let parsed;try{parsed=new URL(url);}catch{throw new Error('OpenWeb needs a valid absolute URL, such as https://example.com.');}if(!['http:','https:'].includes(parsed.protocol))throw new Error('OpenWeb only permits http:// and https:// URLs.');if(!tabV.value&&!windowV.value){window.location.assign(parsed.href);}else{const features=windowV.value?'popup=yes,width=1100,height=800':'';const opened=window.open(parsed.href,'_blank',features);if(!opened)throw new Error('The browser blocked the new tab/window. Allow pop-ups for this page, then run OpenWeb again.');try{opened.opener=null;}catch{}}this.note(`OpenWeb: requested ${parsed.href}${windowV.value?' in a new window':tabV.value?' in a new tab':' in this tab'}.`);break;}
-  case 'OUTPUT':{const values=this.popMany(x.count);if(values.some(v=>v?.type==='ARRAY'))throw new Error('Output individual array elements inside a loop, not a whole array.');const out=values.map(v=>display(v)).join('');this.append(out);this.note(`Output: ${out}`);break;}
+  case 'OUTPUT':{const values=this.popMany(x.count);if(values.some(v=>v?.type==='ARRAY'))throw new Error('Output individual array elements inside a loop, not a whole array.');if(values.some(v=>v===UNINITIALISED||v?.type==='UNINITIALISED'))throw new Error('Cannot OUTPUT an uninitialised variable. Assign a value first.');const out=values.map(v=>display(v)).join('');this.append(out,'output',!!x.inline);this.note(`Output${x.inline?' (inline)':''}: ${out}`);break;}
   case 'BEEP':this.append('♪ Beep (simulated)','bell');this.note('BEEP: simulated console bell.');break;
   case 'INPUT':{const r=this.pop();if(this.refType(r)==='ARRAY')throw new Error('INPUT needs one scalar variable or array element.');if(r.cell.constant)throw new Error('Cannot INPUT into a constant.');s.pending={ref:r,line:x.line,name:this.refName(r),type:this.refType(r)==='AUTO'?(r.cell.inputHint||'AUTO'):this.refType(r)};this.note(`Waiting for INPUT ${this.refName(r)}.`);break;}
   case 'JUMP':s.pc=x.target;if(x.explain)this.note(x.explain);break;
