@@ -221,9 +221,34 @@
 @media(max-width:800px){.code-tabs{order:1}.editor-panel > .panelhead{order:2}.editor-panel > .editor-wrap{order:3}.editor-panel > .editorfoot{order:4}.code-tabs{flex-basis:35px}}
 </style>
 <style id="right-panels-collapse-style">
-.panel-collapse-btn{display:inline-grid;place-items:center;flex:none;width:25px;height:25px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--muted);font:18px/1 Arial,sans-serif;cursor:pointer}.panel-collapse-btn:hover{background:var(--tint);color:var(--accent);border-color:#b8d8d2}.output-panel-heading{height:39px;flex:0 0 39px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;border-bottom:1px solid var(--line);font-size:12px;color:var(--ink)}
-@media(min-width:801px){.workspace.inspector-collapsed .inspection{display:none!important}.workspace.inspector-collapsed .output-tabs-panel{grid-row:2/4}.workspace.output-collapsed .output-tabs-panel{display:none!important}.workspace.output-collapsed .inspection{grid-row:2/4}.workspace.inspector-collapsed.output-collapsed .editor-panel{grid-column:1/3}.workspace.inspector-collapsed.output-collapsed{grid-template-columns:minmax(0,1fr) 0}.workspace.inspector-collapsed.output-collapsed .editor-panel{grid-column:1/3}.workspace.inspector-collapsed .output-tabs-panel,.workspace.output-collapsed .inspection{min-height:0}}
-@media(max-width:800px){.inspection.collapsed{height:44px!important;min-height:44px!important;flex:none}.inspection.collapsed>.tabs,.inspection.collapsed>.pane{display:none!important}.output-tabs-panel.collapsed{height:44px!important;min-height:44px!important;flex:none}.output-tabs-panel.collapsed>.output-tabs,.output-tabs-panel.collapsed>.output-tab-content{display:none!important}}
+.panel-collapse-btn{display:inline-grid;place-items:center;flex:none;width:25px;height:25px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--muted);font:18px/1 Arial,sans-serif;cursor:pointer}
+.panel-collapse-btn:hover{background:var(--tint);color:var(--accent);border-color:#b8d8d2}
+.output-panel-heading{height:39px;flex:0 0 39px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;border-bottom:1px solid var(--line);font-size:12px;color:var(--ink)}
+@media(min-width:801px){
+ .workspace{grid-template-columns:minmax(320px,var(--studio-left,1fr)) 7px minmax(320px,var(--studio-right,1fr))!important;grid-template-rows:78px minmax(110px,var(--studio-inspector,1fr)) 7px minmax(110px,var(--studio-output,1fr))!important;column-gap:0!important;row-gap:0!important}
+ .editor-panel{grid-column:1!important;grid-row:1/5!important}
+ .inspection{grid-column:3!important;grid-row:2!important}
+ .output-tabs-panel{grid-column:3!important;grid-row:4!important}
+ .studio-splitter{z-index:15;position:relative;touch-action:none;user-select:none;background:#dce5e9;transition:background .12s;display:flex;align-items:center;justify-content:center}
+ .studio-splitter:hover,.studio-splitter.dragging{background:#6da99e}
+ .studio-splitter.vertical{grid-column:2;grid-row:1/5;cursor:col-resize}
+ .studio-splitter.horizontal{grid-column:3;grid-row:3;cursor:row-resize}
+ .studio-splitter:after{content:'';display:block;border-radius:4px;background:#91a5af}
+ .studio-splitter.vertical:after{width:3px;height:34px}
+ .studio-splitter.horizontal:after{height:3px;width:34px}
+ .inspection.collapsed{min-height:39px!important;height:39px!important;align-self:start;overflow:hidden}
+ .inspection.collapsed>.tabs,.inspection.collapsed>.pane{display:none!important}
+ .output-tabs-panel.collapsed{min-height:39px!important;height:39px!important;align-self:start;overflow:hidden}
+ .output-tabs-panel.collapsed>.output-tabs,.output-tabs-panel.collapsed>.output-tab-content{display:none!important}
+ .workspace.inspector-collapsed .inspection,.workspace.output-collapsed .output-tabs-panel{display:flex!important}
+}
+@media(max-width:800px){
+ .inspection.collapsed{height:44px!important;min-height:44px!important;flex:none;overflow:hidden}
+ .inspection.collapsed>.tabs,.inspection.collapsed>.pane{display:none!important}
+ .output-tabs-panel.collapsed{height:44px!important;min-height:44px!important;flex:none;overflow:hidden}
+ .output-tabs-panel.collapsed>.output-tabs,.output-tabs-panel.collapsed>.output-tab-content{display:none!important}
+ .studio-splitter{display:none!important}
+}
 </style>
 </head>
 <body>
@@ -297,6 +322,7 @@
 <section class="panel execution" id="execution" aria-label="Execution trace" hidden><div class="panelhead"><h2><svg aria-hidden="true"><use href="#i-trace"/></svg>Execution trace</h2><span class="grow"></span><button class="btn small" id="bytecodeBtn" title="View compiled bytecode">Bytecode</button><button class="iconbtn" id="traceBtn" title="Open full trace table and export CSV" aria-label="Open full trace table"><svg aria-hidden="true"><use href="#i-expand"/></svg></button></div><div class="execution-summary" id="executionSummary" aria-live="polite"></div><div class="trace-scroll" id="traceScroll"><table class="trace-mini" id="traceMini"><thead><tr><th>Step</th><th>Line</th><th>What changed?</th></tr></thead><tbody id="traceBody"></tbody></table></div></section>
 </div>
 </section>
+<div class="studio-splitter vertical" data-splitter="columns" role="separator" aria-orientation="vertical" aria-label="Resize code and right panels" tabindex="0"></div><div class="studio-splitter horizontal" data-splitter="rows" role="separator" aria-orientation="horizontal" aria-label="Resize Inspector and Output panels" tabindex="0"></div>
 </main>
 <footer class="bottom"><div class="left"><span><span class="online-dot"></span>Runs locally · no account needed</span><span id="saveState">Autosave ready</span></div><span id="stepState">0 steps · not compiled</span><div class="right">Cambridge-style teaching dialect · <button class="help-link" id="scopeBtn">Supported syntax</button> · v1.2</div></footer>
 </div>
@@ -1238,6 +1264,30 @@ window.PseudocodeStudio={compiler:Pseudo,examples:EXAMPLES,get vm(){return vm;},
 })();
 </script>
 <script id="right-panels-collapse-behaviour">
-(()=>{const workspace=document.querySelector(".workspace");const buttons=[...document.querySelectorAll("[data-collapse-panel]")];function setCollapsed(name,collapsed){const panel=name==="inspector"?document.querySelector(".inspection"):document.querySelector(".output-tabs-panel");if(!panel)return;panel.classList.toggle("collapsed",collapsed);workspace.classList.toggle(name+"-collapsed",collapsed);const b=buttons.find(x=>x.dataset.collapsePanel===name);if(b){b.textContent=collapsed?"+":"−";b.setAttribute("aria-expanded",String(!collapsed));b.title=(collapsed?"Restore ":"Minimise ")+(name==="inspector"?"Inspector":"Output panel");b.setAttribute("aria-label",b.title);}}buttons.forEach(b=>b.addEventListener("click",()=>{const name=b.dataset.collapsePanel;setCollapsed(name,b.getAttribute("aria-expanded")==="true");}));})();
+(()=>{
+ const workspace=document.querySelector(".workspace");
+ const buttons=[...document.querySelectorAll("[data-collapse-panel]")];
+ function setCollapsed(name,collapsed){
+  const panel=name==="inspector"?document.querySelector(".inspection"):document.querySelector(".output-tabs-panel");
+  if(!panel)return;
+  panel.classList.toggle("collapsed",collapsed);
+  workspace.classList.toggle(name+"-collapsed",collapsed);
+  const b=buttons.find(x=>x.dataset.collapsePanel===name);
+  if(b){b.textContent=collapsed?"+":"−";b.setAttribute("aria-expanded",String(!collapsed));b.title=(collapsed?"Restore ":"Minimise ")+(name==="inspector"?"Inspector":"Output panel");b.setAttribute("aria-label",b.title);}
+ }
+ buttons.forEach(b=>b.addEventListener("click",()=>setCollapsed(b.dataset.collapsePanel,b.getAttribute("aria-expanded")==="true")));
+ const vertical=workspace.querySelector('[data-splitter="columns"]');
+ const horizontal=workspace.querySelector('[data-splitter="rows"]');
+ let drag=null;
+ function setColumns(clientX){const rect=workspace.getBoundingClientRect();const gutter=7;const left=Math.max(320,Math.min(rect.width-320-gutter,clientX-rect.left));workspace.style.setProperty("--studio-left",left+"px");workspace.style.setProperty("--studio-right",(rect.width-gutter-left)+"px");}
+ function setRows(clientY){const rect=workspace.getBoundingClientRect();const top=Math.max(110,Math.min(rect.height-110-7,clientY-rect.top-78));workspace.style.setProperty("--studio-inspector",top+"px");workspace.style.setProperty("--studio-output",(rect.height-78-7-top)+"px");}
+ function down(e,axis,el){if(e.button!==0)return;e.preventDefault();drag={axis,el};el.classList.add("dragging");el.setPointerCapture(e.pointerId);}
+ function move(e){if(!drag)return;if(drag.axis==="columns")setColumns(e.clientX);else setRows(e.clientY);}
+ function up(){if(!drag)return;drag.el.classList.remove("dragging");drag=null;}
+ vertical.addEventListener("pointerdown",e=>down(e,"columns",vertical));horizontal.addEventListener("pointerdown",e=>down(e,"rows",horizontal));
+ for(const el of [vertical,horizontal]){el.addEventListener("pointermove",move);el.addEventListener("pointerup",up);el.addEventListener("pointercancel",up);el.addEventListener("lostpointercapture",up);}
+ vertical.addEventListener("keydown",e=>{if(e.key==="ArrowLeft"||e.key==="ArrowRight"){e.preventDefault();const rect=workspace.getBoundingClientRect();const left=workspace.querySelector(".editor-panel").getBoundingClientRect().width;setColumns(rect.left+left+(e.key==="ArrowLeft"?-20:20));}});
+ horizontal.addEventListener("keydown",e=>{if(e.key==="ArrowUp"||e.key==="ArrowDown"){e.preventDefault();const rect=workspace.getBoundingClientRect();const top=workspace.querySelector(".inspection").getBoundingClientRect().height;setRows(rect.top+78+top+(e.key==="ArrowUp"?-20:20));}});
+})();
 </script>
 </body></html>
