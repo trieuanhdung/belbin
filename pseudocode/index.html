@@ -225,7 +225,7 @@
 .panel-collapse-btn:hover{background:var(--tint);color:var(--accent);border-color:#b8d8d2}
 .output-panel-heading{height:39px;flex:0 0 39px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;border-bottom:1px solid var(--line);font-size:12px;color:var(--ink)}
 @media(min-width:801px){
- .workspace{grid-template-columns:minmax(320px,var(--studio-left,1fr)) 7px minmax(320px,var(--studio-right,1fr))!important;grid-template-rows:78px minmax(110px,var(--studio-inspector,1fr)) 7px minmax(110px,var(--studio-output,1fr))!important;column-gap:0!important;row-gap:0!important}
+ .workspace{--studio-left:60fr;--studio-right:40fr;--studio-inspector:1fr;--studio-output:1fr;grid-template-columns:minmax(320px,var(--studio-left)) 7px minmax(320px,var(--studio-right))!important;grid-template-rows:78px minmax(110px,var(--studio-inspector)) 7px minmax(110px,var(--studio-output))!important;column-gap:0!important;row-gap:0!important}
  .editor-panel{grid-column:1!important;grid-row:1/5!important}
  .inspection{grid-column:3!important;grid-row:2!important}
  .output-tabs-panel{grid-column:3!important;grid-row:4!important}
