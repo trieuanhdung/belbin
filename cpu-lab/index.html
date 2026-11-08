@@ -17,6 +17,8 @@
 /* Register layout: explicit component ports and the accumulator store path. */
 .cpu-diagram-v2 .node-title{font-size:27px}.cpu-diagram-v2 .node-name{font-size:12px}.cpu-diagram-v2 .node-value{font-size:21px}.cpu-diagram-v2 .node-caption{font-size:12px}.cpu-diagram-v2 .bus-label{font-size:12px;letter-spacing:.6px}.cpu-diagram-v2 .bus-line{stroke-width:4}.cpu-diagram-v2 .bus-caption{font-size:11px;fill:#738799}.cpu-diagram-v2 .alu-result{font-size:13px;font-weight:700;fill:#a16824}.cpu-diagram-v2 .route-label{font-size:11px;fill:#ae7e43;font-weight:650}.cpu-diagram-v2 .internal-route{stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.8;transition:stroke-width .2s,opacity .2s}.cpu-diagram-v2 .internal-route.route-active{stroke-width:4.2;opacity:1;stroke:#d7862d}.cpu-packet-secondary{fill:#cdefff;stroke:#397dc6}.cpu-diagram-v2 .bus-port{stroke:white;stroke-width:1.2}.store-flow-note{font-size:10px;line-height:1.7;background:#fff5e7;border:1px solid #f0e2ce;border-radius:7px;color:#9a672c;padding:9px 12px;margin:12px 1px 0;text-align:center}.store-flow-note span{display:block;color:#977b57;font-size:9px}#explore-diagram .cpu-diagram-v2,#sim-diagram .cpu-diagram-v2{max-height:none}
 
+.cpu-diagram-v3 .control-route{stroke-dasharray:5 4}.cpu-diagram-v3 .control-route-label{font-size:11px;font-weight:650;fill:#8060b5;paint-order:stroke;stroke:#f8fafc;stroke-width:4px;stroke-linejoin:round}.cpu-diagram-v3 .control-route.route-active{stroke:#8b62c7}.cpu-diagram-v3 .route-label{paint-order:stroke;stroke:#f8fafc;stroke-width:3px;stroke-linejoin:round}
+
 .activity-section{--activity-navy:#172b45;--activity-teal:#087e8b;--activity-purple:#7557d5;--activity-orange:#d97712;--activity-line:#dce4e7;--activity-muted:#617181;color:var(--activity-navy)}
 .activity-section[hidden]{display:none!important}.activity-section *{box-sizing:border-box}.activity-section button,.activity-section input,.activity-section select{font:inherit}.activity-section button{cursor:pointer}.activity-section button:disabled{cursor:default;opacity:.55}.activity-section button:focus-visible,.activity-section select:focus-visible,.activity-section summary:focus-visible{outline:3px solid #37adbd;outline-offset:4px}.activity-section [hidden]{display:none!important}
 .activity-section-head{display:flex;gap:24px;align-items:center;justify-content:space-between;margin:0 0 24px}.activity-section-head h2{font-size:clamp(27px,3vw,40px);letter-spacing:-1.2px;line-height:1.14;margin:7px 0 12px}.activity-section-head p:not(.activity-eyebrow){font-size:15px;line-height:1.65;color:var(--activity-muted);max-width:760px;margin:0}.activity-eyebrow{font-size:10px!important;letter-spacing:1.7px;font-weight:800;margin:0;color:var(--activity-teal);line-height:1.6}.activity-progress-pill{border:1px solid var(--activity-line);background:#fff;border-radius:16px;padding:15px 23px;display:flex;flex-direction:column;align-items:center;flex-shrink:0}.activity-progress-pill span{font-weight:800;font-size:26px;letter-spacing:-1px}.activity-progress-pill small{font-size:11px;color:var(--activity-muted);margin-top:3px}.activity-model-label{border:1px solid var(--activity-line);color:var(--activity-muted);font-weight:700;letter-spacing:1px;font-size:10px;padding:10px 14px;border-radius:30px;flex-shrink:0}
@@ -34,18 +36,18 @@
 .activity-builder-stage{padding:20px;min-width:0}.activity-diagram-heading{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:18px}.activity-diagram-heading strong{font-size:13px}.activity-diagram-heading span{color:var(--activity-muted);font-size:10px}
 .activity-scroll-hint{display:none;font-size:10px;line-height:1.6;margin:0 0 12px;color:var(--activity-muted)}
 .activity-board-scroll{max-width:100%;overflow-x:auto;padding:3px 2px 12px;overscroll-behavior-x:contain;scrollbar-width:thin;border-radius:12px}.activity-board-scroll:focus-visible{outline:3px solid #37adbd;outline-offset:3px}
-.activity-builder-board{--activity-build-row:160px;--activity-build-gap:22px;--activity-build-top:50px;display:grid;grid-template-columns:minmax(350px,1.6fr) minmax(150px,.65fr) minmax(160px,.7fr);gap:28px;align-items:start;position:relative;isolation:isolate;min-width:780px;width:100%}
+.activity-builder-board{--activity-build-row:160px;--activity-build-gap:22px;--activity-build-top:80px;display:grid;grid-template-columns:minmax(550px,2.2fr) minmax(150px,.65fr) minmax(160px,.7fr);gap:28px;align-items:start;position:relative;isolation:isolate;min-width:920px;width:100%}
 .activity-builder-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:1}.activity-builder-wire{fill:none;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}.activity-builder-port{fill:#fff;stroke-width:2}.activity-builder-wire-label{font:700 8px ui-sans-serif,system-ui,sans-serif;fill:#6d7c8b;paint-order:stroke;stroke:#f5f7fc;stroke-width:4px;stroke-linejoin:round}
 .activity-cpu-boundary{padding:14px 12px;border:2px solid #d4dcee;border-radius:15px;background:#f5f7fc;position:relative;min-width:0}
-.activity-boundary-label{height:20px;font-size:9px;letter-spacing:1.15px;font-weight:800;display:flex;gap:8px;align-items:center;margin:0 0 14px;color:#4f6088;white-space:nowrap}.activity-mini-chip{font-size:19px;color:#5c6c94;line-height:1}
-.activity-cpu-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(4,var(--activity-build-row));gap:var(--activity-build-gap) 24px;align-items:stretch}
-.activity-cpu-grid [data-activity-slot="PC"]{grid-column:1;grid-row:1;justify-self:end;width:100%;max-width:190px}
-.activity-cpu-grid [data-activity-slot="CU"]{grid-column:2;grid-row:1}
-.activity-cpu-grid [data-activity-slot="ALU"]{grid-column:1;grid-row:2/4;align-self:start;height:calc(var(--activity-build-row)*1.45);background:#fff7eb;border-color:#efd8b5}
-.activity-cpu-grid [data-activity-slot="MAR"]{grid-column:2;grid-row:2}
-.activity-cpu-grid [data-activity-slot="MDR"]{grid-column:2;grid-row:3}
-.activity-cpu-grid [data-activity-slot="CIR"]{grid-column:1;grid-row:4}
-.activity-cpu-grid [data-activity-slot="ACC"]{grid-column:2;grid-row:4;background:#fff7eb;border-color:#efd8b5}
+.activity-boundary-label{height:20px;font-size:9px;letter-spacing:1.15px;font-weight:800;display:flex;gap:8px;align-items:center;margin:0 0 44px;color:#4f6088;white-space:nowrap}.activity-mini-chip{font-size:19px;color:#5c6c94;line-height:1}
+.activity-cpu-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,var(--activity-build-row));gap:var(--activity-build-gap) 24px;align-items:stretch}
+.activity-cpu-grid [data-activity-slot="PC"]{grid-column:2;grid-row:1}
+.activity-cpu-grid [data-activity-slot="CU"]{grid-column:3;grid-row:1}
+.activity-cpu-grid [data-activity-slot="ALU"]{grid-column:1;grid-row:1/3;align-self:start;height:calc(var(--activity-build-row)*1.45);background:#fff7eb;border-color:#efd8b5}
+.activity-cpu-grid [data-activity-slot="MAR"]{grid-column:3;grid-row:2}
+.activity-cpu-grid [data-activity-slot="MDR"]{grid-column:3;grid-row:3}
+.activity-cpu-grid [data-activity-slot="CIR"]{grid-column:2;grid-row:2;background:#f3effc;border-color:#d8cbed}
+.activity-cpu-grid [data-activity-slot="ACC"]{grid-column:1;grid-row:3;background:#fff7eb;border-color:#efd8b5}
 .activity-slot{border:1px solid #dfe4ec;border-radius:10px;background:#fff;padding:10px 8px;position:relative;z-index:2;min-width:0;transition:border-color .15s,background .15s,box-shadow .15s;display:flex;flex-direction:column}
 .activity-role-clue{font-size:10px;line-height:1.5;margin:0 0 8px;color:#57667c;flex:1}
 .activity-drop-target{border:1px dashed #bcc9d5;background:#f9fbfd;border-radius:6px;min-height:36px;width:100%;padding:7px 4px;color:#7b899b;font-size:9px!important;font-weight:600!important;display:flex;align-items:center;justify-content:center;gap:5px;text-align:center;line-height:1.25}
@@ -58,6 +60,7 @@
 .activity-memory-boundary{border:2px solid #efdabf;border-radius:14px;background:#fff8ed;padding:18px 10px;text-align:center;margin-top:var(--activity-build-top);min-height:calc(var(--activity-build-row)*3 + var(--activity-build-gap)*2);display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}
 .activity-memory-pixels{display:grid;grid-template-columns:repeat(4,15px);gap:5px;justify-content:center;margin:0 0 14px}.activity-memory-pixels i{width:15px;height:15px;background:#f7d29d;border:1px solid #e2ba82;border-radius:3px}.activity-memory-outside{font-size:7px;letter-spacing:.6px;font-weight:800;color:#a77b40;display:block;margin-bottom:14px;line-height:1.6}.activity-memory-boundary .activity-slot{border-color:#eddcc3;min-height:190px}.activity-memory-boundary>small{font-size:9px;line-height:1.7;color:#97733f;display:block;margin:14px 3px 0}
 .activity-store-path{display:flex;gap:14px;align-items:center;padding:14px 16px;background:#fff6e9;border:1px solid #f1dfc4;border-radius:10px;margin-top:12px;line-height:1.65}.activity-store-path strong{font-size:12px;white-space:nowrap;color:#9f6320}.activity-store-path span{font-size:11px;color:#7d6748}.activity-store-path code{font-size:10px;color:#8d581c;background:#f4e6d0;padding:2px 4px;border-radius:3px}
+.activity-decode-path{background:#f5f1fc;border-color:#e3d8f2}.activity-decode-path strong{color:#7353a9}.activity-decode-path span{color:#6d607d}
 .activity-builder-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
 .activity-performance-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:start}.activity-cache-card{grid-column:1/-1}.activity-lab-number{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:12px;font-size:13px;font-weight:800;flex-shrink:0}.activity-teal{color:#087e8b;background:#e4f4f4}.activity-purple{color:#7557d5;background:#efeafb}.activity-orange{color:#b8731e;background:#fff0dd}.activity-segment-field{border:0;padding:0;margin:0;min-width:0}.activity-segment-field legend,.activity-select-field{font-size:11px;font-weight:700;color:#526475;margin-bottom:8px;line-height:1.5}.activity-segments{display:inline-flex;border:1px solid #dce4e7;padding:3px;background:#f4f7f8;border-radius:9px;gap:3px;flex-wrap:nowrap}.activity-segments label{position:relative;display:block;cursor:pointer;flex:1}.activity-segments input{position:absolute;opacity:0;width:1px;height:1px}.activity-segments span{padding:7px 13px;display:block;font-size:11px;font-weight:700;text-align:center;border-radius:6px;white-space:nowrap;color:#617181;min-width:40px}.activity-segments input:checked+span{background:#fff;color:#172b45;box-shadow:0 1px 4px #172b4520}.activity-segments input:focus-visible+span{outline:3px solid #37adbd;outline-offset:1px}.activity-clock-comparison{display:flex;flex-direction:column;gap:18px;margin-top:24px}.activity-clock-row{display:grid;grid-template-columns:96px minmax(30px,1fr) 86px;align-items:center;gap:12px}.activity-clock-row-label{font-size:10px;line-height:1.6;color:var(--activity-muted)}.activity-clock-row-label strong{display:block;font-size:14px;color:var(--activity-navy)}.activity-clock-track{position:relative;height:17px;border-radius:5px;background:#e9eef2;overflow:hidden}.activity-clock-fill{height:100%;background:#1492a0;width:0%;border-radius:5px;transition:width .07s linear}.activity-clock-base-fill{background:#9aacc2}.activity-clock-light{width:7px;height:7px;background:#fff;border-radius:50%;position:absolute;left:5px;top:5px;opacity:0;box-shadow:0 0 9px #fff}.activity-clock-light.activity-pulse{opacity:1}.activity-clock-row output{font-size:10px;font-variant-numeric:tabular-nums;color:#526475;text-align:right}.activity-cores-controls{display:flex;gap:18px;align-items:end;flex-wrap:wrap}.activity-select-field{display:flex;flex-direction:column;gap:7px;margin:0;flex:1;min-width:150px}.activity-select-field select{width:100%;border:1px solid #dce4e7;border-radius:8px;background:#fff;padding:10px;color:#172b45;font-size:11px;font-weight:600;height:39px}.activity-work-queue{display:flex;align-items:center;gap:9px;margin-top:20px}.activity-work-queue>span{font-size:8px;letter-spacing:1px;color:#8490a0;font-weight:800}.activity-work-queue>div{display:flex;gap:4px;flex-wrap:wrap}.activity-queue-job{display:inline-flex;width:24px;height:24px;align-items:center;justify-content:center;border:1px solid #d8d2eb;background:#f4f0fc;border-radius:5px;font-size:9px;font-weight:700;color:#7960ac;transition:opacity .2s,background .2s}.activity-queue-job.activity-job-done{opacity:.35;background:#f2f5f6;color:#8b96a3;border-color:#dce4e7}.activity-core-lanes{display:grid;gap:7px;margin-top:14px}.activity-core-lane{display:flex;align-items:center;gap:10px;min-height:34px;border:1px solid #e7e2f0;border-radius:7px;padding:5px 9px;background:#fcfbfe}.activity-core-label{font-size:10px;font-weight:700;display:flex;align-items:center;gap:6px;min-width:51px;color:#6a598c}.activity-core-label:before{content:"";width:7px;height:7px;border-radius:2px;background:#cabde8;border:1px solid #aa94d3}.activity-core-lane.activity-core-active .activity-core-label:before{background:#8464ce;box-shadow:0 0 0 3px #e6dcfa}.activity-core-history{display:flex;gap:4px;flex-wrap:wrap;min-height:21px;align-items:center}.activity-core-job{font-size:8px;font-weight:800;color:#6e51b3;background:#ede6fa;border-radius:4px;display:inline-flex;min-width:22px;height:21px;align-items:center;justify-content:center;padding:2px 4px}.activity-core-job.activity-job-new{animation:activity-job-arrive .45s ease both;background:#8060c9;color:#fff}.activity-core-idle{font-size:9px;color:#a49bb6}.activity-core-counters{display:flex;justify-content:space-between;gap:10px;font-size:10px;color:#7b7190;align-items:center;margin-top:13px}.activity-core-counters strong{font-size:13px;color:#604495}
 .activity-cache-top{display:flex;gap:24px;justify-content:space-between;align-items:center}.activity-cache-top .activity-card-intro{margin-bottom:14px;max-width:690px}.activity-cache-top .activity-segment-field{flex-shrink:0}.activity-cache-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.85fr);gap:26px;margin-top:10px}.activity-small-heading{font-size:8px;letter-spacing:1.1px;color:#798897;font-weight:800;margin:0 0 11px}.activity-cache-sequence{display:flex;gap:5px;flex-wrap:wrap}.activity-cache-request{width:33px;height:37px;border:1px solid #e0e6e9;background:#f7f9fa;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:7px;color:#8b98a5;font-size:8px;line-height:1.1;gap:3px}.activity-cache-request strong{font-size:12px;color:#576b7c}.activity-cache-request.activity-request-current{box-shadow:0 0 0 2px #172b45;border-color:#172b45}.activity-cache-request.activity-cache-hit{background:#e5f5ef;border-color:#9bd4bd;color:#2c8660}.activity-cache-request.activity-cache-hit strong{color:#227652}.activity-cache-request.activity-cache-miss{background:#fff1de;border-color:#ebc695;color:#ac792e}.activity-cache-request.activity-cache-miss strong{color:#996322}.activity-cache-flow{display:grid;grid-template-columns:58px 30px minmax(130px,1fr) 30px 83px;gap:7px;align-items:center;min-height:151px;margin:22px 0 9px}.activity-cache-cpu{background:#172b45;border-radius:11px;padding:15px 9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#fff;font-size:10px;font-weight:800;box-shadow:0 0 0 4px #edf0f4}.activity-cache-cpu span{font-size:23px;font-weight:400;line-height:1}.activity-cache-arrow{position:relative;height:2px;background:#c8d4dc;border-radius:3px}.activity-cache-arrow:after{content:"";position:absolute;right:-1px;top:-3px;border-left:5px solid #c8d4dc;border-top:4px solid transparent;border-bottom:4px solid transparent}.activity-cache-arrow.activity-flow-active{background:#d99d47}.activity-cache-arrow.activity-flow-active:after{border-left-color:#d99d47}.activity-cache-arrow.activity-flow-active:before{content:"";position:absolute;top:-3px;left:0;height:8px;width:8px;border-radius:3px;background:#e5a44c;animation:activity-data-travel .7s ease both}.activity-cache-arrow.activity-flow-hit{background:#3fa584}.activity-cache-arrow.activity-flow-hit:after{border-left-color:#3fa584}.activity-cache-arrow.activity-flow-hit:before{background:#3fa584}.activity-cache-box{border:1px solid #d6ccec;border-radius:11px;background:#faf7ff;padding:11px 9px;min-height:105px}.activity-cache-box>span{font-size:8px;letter-spacing:.5px;color:#8d77b5;font-weight:800;display:block;margin-bottom:9px}.activity-cache-slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.activity-cache-cell{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px dashed #ded5ed;background:#fff;min-height:44px;border-radius:6px;color:#c4b6da}.activity-cache-cell small{font-size:8px;line-height:1.3}.activity-cache-cell strong{font-size:14px;line-height:1.1;font-variant-numeric:tabular-nums}.activity-cache-cell.activity-cache-filled{border-style:solid;background:#f0eafa;border-color:#d2c2e9;color:#7454aa}.activity-cache-cell.activity-cache-hot{border-color:#5fa783;background:#e5f5ec;color:#31734f;box-shadow:0 0 0 1px #8dc3a6}.activity-cache-off{font-size:10px;line-height:1.6;color:#a395b4;text-align:center;margin:9px 2px}.activity-cache-ram{background:#fff6e9;border:1px solid #efd6b3;border-radius:11px;padding:11px 8px;color:#9d743e}.activity-cache-ram>strong{display:block;font-size:9px;margin-bottom:8px;letter-spacing:.7px}.activity-cache-ram-data{display:flex;justify-content:space-between;gap:5px;font-size:8px;padding:3px 4px;border-radius:3px;font-variant-numeric:tabular-nums}.activity-cache-ram-data.activity-ram-read{background:#f6d9ac;color:#8b5f24;font-weight:800}.activity-cache-ram-data b{font-size:9px}.activity-cache-legend{display:flex;gap:15px;flex-wrap:wrap;font-size:9px;color:#768694}.activity-cache-legend>span{display:flex;gap:5px;align-items:center}.activity-cache-scoreboard{border-left:1px solid #e5ebee;padding-left:26px}.activity-cache-stats{display:flex;gap:8px}.activity-cache-stats>div{flex:1;border:1px solid #e0e8ec;background:#f8fafb;border-radius:9px;display:flex;flex-direction:column;align-items:center;padding:13px 8px;gap:4px}.activity-cache-stats strong{font-size:25px;color:#172b45;letter-spacing:-.8px;font-variant-numeric:tabular-nums}.activity-cache-stats span{font-size:8px;color:#7d8e9c;font-weight:800;letter-spacing:.7px}.activity-cache-stats>div:first-child strong{color:#298364}.activity-cache-stats>div:nth-child(2) strong{color:#bc832c}.activity-cache-scoreboard .activity-feedback{min-height:88px}.activity-cost-model{font-size:10px;color:#84909d;line-height:1.65;margin:13px 0 0}.activity-cost-model strong{color:#627487}.activity-cache-note{margin-top:20px}.activity-cache-note details{margin-top:10px}.activity-cache-note summary{cursor:pointer;font-size:11px;color:#637788;font-weight:650;display:list-item}.activity-cache-note details p{margin-top:10px;max-width:900px;font-size:11px}
@@ -90,7 +93,7 @@
 <section class="panel" data-panel="explore" id="explore-panel">
   <div class="section-head"><div><p class="eyebrow">THE SMALL CHIP BEHIND EVERY INSTRUCTION</p><h1>Bring the CPU to life<span class="orange">.</span></h1><p class="intro">Meet the parts. Follow the signals. Then write a program of your own.</p></div><button class="button primary" id="start-demo">Watch 7 + 5 happen <span aria-hidden="true">→</span></button></div>
   <div class="explore-layout">
-    <div class="card diagram-card"><div class="card-heading"><div><span class="tiny-tag teal-tag">INTERACTIVE MAP</span><h2>Inside a stored-program computer</h2></div><span class="small-muted">Select a component to explore</span></div><div id="explore-diagram" class="diagram-wrap"></div><div class="diagram-legend"><span><i class="dot purple-bg"></i>Control &amp; instructions</span><span><i class="dot orange-bg"></i>Arithmetic &amp; results</span><span><i class="dot teal-bg"></i>Memory &amp; transfers</span></div><p class="diagram-caption">A simplified Von Neumann model: instructions and data share the same RAM. The dashed boundary marks the CPU. IR is also called CIR.</p></div>
+    <div class="card diagram-card"><div class="card-heading"><div><span class="tiny-tag teal-tag">INTERACTIVE MAP</span><h2>Inside a stored-program computer</h2></div><span class="small-muted">Select a component to explore</span></div><div id="explore-diagram" class="diagram-wrap"></div><div class="diagram-legend"><span><i class="dot purple-bg"></i>Control &amp; instructions</span><span><i class="dot orange-bg"></i>Arithmetic &amp; results</span><span><i class="dot teal-bg"></i>Memory &amp; transfers</span></div><p class="diagram-caption">A simplified Von Neumann model: instructions and data share the same RAM. The dashed boundary marks the CPU. CIR is also called IR. The CU decodes the instruction held in CIR and directs the ALU.</p></div>
     <aside class="component-card card" id="component-detail" aria-live="polite"></aside>
   </div>
   <div class="concept-row">
@@ -99,7 +102,7 @@
     <article class="concept-card"><span class="concept-icon teal-soft">03</span><div><h3>Execute</h3><p>Carry out the instruction, then repeat.</p></div><span class="concept-repeat" aria-hidden="true">↻</span></article>
   </div>
   <div class="explore-bottom">
-    <article class="card memory-card"><p class="eyebrow">DON’T MIX THESE UP</p><h2>Three kinds of working storage</h2><div class="memory-levels"><button data-component="ACC"><b>Registers</b><span>Very small, immediate working values inside the CPU.</span><em>PC · MAR · MDR · IR (CIR) · ACC</em></button><button data-component="CACHE"><b>Cache</b><span>Fast copies of instructions and data that may be needed again.</span><em>Reduces waiting for RAM</em></button><button data-component="RAM"><b>Main memory</b><span>Stores programs and data currently in use.</span><em>Outside the CPU in this model</em></button></div></article>
+    <article class="card memory-card"><p class="eyebrow">DON’T MIX THESE UP</p><h2>Three kinds of working storage</h2><div class="memory-levels"><button data-component="ACC"><b>Registers</b><span>Very small, immediate working values inside the CPU.</span><em>PC · MAR · MDR · CIR (IR) · ACC</em></button><button data-component="CACHE"><b>Cache</b><span>Fast copies of instructions and data that may be needed again.</span><em>Reduces waiting for RAM</em></button><button data-component="RAM"><b>Main memory</b><span>Stores programs and data currently in use.</span><em>Outside the CPU in this model</em></button></div></article>
     <article class="card next-card"><span class="tiny-tag orange-tag">YOUR FIRST INVESTIGATION</span><h2>Where does the number go?</h2><p>If memory location <b>12</b> contains <b>7</b>, <code>LDA 12</code> loads the value <b>7</b> into the accumulator.</p><p class="small-muted">The address tells the CPU where to look. The contents tell it what to use.</p><button class="button light" data-go="simulate">Try a program <span aria-hidden="true">→</span></button></article>
   </div>
 </section>
@@ -109,7 +112,7 @@
   <div class="simulation-toolbar card"><div class="transport"><button class="button primary" id="run-button"><span aria-hidden="true">▶</span> Run</button><button class="button light" id="step-button">Step <span aria-hidden="true">→</span></button><button class="button light" id="instruction-button">Next instruction</button><button class="icon-button" id="reset-button" aria-label="Reset CPU and restore loaded program" title="Reset CPU">↻</button></div><div class="sim-settings"><label for="speed-select">Animation<select id="speed-select"><option value="1400">Slow</option><option value="750" selected>Normal</option><option value="250">Fast</option></select></label><label for="value-format">RAM view<select id="value-format"><option value="hex">Hex</option><option value="binary">Binary</option><option value="decimal">Denary</option></select></label></div><span id="machine-status" class="status-chip">Ready</span></div>
   <div class="sim-grid">
     <aside class="editor-card card"><div class="card-heading"><h2>Your program</h2><span class="tiny-tag purple-tag">16 BYTES</span></div><label class="field-label" for="sample-select">Start with an example</label><select id="sample-select" class="full-select"></select><div class="editor-mode"><label for="source-mode">Write in</label><select id="source-mode"><option value="assembly">Assembly</option><option value="machine">Machine code</option></select></div><textarea id="program-source" aria-label="Program source code" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off"></textarea><div class="editor-buttons"><button class="button teal" id="assemble-button">Assemble &amp; load</button><button class="icon-button" id="save-program" aria-label="Save program as a text file" title="Save program">↓</button></div><p class="source-hint" id="source-hint">Use labels such as <code>NUM: DAT 7</code>. Comments start with <code>;</code>.</p><div id="editor-message" class="editor-message" role="status"></div><div class="input-section"><label class="field-label" for="input-values">Input queue <span>−128 to 127</span></label><div class="input-row"><input id="input-values" type="text" value="5, 7" placeholder="e.g. 5, 7" aria-describedby="input-hint"><button class="button light" id="queue-button">Set</button></div><p id="input-hint" class="small-muted">Consumed by INP, one number at a time.</p><div id="input-queue" class="input-chips"></div></div><div id="input-wait" class="input-wait" hidden><label for="live-input">The CPU is waiting for a number.</label><div class="input-row"><input id="live-input" type="number" min="-128" max="127" step="1"><button id="submit-input" class="button teal">Send</button></div></div><details class="syntax-help"><summary>Quick coding guide</summary><p><b>LDA N</b> reads RAM[N]. <b>STA N</b> stores ACC in RAM[N]. <b>DAT</b> reserves a data byte; it is an assembler directive.</p><p><b>INP</b>, <b>OUT</b> and <b>HLT</b> have no operand. Branch targets can be addresses or labels.</p><p>Assembly is translated into bytes before execution. In machine-code mode, enter one binary byte, <code>0xNN</code>, or denary byte per line.</p></details></aside>
-    <div class="cpu-workspace"><div class="card live-diagram-card"><div class="live-heading"><div class="phase-strip" aria-label="Current cycle stage"><span data-phase="fetch">1 <b>Fetch</b></span><i>→</i><span data-phase="decode">2 <b>Decode</b></span><i>→</i><span data-phase="execute">3 <b>Execute</b></span></div><span class="instruction-count"><b id="instruction-count">0</b> instructions</span></div><div id="sim-diagram" class="diagram-wrap"></div><div class="instruction-word"><span>Instruction in IR (CIR)</span><div><code id="opcode-bits">0000</code><code id="operand-bits">0000</code></div><p><span class="purple-text">opcode</span><span class="teal-text">operand</span></p><b id="instruction-name">—</b></div><p class="diagram-caption">One byte = 4 opcode bits + 4 operand bits. Memory addresses run from 0 to 15.</p><p class="store-flow-note"><b>Store a result:</b> ALU → ACC → MDR → data bus → RAM <span>Memory is written when STA executes.</span></p></div><article class="step-story" aria-live="polite" aria-atomic="true"><div class="step-story-top"><span id="step-phase" class="tiny-tag teal-tag">READY TO FETCH</span><span id="microstep-count">0 microsteps</span></div><h2 id="step-title">Every program starts with an address.</h2><p id="step-detail">Press Step to copy the PC into the MAR. Then follow the instruction as it travels from RAM into the CPU.</p><div id="step-transfer" class="transfer-tag">PC → MAR</div></article><p class="model-note">Teaching microsteps show transfers clearly. They are not literal clock cycles. This is a tiny illustrative CPU, with signed 8-bit data (−128 to 127).</p></div>
+    <div class="cpu-workspace"><div class="card live-diagram-card"><div class="live-heading"><div class="phase-strip" aria-label="Current cycle stage"><span data-phase="fetch">1 <b>Fetch</b></span><i>→</i><span data-phase="decode">2 <b>Decode</b></span><i>→</i><span data-phase="execute">3 <b>Execute</b></span></div><span class="instruction-count"><b id="instruction-count">0</b> instructions</span></div><div id="sim-diagram" class="diagram-wrap"></div><div class="instruction-word"><span>Instruction in CIR (IR)</span><div><code id="opcode-bits">0000</code><code id="operand-bits">0000</code></div><p><span class="purple-text">opcode</span><span class="teal-text">operand</span></p><b id="instruction-name">—</b></div><p class="diagram-caption">One byte = 4 opcode bits + 4 operand bits. Memory addresses run from 0 to 15.</p><p class="store-flow-note"><b>Store a result:</b> ALU → ACC → MDR → data bus → RAM <span>Memory is written when STA executes.</span></p></div><article class="step-story" aria-live="polite" aria-atomic="true"><div class="step-story-top"><span id="step-phase" class="tiny-tag teal-tag">READY TO FETCH</span><span id="microstep-count">0 microsteps</span></div><h2 id="step-title">Every program starts with an address.</h2><p id="step-detail">Press Step to copy the PC into the MAR. Then follow the instruction as it travels from RAM into the CPU.</p><div id="step-transfer" class="transfer-tag">PC → MAR</div></article><p class="model-note">Teaching microsteps show transfers clearly. They are not literal clock cycles. This is a tiny illustrative CPU, with signed 8-bit data (−128 to 127).</p></div>
     <aside class="ram-column"><div class="card ram-card"><div class="card-heading"><h2>RAM</h2><span class="small-muted">instructions + data</span></div><div class="ram-table-wrap"><table class="ram-table"><thead><tr><th scope="col">Addr.</th><th scope="col" id="ram-value-head">Byte</th><th scope="col">Meaning</th></tr></thead><tbody id="ram-body"></tbody></table></div><p class="ram-mode-note small-muted" style="font-size:9px;margin:9px 0 0">Raw bytes can be instructions or data. “Meaning” shows a possible interpretation.</p><p class="ram-key"><span><i class="pc-marker"></i>next address (PC)</span><span><i class="mar-marker"></i>selected (MAR)</span></p></div><div class="output-card"><div class="output-heading"><h3>Output</h3><span>OUT → screen</span></div><div id="output-values" aria-live="polite"><span class="output-empty">Your results will appear here.</span></div></div><div class="sim-inspector" id="sim-component-detail">Select a component for a quick reminder of its role.</div></aside>
   </div>
   <details class="card trace-card"><summary>Execution trace <span class="small-muted">See the transfers you have stepped through</span></summary><div class="trace-scroll"><table><thead><tr><th>Step</th><th>Stage</th><th>What happened</th><th>Transfer</th></tr></thead><tbody id="trace-body"><tr><td colspan="4">No steps yet. Press Step or Run.</td></tr></tbody></table></div></details>
@@ -141,41 +144,41 @@
           <svg id="activity-builder-wires" class="activity-builder-wires" aria-hidden="true" focusable="false"></svg>
           <div class="activity-cpu-boundary">
             <div class="activity-boundary-label"><span class="activity-mini-chip" aria-hidden="true">▦</span> CENTRAL PROCESSING UNIT</div>
-            <div class="activity-cpu-grid">
+            <div class="activity-cpu-grid" role="group" aria-label="ALU top-left with ACC below, CIR in the centre, PC and CU above MAR and MDR on the right">
+              <div class="activity-slot" data-activity-slot="ALU">
+              <p class="activity-role-clue">Performs arithmetic and logic under CU control</p>
+              <button class="activity-drop-target" data-activity-place="ALU" type="button" aria-label="Place a component: performs arithmetic and logical operations">Place component</button>
+              <button class="activity-return" data-activity-remove="ALU" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
+            </div>
               <div class="activity-slot" data-activity-slot="PC">
               <p class="activity-role-clue">Address of the next instruction</p>
               <button class="activity-drop-target" data-activity-place="PC" type="button" aria-label="Place a component: address of the next instruction">Place component</button>
               <button class="activity-return" data-activity-remove="PC" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
             </div>
               <div class="activity-slot" data-activity-slot="CU">
-              <p class="activity-role-clue">Decodes instructions and coordinates the CPU</p>
+              <p class="activity-role-clue">Decodes the instruction in CIR and directs the CPU</p>
               <button class="activity-drop-target" data-activity-place="CU" type="button" aria-label="Place a component: decodes instructions and coordinates the CPU">Place component</button>
               <button class="activity-return" data-activity-remove="CU" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
             </div>
-              <div class="activity-slot" data-activity-slot="ALU">
-              <p class="activity-role-clue">Performs arithmetic and logical operations</p>
-              <button class="activity-drop-target" data-activity-place="ALU" type="button" aria-label="Place a component: performs arithmetic and logical operations">Place component</button>
-              <button class="activity-return" data-activity-remove="ALU" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
+              <div class="activity-slot" data-activity-slot="CIR">
+              <p class="activity-role-clue">Current instruction for the CU to decode</p>
+              <button class="activity-drop-target" data-activity-place="CIR" type="button" aria-label="Place a component: current instruction for the CU to decode">Place component</button>
+              <button class="activity-return" data-activity-remove="CIR" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
             </div>
               <div class="activity-slot" data-activity-slot="MAR">
               <p class="activity-role-clue">Address of the memory location being accessed</p>
               <button class="activity-drop-target" data-activity-place="MAR" type="button" aria-label="Place a component: address of the memory location being accessed">Place component</button>
               <button class="activity-return" data-activity-remove="MAR" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
             </div>
-              <div class="activity-slot" data-activity-slot="MDR">
-              <p class="activity-role-clue">Instruction or data moving to or from memory</p>
-              <button class="activity-drop-target" data-activity-place="MDR" type="button" aria-label="Place a component: instruction or data moving to or from memory">Place component</button>
-              <button class="activity-return" data-activity-remove="MDR" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
-            </div>
-              <div class="activity-slot" data-activity-slot="CIR">
-              <p class="activity-role-clue">Instruction currently being decoded and executed (IR / CIR)</p>
-              <button class="activity-drop-target" data-activity-place="CIR" type="button" aria-label="Place a component: instruction currently being decoded and executed">Place component</button>
-              <button class="activity-return" data-activity-remove="CIR" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
-            </div>
               <div class="activity-slot" data-activity-slot="ACC">
               <p class="activity-role-clue">Working values and calculation results, ready to copy to MDR</p>
               <button class="activity-drop-target" data-activity-place="ACC" type="button" aria-label="Place a component: working values and results of calculations">Place component</button>
               <button class="activity-return" data-activity-remove="ACC" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
+            </div>
+              <div class="activity-slot" data-activity-slot="MDR">
+              <p class="activity-role-clue">Instruction or data moving to or from memory</p>
+              <button class="activity-drop-target" data-activity-place="MDR" type="button" aria-label="Place a component: instruction or data moving to or from memory">Place component</button>
+              <button class="activity-return" data-activity-remove="MDR" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
             </div>
             </div>
           </div>
@@ -211,6 +214,7 @@
           </div>
         </div>
       </div>
+      <div class="activity-store-path activity-decode-path"><strong>CIR → CU → ALU</strong><span>The central CIR (also called IR) holds the current instruction. CU decodes it, then sends control signals that direct the ALU.</span></div>
       <div class="activity-store-path"><strong>ALU → ACC → MDR → RAM</strong><span>The ALU’s result is saved in ACC. When <code>STA</code> executes, the CPU copies ACC to MDR, then writes that byte to RAM using the data bus.</span></div>
       <div class="activity-builder-actions">
         <button id="activity-build-check" class="activity-button activity-button-primary" type="button">Check my CPU <span aria-hidden="true">✓</span></button>
@@ -287,7 +291,7 @@
 </section>
 </main>
 <footer class="site-footer"><span><b>CPU lab</b> · RGSV Computer Science</span><span>Explore → build → program → explain</span><button class="text-button" id="model-notes-button">Model &amp; sources</button></footer>
-<dialog id="notes-dialog"><div class="dialog-top"><span class="tiny-tag teal-tag">CLASSROOM GUIDE</span><button class="icon-button" data-close="notes-dialog" aria-label="Close teacher notes">×</button></div><h2>CPU revision, made visible.</h2><p>This self-contained lab supports Cambridge IGCSE Computer Science 0478 (2026–2028), section 3.1. Open the HTML file in a modern browser; the activities work offline.</p><h3>A suggested 40-minute lesson</h3><div class="lesson-plan"><span><b>5 min</b> Explore the parts</span><span><b>8 min</b> Build the CPU</span><span><b>12 min</b> Trace &amp; program</span><span><b>8 min</b> Investigate performance</span><span><b>7 min</b> Check understanding</span></div><h3>Following the result</h3><p>The ALU places a calculation result in ACC. When <code>STA</code> executes, ACC is copied to MDR; the CU sends WRITE and the data bus carries the word to RAM at the address held in MAR. IR and CIR name the same instruction register in this app.</p><h3>What this model simplifies</h3><ul><li>One core, 16 shared RAM locations and 8-bit words. Each instruction has a 4-bit opcode and a 4-bit operand. This teaching instruction set is not a required Cambridge instruction encoding.</li><li>Data and ACC use signed integers from −128 to 127. RAM stores the underlying byte. Arithmetic outside this range stops with an explanation; actual processors have their own overflow behaviour.</li><li>For INP, OUT and HLT, the operand bits must be zero. PC wraps from 15 to 0. A branch replaces the next address.</li><li>DAT is an assembler directive, not a CPU instruction. RAM has no built-in distinction between instructions and data; if the PC reaches a data byte, the CPU tries to decode its bits.</li><li>Animation speed is for learning. Teaching microsteps are not hardware clock cycles. Cache and multi-core behaviour are explored separately in illustrative experiments.</li><li>Cache stores copies of memory contents. Registers hold the immediate working state. Main RAM is shown outside the CPU.</li></ul><h3>For a classroom discussion</h3><p>Ask students to predict ACC, PC and output before running. Then ask them to name the register, bus and control signal responsible for each transfer. Use single-step mode when introducing a new instruction.</p><p>All practice questions are original. This app is an independent teaching resource, not a Cambridge-endorsed product.</p><h3>Sources &amp; reference</h3><div id="source-links"></div><button class="button primary" data-close="notes-dialog">Back to the lab</button></dialog>
+<dialog id="notes-dialog"><div class="dialog-top"><span class="tiny-tag teal-tag">CLASSROOM GUIDE</span><button class="icon-button" data-close="notes-dialog" aria-label="Close teacher notes">×</button></div><h2>CPU revision, made visible.</h2><p>This self-contained lab supports Cambridge IGCSE Computer Science 0478 (2026–2028), section 3.1. Open the HTML file in a modern browser; the activities work offline.</p><h3>A suggested 40-minute lesson</h3><div class="lesson-plan"><span><b>5 min</b> Explore the parts</span><span><b>8 min</b> Build the CPU</span><span><b>12 min</b> Trace &amp; program</span><span><b>8 min</b> Investigate performance</span><span><b>7 min</b> Check understanding</span></div><h3>Following the result</h3><p>The ALU places a calculation result in ACC. When <code>STA</code> executes, ACC is copied to MDR; the CU sends WRITE and the data bus carries the word to RAM at the address held in MAR. CIR and IR name the same instruction register in this app. The CU decodes the instruction in CIR and sends control signals to select the ALU operation.</p><h3>What this model simplifies</h3><ul><li>One core, 16 shared RAM locations and 8-bit words. Each instruction has a 4-bit opcode and a 4-bit operand. This teaching instruction set is not a required Cambridge instruction encoding.</li><li>Data and ACC use signed integers from −128 to 127. RAM stores the underlying byte. Arithmetic outside this range stops with an explanation; actual processors have their own overflow behaviour.</li><li>For INP, OUT and HLT, the operand bits must be zero. PC wraps from 15 to 0. A branch replaces the next address.</li><li>DAT is an assembler directive, not a CPU instruction. RAM has no built-in distinction between instructions and data; if the PC reaches a data byte, the CPU tries to decode its bits.</li><li>Animation speed is for learning. Teaching microsteps are not hardware clock cycles. Cache and multi-core behaviour are explored separately in illustrative experiments.</li><li>Cache stores copies of memory contents. Registers hold the immediate working state. Main RAM is shown outside the CPU.</li></ul><h3>For a classroom discussion</h3><p>Ask students to predict ACC, PC and output before running. Then ask them to name the register, bus and control signal responsible for each transfer. Use single-step mode when introducing a new instruction.</p><p>All practice questions are original. This app is an independent teaching resource, not a Cambridge-endorsed product.</p><h3>Sources &amp; reference</h3><div id="source-links"></div><button class="button primary" data-close="notes-dialog">Back to the lab</button></dialog>
 <dialog id="isa-dialog"><div class="dialog-top"><span class="tiny-tag purple-tag">OUR TEACHING INSTRUCTION SET</span><button class="icon-button" data-close="isa-dialog" aria-label="Close instruction set">×</button></div><h2>One byte. One instruction.</h2><p>The first four bits say <b>what to do</b> (opcode). The last four bits give a <b>memory address</b> when needed (operand).</p><div class="encoding-example"><div><b>0001</b><span>LDA opcode</span></div><div><b>1100</b><span>address 12</span></div><span>→ <code>LDA 12</code></span></div><p>If RAM[12] contains 7, this instruction puts <b>7</b> into ACC. It does not put the address 12 into ACC.</p><div class="isa-table-wrap"><table class="isa-table"><thead><tr><th>Mnemonic</th><th>Opcode</th><th>What happens</th><th>Example</th></tr></thead><tbody id="isa-body"></tbody></table></div><p class="small-muted"><b>DAT</b> is an assembler directive that reserves a byte for data. It is not an instruction. Labels make addresses easier to remember; the assembler resolves them.</p><button class="button primary" data-close="isa-dialog">Let’s program</button></dialog>
 <script>/* CPU Lab: a deliberately small, deterministic teaching CPU.
  * A memory word is 8 bits. Instructions use a 4-bit opcode and a 4-bit
@@ -693,9 +697,9 @@
         examTip: 'MDR = the contents being transferred. It can hold data or an instruction.'
       },
       CIR: {
-        name: 'Instruction register · CIR',
+        name: 'Current instruction register',
         role: 'Holds the instruction currently being decoded and executed.',
-        example: 'The CIR holds ADD 13 while the CU identifies the ADD operation and its operand.',
+        example: 'CIR holds ADD 13. The CU decodes it, fetches the value from address 13, and directs the ALU to add that value to ACC.',
         examTip: 'IR and CIR (current instruction register) refer to the same register here. The CU decodes this instruction; the PC holds the next fetch address.'
       },
       ACC: {
@@ -930,12 +934,12 @@
   'use strict';
 
   const components = {
-    CU: { short: 'CU', name: 'Control unit', type: 'unit', hint: 'The control unit decodes instructions and coordinates the CPU. It connects directly to the control bus to send READ and WRITE signals.' },
-    ALU: { short: 'ALU', name: 'Arithmetic logic unit', type: 'unit', hint: 'The arithmetic logic unit performs calculations and logical operations.' },
+    CU: { short: 'CU', name: 'Control unit', type: 'unit', hint: 'The control unit decodes the instruction in CIR and directs the ALU. It connects directly to the control bus to send READ and WRITE signals.' },
+    ALU: { short: 'ALU', name: 'Arithmetic logic unit', type: 'unit', hint: 'The arithmetic logic unit performs calculations and logical operations as directed by the CU. Its result is held in ACC, directly below it.' },
     PC: { short: 'PC', name: 'Program counter', type: 'register', hint: 'The program counter holds an address: the location of the next instruction.' },
     MAR: { short: 'MAR', name: 'Memory address register', type: 'register', hint: 'The memory address register holds the location being read or written. Its address travels directly onto the address bus.' },
     MDR: { short: 'MDR', name: 'Memory data register', type: 'register', hint: 'The memory data register holds an instruction or data travelling to or from RAM. It connects directly to the two-way data bus.' },
-    CIR: { short: 'IR (CIR)', name: 'Instruction register (CIR)', type: 'register', hint: 'The instruction register, also called the CIR, holds the current instruction while the CPU decodes and executes it.' },
+    CIR: { short: 'CIR', name: 'Current instruction register', type: 'register', hint: 'The current instruction register (CIR), also called the IR, holds the instruction for the CU to decode. The CU then directs the ALU.' },
     ACC: { short: 'ACC', name: 'Accumulator', type: 'register', hint: 'The accumulator holds working values and calculation results. When STA executes, the CPU copies ACC to MDR before writing to RAM.' },
     RAM: { short: 'RAM', name: 'Main memory', type: 'connection', hint: 'Main memory sits outside the CPU in this diagram. It holds the instructions and data currently in use.' },
     ABUS: { short: 'ADDRESS', name: 'Address bus', type: 'connection', hint: 'The address bus carries a location from the CPU to memory. It does not carry the contents of that location.' },
@@ -997,7 +1001,7 @@
     const memory = rect(board.querySelector('.activity-memory-boundary'));
     const colours = { control: '#8b62c7', address: '#087e8b', data: '#397dc6', result: '#d28a33' };
     const marker = kind => 'url(#activity-build-arrow-' + kind + ')';
-    const path = (d, kind, both) => '<path class="activity-builder-wire" d="' + d + '" stroke="' + colours[kind] + '" marker-end="' + marker(kind) + '"' + (both ? ' marker-start="' + marker(kind) + '"' : '') + '/>';
+    const path = (d, kind, both, name) => '<path' + (name ? ' id="activity-build-wire-' + name + '"' : '') + ' class="activity-builder-wire" d="' + d + '" stroke="' + colours[kind] + '" marker-end="' + marker(kind) + '"' + (both ? ' marker-start="' + marker(kind) + '"' : '') + '/>';
     const pieces = ['<defs>' + Object.keys(colours).map(kind => '<marker id="activity-build-arrow-' + kind + '" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="' + colours[kind] + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker>').join('') + '</defs>'];
     [['CU', 'CBUS', 'control', true], ['MAR', 'ABUS', 'address', false], ['MDR', 'DBUS', 'data', true]].forEach(connection => {
       const [key, busKey, kind, both] = connection;
@@ -1009,11 +1013,26 @@
     });
     const alu = slot('ALU');
     const acc = slot('ACC');
+    const cir = slot('CIR');
+    const cu = slot('CU');
     const mdr = slot('MDR');
-    const resultX = (alu.right + acc.left) / 2;
-    pieces.push(path('M' + (alu.right + 1) + ' ' + alu.cy + ' H' + resultX + ' V' + acc.cy + ' H' + (acc.left - 1), 'result', false));
-    pieces.push(path('M' + acc.cx + ' ' + (acc.top - 1) + ' V' + (mdr.bottom + 1), 'result', false));
-    pieces.push('<text class="activity-builder-wire-label" x="' + (acc.cx + 10) + '" y="' + ((acc.top + mdr.bottom) / 2 + 3) + '">copy</text>');
+    const decodeX = (cir.right + cu.left) / 2;
+    const decodeY = (cu.bottom + cir.top) / 2;
+    const instructionY = (cir.bottom + mdr.top) / 2;
+    const operationY = Math.min(cu.top, alu.top) - 22;
+    const label = (text, x, y, anchor) => '<text class="activity-builder-wire-label" x="' + x + '" y="' + y + '" text-anchor="' + (anchor || 'start') + '">' + text + '</text>';
+    // The CU decodes the instruction in CIR, then directs the ALU with control signals.
+    pieces.push(path('M' + cir.right + ' ' + cir.cy + ' H' + decodeX + ' V' + decodeY + ' H' + cu.cx + ' V' + cu.bottom, 'control', false, 'cir-cu'));
+    pieces.push(path('M' + cu.cx + ' ' + cu.top + ' V' + operationY + ' H' + alu.cx + ' V' + alu.top, 'control', false, 'cu-alu'));
+    pieces.push(label('decode', cu.cx - 8, decodeY - 4, 'end'));
+    pieces.push(label('CU directs ALU', (cu.cx + alu.cx) / 2, operationY - 5, 'middle'));
+    // A fetched instruction is copied from MDR into the central CIR.
+    pieces.push(path('M' + mdr.left + ' ' + mdr.cy + ' H' + decodeX + ' V' + instructionY + ' H' + cir.cx + ' V' + cir.bottom, 'data', false, 'mdr-cir'));
+    // ACC is directly below ALU and on the same horizontal level as MDR.
+    pieces.push(path('M' + alu.cx + ' ' + alu.bottom + ' V' + acc.top, 'result', true, 'alu-acc'));
+    pieces.push(path('M' + acc.right + ' ' + acc.cy + ' H' + mdr.left, 'result', true, 'acc-mdr'));
+    pieces.push(label('result → ACC', alu.cx + 10, (alu.bottom + acc.top) / 2 + 3));
+    pieces.push(label('copy on STA →', (acc.right + mdr.left) / 2, acc.cy - 8, 'middle'));
     svg.setAttribute('viewBox', '0 0 ' + bounds.width + ' ' + bounds.height);
     svg.innerHTML = pieces.join('');
   }
@@ -1501,8 +1520,8 @@
   const bits = value => (value & 255).toString(2).padStart(8, '0');
   const hex = value => '0x' + (value & 255).toString(16).toUpperCase().padStart(2, '0');
   const pad = value => String(value).padStart(2, '0');
-  const visibleRegister = key => key === 'CIR' ? 'IR (CIR)' : key;
-  const visibleCPUText = text => String(text).replace(/\bCIR\b/g, 'IR (CIR)');
+  const visibleRegister = key => key === 'CIR' ? 'CIR (IR)' : key;
+  const visibleCPUText = text => String(text);
   const content = window.CPUContent;
   const model = window.CPUModel;
   const componentOrder = ['CU','ALU','PC','MAR','MDR','CIR','ACC','RAM','ADDRESS','DATA','CONTROL','CACHE','CLOCK'];
@@ -1513,50 +1532,60 @@
   let assemblyDraft = '', sourceMode = 'assembly';
   const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  const cpuRoutes = {
+    'pc-mar': 'M 388 176 V 202 H 621 V 225',
+    'mdr-ir': 'M 621 392 V 350 H 476',
+    'ir-cu': 'M 476 286 H 500 V 152 H 526',
+    'cu-alu': 'M 621 80 V 62 H 147 V 80',
+    'mdr-alu': 'M 526 416 H 276 V 184 H 250',
+    'alu-acc': 'M 147 244 V 392',
+    'acc-mdr': 'M 250 440 H 526'
+  };
+
   function diagram(prefix, live) {
     const register = (key,x,y,w,h,fill,subtitle) => {
-      const label = key === 'CIR' ? 'IR' : key;
       const alu = key === 'ALU';
       const valueY = alu ? y+100 : y+77;
-      const caption = {CU:'decodes & coordinates',ALU:'calculates & compares',PC:'next instruction address',MAR:'address sent to RAM',MDR:'word moving to / from RAM',CIR:'current instruction',ACC:'result held here first'}[key];
-      return `<g class="cpu-node" data-component="${key}" tabindex="0" role="button" aria-label="${key==='CIR'?'Instruction register, IR (CIR)':esc(content.components[key].name)}"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="${fill}"/><text class="node-title" x="${x+16}" y="${y+31}">${label}</text><text class="node-name" x="${x+16}" y="${y+51}">${subtitle}</text><text class="node-value" id="${prefix}-value-${key}" x="${x+16}" y="${valueY}">${live ? (['CU','ALU'].includes(key)?'—':'0') : ''}</text>${live?'':`<text class="node-caption" x="${x+16}" y="${alu?y+93:y+76}">${caption}</text>`}${alu?`<text class="alu-result" id="${prefix}-alu-result" x="${x+16}" y="${y+137}">${live?'result → ACC':'7 + 5 = 12 → ACC'}</text>`:''}</g>`;
+      const caption = {CU:'decodes & coordinates',ALU:'calculates & compares',PC:'next instruction address',MAR:'address sent to RAM',MDR:'word moving to / from RAM',CIR:'CU decodes this',ACC:'result held here first'}[key];
+      return `<g class="cpu-node" data-component="${key}" tabindex="0" role="button" aria-label="${key==='CIR'?'Current instruction register, CIR (IR)':esc(content.components[key].name)}"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="${fill}"/><text class="node-title" x="${x+16}" y="${y+31}">${key}</text><text class="node-name" x="${x+16}" y="${y+51}">${subtitle}</text><text class="node-value" id="${prefix}-value-${key}" x="${x+16}" y="${valueY}">${live ? (['CU','ALU'].includes(key)?'—':'0') : ''}</text>${live?'':`<text class="node-caption" x="${x+16}" y="${alu?y+93:y+76}">${caption}</text>`}${alu?`<text class="alu-result" id="${prefix}-alu-result" x="${x+16}" y="${y+137}">${live?'result → ACC':'7 + 5 = 12 → ACC'}</text>`:''}</g>`;
     };
     const arrow = (key,color) => `<marker id="${prefix}-arrow-${key}" markerWidth="7" markerHeight="7" refX="5.3" refY="3.5" orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M 1 1 L 5.5 3.5 L 1 6" fill="none" stroke="${color}" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></marker>`;
-    const bus = (key,y,color,label,both) => `<g class="bus-group" data-component="${key}" tabindex="0" role="button" aria-label="${esc(content.components[key].name)}"><rect x="612" y="${y-31}" width="230" height="55" fill="transparent"/><path id="${prefix}-bus-${key}" class="bus-line" d="M 610 ${y} H 850" stroke="${color}" marker-end="url(#${prefix}-arrow-${key})" ${both?`marker-start="url(#${prefix}-arrow-${key})"`:''}/><circle class="bus-port" cx="610" cy="${y}" r="4" fill="${color}"/><text class="bus-label" x="735" y="${y-17}" fill="${color}" text-anchor="middle">${label}</text></g>`;
-    const wire = (name,path,color,arrowKey,both=false) => `<path id="${prefix}-wire-${name}" class="internal-route" d="${path}" fill="none" stroke="${color}" marker-end="url(#${prefix}-arrow-${arrowKey})" ${both?`marker-start="url(#${prefix}-arrow-${arrowKey})"`:''}/>`;
-    return `<svg class="cpu-diagram cpu-diagram-v2" viewBox="0 0 1080 660" role="group" aria-label="CPU: ALU on left, IR and ACC below; PC and CU above MAR and MDR on right, directly connected to buses and RAM">
+    const bus = (key,y,color,label,both) => `<g class="bus-group" data-component="${key}" tabindex="0" role="button" aria-label="${esc(content.components[key].name)}"><rect x="718" y="${y-31}" width="224" height="55" fill="transparent"/><path id="${prefix}-bus-${key}" class="bus-line" d="M 716 ${y} H 950" stroke="${color}" marker-end="url(#${prefix}-arrow-${key})" ${both?`marker-start="url(#${prefix}-arrow-${key})"`:''}/><circle class="bus-port" cx="716" cy="${y}" r="4" fill="${color}"/><text class="bus-label" x="833" y="${y-17}" fill="${color}" text-anchor="middle">${label}</text></g>`;
+    const wire = (name,color,arrowKey,both=false) => `<path id="${prefix}-wire-${name}" class="internal-route${name==='cu-alu'?' control-route':''}" d="${cpuRoutes[name]}" fill="none" stroke="${color}" marker-end="url(#${prefix}-arrow-${arrowKey})" ${both?`marker-start="url(#${prefix}-arrow-${arrowKey})"`:''}/>`;
+    return `<svg class="cpu-diagram cpu-diagram-v2 cpu-diagram-v3" viewBox="0 0 1160 620" role="group" aria-label="CPU: ALU top-left, ACC directly below and level with MDR on the right; CIR in the centre, PC and CU above, MAR and MDR connected directly to buses and RAM">
       <defs>${arrow('ADDRESS','#087f8c')}${arrow('DATA','#397dc6')}${arrow('CONTROL','#8b62c7')}${arrow('WORK','#b9782e')}${arrow('INTERNAL','#a6b7c7')}</defs>
       <text x="32" y="27" class="chip-label">CENTRAL PROCESSING UNIT</text>
-      <rect class="cpu-outline" x="16" y="43" width="624" height="559" rx="18"/>
-      ${wire('pc-mar','M 316 176 V 195 H 518 V 216','#afc4d5','INTERNAL')}
-      ${wire('mdr-ir','M 426 393 H 294 V 528 H 264','#b4c4d3','INTERNAL')}
-      ${wire('ir-cu','M 44 528 H 28 V 64 H 518 V 80','#c3b9db','INTERNAL')}
-      ${wire('mdr-alu','M 426 393 H 315 V 297 H 264','#afc4d5','INTERNAL')}
-      ${wire('alu-acc','M 154 380 V 426 H 350 V 528 H 426','#d2a777','WORK',true)}
-      ${wire('acc-mdr','M 518 480 V 441','#d2a777','WORK',true)}
-      ${register('PC',234,80,165,96,'#e7effb','Program counter')}
-      ${register('CU',426,80,184,96,'#eee8fb','Control unit')}
-      ${register('ALU',44,216,220,164,'#fff0da','Arithmetic logic unit')}
-      ${register('MAR',426,216,184,96,'#ddf1ec','Memory address register')}
-      ${register('MDR',426,345,184,96,'#e6f0fc','Memory data register')}
-      ${register('CIR',44,480,220,96,'#eee8fb','Instruction register (CIR)')}
-      ${register('ACC',426,480,184,96,'#fff0da','Accumulator')}
-      <text class="route-label" x="352" y="444" text-anchor="end">result → ACC</text>
-      <text class="route-label" x="533" y="463">copy on STA ↑</text>
+      <rect class="cpu-outline" x="16" y="43" width="730" height="510" rx="18"/>
+      ${wire('pc-mar','#afc4d5','INTERNAL')}
+      ${wire('mdr-ir','#b4c4d3','INTERNAL')}
+      ${wire('ir-cu','#b49ad5','CONTROL')}
+      ${wire('cu-alu','#b49ad5','CONTROL')}
+      ${wire('mdr-alu','#afc4d5','INTERNAL')}
+      ${wire('alu-acc','#d2a777','WORK',true)}
+      ${wire('acc-mdr','#d2a777','WORK',true)}
+      ${register('ALU',44,80,206,164,'#fff0da','Arithmetic logic unit')}
+      ${register('PC',300,80,176,96,'#e7effb','Program counter')}
+      ${register('CU',526,80,190,96,'#eee8fb','Control unit')}
+      ${register('CIR',300,262,176,112,'#eee8fb','Instruction register')}
+      ${register('MAR',526,225,190,96,'#ddf1ec','Memory address register')}
+      ${register('ACC',44,392,206,96,'#fff0da','Accumulator')}
+      ${register('MDR',526,392,190,96,'#e6f0fc','Memory data register')}
+      <text class="control-route-label" x="388" y="56" text-anchor="middle">CU selects the ALU operation</text>
+      <text class="route-label" x="161" y="319">result ↓</text>
+      <text class="route-label" x="388" y="466" text-anchor="middle">copy on STA →</text>
       ${bus('CONTROL',128,'#8b62c7','CONTROL BUS',true)}
-      ${bus('ADDRESS',264,'#087f8c','ADDRESS BUS',false)}
-      ${bus('DATA',393,'#397dc6','DATA BUS',true)}
-      <text x="735" y="152" class="bus-caption" text-anchor="middle">READ / WRITE →</text>
-      <text x="735" y="170" class="bus-caption" text-anchor="middle">← status / interrupts</text>
-      <text x="735" y="288" class="bus-caption" text-anchor="middle">MAR selects the location</text>
-      <text x="735" y="417" class="bus-caption" text-anchor="middle">MDR transfers the word</text>
-      <g class="cpu-node" data-component="RAM" tabindex="0" role="button" aria-label="Main memory RAM"><rect x="850" y="80" width="204" height="496" rx="13" fill="#e8f2ef"/><text class="node-title" x="870" y="115">RAM</text><text class="node-name" x="870" y="139">Main memory</text><text class="node-caption" x="870" y="163">instructions + data</text>${[0,1,2,3].map(n=>`<rect x="866" y="${206+n*67}" width="172" height="48" rx="7" fill="#ffffffc9"/><text x="880" y="${236+n*67}" id="${prefix}-ram-${n}" style="font-family:monospace;font-size:16px;fill:#326f72">${live?pad(n)+': 00000000':['00: LDA 4','01: ADD 5','04: 7','05: 5'][n]}</text>`).join('')}<text class="node-caption" x="870" y="535">16 addresses · 0 to 15</text></g>
-      ${live?`<g data-component="INPUT" class="extra-node"><rect x="44" y="621" width="220" height="30" rx="7"/><text x="154" y="641" text-anchor="middle">INPUT → ACC</text></g><g data-component="OUTPUT" class="extra-node"><rect x="390" y="621" width="220" height="30" rx="7"/><text x="500" y="641" text-anchor="middle">ACC → OUTPUT</text></g>`:`<g data-component="CACHE" tabindex="0" role="button" aria-label="Learn about cache memory" class="extra-node"><rect x="44" y="621" width="220" height="30" rx="7"/><text x="154" y="641" text-anchor="middle">+ EXPLORE CACHE</text></g><g data-component="CLOCK" tabindex="0" role="button" aria-label="Learn about the CPU clock" class="extra-node"><rect x="390" y="621" width="220" height="30" rx="7"/><text x="500" y="641" text-anchor="middle">+ EXPLORE THE CLOCK</text></g>`}
+      ${bus('ADDRESS',273,'#087f8c','ADDRESS BUS',false)}
+      ${bus('DATA',440,'#397dc6','DATA BUS',true)}
+      <text x="833" y="152" class="bus-caption" text-anchor="middle">READ / WRITE →</text>
+      <text x="833" y="170" class="bus-caption" text-anchor="middle">← status / interrupts</text>
+      <text x="833" y="297" class="bus-caption" text-anchor="middle">MAR selects the location</text>
+      <text x="833" y="464" class="bus-caption" text-anchor="middle">MDR transfers the word</text>
+      <g class="cpu-node" data-component="RAM" tabindex="0" role="button" aria-label="Main memory RAM"><rect x="950" y="80" width="184" height="450" rx="13" fill="#e8f2ef"/><text class="node-title" x="970" y="115">RAM</text><text class="node-name" x="970" y="139">Main memory</text><text class="node-caption" x="970" y="163">instructions + data</text>${[0,1,2,3].map(n=>`<rect x="966" y="${206+n*62}" width="152" height="44" rx="7" fill="#ffffffc9"/><text x="978" y="${233+n*62}" id="${prefix}-ram-${n}" style="font-family:monospace;font-size:16px;fill:#326f72">${live?pad(n)+': 00000000':['00: LDA 4','01: ADD 5','04: 7','05: 5'][n]}</text>`).join('')}<text class="node-caption" x="970" y="505">16 addresses · 0 to 15</text></g>
+      ${live?`<g data-component="INPUT" class="extra-node"><rect x="44" y="575" width="206" height="30" rx="7"/><text x="147" y="595" text-anchor="middle">INPUT → ACC</text></g><g data-component="OUTPUT" class="extra-node"><rect x="510" y="575" width="206" height="30" rx="7"/><text x="613" y="595" text-anchor="middle">ACC → OUTPUT</text></g>`:`<g data-component="CACHE" tabindex="0" role="button" aria-label="Learn about cache memory" class="extra-node"><rect x="44" y="575" width="206" height="30" rx="7"/><text x="147" y="595" text-anchor="middle">+ EXPLORE CACHE</text></g><g data-component="CLOCK" tabindex="0" role="button" aria-label="Learn about the CPU clock" class="extra-node"><rect x="510" y="575" width="206" height="30" rx="7"/><text x="613" y="595" text-anchor="middle">+ EXPLORE THE CLOCK</text></g>`}
       <circle id="${prefix}-packet" class="cpu-packet" r="8" visibility="hidden"><animateMotion id="${prefix}-motion" dur="0.65s" begin="indefinite" fill="freeze" path="M 0 0 L 1 1"/></circle>
       <circle id="${prefix}-packet-secondary" class="cpu-packet cpu-packet-secondary" r="7" visibility="hidden"><animateMotion id="${prefix}-motion-secondary" dur="0.65s" begin="indefinite" fill="freeze" path="M 0 0 L 1 1"/></circle>
     </svg>`;
   }
-
 
   function showComponent(key, area) {
     if (!content.components[key]) {
@@ -1597,25 +1626,27 @@
     document.querySelectorAll('#'+prefix+'-diagram .internal-route').forEach(p=>p.classList.remove('route-active'));
     let path='', extraPath='', routes=[];
     const transfer=event.transfer||'';
-    if(event.bus==='address')path='M 610 264 H 850';
-    else if(event.bus==='data')path=event.direction==='to-ram'?'M 610 393 H 850':'M 850 393 H 610';
-    else if(event.bus==='control')path=event.direction==='from-ram'?'M 850 128 H 610':'M 610 128 H 850';
-    else if(transfer==='PC → MAR'){path='M 316 176 V 195 H 518 V 216';routes=['pc-mar'];}
-    else if(transfer==='MDR → CIR'){path='M 426 393 H 294 V 528 H 264';routes=['mdr-ir'];}
-    else if(transfer==='ACC → MDR'){path='M 518 480 V 441';routes=['acc-mdr'];}
-    else if(transfer==='MDR → ACC'){path='M 518 441 V 480';routes=['acc-mdr'];}
-    else if(transfer==='ALU → ACC'){path='M 154 380 V 426 H 350 V 528 H 426';routes=['alu-acc'];}
+    if(event.bus==='address')path='M 716 273 H 950';
+    else if(event.bus==='data')path=event.direction==='to-ram'?'M 716 440 H 950':'M 950 440 H 716';
+    else if(event.bus==='control')path=event.direction==='from-ram'?'M 950 128 H 716':'M 716 128 H 950';
+    else if(transfer==='PC → MAR'){path=cpuRoutes['pc-mar'];routes=['pc-mar'];}
+    else if(transfer==='MDR → CIR'){path=cpuRoutes['mdr-ir'];routes=['mdr-ir'];}
+    else if(transfer==='ACC → MDR'){path=cpuRoutes['acc-mdr'];routes=['acc-mdr'];}
+    else if(transfer==='MDR → ACC'){path='M 526 440 H 250';routes=['acc-mdr'];}
+    else if(transfer==='ALU → ACC'){path=cpuRoutes['alu-acc'];routes=['alu-acc'];}
     else if(transfer==='ACC, MDR → ALU'){
-      path='M 426 528 H 350 V 426 H 154 V 380';
-      extraPath='M 426 393 H 315 V 297 H 264';routes=['alu-acc','mdr-alu'];
+      path='M 147 392 V 244';
+      extraPath=cpuRoutes['mdr-alu'];routes=['alu-acc','mdr-alu','cu-alu'];
     }
-    else if(transfer==='CIR → CU'){path='M 44 528 H 28 V 64 H 518 V 80';routes=['ir-cu'];}
-    else if(transfer==='CIR operand → MAR')path='M 264 528 H 294 V 195 H 518 V 216';
-    else if(transfer==='CIR operand → PC')path='M 44 528 H 28 V 64 H 316 V 80';
-    else if(transfer==='INPUT → ACC')path='M 264 636 H 340 V 560 H 426';
-    else if(transfer==='ACC → OUTPUT')path='M 518 576 V 621';
-    else if(transfer==='ACC → ALU → CU'){path='M 426 528 H 350 V 426 H 154 V 380';routes=['alu-acc'];}
-    else if(event.phase==='decode'){path='M 44 528 H 28 V 64 H 518 V 80';routes=['ir-cu'];}
+    else if(transfer==='CIR → CU'){path=cpuRoutes['ir-cu'];routes=['ir-cu'];}
+    else if(transfer==='CIR operand → MAR')path='M 476 318 H 514 V 273 H 526';
+    else if(transfer==='CIR operand → PC')path='M 388 262 V 176';
+    else if(transfer==='INPUT → ACC')path='M 147 575 V 488';
+    else if(transfer==='ACC → OUTPUT')path='M 147 488 V 548 H 613 V 575';
+    else if(transfer==='ACC → ALU → CU'){
+      path='M 147 392 V 244';extraPath='M 147 80 V 62 H 621 V 80';routes=['alu-acc','cu-alu'];
+    }
+    else if(event.phase==='decode'){path=cpuRoutes['ir-cu'];routes=['ir-cu'];}
     routes.forEach(id=>$(prefix+'-wire-'+id)?.classList.add('route-active'));
     if(!path||reducedMotion)return;
     const duration=(prefix==='sim'?Math.min(Number($('speed-select').value)*.85,900):800)+'ms';
