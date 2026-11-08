@@ -63,6 +63,13 @@
 
 .cpu-diagram-v5 .ram-meaning-text{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:16px;font-weight:750;fill:#4b3d19;pointer-events:none}
 
+/* A visible memory command: the WRITE signal precedes the data transfer. */
+.control-signal-status rect{fill:#eef4ff;stroke:#a7bef1;stroke-width:1.5}.control-signal-status text{fill:#275baa;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:14px;font-weight:800;stroke:none}
+.control-signal-status[data-signal="WRITE"] rect{fill:#ff6c20;stroke:#a83b0b;stroke-width:2}.control-signal-status[data-signal="WRITE"] text{fill:#102237}.control-signal-status[data-signal="READ"] rect{fill:#e4edff;stroke:#2469ff}
+.cpu-diagram-v5 .cpu-packet.packet-write rect{fill:#ff6c20;stroke:#102237;stroke-width:3}.cpu-diagram-v5 .ram-last-write,.cpu-diagram-v5 .node-caption.has-write{fill:#9b3e09;font-weight:800}
+.cpu-diagram-v5 .single-ram .ram-written>rect{stroke:#e27626;stroke-width:2}.cpu-diagram-v5 .single-ram .ram-active>rect{stroke:#102237;stroke-width:2.5}
+.step-story.is-write-signal{background:#fff1df;border-color:#ee9a4c}
+
 .activity-section{--activity-navy:#172b45;--activity-teal:#087e8b;--activity-purple:#7557d5;--activity-orange:#d97712;--activity-line:#dce4e7;--activity-muted:#617181;color:var(--activity-navy)}
 .activity-section[hidden]{display:none!important}.activity-section *{box-sizing:border-box}.activity-section button,.activity-section input,.activity-section select{font:inherit}.activity-section button{cursor:pointer}.activity-section button:disabled{cursor:default;opacity:.55}.activity-section button:focus-visible,.activity-section select:focus-visible,.activity-section summary:focus-visible{outline:3px solid #37adbd;outline-offset:4px}.activity-section [hidden]{display:none!important}
 .activity-section-head{display:flex;gap:24px;align-items:center;justify-content:space-between;margin:0 0 24px}.activity-section-head h2{font-size:clamp(27px,3vw,40px);letter-spacing:-1.2px;line-height:1.14;margin:7px 0 12px}.activity-section-head p:not(.activity-eyebrow){font-size:15px;line-height:1.65;color:var(--activity-muted);max-width:760px;margin:0}.activity-eyebrow{font-size:10px!important;letter-spacing:1.7px;font-weight:800;margin:0;color:var(--activity-teal);line-height:1.6}.activity-progress-pill{border:1px solid var(--activity-line);background:#fff;border-radius:16px;padding:15px 23px;display:flex;flex-direction:column;align-items:center;flex-shrink:0}.activity-progress-pill span{font-weight:800;font-size:26px;letter-spacing:-1px}.activity-progress-pill small{font-size:11px;color:var(--activity-muted);margin-top:3px}.activity-model-label{border:1px solid var(--activity-line);color:var(--activity-muted);font-weight:700;letter-spacing:1px;font-size:10px;padding:10px 14px;border-radius:30px;flex-shrink:0}
@@ -797,9 +804,9 @@
 
   const samples = Object.freeze([
     {
-      id: 'load-add', title: 'Load and add',
-      description: 'Load 0111 from RAM, add 0101, and output 1100.',
-      source: 'LDA A       ; Load the bits at A\nADD B       ; Add the value at B\nOUT         ; Display ACC\nHLT         ; Stop\nA: DAT 0111\nB: DAT 0101',
+      id: 'load-add', title: 'Add and store',
+      description: 'Load 0111, add 0101, write the result 1100 to RAM, then output 1100.',
+      source: 'LDA A\nADD B\nSTA RESULT\nOUT\nHLT\nA: DAT 0111\nB: DAT 0101\nRESULT: DAT 0000',
       input: [], expected: [12]
     },
     {
@@ -815,9 +822,9 @@
       input: [3], expected: [3, 2, 1, 0]
     },
     {
-      id: 'store-result', title: 'Store a result',
-      description: 'Calculate 0111 + 0101 and copy the result 1100 through MDR into RAM.',
-      source: 'LDA A\nADD B\nSTA RESULT\nOUT\nHLT\nA: DAT 0111\nB: DAT 0101\nRESULT: DAT 0000',
+      id: 'store-result', title: 'Store and reload',
+      description: 'Store 1100 in RAM, load 0000 into ACC, then reload the stored bits and output 1100.',
+      source: 'LDA A\nADD B\nSTA RESULT\nLDA ZERO\nLDA RESULT\nOUT\nHLT\nA: DAT 0111\nB: DAT 0101\nRESULT: DAT 0000\nZERO: DAT 0000',
       input: [], expected: [12]
     }
   ]);
@@ -1692,6 +1699,7 @@
   let activePanel = 'explore';
   let cpu, program, lastEvent = null, trace = [], dirty = false;
   let ramInstructionCells = new Set();
+  let memorySignal = '', lastMemoryWrite = null;
   let running = false, timer = null, stopAt = Infinity, runStart = 0;
   let assemblyDraft = '', sourceMode = 'assembly';
   const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1772,8 +1780,8 @@
   }
 
   function diagram(prefix, live) {
-    const exampleWords=[1,6,3,7,6,0,7,5,0,0,0,0,0,0,0,0];
-    const exampleInstructions=new Set([0,2,4,5]);
+    const exampleWords=[1,8,3,9,2,10,6,0,7,5,0,0,0,0,0,0];
+    const exampleInstructions=new Set([0,2,4,6,7]);
     const register = (key,x,y,w,h,fill,subtitle) => {
       const alu = key === 'ALU';
       const valueY = alu ? y+100 : y+77;
@@ -1807,11 +1815,11 @@
       ${bus('CONTROL',128,cpuPalette.CONTROL,'CONTROL BUS',true)}
       ${bus('ADDRESS',458,cpuPalette.ADDRESS,'ADDRESS BUS',false)}
       ${bus('DATA',592,cpuPalette.DATA,'DATA BUS',true)}
-      <text x="833" y="152" class="bus-caption" text-anchor="middle">READ / WRITE →</text>
-      <text x="833" y="170" class="bus-caption" text-anchor="middle">← status / interrupts</text>
+      <g id="${prefix}-control-status" class="control-signal-status" data-signal="idle" role="img" aria-label="${live?'Control bus ready':'CU sends READ and WRITE to RAM'}"><rect x="754" y="143" width="158" height="32" rx="7"/><text id="${prefix}-control-signal" x="833" y="165" text-anchor="middle">${live?'READY':'READ / WRITE →'}</text></g>
+      <text x="833" y="192" class="bus-caption" text-anchor="middle">← status / interrupts</text>
       <text x="833" y="482" class="bus-caption" text-anchor="middle">MAR selects the location</text>
       <text x="833" y="616" class="bus-caption" text-anchor="middle">MDR transfers the word</text>
-      <g class="cpu-node single-ram" data-component="RAM" tabindex="0" role="button" aria-label="RAM: sixteen four-bit words"><rect x="950" y="80" width="274" height="591" rx="13" fill="#fff9e4"/><text class="node-title" x="970" y="115">RAM</text><text class="node-name" x="970" y="139">instructions + data</text><text class="ram-column-label" x="978" y="174">ADDRESS</text><text class="ram-column-label" x="1051" y="174">BITS</text><text class="ram-column-label" x="1128" y="174">MEANING</text>${Array.from({length:16},(_,n)=>`<g id="${prefix}-ram-row-${n}" class="ram-word-row" data-ram-address="${n}"><title id="${prefix}-ram-title-${n}">RAM[${bits(n)}]</title><rect x="966" y="${187+n*27}" width="242" height="25" rx="4" fill="${cpuPalette.RAM}"/><text class="ram-address-text" x="978" y="${205+n*27}">${bits(n)}</text><text class="ram-word-text" x="1051" y="${205+n*27}" id="${prefix}-ram-value-${n}">${live?'0000':bits(exampleWords[n])}</text><text class="ram-meaning-text" x="1128" y="${205+n*27}" id="${prefix}-ram-meaning-${n}">${live?'0':ramMeaning(exampleWords[n],exampleInstructions.has(n))}</text></g>`).join('')}<text class="node-caption" x="970" y="641">4 bits in every cell</text><text class="node-caption" x="970" y="658">Meaning = mnemonic or denary</text></g>
+      <g class="cpu-node single-ram" data-component="RAM" tabindex="0" role="button" aria-label="RAM: sixteen four-bit words"><rect x="950" y="80" width="274" height="591" rx="13" fill="#fff9e4"/><text class="node-title" x="970" y="115">RAM</text><text class="node-name" x="970" y="139">instructions + data</text><text class="ram-column-label" x="978" y="174">ADDRESS</text><text class="ram-column-label" x="1051" y="174">BITS</text><text class="ram-column-label" x="1128" y="174">MEANING</text>${Array.from({length:16},(_,n)=>`<g id="${prefix}-ram-row-${n}" class="ram-word-row" data-ram-address="${n}"><title id="${prefix}-ram-title-${n}">RAM[${bits(n)}]</title><rect x="966" y="${187+n*27}" width="242" height="25" rx="4" fill="${cpuPalette.RAM}"/><text class="ram-address-text" x="978" y="${205+n*27}">${bits(n)}</text><text class="ram-word-text" x="1051" y="${205+n*27}" id="${prefix}-ram-value-${n}">${live?'0000':bits(exampleWords[n])}</text><text class="ram-meaning-text" x="1128" y="${205+n*27}" id="${prefix}-ram-meaning-${n}">${live?'0':ramMeaning(exampleWords[n],exampleInstructions.has(n))}</text></g>`).join('')}<text class="node-caption" id="${prefix}-ram-last-write" x="970" y="641">4 bits in every cell</text><text class="node-caption" x="970" y="658">Meaning = mnemonic or denary</text></g>
       ${cycleClock(prefix,live)}
       ${live?`<g data-component="INPUT" class="extra-node"><rect x="44" y="690" width="206" height="30" rx="7"/><text x="147" y="710" text-anchor="middle">INPUT → ACC</text></g><g data-component="OUTPUT" class="extra-node"><rect x="510" y="690" width="206" height="30" rx="7"/><text x="613" y="710" text-anchor="middle">ACC → OUTPUT</text></g>`:`<g data-component="CACHE" tabindex="0" role="button" aria-label="Learn about cache memory" class="extra-node"><rect x="44" y="690" width="206" height="30" rx="7"/><text x="147" y="710" text-anchor="middle">+ EXPLORE CACHE</text></g><g data-component="CLOCK" tabindex="0" role="button" aria-label="Learn about the CPU clock" class="extra-node"><rect x="510" y="690" width="206" height="30" rx="7"/><text x="613" y="710" text-anchor="middle">+ EXPLORE THE CLOCK</text></g>`}
       <g id="${prefix}-packet" class="cpu-packet" visibility="hidden"><rect x="-29" y="-15" width="58" height="30" rx="8"/><text id="${prefix}-packet-value" text-anchor="middle" y="5">0000</text><animateMotion id="${prefix}-motion" dur="0.65s" begin="indefinite" fill="freeze" path="M 0 0 L 1 1"/></g>
@@ -1858,6 +1866,8 @@
     document.querySelectorAll('#'+prefix+'-diagram .internal-route').forEach(p=>p.classList.remove('route-active'));
     let path='', extraPath='', routes=[];
     const transfer=event.transfer||'';
+    const isWrite=event.bus==='control'&&transfer.includes('WRITE');
+    packet.classList.toggle('packet-write',isWrite);
     if(event.bus==='address')path='M 716 458 H 950';
     else if(event.bus==='data')path=event.direction==='to-ram'?'M 716 592 H 950':'M 950 592 H 716';
     else if(event.bus==='control')path=event.direction==='from-ram'?'M 950 128 H 716':'M 716 128 H 950';
@@ -1883,7 +1893,8 @@
     $(prefix+'-packet-secondary-value').textContent=event.alu?bits(event.alu.right):'TEST';
     routes.forEach(id=>$(prefix+'-wire-'+id)?.classList.add('route-active'));
     if(!path||reducedMotion)return;
-    const duration=(prefix==='sim'?Math.min(Number($('speed-select').value)*.85,900):800)+'ms';
+    const travelTime=prefix==='sim'?Math.min(Number($('speed-select').value)*.85,900):800;
+    const duration=(isWrite?Math.max(travelTime,900):travelTime)+'ms';
     motion.setAttribute('path',path);motion.setAttribute('dur',duration);packet.setAttribute('visibility','visible');
     try{motion.beginElement();}catch(_){packet.setAttribute('visibility','hidden');}
     if(extraPath&&secondary&&secondaryMotion){
@@ -1975,6 +1986,14 @@
   function renderMachine(){
     if(!cpu)return;
     updateCycleClock('sim',lastEvent?.phase);
+    if(!lastEvent){memorySignal='';lastMemoryWrite=null;}
+    if(lastEvent?.bus==='control')memorySignal=lastEvent.transfer.includes('WRITE')?'WRITE':'READ';
+    if(lastEvent?.transfer==='MDR → RAM')lastMemoryWrite={address:lastEvent.address,value:lastEvent.value};
+    $('sim-control-signal').textContent=memorySignal?memorySignal+' → RAM':'READY';
+    $('sim-control-status').dataset.signal=memorySignal||'idle';
+    $('sim-control-status').setAttribute('aria-label',memorySignal?'CU sends '+memorySignal+' to RAM on the control bus':'Control bus ready');
+    $('sim-ram-last-write').textContent=lastMemoryWrite?'Last WRITE: ['+bits(lastMemoryWrite.address)+'] ← '+bits(lastMemoryWrite.value):'4 bits in every cell';
+    $('sim-ram-last-write').classList.toggle('has-write',!!lastMemoryWrite);
     ['PC','MAR','MDR','CIR','ACC'].forEach(key=>{
       const v=cpu[key.toLowerCase()];
       $("sim-value-"+key).textContent=bits(v);
@@ -1995,6 +2014,7 @@
       row.classList.toggle('ram-next',cpu.pc===n&&!cpu.halted);
       row.classList.toggle('ram-selected',cpu.mar===n);
       row.classList.toggle('ram-active',lastEvent?.address===n);
+      row.classList.toggle('ram-written',lastMemoryWrite?.address===n);
       $('sim-ram-title-'+n).textContent='RAM['+bits(n)+'] = '+bits(cpu.memory[n])+' · '+(ramInstructionCells.has(n)?'instruction '+meaning:(item?.kind==='operand'?'address word, ':'')+'denary '+meaning);
     }
     $('opcode-bits').textContent=bits(cpu.cir);
@@ -2017,10 +2037,11 @@
       $('step-transfer').textContent=(lastEvent.transfer?visibleCPUText(lastEvent.transfer):'')||(cpu.halted?'HLT — program stopped':'—');
       $('step-transfer').hidden=!lastEvent.transfer;
       document.querySelector('.step-story').classList.toggle('is-error',lastEvent.phase==='error');
+      document.querySelector('.step-story').classList.toggle('is-write-signal',lastEvent.bus==='control'&&memorySignal==='WRITE');
     }else{
       $('step-phase').textContent='READY TO FETCH';$('step-title').textContent='Every program starts with an address.';
       $('step-detail').textContent='Press Step to copy the PC into the MAR. Then follow the instruction as it travels from RAM into the CPU.';
-      $('step-transfer').textContent='PC → MAR';$('step-transfer').hidden=false;document.querySelector('.step-story').classList.remove('is-error');
+      $('step-transfer').textContent='PC → MAR';$('step-transfer').hidden=false;document.querySelector('.step-story').classList.remove('is-error','is-write-signal');
     }
   }
 
@@ -2052,7 +2073,9 @@
     const keepGoing=doStep();
     if(!keepGoing || cpu.instructions>=stopAt){pause();renderMachine();return;}
     if(cpu.instructions-runStart>=200){pause();renderMachine();editorMessage('Paused after 200 instructions. Check your loop, or press Run to continue.',true);return;}
-    timer=setTimeout(runLoop,Number($('speed-select').value));
+    const selectedDelay=Number($('speed-select').value);
+    const delay=lastEvent?.bus==='control'&&lastEvent.transfer.includes('WRITE')?Math.max(selectedDelay,1200):selectedDelay;
+    timer=setTimeout(runLoop,delay);
   }
 
   function startRun(oneInstruction){
@@ -2142,7 +2165,21 @@
     $('print-sheet').innerHTML=`<h1>CPU revision sheet</h1><p>RGSV · Cambridge IGCSE Computer Science 0478 · 2026–2028</p><table><thead><tr><th>Component</th><th>Purpose</th></tr></thead><tbody>${componentOrder.map(k=>`<tr><td><b>${visibleRegister(k)}</b> · ${esc(content.components[k].name)}</td><td>${esc(content.components[k].role)}</td></tr>`).join('')}</tbody></table><h2>The fetch–decode–execute cycle</h2><ol>${content.fdeSteps.map(s=>'<li>'+esc(s)+'</li>').join('')}</ol><p>${esc(content.overview.microprocessor)} ${esc(content.overview.distinction)}</p><h2>Performance</h2><p>Clock rate is measured in cycles per second, not instructions per second. More cache can reduce RAM waits. More cores can process independent work concurrently; sequential dependencies limit gains.</p><h2>Instruction sets &amp; embedded systems</h2><p>An instruction set contains the machine instructions a CPU supports. In assembly, mnemonics name instructions; an assembler encodes them as machine code. ${esc(content.embedded.text)}</p><p>Model: four-bit words and 16 RAM locations. Data ranges from 0000 to 1111. Addressed commands use an opcode cell followed by an address cell. This app uses its own illustrative instruction encoding.</p><div class="print-questions"><h2>Exam-style practice</h2>${content.shortAnswers.map((q,i)=>`<article><h3>${i+1}. ${esc(q.question)} [${q.marks}]</h3><div style="height:80px;border-bottom:1px dotted #bbb"></div></article>`).join('')}</div><p>Curriculum source: Cambridge IGCSE 0478 syllabus 2026–2028, section 3.1, page 16. Questions are original.</p>`;
     renderQuiz();renderOrder();
     let restored=false;
-    try{const saved=JSON.parse(localStorage.getItem('rgsv-cpu-lab-draft-v2-4bit')||'null');if(saved&&typeof saved.source==='string'&&saved.source.length<15000&&['assembly','machine'].includes(saved.mode)){$('program-source').value=saved.source;$('source-mode').value=saved.mode;sourceMode=saved.mode;$('input-values').value=String(saved.inputs||'');updateModeHint();dirty=true;restored=assembleCurrent();if(restored)editorMessage('Restored your last program on this device.',true);}}catch(_){}
+    try{
+      const saved=JSON.parse(localStorage.getItem('rgsv-cpu-lab-draft-v2-4bit')||'null');
+      if(saved&&typeof saved.source==='string'&&saved.source.length<15000&&['assembly','machine'].includes(saved.mode)){
+        const previousDemo='LDA A       ; Load the bits at A\nADD B       ; Add the value at B\nOUT         ; Display ACC\nHLT         ; Stop\nA: DAT 0111\nB: DAT 0101';
+        const previousBinary=model.assemble(previousDemo).listing.map(r=>bits(r.word)+' ; '+r.text).join('\n');
+        const upgrade=saved.mode==='assembly'?saved.source===previousDemo:saved.source===previousBinary;
+        if(upgrade){
+          const updated=model.samples.find(sample=>sample.id==='load-add').source;
+          saved.source=saved.mode==='assembly'?updated:model.assemble(updated).listing.map(r=>bits(r.word)+' ; '+r.text).join('\n');
+        }
+        $('program-source').value=saved.source;$('source-mode').value=saved.mode;sourceMode=saved.mode;
+        $('input-values').value=String(saved.inputs||'');updateModeHint();dirty=true;restored=assembleCurrent();
+        if(restored)editorMessage(upgrade?'Updated the starter example: STA writes the result back to RAM.':'Restored your last program on this device.',true);
+      }
+    }catch(_){}
     if(!restored)loadSample('load-add');
     if(window.CPUActivities)window.CPUActivities.init();
 
