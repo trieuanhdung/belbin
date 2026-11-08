@@ -139,7 +139,7 @@
 .activity-cpu-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:var(--activity-build-tracks);gap:0 24px;align-items:stretch}
 .activity-cpu-grid [data-activity-slot="PC"]{grid-column:2;grid-row:1}
 .activity-cpu-grid [data-activity-slot="CU"]{grid-column:3;grid-row:1}
-.activity-cpu-grid [data-activity-slot="ALU"]{grid-column:3;grid-row:3;align-self:stretch;background:#fff7eb;border-color:#efd8b5}
+.activity-cpu-grid [data-activity-slot="ALU"]{grid-column:1;grid-row:3;align-self:stretch;background:#fff7eb;border-color:#efd8b5}
 .activity-cpu-grid [data-activity-slot="MAR"]{grid-column:3;grid-row:5}
 .activity-cpu-grid [data-activity-slot="MDR"]{grid-column:3;grid-row:7}
 .activity-cpu-grid [data-activity-slot="CIR"]{grid-column:2;grid-row:3;align-self:center;height:var(--activity-build-row);background:#f3effc;border-color:#d8cbed}
@@ -297,7 +297,7 @@
           <svg id="activity-builder-wires" class="activity-builder-wires" aria-hidden="true" focusable="false"></svg>
           <div class="activity-cpu-boundary">
             <div class="activity-boundary-label"><span class="activity-mini-chip" aria-hidden="true">▦</span> CENTRAL PROCESSING UNIT</div>
-            <div class="activity-cpu-grid" role="group" aria-label="Cycle clock top-left, PC top-middle, CU top-right, ALU at the vertical midpoint on the right, CIR at the same level in the centre, and ACC level with MDR at the bottom">
+            <div class="activity-cpu-grid" role="group" aria-label="Cycle clock top-left, PC top-middle, CU top-right, ALU at the vertical midpoint on the left beneath the clock, CIR at the same level in the centre, and ACC below ALU and level with MDR at the bottom">
               <div class="activity-builder-clock">
                 <svg viewBox="0 0 230 170" role="img" aria-label="Fetch, decode, execute cycle">
                   <title>The three instruction stages. This reference dial is not a component to place.</title>
@@ -1210,21 +1210,20 @@
     const cir = slot('CIR');
     const cu = slot('CU');
     const mdr = slot('MDR');
-    const mar = slot('MAR');
     const decodeX = (cir.right + cu.left) / 2;
     const instructionY = (cir.bottom + mdr.top) / 2;
-    const resultY = (Math.max(alu.bottom, cir.bottom) + mar.top) / 2;
+    const controlY = (cu.bottom + alu.top) / 2;
     const label = (text, x, y, anchor) => '<text class="activity-builder-wire-label" x="' + x + '" y="' + y + '" text-anchor="' + (anchor || 'start') + '">' + text + '</text>';
     // The CU decodes the instruction in CIR, then directs the ALU with control signals.
     pieces.push(path('M' + cir.right + ' ' + cir.cy + ' H' + decodeX + ' V' + cu.cy + ' H' + cu.left, 'control', false, 'cir-cu'));
-    pieces.push(path('M' + cu.cx + ' ' + cu.bottom + ' V' + alu.top, 'control', false, 'cu-alu'));
-    pieces.push(label('CU directs ALU', cu.cx - 8, (cu.bottom + alu.top) / 2 + 3, 'end'));
+    pieces.push(path('M' + cu.cx + ' ' + cu.bottom + ' V' + controlY + ' H' + alu.cx + ' V' + alu.top, 'control', false, 'cu-alu'));
+    pieces.push(label('CU directs ALU', (cu.cx + alu.cx) / 2, controlY - 8, 'middle'));
     // A fetched instruction is copied from MDR into the central CIR.
     pieces.push(path('M' + mdr.left + ' ' + mdr.cy + ' H' + decodeX + ' V' + instructionY + ' H' + cir.cx + ' V' + cir.bottom, 'data', false, 'mdr-cir'));
-    // Route below the centred ALU and CIR, then down to ACC without crossing a register.
-    pieces.push(path('M' + alu.cx + ' ' + alu.bottom + ' V' + resultY + ' H' + acc.cx + ' V' + acc.top, 'result', true, 'alu-acc'));
+    // ALU and ACC share the left column, so values travel directly between them.
+    pieces.push(path('M' + alu.cx + ' ' + alu.bottom + ' V' + acc.top, 'result', true, 'alu-acc'));
     pieces.push(path('M' + acc.right + ' ' + acc.cy + ' H' + mdr.left, 'result', true, 'acc-mdr'));
-    pieces.push(label('result to ACC', (alu.cx + acc.cx) / 2, resultY + 12, 'middle'));
+    pieces.push(label('result to ACC', alu.cx + 10, (alu.bottom + acc.top) / 2 + 3));
     pieces.push(label('copy on STA →', (acc.right + mdr.left) / 2, acc.cy - 8, 'middle'));
     svg.setAttribute('viewBox', '0 0 ' + bounds.width + ' ' + bounds.height);
     svg.innerHTML = pieces.join('');
@@ -1764,9 +1763,9 @@
     'mdr-ir': 'M 526 578 H 486 V 450 H 388 V 428',
     'ir-cu': 'M 476 342 H 482 V 198 H 556 V 176',
     'ir-mar': 'M 476 402 H 500 V 496 H 526',
-    'cu-alu': 'M 621 176 V 275',
-    'mdr-alu': 'M 526 578 H 508 V 360 H 526',
-    'alu-acc': 'M 526 300 H 266 V 530 H 147 V 554',
+    'cu-alu': 'M 556 176 V 230 H 147 V 275',
+    'mdr-alu': 'M 526 578 H 486 V 480 H 266 V 357 H 250',
+    'alu-acc': 'M 147 439 V 554',
     'acc-mdr': 'M 250 602 H 526'
   };
 
@@ -1817,7 +1816,7 @@
     const arrow = (key,color) => `<marker id="${prefix}-arrow-${key}" markerWidth="7" markerHeight="7" refX="5.3" refY="3.5" orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M 1 1 L 5.5 3.5 L 1 6" fill="none" stroke="${color}" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></marker>`;
     const bus = (key,y,color,label,both) => `<g class="bus-group" data-component="${key}" tabindex="0" role="button" aria-label="${esc(content.components[key].name)}"><rect x="718" y="${y-31}" width="224" height="55" fill="transparent"/><path id="${prefix}-bus-${key}" class="bus-line" d="M 716 ${y} H 950" stroke="${color}" marker-end="url(#${prefix}-arrow-${key})" ${both?`marker-start="url(#${prefix}-arrow-${key})"`:''}/><circle class="bus-port" cx="716" cy="${y}" r="4" fill="${color}"/><text class="bus-label" x="833" y="${y-17}" fill="${color}" text-anchor="middle">${label}</text></g>`;
     const wire = (name,color,arrowKey,both=false) => `<path id="${prefix}-wire-${name}" class="internal-route${name==='cu-alu'?' control-route':''}" d="${cpuRoutes[name]}" fill="none" stroke="${color}" style="--route-colour:${color}" marker-end="url(#${prefix}-arrow-${arrowKey})" ${both?`marker-start="url(#${prefix}-arrow-${arrowKey})"`:''}/>`;
-    return `<svg class="cpu-diagram cpu-diagram-v2 cpu-diagram-v3 cpu-diagram-v4 cpu-diagram-v5" viewBox="0 0 1250 735" role="group" aria-label="CPU: cycle clock at the top-left, ALU in the middle of the right side, CIR in the centre, ACC at bottom-left level with MDR at bottom-right; MAR and MDR connect directly to their buses and RAM">
+    return `<svg class="cpu-diagram cpu-diagram-v2 cpu-diagram-v3 cpu-diagram-v4 cpu-diagram-v5" viewBox="0 0 1250 735" role="group" aria-label="CPU: cycle clock at the top-left, ALU directly below the clock on the left and above ACC, CIR in the centre, ACC at bottom-left level with MDR at bottom-right; MAR and MDR connect directly to their buses and RAM">
       <defs>${arrow('ADDRESS',cpuPalette.ADDRESS)}${arrow('DATA',cpuPalette.DATA)}${arrow('CONTROL',cpuPalette.CONTROL)}${arrow('WORK',cpuPalette.ALU)}${arrow('INSTRUCTION',cpuPalette.CIR)}${arrow('REGISTER',cpuPalette.ACC)}</defs>
       <text x="32" y="27" class="chip-label">CENTRAL PROCESSING UNIT</text>
       <rect class="cpu-outline" x="16" y="43" width="730" height="628" rx="18"/>
@@ -1829,15 +1828,15 @@
       ${wire('mdr-alu',cpuPalette.ACC,'REGISTER')}
       ${wire('alu-acc',cpuPalette.ALU,'WORK',true)}
       ${wire('acc-mdr',cpuPalette.ACC,'REGISTER',true)}
-      ${register('ALU',526,275,190,164,cpuPalette.ALU,'Arithmetic logic unit')}
+      ${register('ALU',44,275,206,164,cpuPalette.ALU,'Arithmetic logic unit')}
       ${register('PC',300,80,176,96,cpuPalette.PC,'Program counter')}
       ${register('CU',526,80,190,96,cpuPalette.CU,'Control unit')}
       ${register('CIR',300,316,176,112,cpuPalette.CIR,'Instruction register')}
       ${register('MAR',526,451,190,90,cpuPalette.MAR,'Memory address register')}
       ${register('ACC',44,554,206,96,cpuPalette.ACC,'Accumulator')}
       ${register('MDR',526,554,190,96,cpuPalette.MDR,'Memory data register')}
-      <text class="control-route-label" x="621" y="234" text-anchor="middle">CU selects the ALU operation</text>
-      <text class="route-label" x="251" y="475" text-anchor="end">result ↓</text>
+      <text class="control-route-label" x="349" y="217" text-anchor="middle">CU selects the ALU operation</text>
+      <text class="route-label" x="166" y="499">result ↓</text>
       <text class="route-label" x="388" y="590" text-anchor="middle">copy on STA →</text>
       ${bus('CONTROL',128,cpuPalette.CONTROL,'CONTROL BUS',true)}
       ${bus('ADDRESS',496,cpuPalette.ADDRESS,'ADDRESS BUS',false)}
@@ -1904,7 +1903,7 @@
     else if(transfer==='MDR → ACC'){path='M 526 602 H 250';routes=['acc-mdr'];}
     else if(transfer==='ALU → ACC'){path=cpuRoutes['alu-acc'];routes=['alu-acc'];}
     else if(transfer==='ACC, MDR → ALU'){
-      path='M 147 554 V 530 H 266 V 300 H 526';
+      path='M 147 554 V 439';
       extraPath=cpuRoutes['mdr-alu'];routes=['alu-acc','mdr-alu','cu-alu'];
     }
     else if(transfer==='CIR → CU'){path=cpuRoutes['ir-cu'];routes=['ir-cu'];}
@@ -1913,7 +1912,7 @@
     else if(transfer==='INPUT → ACC')path='M 147 690 V 650';
     else if(transfer==='ACC → OUTPUT')path='M 147 650 V 674 H 613 V 690';
     else if(transfer==='ACC → ALU → CU'){
-      path='M 147 554 V 530 H 266 V 300 H 526';extraPath='M 621 275 V 176';routes=['alu-acc','cu-alu'];
+      path='M 147 554 V 439';extraPath='M 147 275 V 230 H 556 V 176';routes=['alu-acc','cu-alu'];
     }
     else if(event.phase==='decode'){path=cpuRoutes['ir-cu'];routes=['ir-cu'];}
     const token=event.bus==='control'?(transfer.includes('WRITE')?'WRITE':'READ'):event.alu?bits(event.alu.left):bits(event.value);
