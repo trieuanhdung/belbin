@@ -23,6 +23,7 @@
 :root{--cpu-orange:#ff6c20;--cpu-cyan:#2bcfff;--cpu-green:#9dd241;--cpu-blue:#4a87ff;--cpu-yellow:#ffeeaa;--cpu-bus:#2469ff;--cpu-pink:#f3228a;--cpu-ink:#102237}
 .cpu-key-orange{background:var(--cpu-orange)}.cpu-key-cyan{background:var(--cpu-cyan)}.cpu-key-green{background:var(--cpu-green)}.cpu-key-blue{background:var(--cpu-blue)}.cpu-key-yellow{background:var(--cpu-yellow)}.cpu-key-bus{background:var(--cpu-bus)}.diagram-legend .dot{width:9px;height:9px;border:1px solid #10223724}
 .cpu-diagram-v4 .node-title,.cpu-diagram-v4 .node-name,.cpu-diagram-v4 .node-value,.cpu-diagram-v4 .node-caption,.cpu-diagram-v4 .alu-result{fill:var(--cpu-ink)}
+.cpu-diagram-v4 .register-denary{font-size:14px;font-weight:650;fill:var(--cpu-ink);font-variant-numeric:tabular-nums}
 .cpu-diagram-v4 [data-component="RAM"] .node-title{fill:var(--cpu-pink)}.cpu-diagram-v4 .bus-caption{fill:#50647a}
 .cpu-diagram-v4 .internal-route{stroke-width:2.5;opacity:.8}.cpu-diagram-v4 .internal-route.route-active{stroke:var(--route-colour);stroke-width:5;opacity:1;filter:drop-shadow(0 0 2px #10223730)}
 .cpu-diagram-v4 .control-route-label,.cpu-diagram-v4 .route-label{fill:#4b5e73}.cpu-diagram-v4 .cpu-node.active>rect:first-child{stroke:var(--cpu-ink);stroke-width:4;filter:drop-shadow(0 0 6px #10223755)}.cpu-diagram-v4 .cpu-node.selected>rect:first-child{stroke:var(--cpu-ink);stroke-width:3}
@@ -89,30 +90,27 @@
 .cpu-diagram-v5 [data-component="ALU"] .node-value,.cpu-diagram-v5 .alu-second{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:17px;font-weight:650;fill:#102237}
 .cpu-diagram-v5 .alu-result{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:16px;font-weight:800;fill:#102237}
 .cpu-diagram-v5 [data-component="ALU"].operation-selected>rect:first-child{stroke:#a83b0b;stroke-width:3}
-.simulation-picture{position:relative;isolation:isolate}
-.decode-panel{position:absolute;z-index:3;left:1.4%;top:5.5%;width:57.5%;padding:14px;background:#fffdf7;border:2px solid #ff9b43;border-radius:13px;box-shadow:0 12px 38px #172b4533;animation:decode-appear .2s ease-out}
-.decode-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
-.decode-heading h3{font-size:18px;margin:0;letter-spacing:-.4px}
-.decode-fields{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;background:#fff0da;border-radius:6px;padding:8px;margin-bottom:9px;color:#7a4b17;font-size:9px;font-weight:750}
-.decode-fields code{background:#2bcfff;font-size:14px;letter-spacing:1px;color:#102237;margin-left:3px}
-.decode-fields>span+span code{background:#d8f0ad}
-.decode-fields b{font-size:10px;font-weight:550;margin-left:4px}
-.decode-table{width:100%;border-collapse:collapse;font-size:11px;line-height:1.35}
-.decode-table th{text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:.6px;color:#6d7c88;padding:5px 6px;border-bottom:1px solid #dbe4ea}
-.decode-table td{padding:6px;border-bottom:1px solid #e7e9e6;color:#516477}
-.decode-table td:first-child{width:61px}
-.decode-table td:nth-child(2){width:95px}
-.decode-table code{font-size:12px;letter-spacing:1px;background:none;padding:0;color:#244d69}
+/* The compact decoder occupies its own empty SVG area above/right of CU. */
+.simulation-picture{position:relative}
+.decode-dock{overflow:visible}
+.decode-panel{box-sizing:border-box;width:184px;padding:9px;background:#fffdf7;border:1.5px solid #f2b56a;border-radius:9px;font-family:Inter,ui-sans-serif,system-ui,sans-serif;line-height:1.2;color:#20344a;animation:decode-appear .15s ease-out}
+.decode-panel h3{font-size:16px;font-weight:800;line-height:20px;letter-spacing:-.25px;text-align:center;margin:0 0 6px}
+.decode-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px;line-height:16px}
+.decode-table th{padding:3px 2px;text-align:left;font-size:11px;font-weight:700;color:#617182;border-bottom:1px solid #dce3e7}
+.decode-table th:first-child{width:70px}
+.decode-table td{height:20px;padding:2px 4px;border-bottom:1px solid #e8ecec;color:#526477;vertical-align:middle}
+.decode-table code{background:none;padding:0;font-size:14px;letter-spacing:1px;color:#244d69}
+.decode-table td b{font-size:13px;font-weight:650}
 .decode-table .decode-match{background:#ffe29a;box-shadow:inset 3px 0 #ff6c20}
-.decode-table .decode-match td{color:#102237;font-weight:750}
-.decode-match-label{display:block;font-size:8px;color:#a44904;font-weight:900;letter-spacing:.6px}
-.decode-result{font-size:12px;font-weight:750;line-height:1.45;color:#973e0b;background:#fff0d7;border-radius:6px;padding:8px 10px;margin:10px 0 7px}
-.decode-footer{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.decode-footer p{font-size:10px;line-height:1.4;margin:0;color:#687a87}
-.decode-footer .button{font-size:10px;padding:8px 11px}
-@keyframes decode-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:1100px){.decode-panel{padding:10px;top:3.5%}.decode-heading h3{font-size:16px}.decode-table td{padding:4px 5px;font-size:10px}.decode-fields{padding:6px;gap:5px}.decode-result{font-size:11px;margin-top:7px;padding:6px 8px}.decode-footer p{font-size:9px}.decode-fields b{display:block;margin:3px 0 0}.sim-values-row{grid-template-columns:1fr}.decode-table td:nth-child(2){width:81px}}
-@media(max-width:760px){.decode-panel{position:relative;left:auto;top:auto;width:100%;margin:10px 0 0;padding:14px}.decode-table td{font-size:12px;padding:7px}.decode-heading h3{font-size:19px}.decode-fields b{display:inline;margin-left:4px}.decode-result{font-size:13px}.decode-footer p{font-size:11px}.decode-footer .button{font-size:12px}.instruction-full{flex-wrap:wrap}.sim-values-row{grid-template-columns:1fr}.decode-panel:not([hidden]){order:-1}.simulation-picture{display:flex;flex-direction:column}}
+.decode-table .decode-match td{color:#102237;font-weight:800}
+.decode-match-label{float:right;font-size:12px;line-height:16px;color:#9d4809;font-weight:900}
+.decode-selection{display:flex;align-items:center;justify-content:space-between;gap:4px;margin:7px 0;font-size:12px;line-height:15px}
+.decode-selection b{color:#8a3e0a;font-size:14px}
+.decode-selection span{font-size:10px;color:#536a7c}
+.decode-panel .button{display:flex;width:100%;height:26px;padding:4px 6px;font-size:12px;line-height:16px;border-radius:5px}
+@keyframes decode-appear{from{opacity:0}to{opacity:1}}
+@media(max-width:1100px){.sim-values-row{grid-template-columns:1fr}}
+@media(max-width:760px){.instruction-full{flex-wrap:wrap}.sim-values-row{grid-template-columns:1fr}}
 
 .activity-section{--activity-navy:#172b45;--activity-teal:#087e8b;--activity-purple:#7557d5;--activity-orange:#d97712;--activity-line:#dce4e7;--activity-muted:#617181;color:var(--activity-navy)}
 .activity-section[hidden]{display:none!important}.activity-section *{box-sizing:border-box}.activity-section button,.activity-section input,.activity-section select{font:inherit}.activity-section button{cursor:pointer}.activity-section button:disabled{cursor:default;opacity:.55}.activity-section button:focus-visible,.activity-section select:focus-visible,.activity-section summary:focus-visible{outline:3px solid #37adbd;outline-offset:4px}.activity-section [hidden]{display:none!important}
@@ -257,10 +255,10 @@
     <div class="cpu-workspace">
       <div class="card live-diagram-card">
         <div class="live-heading"><div class="phase-strip" aria-label="Current cycle stage"><span data-phase="fetch">1 <b>Fetch</b></span><i>→</i><span data-phase="decode">2 <b>Decode</b></span><i>→</i><span data-phase="execute">3 <b>Execute</b></span></div><span class="instruction-count"><b id="instruction-count">0</b> instructions</span></div>
-        <div class="simulation-picture"><div id="sim-diagram" class="diagram-wrap"></div><section id="decode-panel" class="decode-panel" aria-labelledby="decode-title" hidden><div class="decode-heading"><span class="tiny-tag orange-tag">CU · DECODE</span><h3 id="decode-title">Instruction set</h3></div><div class="decode-fields"><span>OPCODE <code id="decode-opcode">0000</code></span><span>OPERAND <code id="decode-operand">0000</code> <b id="decode-operand-meaning"></b></span></div><table class="decode-table"><caption class="sr-only">The CU matches the opcode to an instruction.</caption><thead><tr><th>Opcode</th><th>Instruction</th><th>CPU action</th></tr></thead><tbody id="decode-table-body"></tbody></table><p id="decode-result" class="decode-result" role="status"></p><div class="decode-footer"><p id="decode-next"></p><button class="button primary" id="decode-execute">Execute →</button></div></section></div>
+        <div class="simulation-picture"><div id="sim-diagram" class="diagram-wrap"></div></div>
         <div class="ram-key single-ram-key"><span><i class="pc-marker"></i>next instruction (PC)</span><span><i class="mar-marker"></i>selected address (MAR)</span></div>
         <div class="sim-values-row"><div class="instruction-word"><span class="instruction-full">CIR · 8-bit instruction <code id="cir-bits">00000000</code></span><div class="instruction-fields"><div class="instruction-field opcode-field"><span>OPCODE · 4 bits</span><code id="opcode-bits">0000</code><b id="instruction-name">not fetched</b></div><span class="field-divider">—</span><div class="instruction-field operand-field"><span>OPERAND · 4 bits</span><code id="operand-bits">0000</code><b id="operand-meaning">address / unused</b></div></div></div><div class="output-card"><div class="output-heading"><h3>Output</h3><span>OUT → screen</span></div><div id="output-values" aria-live="polite"><span class="output-empty">Your results will appear here.</span></div></div></div>
-        <p id="decoded-action" class="decoded-action" aria-live="polite" hidden></p><p class="diagram-caption">Each cell and register holds 8 bits. One instruction = 4-bit opcode + 4-bit operand. RAM addresses are shown in denary.</p>
+        <p id="decoded-action" class="decoded-action" aria-live="polite" hidden></p><p class="diagram-caption">Each cell and register holds 8 bits. ACC and MDR also show the same value in denary. One instruction = 4-bit opcode + 4-bit operand. RAM addresses are shown in denary.</p>
         <p class="store-flow-note"><b>Store a result:</b> ALU → ACC → MDR → data bus → RAM <span>Copying keeps the bits unchanged. STA writes the value to RAM.</span></p>
         <div class="sim-inspector" id="sim-component-detail">Select a component for a quick reminder of its role.</div>
       </div>
@@ -1210,16 +1208,22 @@
     const cir = slot('CIR');
     const cu = slot('CU');
     const mdr = slot('MDR');
-    const decodeX = (cir.right + cu.left) / 2;
-    const instructionY = (cir.bottom + mdr.top) / 2;
-    const controlY = (cu.bottom + alu.top) / 2;
+    const cuWidth = cu.right - cu.left;
+    const controlX = cu.left + cuWidth / 4;
+    const decodeX = cu.left + cuWidth * 3 / 4;
+    const upperGap = Math.min(alu.top, cir.top) - cu.bottom;
+    const controlY = cu.bottom + upperGap / 3;
+    const decodeY = cu.bottom + upperGap * 2 / 3;
+    const instructionY = mdr.top + (mdr.bottom - mdr.top) / 4;
     const label = (text, x, y, anchor) => '<text class="activity-builder-wire-label" x="' + x + '" y="' + y + '" text-anchor="' + (anchor || 'start') + '">' + text + '</text>';
-    // The CU decodes the instruction in CIR, then directs the ALU with control signals.
-    pieces.push(path('M' + cir.right + ' ' + cir.cy + ' H' + decodeX + ' V' + cu.cy + ' H' + cu.left, 'control', false, 'cir-cu'));
-    pieces.push(path('M' + cu.cx + ' ' + cu.bottom + ' V' + controlY + ' H' + alu.cx + ' V' + alu.top, 'control', false, 'cu-alu'));
-    pieces.push(label('CU directs ALU', (cu.cx + alu.cx) / 2, controlY - 8, 'middle'));
-    // A fetched instruction is copied from MDR into the central CIR.
-    pieces.push(path('M' + mdr.left + ' ' + mdr.cy + ' H' + decodeX + ' V' + instructionY + ' H' + cir.cx + ' V' + cir.bottom, 'data', false, 'mdr-cir'));
+    // Separate CU ports and lanes keep the decode and ALU-control paths from crossing.
+    pieces.push(path('M' + cir.cx + ' ' + cir.top + ' V' + decodeY + ' H' + decodeX + ' V' + cu.bottom, 'control', false, 'cir-cu'));
+    pieces.push(path('M' + controlX + ' ' + cu.bottom + ' V' + controlY + ' H' + alu.cx + ' V' + alu.top, 'control', false, 'cu-alu'));
+    pieces.push(label('instruction to CU', (cir.cx + decodeX) / 2, decodeY - 8, 'middle'));
+    pieces.push(label('CU directs ALU', (controlX + alu.cx) / 2, controlY - 8, 'middle'));
+    // Use a higher MDR port so instruction copies never share the ACC-to-MDR line.
+    pieces.push(path('M' + mdr.left + ' ' + instructionY + ' H' + cir.cx + ' V' + cir.bottom, 'data', false, 'mdr-cir'));
+    pieces.push(label('copy instruction', cir.cx + 10, (cir.bottom + instructionY) / 2 + 3));
     // ALU and ACC share the left column, so values travel directly between them.
     pieces.push(path('M' + alu.cx + ' ' + alu.bottom + ' V' + acc.top, 'result', true, 'alu-acc'));
     pieces.push(path('M' + acc.right + ' ' + acc.cy + ' H' + mdr.left, 'result', true, 'acc-mdr'));
@@ -1759,15 +1763,22 @@
   }
 
   const cpuRoutes = {
-    'pc-mar': 'M 388 176 V 194 H 494 V 496 H 526',
-    'mdr-ir': 'M 526 578 H 486 V 450 H 388 V 428',
-    'ir-cu': 'M 476 342 H 482 V 198 H 556 V 176',
-    'ir-mar': 'M 476 402 H 500 V 496 H 526',
-    'cu-alu': 'M 556 176 V 230 H 147 V 275',
-    'mdr-alu': 'M 526 578 H 486 V 480 H 266 V 357 H 250',
+    'pc-mar': 'M 476 128 H 500 V 300 H 650 V 451',
+    'mdr-ir': 'M 526 566 H 510 V 460 H 390 V 428',
+    'ir-cu': 'M 328 316 V 220 H 280 V 68 H 600 V 80',
+    'ir-mar': 'M 476 385 H 570 V 451',
+    'cu-alu': 'M 650 80 V 55 H 30 V 357 H 44',
+    'mdr-alu': 'M 526 590 H 484 V 510 H 270 V 365 H 250',
     'alu-acc': 'M 147 439 V 554',
-    'acc-mdr': 'M 250 602 H 526'
+    'acc-mdr': 'M 250 618 H 526'
   };
+
+  const controlBusPath = 'M 716 128 H 736 V 360 H 950';
+  const controlBusReturnPath = 'M 950 360 H 736 V 128 H 716';
+
+  function decodeLookup() {
+    return `<foreignObject x="758" y="4" width="184" height="318" class="decode-dock"><section xmlns="http://www.w3.org/1999/xhtml" id="decode-panel" class="decode-panel" aria-labelledby="decode-title" hidden><h3 id="decode-title">Instruction set</h3><table class="decode-table"><caption class="sr-only">The CU matches the opcode to an instruction.</caption><thead><tr><th>Opcode</th><th>Instruction</th></tr></thead><tbody id="decode-table-body"></tbody></table><div class="decode-selection" role="status"><b id="decode-result"></b><span id="decode-next"></span></div><button class="button primary" id="decode-execute">Execute →</button></section></foreignObject>`;
+  }
 
   function cycleClock(prefix, live) {
     const phases = [
@@ -1809,12 +1820,14 @@
     const exampleInstructions=new Set([0,1,2,3,4]);
     const register = (key,x,y,w,h,fill,subtitle) => {
       const alu = key === 'ALU';
-      const valueY = alu ? y+99 : y+77;
+      const dualValue = key === 'ACC' || key === 'MDR';
+      const valueY = alu ? y+99 : dualValue ? y+67 : y+77;
+      const initialValue = live ? 0 : 12;
       const caption = {CU:'decodes & coordinates',PC:'next instruction',MAR:'address sent to RAM',MDR:'word moving to / from RAM',CIR:'CU decodes this',ACC:'result held here first'}[key];
-      return `<g class="cpu-node" data-component="${key}" tabindex="0" role="button" aria-label="${key==='CIR'?'Current instruction register, CIR (IR)':esc(content.components[key].name)}"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="${fill}"/><text class="node-title" x="${x+16}" y="${y+31}">${key}</text><text class="node-name" x="${x+16}" y="${y+51}">${subtitle}</text>${alu?`<rect class="alu-mode-bg" x="${x+10}" y="${y+57}" width="${w-20}" height="22" rx="5"/><text class="alu-operation" id="${prefix}-alu-operation" x="${x+16}" y="${y+73}">${live?'READY':'ADD +'}</text>`:''}<text class="node-value" id="${prefix}-value-${key}" x="${x+16}" y="${valueY}">${live ? (['CU','ALU'].includes(key)?'—':'00000000') : alu?'00000111':''}</text>${live||alu?'':`<text class="node-caption" x="${x+16}" y="${y+76}">${caption}</text>`}${alu?`<text class="alu-second" id="${prefix}-alu-second" x="${x+16}" y="${y+121}">${live?'':'+ 00000101'}</text><text class="alu-result" id="${prefix}-alu-result" x="${x+16}" y="${y+145}">${live?'result → ACC':'= 00001100'}</text>`:''}</g>`;
+      return `<g class="cpu-node" data-component="${key}" tabindex="0" role="button" aria-label="${key==='CIR'?'Current instruction register, CIR (IR)':esc(content.components[key].name)}${dualValue?' · binary '+bits(initialValue)+' · denary '+initialValue:''}"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="${fill}"/><text class="node-title" x="${x+16}" y="${y+(dualValue?28:31)}">${key}</text><text class="node-name" x="${x+16}" y="${y+(dualValue?44:51)}">${subtitle}</text>${alu?`<rect class="alu-mode-bg" x="${x+10}" y="${y+57}" width="${w-20}" height="22" rx="5"/><text class="alu-operation" id="${prefix}-alu-operation" x="${x+16}" y="${y+73}">${live?'READY':'ADD +'}</text>`:''}<text class="node-value" id="${prefix}-value-${key}" x="${x+16}" y="${valueY}">${dualValue?bits(initialValue):live ? (['CU','ALU'].includes(key)?'—':'00000000') : alu?'00000111':''}</text>${dualValue?`<text class="register-denary" id="${prefix}-denary-${key}" x="${x+16}" y="${y+86}">Denary: ${initialValue}</text>`:''}${live||alu||dualValue?'':`<text class="node-caption" x="${x+16}" y="${y+76}">${caption}</text>`}${alu?`<text class="alu-second" id="${prefix}-alu-second" x="${x+16}" y="${y+121}">${live?'':'+ 00000101'}</text><text class="alu-result" id="${prefix}-alu-result" x="${x+16}" y="${y+145}">${live?'result → ACC':'= 00001100'}</text>`:''}</g>`;
     };
     const arrow = (key,color) => `<marker id="${prefix}-arrow-${key}" markerWidth="7" markerHeight="7" refX="5.3" refY="3.5" orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M 1 1 L 5.5 3.5 L 1 6" fill="none" stroke="${color}" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></marker>`;
-    const bus = (key,y,color,label,both) => `<g class="bus-group" data-component="${key}" tabindex="0" role="button" aria-label="${esc(content.components[key].name)}"><rect x="718" y="${y-31}" width="224" height="55" fill="transparent"/><path id="${prefix}-bus-${key}" class="bus-line" d="M 716 ${y} H 950" stroke="${color}" marker-end="url(#${prefix}-arrow-${key})" ${both?`marker-start="url(#${prefix}-arrow-${key})"`:''}/><circle class="bus-port" cx="716" cy="${y}" r="4" fill="${color}"/><text class="bus-label" x="833" y="${y-17}" fill="${color}" text-anchor="middle">${label}</text></g>`;
+    const bus = (key,y,color,label,both) => `<g class="bus-group" data-component="${key}" tabindex="0" role="button" aria-label="${esc(content.components[key].name)}"><rect x="748" y="${y-31}" width="194" height="55" fill="transparent"/><path id="${prefix}-bus-${key}" class="bus-line" d="${key==='CONTROL'?controlBusPath:`M 716 ${y} H 950`}" stroke="${color}" marker-end="url(#${prefix}-arrow-${key})" ${both?`marker-start="url(#${prefix}-arrow-${key})"`:''}/><circle class="bus-port" cx="716" cy="${key==='CONTROL'?128:y}" r="4" fill="${color}"/><text class="bus-label" x="833" y="${y-17}" fill="${color}" text-anchor="middle">${label}</text></g>`;
     const wire = (name,color,arrowKey,both=false) => `<path id="${prefix}-wire-${name}" class="internal-route${name==='cu-alu'?' control-route':''}" d="${cpuRoutes[name]}" fill="none" stroke="${color}" style="--route-colour:${color}" marker-end="url(#${prefix}-arrow-${arrowKey})" ${both?`marker-start="url(#${prefix}-arrow-${arrowKey})"`:''}/>`;
     return `<svg class="cpu-diagram cpu-diagram-v2 cpu-diagram-v3 cpu-diagram-v4 cpu-diagram-v5" viewBox="0 0 1250 735" role="group" aria-label="CPU: cycle clock at the top-left, ALU directly below the clock on the left and above ACC, CIR in the centre, ACC at bottom-left level with MDR at bottom-right; MAR and MDR connect directly to their buses and RAM">
       <defs>${arrow('ADDRESS',cpuPalette.ADDRESS)}${arrow('DATA',cpuPalette.DATA)}${arrow('CONTROL',cpuPalette.CONTROL)}${arrow('WORK',cpuPalette.ALU)}${arrow('INSTRUCTION',cpuPalette.CIR)}${arrow('REGISTER',cpuPalette.ACC)}</defs>
@@ -1835,18 +1848,24 @@
       ${register('MAR',526,451,190,90,cpuPalette.MAR,'Memory address register')}
       ${register('ACC',44,554,206,96,cpuPalette.ACC,'Accumulator')}
       ${register('MDR',526,554,190,96,cpuPalette.MDR,'Memory data register')}
-      <text class="control-route-label" x="349" y="217" text-anchor="middle">CU selects the ALU operation</text>
+      <text class="control-route-label" x="48" y="236">CU → ALU control</text>
+      <text class="route-label" x="340" y="264">instruction ↑</text>
+      <text class="route-label" x="663" y="348">PC → MAR</text>
+      <text class="route-label" x="523" y="373" text-anchor="middle">operand</text>
+      <text class="route-label" x="450" y="449" text-anchor="middle">instruction</text>
+      <text class="route-label" x="377" y="499" text-anchor="middle">data to ALU ←</text>
       <text class="route-label" x="166" y="499">result ↓</text>
-      <text class="route-label" x="388" y="590" text-anchor="middle">copy on STA →</text>
-      ${bus('CONTROL',128,cpuPalette.CONTROL,'CONTROL BUS',true)}
+      <text class="route-label" x="388" y="606" text-anchor="middle">copy on STA →</text>
+      ${bus('CONTROL',360,cpuPalette.CONTROL,'CONTROL BUS',true)}
       ${bus('ADDRESS',496,cpuPalette.ADDRESS,'ADDRESS BUS',false)}
       ${bus('DATA',602,cpuPalette.DATA,'DATA BUS',true)}
-      <g id="${prefix}-control-status" class="control-signal-status" data-signal="idle" role="img" aria-label="${live?'Control bus ready':'CU sends READ and WRITE to RAM'}"><rect x="754" y="143" width="158" height="32" rx="7"/><text id="${prefix}-control-signal" x="833" y="165" text-anchor="middle">${live?'READY':'READ / WRITE →'}</text></g>
-      <text x="833" y="192" class="bus-caption" text-anchor="middle">← status / interrupts</text>
+      <g id="${prefix}-control-status" class="control-signal-status" data-signal="idle" role="img" aria-label="${live?'Control bus ready':'CU sends READ and WRITE to RAM'}"><rect x="754" y="375" width="158" height="32" rx="7"/><text id="${prefix}-control-signal" x="833" y="397" text-anchor="middle">${live?'READY':'READ / WRITE →'}</text></g>
+      <text x="833" y="424" class="bus-caption" text-anchor="middle">← status / interrupts</text>
       <text x="833" y="520" class="bus-caption" text-anchor="middle">MAR selects the location</text>
       <text x="833" y="626" class="bus-caption" text-anchor="middle">MDR transfers the word</text>
       <g class="cpu-node single-ram" data-component="RAM" tabindex="0" role="button" aria-label="RAM: sixteen eight-bit words, denary addresses 0 to 15"><rect x="950" y="80" width="274" height="591" rx="13" fill="#fff9e4"/><text class="node-title" x="970" y="115">RAM</text><text class="node-name" x="970" y="139">instructions + data</text><text class="ram-column-label" x="978" y="174">ADDRESS</text><text class="ram-column-label" x="1035" y="174">BITS</text><text class="ram-column-label" x="1135" y="174">MEANING</text>${Array.from({length:16},(_,n)=>`<g id="${prefix}-ram-row-${n}" class="ram-word-row" data-ram-address="${n}"><title id="${prefix}-ram-title-${n}">RAM[${n}]</title><rect x="966" y="${187+n*27}" width="242" height="25" rx="4" fill="${cpuPalette.RAM}"/><text class="ram-address-text" x="978" y="${205+n*27}">${n}</text><text class="ram-word-text" x="1035" y="${205+n*27}" id="${prefix}-ram-value-${n}">${live?'00000000':bits(exampleWords[n])}</text><text class="ram-meaning-text" x="1135" y="${205+n*27}" id="${prefix}-ram-meaning-${n}">${live?'0':ramMeaning(exampleWords[n],exampleInstructions.has(n))}</text></g>`).join('')}<text class="node-caption" id="${prefix}-ram-last-write" x="970" y="641">8 bits in every cell</text><text class="node-caption" x="970" y="658">Meaning = mnemonic or denary</text></g>
       ${cycleClock(prefix,live)}
+      ${live?decodeLookup():''}
       ${live?`<g data-component="INPUT" class="extra-node"><rect x="44" y="690" width="206" height="30" rx="7"/><text x="147" y="710" text-anchor="middle">INPUT → ACC</text></g><g data-component="OUTPUT" class="extra-node"><rect x="510" y="690" width="206" height="30" rx="7"/><text x="613" y="710" text-anchor="middle">ACC → OUTPUT</text></g>`:`<g data-component="CACHE" tabindex="0" role="button" aria-label="Learn about cache memory" class="extra-node"><rect x="44" y="690" width="206" height="30" rx="7"/><text x="147" y="710" text-anchor="middle">+ EXPLORE CACHE</text></g><g data-component="CLOCK" tabindex="0" role="button" aria-label="Learn about the CPU clock" class="extra-node"><rect x="510" y="690" width="206" height="30" rx="7"/><text x="613" y="710" text-anchor="middle">+ EXPLORE THE CLOCK</text></g>`}
       <g id="${prefix}-packet" class="cpu-packet" visibility="hidden"><rect x="-51" y="-15" width="102" height="30" rx="8"/><text id="${prefix}-packet-value" text-anchor="middle" y="5">00000000</text><animateMotion id="${prefix}-motion" dur="0.65s" begin="indefinite" fill="freeze" path="M 0 0 L 1 1"/></g>
       <g id="${prefix}-packet-secondary" class="cpu-packet cpu-packet-secondary" visibility="hidden"><rect x="-51" y="-15" width="102" height="30" rx="8"/><text id="${prefix}-packet-secondary-value" text-anchor="middle" y="5">00000000</text><animateMotion id="${prefix}-motion-secondary" dur="0.65s" begin="indefinite" fill="freeze" path="M 0 0 L 1 1"/></g>
@@ -1896,11 +1915,11 @@
     packet.classList.toggle('packet-write',isWrite);
     if(event.bus==='address')path='M 716 496 H 950';
     else if(event.bus==='data')path=event.direction==='to-ram'?'M 716 602 H 950':'M 950 602 H 716';
-    else if(event.bus==='control')path=event.direction==='from-ram'?'M 950 128 H 716':'M 716 128 H 950';
+    else if(event.bus==='control')path=event.direction==='from-ram'?controlBusReturnPath:controlBusPath;
     else if(transfer==='PC → MAR'){path=cpuRoutes['pc-mar'];routes=['pc-mar'];}
     else if(transfer==='MDR → CIR'){path=cpuRoutes['mdr-ir'];routes=['mdr-ir'];}
     else if(transfer==='ACC → MDR'){path=cpuRoutes['acc-mdr'];routes=['acc-mdr'];}
-    else if(transfer==='MDR → ACC'){path='M 526 602 H 250';routes=['acc-mdr'];}
+    else if(transfer==='MDR → ACC'){path='M 526 618 H 250';routes=['acc-mdr'];}
     else if(transfer==='ALU → ACC'){path=cpuRoutes['alu-acc'];routes=['alu-acc'];}
     else if(transfer==='ACC, MDR → ALU'){
       path='M 147 554 V 439';
@@ -1912,7 +1931,7 @@
     else if(transfer==='INPUT → ACC')path='M 147 690 V 650';
     else if(transfer==='ACC → OUTPUT')path='M 147 650 V 674 H 613 V 690';
     else if(transfer==='ACC → ALU → CU'){
-      path='M 147 554 V 439';extraPath='M 147 275 V 230 H 556 V 176';routes=['alu-acc','cu-alu'];
+      path='M 147 554 V 439';extraPath='M 44 357 H 30 V 55 H 650 V 80';routes=['alu-acc','cu-alu'];
     }
     else if(event.phase==='decode'){path=cpuRoutes['ir-cu'];routes=['ir-cu'];}
     const token=event.bus==='control'?(transfer.includes('WRITE')?'WRITE':'READ'):event.alu?bits(event.alu.left):bits(event.value);
@@ -2029,16 +2048,14 @@
     const executing=!!action&&['execute','input','halt'].includes(lastEvent?.phase);
     const chosen=action?action.action.replaceAll('[N]','['+current.operand+']').replace(/\bN\b/g,String(current.operand)):'';
     $('decode-panel').hidden=!decoding;
-    $('decode-opcode').textContent=current?nibble(current.opcode):'0000';
-    $('decode-operand').textContent=current?nibble(current.operand):'0000';
-    $('decode-operand-meaning').textContent=current?.hasOperand?'address '+current.operand:'unused · keep 0000';
-    $('decode-result').textContent=action?current.mnemonic+' → '+chosen:'No matching instruction';
-    $('decode-next').textContent=action?.alu==='IDLE'?'Next: the CU directs this action. The ALU stays idle.':'Next: the CU switches the ALU to '+(action?.alu||'the selected operation')+'.';
+    $('decode-panel').setAttribute('aria-description',action?'Opcode '+nibble(current.opcode)+' means '+current.mnemonic+'. '+chosen:'');
+    $('decode-result').textContent=action?current.mnemonic+(current.hasOperand?' '+current.operand:''):'—';
+    $('decode-next').textContent=action?'ALU: '+action.alu:'';
     $('decode-table-body').querySelectorAll('[data-opcode]').forEach(row=>{
       const matched=decoding&&current?.valid&&Number(row.dataset.opcode)===current.opcode;
       row.classList.toggle('decode-match',matched);
       if(matched)row.setAttribute('aria-current','true');else row.removeAttribute('aria-current');
-      row.querySelector('.decode-match-label').textContent=matched?'✓ MATCH':'';
+      row.querySelector('.decode-match-label').textContent=matched?'✓':'';
     });
     $('decoded-action').hidden=!action;
     $('decoded-action').textContent=action?'CU selected: '+current.mnemonic+(current.hasOperand?' '+current.operand:'')+' · '+chosen+' · ALU: '+action.alu:'';
@@ -2080,6 +2097,10 @@
     ['PC','MAR','MDR','CIR','ACC'].forEach(key=>{
       const v=cpu[key.toLowerCase()];
       $("sim-value-"+key).textContent=bits(v);
+      if(key==='ACC'||key==='MDR'){
+        $('sim-denary-'+key).textContent='Denary: '+v;
+        document.querySelector('#sim-diagram [data-component="'+key+'"]').setAttribute('aria-label',content.components[key].name+' · binary '+bits(v)+' · denary '+v);
+      }
     });
     $('sim-value-CU').textContent=lastEvent?.phase==='decode'?'decode':lastEvent?.bus==='control'?(lastEvent.detail.includes('WRITE')?'WRITE':'READ'):cpu.currentInstruction?.mnemonic||'control';
     document.querySelectorAll('#sim-diagram [data-component]').forEach(node=>{
@@ -2243,7 +2264,7 @@
     $('sample-select').innerHTML=model.samples.map(s=>`<option value="${s.id}">${esc(s.title)}</option>`).join('');
     $('challenge-select').innerHTML=challenges.map((c,i)=>`<option value="${i}">${c.title}</option>`).join('');showChallenge();
     $('isa-body').innerHTML=model.ISA.map(i=>`<tr><td>${i.mnemonic}${i.hasOperand?' N':''}</td><td>${i.opcode.toString(2).padStart(4,'0')}</td><td>${esc(i.description)}</td><td>${esc(i.example)}</td></tr>`).join('');
-    $('decode-table-body').innerHTML=model.ISA.map(i=>`<tr data-opcode="${i.opcode}"><td><code>${i.opcodeBits}</code></td><td><b>${i.mnemonic}${i.hasOperand?' N':''}</b><span class="decode-match-label"></span></td><td>${esc(instructionActions[i.mnemonic].action)}</td></tr>`).join('');
+    $('decode-table-body').innerHTML=model.ISA.map(i=>`<tr data-opcode="${i.opcode}"><td><code>${i.opcodeBits}</code></td><td><b>${i.mnemonic}${i.hasOperand?' N':''}</b><span class="decode-match-label" aria-hidden="true"></span></td></tr>`).join('');
     $('source-links').innerHTML=content.sources.map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)} →</a><p class="small-muted">${esc(s.note)}</p>`).join('');
     $('short-answers').innerHTML=content.shortAnswers.map((q,i)=>`<article class="written-card"><span class="mark-tag">QUESTION ${i+1} · ${q.marks} MARKS</span><h3 id="written-q-${i}">${esc(q.question)}</h3><textarea aria-labelledby="written-q-${i}" placeholder="Write your explanation here…"></textarea><details><summary>Reveal marking points</summary><ul>${q.points.map(p=>'<li>'+esc(p)+'</li>').join('')}</ul><p class="small-muted">Indicative points for self-checking; this is not an official mark scheme.</p></details></article>`).join('');
     $('revision-sheet').innerHTML=referenceHTML();
