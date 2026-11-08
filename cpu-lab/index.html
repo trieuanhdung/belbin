@@ -129,12 +129,12 @@
 .activity-builder-stage{padding:20px;min-width:0}.activity-diagram-heading{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:18px}.activity-diagram-heading strong{font-size:13px}.activity-diagram-heading span{color:var(--activity-muted);font-size:10px}
 .activity-scroll-hint{display:none;font-size:10px;line-height:1.6;margin:0 0 12px;color:var(--activity-muted)}
 .activity-board-scroll{max-width:100%;overflow-x:auto;padding:3px 2px 12px;overscroll-behavior-x:contain;scrollbar-width:thin;border-radius:12px}.activity-board-scroll:focus-visible{outline:3px solid #37adbd;outline-offset:3px}
-/* The first gap balances the 80px header and 16px footer, putting ALU at the CPU frame midpoint. */
-.activity-builder-board{--activity-build-row:160px;--activity-build-gap:22px;--activity-build-top:80px;--activity-build-lead:140px;--activity-build-tracks:var(--activity-build-row) var(--activity-build-lead) var(--activity-build-row) var(--activity-build-gap) var(--activity-build-row) var(--activity-build-gap) var(--activity-build-row);display:grid;grid-template-columns:minmax(550px,2.2fr) minmax(150px,.65fr) minmax(160px,.7fr);gap:28px;align-items:start;position:relative;isolation:isolate;min-width:920px;width:100%}
+/* Compact tracks keep ALU at the midpoint of the 441px CPU frame. */
+.activity-builder-board{--activity-build-row:77px;--activity-build-gap:10px;--activity-build-top:38px;--activity-build-lead:67px;--activity-build-tracks:var(--activity-build-row) var(--activity-build-lead) var(--activity-build-row) var(--activity-build-gap) var(--activity-build-row) var(--activity-build-gap) var(--activity-build-row);display:grid;grid-template-columns:minmax(490px,2.2fr) minmax(140px,.65fr) minmax(150px,.7fr);gap:20px;align-items:start;position:relative;isolation:isolate;min-width:850px;width:100%}
 .activity-builder-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:1}.activity-builder-wire{fill:none;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}.activity-builder-port{fill:#fff;stroke-width:2}.activity-builder-wire-label{font:700 8px ui-sans-serif,system-ui,sans-serif;fill:#6d7c8b;paint-order:stroke;stroke:#f5f7fc;stroke-width:4px;stroke-linejoin:round}
-.activity-cpu-boundary{padding:14px 12px;border:2px solid #d4dcee;border-radius:15px;background:#f5f7fc;position:relative;min-width:0}
-.activity-boundary-label{height:20px;font-size:9px;letter-spacing:1.15px;font-weight:800;display:flex;gap:8px;align-items:center;margin:0 0 44px;color:#4f6088;white-space:nowrap}.activity-mini-chip{font-size:19px;color:#5c6c94;line-height:1}
-.activity-cpu-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:var(--activity-build-tracks);gap:0 24px;align-items:stretch}
+.activity-cpu-boundary{padding:6px 8px;border:2px solid #d4dcee;border-radius:15px;background:#f5f7fc;position:relative;min-width:0}
+.activity-boundary-label{height:18px;font-size:9px;letter-spacing:1.15px;font-weight:800;display:flex;gap:8px;align-items:center;margin:0 0 12px;color:#4f6088;white-space:nowrap}.activity-mini-chip{font-size:19px;color:#5c6c94;line-height:1}
+.activity-cpu-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:var(--activity-build-tracks);gap:0 14px;align-items:stretch}
 .activity-cpu-grid [data-activity-slot="PC"]{grid-column:2;grid-row:1}
 .activity-cpu-grid [data-activity-slot="CU"]{grid-column:3;grid-row:1}
 .activity-cpu-grid [data-activity-slot="ALU"]{grid-column:1;grid-row:3;align-self:stretch;background:#fff7eb;border-color:#efd8b5}
@@ -203,6 +203,65 @@
 @media(max-width:1180px){.activity-builder-layout{grid-template-columns:1fr}.activity-component-bank{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.activity-component-tray{padding:16px}.activity-component-tray .activity-muted{margin-bottom:10px}.activity-selection-note{min-height:auto;padding:0;margin-top:11px}.activity-tray-legend{display:none}.activity-component-chip{min-height:47px}}
 @media(max-width:900px){.activity-component-bank{grid-template-columns:repeat(3,minmax(0,1fr))}.activity-builder-stage{padding:15px}.activity-scroll-hint{display:block}.activity-store-path{display:block}.activity-store-path strong{display:block;margin-bottom:5px}}
 @media(max-width:680px){.activity-component-bank{grid-template-columns:repeat(2,minmax(0,1fr))}.activity-component-chip{gap:8px}.activity-component-chip strong{font-size:11px}.activity-component-chip small{font-size:9px}.activity-builder-stage{padding:14px}.activity-diagram-heading{display:block}.activity-diagram-heading span{display:block;margin-top:6px}.activity-builder-actions{gap:6px}.activity-builder-actions .activity-button{font-size:11px!important;padding:10px}}
+
+/* Compact build workspace: keep all eleven pieces and the complete diagram in view. */
+#build-panel .activity-section-head{gap:14px;margin-bottom:10px}
+#build-panel .activity-section-head>div:first-child{display:flex;align-items:center;gap:16px;min-width:0}
+#build-panel .activity-section-head .activity-eyebrow{display:none}
+#build-panel .activity-section-head h2{font-size:24px;line-height:1.2;letter-spacing:-.6px;white-space:nowrap;margin:0}
+#build-panel .activity-section-head p:not(.activity-eyebrow){font-size:12px;line-height:1.4;margin:0}
+#build-panel .activity-progress-pill{flex-direction:row;gap:6px;padding:6px 9px;border-radius:9px;min-width:0}
+#build-panel .activity-progress-pill span{font-size:18px;letter-spacing:-.4px;white-space:nowrap}
+#build-panel .activity-progress-pill small{font-size:10px;margin:0;white-space:nowrap}
+#build-panel .activity-builder-layout{grid-template-columns:198px minmax(0,1fr);gap:12px}
+#build-panel .activity-component-tray,#build-panel .activity-builder-stage{padding:10px;border-radius:12px}
+#build-panel .activity-component-tray .activity-card-heading{flex-wrap:nowrap;gap:4px;margin-bottom:7px}
+#build-panel .activity-component-tray h3{font-size:13px;margin:0;line-height:18px}
+#build-panel .activity-component-tray .activity-tiny-label{font-size:7px;letter-spacing:.3px;white-space:nowrap}
+#build-panel .activity-component-bank{gap:4px;min-height:0}
+#build-panel .activity-component-chip{height:30px;min-height:30px;padding:3px 7px;border-radius:6px;gap:6px}
+#build-panel .activity-component-chip strong{font-size:11px;min-width:36px;letter-spacing:0}
+#build-panel .activity-component-chip small{font-size:10px;line-height:1.1}
+#build-panel .activity-bank-empty{padding:14px 4px;font-size:11px;margin:0}
+#build-panel .activity-selection-note{min-height:14px;font-size:10px;line-height:1.4;margin:6px 0 0;padding:0}
+#build-panel .activity-diagram-heading{gap:8px;margin-bottom:8px;align-items:center}
+#build-panel .activity-diagram-heading>strong{font-size:11px;white-space:nowrap}
+#build-panel .activity-builder-actions{gap:5px;margin:0;justify-content:flex-end}
+#build-panel .activity-builder-actions .activity-button{min-height:28px;padding:5px 8px;font-size:10px!important;gap:5px;border-radius:6px}
+#build-panel .activity-scroll-hint{font-size:10px;line-height:1.35;margin:0 0 7px}
+#build-panel .activity-board-scroll{padding:2px 2px 5px}
+#build-panel .activity-builder-clock text{font-size:10px}
+#build-panel .activity-builder-clock .activity-cycle-caption{font-size:9px}
+#build-panel .activity-slot{padding:6px;border-radius:7px;justify-content:flex-start;min-height:0}
+#build-panel .activity-role-clue{flex:0 0 auto;padding-right:17px;font-size:10px;line-height:1.2;margin:0 0 4px}
+#build-panel .activity-drop-target,#build-panel .activity-drop-target.activity-filled{height:26px;min-height:26px;padding:3px;gap:4px;border-radius:4px;flex:0 0 auto}
+#build-panel .activity-drop-target strong{font-size:11px}
+#build-panel .activity-drop-target small{font-size:8px;line-height:1.1}
+#build-panel .activity-return{position:absolute;right:2px;top:2px;width:18px;height:18px;padding:0;margin:0;font-size:15px!important;line-height:18px;text-decoration:none;border-radius:4px}
+#build-panel .activity-return:hover{background:#ffffff80}
+#build-panel .activity-slot-feedback:not(:empty){position:absolute;right:4px;bottom:1px;width:15px;height:15px;margin:0;padding:0;border-radius:50%;font-size:0;line-height:1;display:flex;align-items:center;justify-content:center;background:#fff;box-shadow:0 0 0 2px #fff;z-index:3}
+#build-panel .activity-slot-correct .activity-slot-feedback:before{content:'✓';font-size:11px;font-weight:800}
+#build-panel .activity-slot-wrong .activity-slot-feedback:before{content:'!';font-size:11px;font-weight:800}
+#build-panel .activity-bus-direction{height:10px;font-size:7px;line-height:10px;margin:0 18px 3px 0}
+#build-panel .activity-bus-direction span{font-size:14px}
+#build-panel .activity-bus-slot .activity-role-clue{padding:0;font-size:9px;line-height:1.15;margin-bottom:3px}
+#build-panel .activity-memory-boundary{padding:12px 8px;border-radius:10px}
+#build-panel .activity-memory-title{top:10px;font-size:20px}
+#build-panel .activity-memory-pixels{grid-template-columns:repeat(4,11px);gap:4px;margin-bottom:8px}
+#build-panel .activity-memory-pixels i{width:11px;height:11px}
+#build-panel .activity-memory-outside{font-size:7px;line-height:1.3;margin-bottom:8px}
+#build-panel .activity-memory-boundary .activity-slot{min-height:77px}
+#build-panel .activity-memory-boundary>small{font-size:9px;line-height:1.4;margin:8px 0 0}
+#build-panel .activity-build-footer{display:flex;gap:10px;align-items:flex-start;margin-top:7px}
+#build-panel .activity-build-footer>.activity-feedback{flex:1;min-width:0;min-height:28px;padding:5px 8px;font-size:11px;line-height:1.4;margin:0;border-radius:6px}
+#build-panel .activity-build-notes{font-size:11px;line-height:1.4;flex:0 0 auto;max-width:65%}
+#build-panel .activity-build-notes>summary{cursor:pointer;padding:6px 0;font-weight:650;color:var(--activity-teal)}
+#build-panel .activity-build-notes[open]{flex:1}
+#build-panel .activity-build-notes .activity-store-path{display:block;padding:8px 10px;margin-top:7px;line-height:1.5}
+#build-panel .activity-build-notes .activity-store-path strong{display:block;font-size:11px;margin-bottom:3px}
+#build-panel .activity-build-notes .activity-tray-legend{display:grid;grid-template-columns:8px 1fr 8px 1fr;gap:5px 7px;padding-top:8px;margin-top:8px}
+@media(max-width:1180px){#build-panel .activity-builder-layout{grid-template-columns:1fr}#build-panel .activity-component-bank{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}#build-panel .activity-component-tray .activity-card-heading{justify-content:flex-start;gap:12px}#build-panel .activity-section-head>div:first-child{display:block}#build-panel .activity-section-head h2{margin-bottom:4px}}
+@media(max-width:680px){#build-panel .activity-section-head{gap:10px}#build-panel .activity-section-head h2{font-size:22px}#build-panel .activity-section-head p:not(.activity-eyebrow){font-size:11px}#build-panel .activity-progress-pill{flex-direction:column;gap:1px;padding:5px 7px}#build-panel .activity-progress-pill small{font-size:8px}#build-panel .activity-component-bank{grid-template-columns:repeat(2,minmax(0,1fr))}#build-panel .activity-diagram-heading{display:block}#build-panel .activity-builder-actions{justify-content:flex-start;margin-top:6px}#build-panel .activity-build-footer{display:block}#build-panel .activity-build-notes{max-width:none;margin-top:3px}}
 </style>
 </head>
 <body>
@@ -274,22 +333,26 @@
   <div class="activity-section-head">
     <div>
       <p class="activity-eyebrow">03 / BUILD A CPU</p>
-      <h2 id="activity-build-title">Every part has a purpose.</h2>
-      <p>Match 11 components to their jobs. Drag a piece into the diagram, or select a piece and then select a slot.</p>
+      <h2 id="activity-build-title">Build a CPU</h2>
+      <p>Drag a component to its job, or select a piece and then a slot.</p>
     </div>
     <div class="activity-progress-pill"><span id="activity-build-count">0 / 11</span><small>components placed</small></div>
   </div>
   <div class="activity-builder-layout">
     <aside class="activity-card activity-component-tray" aria-labelledby="activity-tray-title">
-      <div class="activity-card-heading"><h3 id="activity-tray-title">Your components</h3><span class="activity-tiny-label">DRAG OR SELECT</span></div>
-      <p class="activity-muted">Choose a piece. Find its job.</p>
+      <div class="activity-card-heading"><h3 id="activity-tray-title">Components</h3><span class="activity-tiny-label">DRAG OR SELECT</span></div>
       <div id="activity-component-bank" class="activity-component-bank" aria-label="Available CPU components"></div>
       <p id="activity-build-selection" class="activity-selection-note" aria-live="polite">No component selected.</p>
-      <div class="activity-tray-legend"><span class="activity-key activity-key-processor"></span>CU &amp; ALU <span class="activity-key activity-key-instruction"></span>PC &amp; CIR <span class="activity-key activity-key-address"></span>MAR &amp; MDR <span class="activity-key activity-key-data"></span>ACC <span class="activity-key activity-key-memory"></span>RAM <span class="activity-key activity-key-bus"></span>Control, address &amp; data buses</div>
+
     </aside>
     <div class="activity-card activity-builder-stage">
-      <div class="activity-diagram-heading"><strong>A simplified computer</strong><span>Match roles, not a physical chip layout</span></div>
-      <p class="activity-scroll-hint" id="activity-build-scroll-hint">On a small screen, scroll the diagram sideways. You can select a piece and then its slot without dragging.</p>
+      <div class="activity-diagram-heading"><strong>A simplified computer</strong><div class="activity-builder-actions">
+        <button id="activity-build-check" class="activity-button activity-button-primary" type="button">Check my CPU <span aria-hidden="true">✓</span></button>
+        <button id="activity-build-hint" class="activity-button" type="button">Give me a hint</button>
+        <button id="activity-build-reset" class="activity-button" type="button">Start again</button>
+        <button id="activity-build-reveal" class="activity-button activity-button-quiet" type="button">Reveal answers</button>
+      </div></div>
+      <p class="activity-scroll-hint" id="activity-build-scroll-hint">Scroll sideways to see the diagram. Select a piece, then its slot.</p>
       <div class="activity-board-scroll" role="region" aria-label="CPU diagram with connected memory" aria-describedby="activity-build-scroll-hint" tabindex="0">
         <div class="activity-builder-board" id="activity-builder-board">
           <svg id="activity-builder-wires" class="activity-builder-wires" aria-hidden="true" focusable="false"></svg>
@@ -297,77 +360,77 @@
             <div class="activity-boundary-label"><span class="activity-mini-chip" aria-hidden="true">▦</span> CENTRAL PROCESSING UNIT</div>
             <div class="activity-cpu-grid" role="group" aria-label="Cycle clock top-left, PC top-middle, CU top-right, ALU at the vertical midpoint on the left beneath the clock, CIR at the same level in the centre, and ACC below ALU and level with MDR at the bottom">
               <div class="activity-builder-clock">
-                <svg viewBox="0 0 230 170" role="img" aria-label="Fetch, decode, execute cycle">
+                <svg viewBox="0 0 164 77" role="img" aria-label="Fetch, decode, execute cycle">
                   <title>The three instruction stages. This reference dial is not a component to place.</title>
-                  <g transform="translate(115 80)">
-                    <circle class="activity-cycle-face" r="42"/>
-                    <circle class="activity-cycle-dot activity-cycle-dot-active" cx="0" cy="-36" r="6"/>
-                    <circle class="activity-cycle-dot" cx="31.177" cy="18" r="6"/>
-                    <circle class="activity-cycle-dot" cx="-31.177" cy="18" r="6"/>
-                    <path class="activity-cycle-hand" d="M0 6 V-27 M-4 -22 L0 -30 L4 -22"/>
-                    <circle class="activity-cycle-pin" r="4"/>
+                  <g transform="translate(82 34)">
+                    <circle class="activity-cycle-face" r="22"/>
+                    <circle class="activity-cycle-dot activity-cycle-dot-active" cx="0" cy="-18" r="3.5"/>
+                    <circle class="activity-cycle-dot" cx="15.588" cy="9" r="3.5"/>
+                    <circle class="activity-cycle-dot" cx="-15.588" cy="9" r="3.5"/>
+                    <path class="activity-cycle-hand" d="M0 3 V-13 M-3 -10 L0 -16 L3 -10"/>
+                    <circle class="activity-cycle-pin" r="2.5"/>
                   </g>
-                  <text x="115" y="23" text-anchor="middle">Fetch</text>
-                  <text x="173" y="119">Decode</text>
-                  <text x="57" y="119" text-anchor="end">Execute</text>
-                  <text class="activity-cycle-caption" x="115" y="159" text-anchor="middle">F–D–E cycle</text>
+                  <text x="82" y="10" text-anchor="middle">Fetch</text>
+                  <text x="112" y="48">Decode</text>
+                  <text x="52" y="48" text-anchor="end">Execute</text>
+                  <text class="activity-cycle-caption" x="82" y="73" text-anchor="middle">F–D–E cycle</text>
                 </svg>
               </div>
               <div class="activity-slot" data-activity-slot="ALU">
-              <p class="activity-role-clue">Performs arithmetic and logic under CU control</p>
+              <p class="activity-role-clue">Performs arithmetic and logic</p>
               <button class="activity-drop-target" data-activity-place="ALU" type="button" aria-label="Place a component: performs arithmetic and logical operations">Place component</button>
-              <button class="activity-return" data-activity-remove="ALU" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
+              <button class="activity-return" data-activity-remove="ALU" type="button" aria-label="Remove placed component" title="Remove component" hidden>×</button><p class="activity-slot-feedback"></p>
             </div>
               <div class="activity-slot" data-activity-slot="PC">
               <p class="activity-role-clue">Address of the next instruction</p>
               <button class="activity-drop-target" data-activity-place="PC" type="button" aria-label="Place a component: address of the next instruction">Place component</button>
-              <button class="activity-return" data-activity-remove="PC" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
+              <button class="activity-return" data-activity-remove="PC" type="button" aria-label="Remove placed component" title="Remove component" hidden>×</button><p class="activity-slot-feedback"></p>
             </div>
               <div class="activity-slot" data-activity-slot="CU">
-              <p class="activity-role-clue">Decodes the instruction in CIR and directs the CPU</p>
+              <p class="activity-role-clue">Decodes instructions; directs the CPU</p>
               <button class="activity-drop-target" data-activity-place="CU" type="button" aria-label="Place a component: decodes instructions and coordinates the CPU">Place component</button>
-              <button class="activity-return" data-activity-remove="CU" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
+              <button class="activity-return" data-activity-remove="CU" type="button" aria-label="Remove placed component" title="Remove component" hidden>×</button><p class="activity-slot-feedback"></p>
             </div>
               <div class="activity-slot" data-activity-slot="CIR">
-              <p class="activity-role-clue">Current instruction for the CU to decode</p>
+              <p class="activity-role-clue">Holds the current instruction</p>
               <button class="activity-drop-target" data-activity-place="CIR" type="button" aria-label="Place a component: current instruction for the CU to decode">Place component</button>
-              <button class="activity-return" data-activity-remove="CIR" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
+              <button class="activity-return" data-activity-remove="CIR" type="button" aria-label="Remove placed component" title="Remove component" hidden>×</button><p class="activity-slot-feedback"></p>
             </div>
               <div class="activity-slot" data-activity-slot="MAR">
-              <p class="activity-role-clue">Address of the memory location being accessed</p>
+              <p class="activity-role-clue">Address of the memory location</p>
               <button class="activity-drop-target" data-activity-place="MAR" type="button" aria-label="Place a component: address of the memory location being accessed">Place component</button>
-              <button class="activity-return" data-activity-remove="MAR" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
+              <button class="activity-return" data-activity-remove="MAR" type="button" aria-label="Remove placed component" title="Remove component" hidden>×</button><p class="activity-slot-feedback"></p>
             </div>
               <div class="activity-slot" data-activity-slot="ACC">
-              <p class="activity-role-clue">Working values and calculation results, ready to copy to MDR</p>
+              <p class="activity-role-clue">Holds working values and results</p>
               <button class="activity-drop-target" data-activity-place="ACC" type="button" aria-label="Place a component: working values and results of calculations">Place component</button>
-              <button class="activity-return" data-activity-remove="ACC" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
+              <button class="activity-return" data-activity-remove="ACC" type="button" aria-label="Remove placed component" title="Remove component" hidden>×</button><p class="activity-slot-feedback"></p>
             </div>
               <div class="activity-slot" data-activity-slot="MDR">
-              <p class="activity-role-clue">Instruction or data moving to or from memory</p>
+              <p class="activity-role-clue">Data or instruction moving to/from RAM</p>
               <button class="activity-drop-target" data-activity-place="MDR" type="button" aria-label="Place a component: instruction or data moving to or from memory">Place component</button>
-              <button class="activity-return" data-activity-remove="MDR" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
+              <button class="activity-return" data-activity-remove="MDR" type="button" aria-label="Remove placed component" title="Remove component" hidden>×</button><p class="activity-slot-feedback"></p>
             </div>
             </div>
           </div>
           <div class="activity-bus-stack" aria-label="Direct connections: CU to control bus, MAR to address bus, MDR to data bus">
             <div class="activity-slot activity-bus-slot" data-activity-slot="CBUS">
             <span class="activity-bus-direction">CU <span aria-hidden="true">⟷</span> RAM</span>
-            <p class="activity-role-clue">Carries signals such as READ and WRITE</p>
+            <p class="activity-role-clue">Carries READ and WRITE signals</p>
             <button class="activity-drop-target" data-activity-place="CBUS" type="button" aria-label="Place a bus: carries control and status signals">Place bus</button>
-            <button class="activity-return" data-activity-remove="CBUS" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
+            <button class="activity-return" data-activity-remove="CBUS" type="button" aria-label="Remove placed component" title="Remove component" hidden>×</button><p class="activity-slot-feedback"></p>
           </div>
             <div class="activity-slot activity-bus-slot" data-activity-slot="ABUS">
             <span class="activity-bus-direction">MAR <span aria-hidden="true">⟶</span> RAM</span>
-            <p class="activity-role-clue">Carries the address to access</p>
+            <p class="activity-role-clue">Carries a memory address</p>
             <button class="activity-drop-target" data-activity-place="ABUS" type="button" aria-label="Place a bus: carries the address to access, CPU to RAM">Place bus</button>
-            <button class="activity-return" data-activity-remove="ABUS" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
+            <button class="activity-return" data-activity-remove="ABUS" type="button" aria-label="Remove placed component" title="Remove component" hidden>×</button><p class="activity-slot-feedback"></p>
           </div>
             <div class="activity-slot activity-bus-slot" data-activity-slot="DBUS">
             <span class="activity-bus-direction">MDR <span aria-hidden="true">⟷</span> RAM</span>
             <p class="activity-role-clue">Carries instructions and data</p>
             <button class="activity-drop-target" data-activity-place="DBUS" type="button" aria-label="Place a bus: carries instructions and data in both directions">Place bus</button>
-            <button class="activity-return" data-activity-remove="DBUS" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
+            <button class="activity-return" data-activity-remove="DBUS" type="button" aria-label="Remove placed component" title="Remove component" hidden>×</button><p class="activity-slot-feedback"></p>
           </div>
           </div>
           <div class="activity-memory-boundary">
@@ -375,23 +438,22 @@
             <div class="activity-memory-pixels" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
             <span class="activity-memory-outside">MAIN MEMORY · OUTSIDE THE CPU</span>
             <div class="activity-slot" data-activity-slot="RAM">
-            <p class="activity-role-clue">Stores the program instructions and data currently in use</p>
+            <p class="activity-role-clue">Stores instructions and data</p>
             <button class="activity-drop-target" data-activity-place="RAM" type="button" aria-label="Place a component: main memory stores instructions and data currently in use">Place component</button>
-            <button class="activity-return" data-activity-remove="RAM" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
+            <button class="activity-return" data-activity-remove="RAM" type="button" aria-label="Remove placed component" title="Remove component" hidden>×</button><p class="activity-slot-feedback"></p>
           </div>
-            <small>One shared memory for instructions and data: the stored-program idea.</small>
+            <small>One memory for instructions and data.</small>
           </div>
         </div>
       </div>
-      <div class="activity-store-path activity-decode-path"><strong>CIR → CU → ALU</strong><span>The central CIR (also called IR) holds the current instruction. CU decodes it, then sends control signals that direct the ALU.</span></div>
+      <div class="activity-build-footer">
+        <div id="activity-build-feedback" class="activity-feedback" role="status">Match each role. You can move any piece again.</div>
+        <details class="activity-build-notes"><summary>How the parts work</summary>
+          <div class="activity-store-path activity-decode-path"><strong>CIR → CU → ALU</strong><span>The central CIR (also called IR) holds the current instruction. CU decodes it, then sends control signals that direct the ALU.</span></div>
       <div class="activity-store-path"><strong>ALU → ACC → MDR → RAM</strong><span>The ALU’s result is saved in ACC. When <code>STA</code> executes, the CPU copies ACC to MDR, then writes that eight-bit word to RAM using the data bus.</span></div>
-      <div class="activity-builder-actions">
-        <button id="activity-build-check" class="activity-button activity-button-primary" type="button">Check my CPU <span aria-hidden="true">✓</span></button>
-        <button id="activity-build-hint" class="activity-button" type="button">Give me a hint</button>
-        <button id="activity-build-reset" class="activity-button" type="button">Start again</button>
-        <button id="activity-build-reveal" class="activity-button activity-button-quiet" type="button">Reveal answers</button>
+          <div class="activity-tray-legend"><span class="activity-key activity-key-processor"></span>CU &amp; ALU <span class="activity-key activity-key-instruction"></span>PC &amp; CIR <span class="activity-key activity-key-address"></span>MAR &amp; MDR <span class="activity-key activity-key-data"></span>ACC <span class="activity-key activity-key-memory"></span>RAM <span class="activity-key activity-key-bus"></span>Control, address &amp; data buses</div>
+        </details>
       </div>
-      <div id="activity-build-feedback" class="activity-feedback" role="status">The role clues are your guide. You can move a piece again at any time.</div>
     </div>
   </div>
 </section>
@@ -1766,7 +1828,6 @@
     'pc-mar': 'M 476 128 H 500 V 300 H 650 V 451',
     'mdr-ir': 'M 526 566 H 510 V 460 H 390 V 428',
     'ir-cu': 'M 328 316 V 220 H 280 V 68 H 600 V 80',
-    'ir-mar': 'M 476 385 H 570 V 451',
     'cu-alu': 'M 650 80 V 55 H 30 V 357 H 44',
     'mdr-alu': 'M 526 590 H 484 V 510 H 270 V 365 H 250',
     'alu-acc': 'M 147 439 V 554',
@@ -1836,7 +1897,6 @@
       ${wire('pc-mar',cpuPalette.PC,'INSTRUCTION')}
       ${wire('mdr-ir',cpuPalette.ACC,'REGISTER')}
       ${wire('ir-cu',cpuPalette.CIR,'INSTRUCTION')}
-      ${wire('ir-mar',cpuPalette.CIR,'INSTRUCTION')}
       ${wire('cu-alu',cpuPalette.CU,'WORK')}
       ${wire('mdr-alu',cpuPalette.ACC,'REGISTER')}
       ${wire('alu-acc',cpuPalette.ALU,'WORK',true)}
@@ -1851,7 +1911,6 @@
       <text class="control-route-label" x="48" y="236">CU → ALU control</text>
       <text class="route-label" x="340" y="264">instruction ↑</text>
       <text class="route-label" x="663" y="348">PC → MAR</text>
-      <text class="route-label" x="523" y="373" text-anchor="middle">operand</text>
       <text class="route-label" x="450" y="449" text-anchor="middle">instruction</text>
       <text class="route-label" x="377" y="499" text-anchor="middle">data to ALU ←</text>
       <text class="route-label" x="166" y="499">result ↓</text>
@@ -1926,7 +1985,8 @@
       extraPath=cpuRoutes['mdr-alu'];routes=['alu-acc','mdr-alu','cu-alu'];
     }
     else if(transfer==='CIR → CU'){path=cpuRoutes['ir-cu'];routes=['ir-cu'];}
-    else if(transfer==='CIR operand → MAR'){path=cpuRoutes['ir-mar'];routes=['ir-mar'];}
+    // The operand copy is a teaching step, without a permanent CIR-to-MAR arrow.
+    else if(transfer==='CIR operand → MAR')path='M 476 385 H 570 V 451';
     else if(transfer==='CIR operand → PC')path='M 388 316 V 176';
     else if(transfer==='INPUT → ACC')path='M 147 690 V 650';
     else if(transfer==='ACC → OUTPUT')path='M 147 650 V 674 H 613 V 690';
