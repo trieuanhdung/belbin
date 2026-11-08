@@ -19,6 +19,49 @@
 
 .cpu-diagram-v3 .control-route{stroke-dasharray:5 4}.cpu-diagram-v3 .control-route-label{font-size:11px;font-weight:650;fill:#8060b5;paint-order:stroke;stroke:#f8fafc;stroke-width:4px;stroke-linejoin:round}.cpu-diagram-v3 .control-route.route-active{stroke:#8b62c7}.cpu-diagram-v3 .route-label{paint-order:stroke;stroke:#f8fafc;stroke-width:3px;stroke-linejoin:round}
 
+/* Component palette sampled from the supplied CPU layout reference. */
+:root{--cpu-orange:#ff6c20;--cpu-cyan:#2bcfff;--cpu-green:#9dd241;--cpu-blue:#4a87ff;--cpu-yellow:#ffeeaa;--cpu-bus:#2469ff;--cpu-pink:#f3228a;--cpu-ink:#102237}
+.cpu-key-orange{background:var(--cpu-orange)}.cpu-key-cyan{background:var(--cpu-cyan)}.cpu-key-green{background:var(--cpu-green)}.cpu-key-blue{background:var(--cpu-blue)}.cpu-key-yellow{background:var(--cpu-yellow)}.cpu-key-bus{background:var(--cpu-bus)}.diagram-legend .dot{width:9px;height:9px;border:1px solid #10223724}
+.cpu-diagram-v4 .node-title,.cpu-diagram-v4 .node-name,.cpu-diagram-v4 .node-value,.cpu-diagram-v4 .node-caption,.cpu-diagram-v4 .alu-result{fill:var(--cpu-ink)}
+.cpu-diagram-v4 [data-component="RAM"] .node-title{fill:var(--cpu-pink)}.cpu-diagram-v4 .bus-caption{fill:#50647a}
+.cpu-diagram-v4 .internal-route{stroke-width:2.5;opacity:.8}.cpu-diagram-v4 .internal-route.route-active{stroke:var(--route-colour);stroke-width:5;opacity:1;filter:drop-shadow(0 0 2px #10223730)}
+.cpu-diagram-v4 .control-route-label,.cpu-diagram-v4 .route-label{fill:#4b5e73}.cpu-diagram-v4 .cpu-node.active>rect:first-child{stroke:var(--cpu-ink);stroke-width:4;filter:drop-shadow(0 0 6px #10223755)}.cpu-diagram-v4 .cpu-node.selected>rect:first-child{stroke:var(--cpu-ink);stroke-width:3}
+.cpu-diagram-v4 .cpu-packet{fill:white;stroke:var(--cpu-ink);stroke-width:2.5}.cpu-diagram-v4 .cpu-packet-secondary{fill:var(--cpu-yellow);stroke:var(--cpu-ink)}
+.component-palette-tag{border:1px solid #10223718}.component-card{border-top-color:var(--cpu-orange)}
+.ram-card>.card-heading h2{color:#d20e70}.instruction-word{border-color:#97e8ff;background:#eefbff}
+
+/* A teaching dial for the instruction stages, separate from hardware clock rate. */
+.cycle-face{fill:#fff;stroke:#cbd8e5;stroke-width:1.8}.cycle-stage .cycle-arc{fill:none;stroke:#d6e1eb;stroke-width:5;stroke-linecap:round}.cycle-stage text{fill:#4b5e73;font-size:15px;font-weight:650}.cycle-stage.active-stage .cycle-arc{stroke:var(--cpu-pink)}.cycle-stage.active-stage text{fill:#c30a65;font-weight:800}.cycle-hand{transform-origin:0 0;transition:transform .4s ease}.cycle-hand>path:first-child{fill:none;stroke:var(--cpu-pink);stroke-width:3;stroke-linecap:round}.cycle-hand-tip,.cycle-pin{fill:var(--cpu-pink)}.cycle-caption{fill:#536a80;font-size:12px;font-weight:650}
+.cycle-preview .cycle-hand{animation:cpu-cycle-hand 6s step-end infinite}.cycle-preview .cycle-stage .cycle-arc{animation:cpu-cycle-arc 6s step-end infinite}.cycle-preview .cycle-stage text{animation:cpu-cycle-label 6s step-end infinite}.cycle-preview [data-cycle-stage="decode"] .cycle-arc,.cycle-preview [data-cycle-stage="decode"] text{animation-delay:-4s}.cycle-preview [data-cycle-stage="execute"] .cycle-arc,.cycle-preview [data-cycle-stage="execute"] text{animation-delay:-2s}
+@keyframes cpu-cycle-hand{0%{transform:rotate(0deg)}33.333%{transform:rotate(120deg)}66.667%{transform:rotate(240deg)}100%{transform:rotate(360deg)}}
+@keyframes cpu-cycle-arc{0%{stroke:var(--cpu-pink)}33.333%{stroke:#d6e1eb}100%{stroke:#d6e1eb}}
+@keyframes cpu-cycle-label{0%{fill:#c30a65}33.333%{fill:#4b5e73}100%{fill:#4b5e73}}
+@media(prefers-reduced-motion:reduce){.cycle-hand{transition:none}.cycle-preview .cycle-hand,.cycle-preview .cycle-stage .cycle-arc,.cycle-preview .cycle-stage text{animation:none}}
+
+
+/* One shared RAM view; all machine words remain four-bit binary. */
+.sim-grid{grid-template-columns:minmax(230px,280px) minmax(0,1fr)}
+.sim-grid>.editor-card{grid-column:1;grid-row:1}.sim-grid>.cpu-workspace{grid-column:2;grid-row:1;min-width:0}
+.sim-values-row{display:grid;grid-template-columns:1fr 1.1fr;gap:14px;margin:14px 2px 9px;align-items:stretch}
+.sim-values-row .instruction-word{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;align-items:center;max-width:none;margin:0;border:1px solid #97e8ff;border-radius:9px;padding:12px}
+.sim-values-row .instruction-word>span{color:#45657b;font-size:11px}.sim-values-row .instruction-word>code{background:#2bcfff;color:#102237;font-size:21px;border-radius:5px;padding:5px 9px}.sim-values-row .instruction-word>b{color:#244d69;font-size:12px}
+.sim-values-row .output-card{margin:0;padding:12px 16px;min-height:72px}.sim-values-row .output-heading{margin-bottom:7px}.sim-values-row .output-number{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:1px}
+.live-diagram-card .sim-inspector{font-size:11px;line-height:1.65;padding:10px 3px 0;margin-top:8px;border-top:1px solid #e2e9ef}
+.single-ram-key{justify-content:flex-end;margin:1px 8px 5px;font-size:10px}.single-ram-key .pc-marker{background:#2bcfff}.single-ram-key .mar-marker{background:#9dd241}
+.cpu-diagram-v4 .ram-column-label{font-size:10px;font-weight:800;letter-spacing:.6px;fill:#5e6255}
+.cpu-diagram-v4 .ram-address-text,.cpu-diagram-v4 .ram-word-text{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:16px;font-weight:650;letter-spacing:.5px;fill:#102237;pointer-events:none}
+.cpu-diagram-v4 .ram-address-text{font-weight:500;fill:#58634e}
+.cpu-diagram-v4 .single-ram .ram-word-row>rect{stroke:transparent;stroke-width:1.5;filter:none}
+.cpu-diagram-v4 .single-ram .ram-next>rect{stroke:#089ac6;stroke-width:2}
+.cpu-diagram-v4 .single-ram .ram-selected>rect{stroke:#6c9626;stroke-width:2.5}
+.cpu-diagram-v4 .single-ram .ram-active>rect{stroke:#102237;stroke-width:2.5;fill:#ffdf73}
+.cpu-diagram-v4 .cpu-packet text{fill:#102237;stroke:none;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:16px;font-weight:800;letter-spacing:.4px}
+.cpu-diagram-v4 .cpu-packet rect{fill:#fff;stroke:#102237;stroke-width:2.5}.cpu-diagram-v4 .cpu-packet-secondary rect{fill:#ffeeaa}
+#input-values,#live-input{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+@media(max-width:960px){.sim-grid{grid-template-columns:220px minmax(0,1fr)}.sim-values-row{grid-template-columns:1fr}.sim-values-row .output-card{min-height:60px}}
+@media(max-width:760px){.sim-grid{grid-template-columns:1fr}.sim-grid>.cpu-workspace{grid-column:1;grid-row:1}.sim-grid>.editor-card{grid-column:1;grid-row:2}.sim-values-row{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.sim-values-row{grid-template-columns:1fr}.single-ram-key{justify-content:center}}
+
 .activity-section{--activity-navy:#172b45;--activity-teal:#087e8b;--activity-purple:#7557d5;--activity-orange:#d97712;--activity-line:#dce4e7;--activity-muted:#617181;color:var(--activity-navy)}
 .activity-section[hidden]{display:none!important}.activity-section *{box-sizing:border-box}.activity-section button,.activity-section input,.activity-section select{font:inherit}.activity-section button{cursor:pointer}.activity-section button:disabled{cursor:default;opacity:.55}.activity-section button:focus-visible,.activity-section select:focus-visible,.activity-section summary:focus-visible{outline:3px solid #37adbd;outline-offset:4px}.activity-section [hidden]{display:none!important}
 .activity-section-head{display:flex;gap:24px;align-items:center;justify-content:space-between;margin:0 0 24px}.activity-section-head h2{font-size:clamp(27px,3vw,40px);letter-spacing:-1.2px;line-height:1.14;margin:7px 0 12px}.activity-section-head p:not(.activity-eyebrow){font-size:15px;line-height:1.65;color:var(--activity-muted);max-width:760px;margin:0}.activity-eyebrow{font-size:10px!important;letter-spacing:1.7px;font-weight:800;margin:0;color:var(--activity-teal);line-height:1.6}.activity-progress-pill{border:1px solid var(--activity-line);background:#fff;border-radius:16px;padding:15px 23px;display:flex;flex-direction:column;align-items:center;flex-shrink:0}.activity-progress-pill span{font-weight:800;font-size:26px;letter-spacing:-1px}.activity-progress-pill small{font-size:11px;color:var(--activity-muted);margin-top:3px}.activity-model-label{border:1px solid var(--activity-line);color:var(--activity-muted);font-weight:700;letter-spacing:1px;font-size:10px;padding:10px 14px;border-radius:30px;flex-shrink:0}
@@ -62,13 +105,44 @@
 .activity-store-path{display:flex;gap:14px;align-items:center;padding:14px 16px;background:#fff6e9;border:1px solid #f1dfc4;border-radius:10px;margin-top:12px;line-height:1.65}.activity-store-path strong{font-size:12px;white-space:nowrap;color:#9f6320}.activity-store-path span{font-size:11px;color:#7d6748}.activity-store-path code{font-size:10px;color:#8d581c;background:#f4e6d0;padding:2px 4px;border-radius:3px}
 .activity-decode-path{background:#f5f1fc;border-color:#e3d8f2}.activity-decode-path strong{color:#7353a9}.activity-decode-path span{color:#6d607d}
 .activity-builder-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+/* Component colours follow the placed piece, including an incorrect placement. */
+#build-panel{--activity-part-fill:#fff;--activity-part-border:#dfe4ec;--activity-part-ink:#102237}
+#build-panel [data-activity-colour="CU"],#build-panel [data-activity-colour="ALU"]{--activity-part-fill:#ff6c20;--activity-part-border:#b84710;--activity-part-ink:#102237}
+#build-panel [data-activity-colour="PC"],#build-panel [data-activity-colour="CIR"]{--activity-part-fill:#2bcfff;--activity-part-border:#0086a8;--activity-part-ink:#102237}
+#build-panel [data-activity-colour="MAR"]{--activity-part-fill:#9dd241;--activity-part-border:#5f8c16;--activity-part-ink:#102237}
+#build-panel [data-activity-colour="ACC"],#build-panel [data-activity-colour="MDR"]{--activity-part-fill:#4a87ff;--activity-part-border:#2457af;--activity-part-ink:#102237}
+#build-panel [data-activity-colour="RAM"]{--activity-part-fill:#ffeeaa;--activity-part-border:#b89e45;--activity-part-ink:#102237}
+#build-panel [data-activity-colour="CBUS"],#build-panel [data-activity-colour="ABUS"],#build-panel [data-activity-colour="DBUS"]{--activity-part-fill:#2469ff;--activity-part-border:#174fc9;--activity-part-ink:#fff}
+#build-panel .activity-component-chip,#build-panel .activity-drop-target.activity-filled{background:var(--activity-part-fill);border-color:var(--activity-part-border);color:var(--activity-part-ink)}
+#build-panel .activity-component-chip[aria-pressed=true]{border-color:#102237;box-shadow:0 0 0 3px #102237}
+#build-panel .activity-drop-target.activity-filled:hover{box-shadow:0 0 0 2px #102237}
+#build-panel .activity-slot{background:#fff;border-color:#dfe4ec}
+#build-panel .activity-slot[data-activity-colour]:not([data-activity-colour=""]){background:var(--activity-part-fill);color:var(--activity-part-ink)}
+#build-panel .activity-slot[data-activity-colour]:not([data-activity-colour=""]) .activity-role-clue,#build-panel .activity-slot[data-activity-colour]:not([data-activity-colour=""]) .activity-return,#build-panel .activity-slot[data-activity-colour]:not([data-activity-colour=""]) .activity-bus-direction{color:var(--activity-part-ink)}
+#build-panel .activity-slot.activity-slot-correct{border-color:#236342;box-shadow:inset 0 0 0 1px #236342}
+#build-panel .activity-slot.activity-slot-wrong{border-color:#a23620;box-shadow:inset 0 0 0 1px #a23620}
+#build-panel .activity-slot-feedback:not(:empty){background:#fff;box-shadow:0 0 0 2px #fff;border-radius:3px;align-self:center;padding:0 3px}
+#build-panel .activity-slot.activity-slot-correct .activity-slot-feedback{color:#236342}
+#build-panel .activity-slot.activity-slot-wrong .activity-slot-feedback{color:#8d2d19}
+#build-panel .activity-slot.activity-drop-over{border-color:#102237;box-shadow:0 0 0 3px #102237}
+#build-panel .activity-slot.activity-hint-target{box-shadow:0 0 0 3px #f3228a}
+#build-panel .activity-bus-direction{color:#2469ff}
+#build-panel .activity-memory-boundary{background:#fffdf4;border-color:#e7cd7d}
+#build-panel .activity-memory-title{position:absolute;top:18px;left:10px;right:10px;color:#f3228a;font-size:23px;line-height:1.2;letter-spacing:1px}
+#build-panel .activity-memory-pixels i{background:#ffeeaa;border-color:#b89e45}
+#build-panel .activity-memory-outside{color:#a20a58}
+#build-panel .activity-memory-boundary>small{color:#695a32}
+#build-panel .activity-component-chip[data-activity-colour="RAM"]>strong,#build-panel .activity-drop-target[data-activity-colour="RAM"]>strong{color:#a20a58}
+#build-panel .activity-key-processor{background:#ff6c20}#build-panel .activity-key-instruction{background:#2bcfff}#build-panel .activity-key-address{background:#9dd241}#build-panel .activity-key-data{background:#4a87ff}#build-panel .activity-key-memory{background:#ffeeaa;box-shadow:inset 0 0 0 1px #b89e45}#build-panel .activity-key-bus{background:#2469ff}
+
 .activity-performance-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:start}.activity-cache-card{grid-column:1/-1}.activity-lab-number{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:12px;font-size:13px;font-weight:800;flex-shrink:0}.activity-teal{color:#087e8b;background:#e4f4f4}.activity-purple{color:#7557d5;background:#efeafb}.activity-orange{color:#b8731e;background:#fff0dd}.activity-segment-field{border:0;padding:0;margin:0;min-width:0}.activity-segment-field legend,.activity-select-field{font-size:11px;font-weight:700;color:#526475;margin-bottom:8px;line-height:1.5}.activity-segments{display:inline-flex;border:1px solid #dce4e7;padding:3px;background:#f4f7f8;border-radius:9px;gap:3px;flex-wrap:nowrap}.activity-segments label{position:relative;display:block;cursor:pointer;flex:1}.activity-segments input{position:absolute;opacity:0;width:1px;height:1px}.activity-segments span{padding:7px 13px;display:block;font-size:11px;font-weight:700;text-align:center;border-radius:6px;white-space:nowrap;color:#617181;min-width:40px}.activity-segments input:checked+span{background:#fff;color:#172b45;box-shadow:0 1px 4px #172b4520}.activity-segments input:focus-visible+span{outline:3px solid #37adbd;outline-offset:1px}.activity-clock-comparison{display:flex;flex-direction:column;gap:18px;margin-top:24px}.activity-clock-row{display:grid;grid-template-columns:96px minmax(30px,1fr) 86px;align-items:center;gap:12px}.activity-clock-row-label{font-size:10px;line-height:1.6;color:var(--activity-muted)}.activity-clock-row-label strong{display:block;font-size:14px;color:var(--activity-navy)}.activity-clock-track{position:relative;height:17px;border-radius:5px;background:#e9eef2;overflow:hidden}.activity-clock-fill{height:100%;background:#1492a0;width:0%;border-radius:5px;transition:width .07s linear}.activity-clock-base-fill{background:#9aacc2}.activity-clock-light{width:7px;height:7px;background:#fff;border-radius:50%;position:absolute;left:5px;top:5px;opacity:0;box-shadow:0 0 9px #fff}.activity-clock-light.activity-pulse{opacity:1}.activity-clock-row output{font-size:10px;font-variant-numeric:tabular-nums;color:#526475;text-align:right}.activity-cores-controls{display:flex;gap:18px;align-items:end;flex-wrap:wrap}.activity-select-field{display:flex;flex-direction:column;gap:7px;margin:0;flex:1;min-width:150px}.activity-select-field select{width:100%;border:1px solid #dce4e7;border-radius:8px;background:#fff;padding:10px;color:#172b45;font-size:11px;font-weight:600;height:39px}.activity-work-queue{display:flex;align-items:center;gap:9px;margin-top:20px}.activity-work-queue>span{font-size:8px;letter-spacing:1px;color:#8490a0;font-weight:800}.activity-work-queue>div{display:flex;gap:4px;flex-wrap:wrap}.activity-queue-job{display:inline-flex;width:24px;height:24px;align-items:center;justify-content:center;border:1px solid #d8d2eb;background:#f4f0fc;border-radius:5px;font-size:9px;font-weight:700;color:#7960ac;transition:opacity .2s,background .2s}.activity-queue-job.activity-job-done{opacity:.35;background:#f2f5f6;color:#8b96a3;border-color:#dce4e7}.activity-core-lanes{display:grid;gap:7px;margin-top:14px}.activity-core-lane{display:flex;align-items:center;gap:10px;min-height:34px;border:1px solid #e7e2f0;border-radius:7px;padding:5px 9px;background:#fcfbfe}.activity-core-label{font-size:10px;font-weight:700;display:flex;align-items:center;gap:6px;min-width:51px;color:#6a598c}.activity-core-label:before{content:"";width:7px;height:7px;border-radius:2px;background:#cabde8;border:1px solid #aa94d3}.activity-core-lane.activity-core-active .activity-core-label:before{background:#8464ce;box-shadow:0 0 0 3px #e6dcfa}.activity-core-history{display:flex;gap:4px;flex-wrap:wrap;min-height:21px;align-items:center}.activity-core-job{font-size:8px;font-weight:800;color:#6e51b3;background:#ede6fa;border-radius:4px;display:inline-flex;min-width:22px;height:21px;align-items:center;justify-content:center;padding:2px 4px}.activity-core-job.activity-job-new{animation:activity-job-arrive .45s ease both;background:#8060c9;color:#fff}.activity-core-idle{font-size:9px;color:#a49bb6}.activity-core-counters{display:flex;justify-content:space-between;gap:10px;font-size:10px;color:#7b7190;align-items:center;margin-top:13px}.activity-core-counters strong{font-size:13px;color:#604495}
-.activity-cache-top{display:flex;gap:24px;justify-content:space-between;align-items:center}.activity-cache-top .activity-card-intro{margin-bottom:14px;max-width:690px}.activity-cache-top .activity-segment-field{flex-shrink:0}.activity-cache-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.85fr);gap:26px;margin-top:10px}.activity-small-heading{font-size:8px;letter-spacing:1.1px;color:#798897;font-weight:800;margin:0 0 11px}.activity-cache-sequence{display:flex;gap:5px;flex-wrap:wrap}.activity-cache-request{width:33px;height:37px;border:1px solid #e0e6e9;background:#f7f9fa;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:7px;color:#8b98a5;font-size:8px;line-height:1.1;gap:3px}.activity-cache-request strong{font-size:12px;color:#576b7c}.activity-cache-request.activity-request-current{box-shadow:0 0 0 2px #172b45;border-color:#172b45}.activity-cache-request.activity-cache-hit{background:#e5f5ef;border-color:#9bd4bd;color:#2c8660}.activity-cache-request.activity-cache-hit strong{color:#227652}.activity-cache-request.activity-cache-miss{background:#fff1de;border-color:#ebc695;color:#ac792e}.activity-cache-request.activity-cache-miss strong{color:#996322}.activity-cache-flow{display:grid;grid-template-columns:58px 30px minmax(130px,1fr) 30px 83px;gap:7px;align-items:center;min-height:151px;margin:22px 0 9px}.activity-cache-cpu{background:#172b45;border-radius:11px;padding:15px 9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#fff;font-size:10px;font-weight:800;box-shadow:0 0 0 4px #edf0f4}.activity-cache-cpu span{font-size:23px;font-weight:400;line-height:1}.activity-cache-arrow{position:relative;height:2px;background:#c8d4dc;border-radius:3px}.activity-cache-arrow:after{content:"";position:absolute;right:-1px;top:-3px;border-left:5px solid #c8d4dc;border-top:4px solid transparent;border-bottom:4px solid transparent}.activity-cache-arrow.activity-flow-active{background:#d99d47}.activity-cache-arrow.activity-flow-active:after{border-left-color:#d99d47}.activity-cache-arrow.activity-flow-active:before{content:"";position:absolute;top:-3px;left:0;height:8px;width:8px;border-radius:3px;background:#e5a44c;animation:activity-data-travel .7s ease both}.activity-cache-arrow.activity-flow-hit{background:#3fa584}.activity-cache-arrow.activity-flow-hit:after{border-left-color:#3fa584}.activity-cache-arrow.activity-flow-hit:before{background:#3fa584}.activity-cache-box{border:1px solid #d6ccec;border-radius:11px;background:#faf7ff;padding:11px 9px;min-height:105px}.activity-cache-box>span{font-size:8px;letter-spacing:.5px;color:#8d77b5;font-weight:800;display:block;margin-bottom:9px}.activity-cache-slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.activity-cache-cell{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px dashed #ded5ed;background:#fff;min-height:44px;border-radius:6px;color:#c4b6da}.activity-cache-cell small{font-size:8px;line-height:1.3}.activity-cache-cell strong{font-size:14px;line-height:1.1;font-variant-numeric:tabular-nums}.activity-cache-cell.activity-cache-filled{border-style:solid;background:#f0eafa;border-color:#d2c2e9;color:#7454aa}.activity-cache-cell.activity-cache-hot{border-color:#5fa783;background:#e5f5ec;color:#31734f;box-shadow:0 0 0 1px #8dc3a6}.activity-cache-off{font-size:10px;line-height:1.6;color:#a395b4;text-align:center;margin:9px 2px}.activity-cache-ram{background:#fff6e9;border:1px solid #efd6b3;border-radius:11px;padding:11px 8px;color:#9d743e}.activity-cache-ram>strong{display:block;font-size:9px;margin-bottom:8px;letter-spacing:.7px}.activity-cache-ram-data{display:flex;justify-content:space-between;gap:5px;font-size:8px;padding:3px 4px;border-radius:3px;font-variant-numeric:tabular-nums}.activity-cache-ram-data.activity-ram-read{background:#f6d9ac;color:#8b5f24;font-weight:800}.activity-cache-ram-data b{font-size:9px}.activity-cache-legend{display:flex;gap:15px;flex-wrap:wrap;font-size:9px;color:#768694}.activity-cache-legend>span{display:flex;gap:5px;align-items:center}.activity-cache-scoreboard{border-left:1px solid #e5ebee;padding-left:26px}.activity-cache-stats{display:flex;gap:8px}.activity-cache-stats>div{flex:1;border:1px solid #e0e8ec;background:#f8fafb;border-radius:9px;display:flex;flex-direction:column;align-items:center;padding:13px 8px;gap:4px}.activity-cache-stats strong{font-size:25px;color:#172b45;letter-spacing:-.8px;font-variant-numeric:tabular-nums}.activity-cache-stats span{font-size:8px;color:#7d8e9c;font-weight:800;letter-spacing:.7px}.activity-cache-stats>div:first-child strong{color:#298364}.activity-cache-stats>div:nth-child(2) strong{color:#bc832c}.activity-cache-scoreboard .activity-feedback{min-height:88px}.activity-cost-model{font-size:10px;color:#84909d;line-height:1.65;margin:13px 0 0}.activity-cost-model strong{color:#627487}.activity-cache-note{margin-top:20px}.activity-cache-note details{margin-top:10px}.activity-cache-note summary{cursor:pointer;font-size:11px;color:#637788;font-weight:650;display:list-item}.activity-cache-note details p{margin-top:10px;max-width:900px;font-size:11px}
+.activity-cache-top{display:flex;gap:24px;justify-content:space-between;align-items:center}.activity-cache-top .activity-card-intro{margin-bottom:14px;max-width:690px}.activity-cache-top .activity-segment-field{flex-shrink:0}.activity-cache-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.85fr);gap:26px;margin-top:10px}.activity-small-heading{font-size:8px;letter-spacing:1.1px;color:#798897;font-weight:800;margin:0 0 11px}.activity-cache-sequence{display:flex;gap:5px;flex-wrap:wrap}.activity-cache-request{width:42px;height:37px;border:1px solid #e0e6e9;background:#f7f9fa;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:7px;color:#8b98a5;font-size:8px;line-height:1.1;gap:3px}.activity-cache-request strong{font-size:12px;color:#576b7c}.activity-cache-request.activity-request-current{box-shadow:0 0 0 2px #172b45;border-color:#172b45}.activity-cache-request.activity-cache-hit{background:#e5f5ef;border-color:#9bd4bd;color:#2c8660}.activity-cache-request.activity-cache-hit strong{color:#227652}.activity-cache-request.activity-cache-miss{background:#fff1de;border-color:#ebc695;color:#ac792e}.activity-cache-request.activity-cache-miss strong{color:#996322}.activity-cache-flow{display:grid;grid-template-columns:58px 30px minmax(130px,1fr) 30px 83px;gap:7px;align-items:center;min-height:151px;margin:22px 0 9px}.activity-cache-cpu{background:#172b45;border-radius:11px;padding:15px 9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#fff;font-size:10px;font-weight:800;box-shadow:0 0 0 4px #edf0f4}.activity-cache-cpu span{font-size:23px;font-weight:400;line-height:1}.activity-cache-arrow{position:relative;height:2px;background:#c8d4dc;border-radius:3px}.activity-cache-arrow:after{content:"";position:absolute;right:-1px;top:-3px;border-left:5px solid #c8d4dc;border-top:4px solid transparent;border-bottom:4px solid transparent}.activity-cache-arrow.activity-flow-active{background:#d99d47}.activity-cache-arrow.activity-flow-active:after{border-left-color:#d99d47}.activity-cache-arrow.activity-flow-active:before{content:"";position:absolute;top:-3px;left:0;height:8px;width:8px;border-radius:3px;background:#e5a44c;animation:activity-data-travel .7s ease both}.activity-cache-arrow.activity-flow-hit{background:#3fa584}.activity-cache-arrow.activity-flow-hit:after{border-left-color:#3fa584}.activity-cache-arrow.activity-flow-hit:before{background:#3fa584}.activity-cache-box{border:1px solid #d6ccec;border-radius:11px;background:#faf7ff;padding:11px 9px;min-height:105px}.activity-cache-box>span{font-size:8px;letter-spacing:.5px;color:#8d77b5;font-weight:800;display:block;margin-bottom:9px}.activity-cache-slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.activity-cache-cell{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px dashed #ded5ed;background:#fff;min-height:44px;border-radius:6px;color:#c4b6da}.activity-cache-cell small{font-size:8px;line-height:1.3}.activity-cache-cell strong{font-size:14px;line-height:1.1;font-variant-numeric:tabular-nums}.activity-cache-cell.activity-cache-filled{border-style:solid;background:#f0eafa;border-color:#d2c2e9;color:#7454aa}.activity-cache-cell.activity-cache-hot{border-color:#5fa783;background:#e5f5ec;color:#31734f;box-shadow:0 0 0 1px #8dc3a6}.activity-cache-off{font-size:10px;line-height:1.6;color:#a395b4;text-align:center;margin:9px 2px}.activity-cache-ram{background:#fff6e9;border:1px solid #efd6b3;border-radius:11px;padding:11px 8px;color:#9d743e}.activity-cache-ram>strong{display:block;font-size:9px;margin-bottom:8px;letter-spacing:.7px}.activity-cache-ram-data{display:flex;justify-content:space-between;gap:5px;font-size:8px;padding:3px 4px;border-radius:3px;font-variant-numeric:tabular-nums}.activity-cache-ram-data.activity-ram-read{background:#f6d9ac;color:#8b5f24;font-weight:800}.activity-cache-ram-data b{font-size:9px}.activity-cache-legend{display:flex;gap:15px;flex-wrap:wrap;font-size:9px;color:#768694}.activity-cache-legend>span{display:flex;gap:5px;align-items:center}.activity-cache-scoreboard{border-left:1px solid #e5ebee;padding-left:26px}.activity-cache-stats{display:flex;gap:8px}.activity-cache-stats>div{flex:1;border:1px solid #e0e8ec;background:#f8fafb;border-radius:9px;display:flex;flex-direction:column;align-items:center;padding:13px 8px;gap:4px}.activity-cache-stats strong{font-size:25px;color:#172b45;letter-spacing:-.8px;font-variant-numeric:tabular-nums}.activity-cache-stats span{font-size:8px;color:#7d8e9c;font-weight:800;letter-spacing:.7px}.activity-cache-stats>div:first-child strong{color:#298364}.activity-cache-stats>div:nth-child(2) strong{color:#bc832c}.activity-cache-scoreboard .activity-feedback{min-height:88px}.activity-cost-model{font-size:10px;color:#84909d;line-height:1.65;margin:13px 0 0}.activity-cost-model strong{color:#627487}.activity-cache-note{margin-top:20px}.activity-cache-note details{margin-top:10px}.activity-cache-note summary{cursor:pointer;font-size:11px;color:#637788;font-weight:650;display:list-item}.activity-cache-note details p{margin-top:10px;max-width:900px;font-size:11px}
+.activity-cache-request strong,.activity-cache-cell strong,.activity-cache-cell small,.activity-cache-ram-data{font-family:Consolas,"Liberation Mono",monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
 @keyframes activity-job-arrive{from{transform:translateY(-5px);opacity:0}to{transform:translateY(0);opacity:1}}@keyframes activity-data-travel{from{left:0;opacity:.3}to{left:calc(100% - 8px);opacity:1}}
 
 @media(max-width:1180px){.activity-cache-layout{gap:20px}.activity-cache-scoreboard{padding-left:20px}.activity-clock-row{grid-template-columns:80px minmax(20px,1fr) 74px;gap:9px}}
 @media(max-width:900px){.activity-section-head{align-items:flex-start}.activity-model-label{display:none}.activity-performance-grid{grid-template-columns:1fr}.activity-cache-card{grid-column:auto}.activity-cache-layout{grid-template-columns:1fr}.activity-cache-scoreboard{border-left:0;border-top:1px solid #e5ebee;padding:20px 0 0}.activity-cache-scoreboard .activity-feedback{min-height:0}.activity-cache-flow{max-width:620px;margin-left:auto;margin-right:auto;grid-template-columns:60px 38px minmax(130px,1fr) 38px 90px;gap:10px}.activity-cache-slots{grid-template-columns:repeat(4,minmax(0,1fr))}.activity-cache-box{min-height:93px}.activity-cache-top{align-items:flex-start}}
-@media(max-width:680px){.activity-section-head{gap:12px;margin-bottom:18px}.activity-section-head h2{font-size:29px;letter-spacing:-.9px}.activity-section-head p:not(.activity-eyebrow){font-size:13px}.activity-progress-pill{padding:12px;min-width:90px}.activity-progress-pill span{font-size:22px}.activity-progress-pill small{font-size:9px;text-align:center}.activity-card{padding:18px;border-radius:15px}.activity-cache-top{display:block}.activity-cache-top .activity-segment-field{margin:17px 0}.activity-cache-flow{grid-template-columns:49px 22px minmax(110px,1fr) 22px 68px;gap:4px}.activity-cache-cpu{padding:14px 5px}.activity-cache-box{padding:10px 6px}.activity-cache-slots{grid-template-columns:repeat(2,minmax(0,1fr))}.activity-cache-ram{padding:10px 5px}.activity-cache-ram-data{padding:3px 1px;font-size:7px}.activity-cache-request{width:28px;height:34px}.activity-cache-sequence{gap:4px}.activity-clock-row{grid-template-columns:76px minmax(20px,1fr) 74px}.activity-clock-row-label{font-size:9px}.activity-clock-row output{font-size:9px}.activity-cache-legend{gap:8px}.activity-core-job{min-width:19px;font-size:7px}.activity-core-history{gap:3px}.activity-queue-job{width:21px;height:23px}.activity-work-queue>div{gap:3px}.activity-core-counters{font-size:9px}}
+@media(max-width:680px){.activity-section-head{gap:12px;margin-bottom:18px}.activity-section-head h2{font-size:29px;letter-spacing:-.9px}.activity-section-head p:not(.activity-eyebrow){font-size:13px}.activity-progress-pill{padding:12px;min-width:90px}.activity-progress-pill span{font-size:22px}.activity-progress-pill small{font-size:9px;text-align:center}.activity-card{padding:18px;border-radius:15px}.activity-cache-top{display:block}.activity-cache-top .activity-segment-field{margin:17px 0}.activity-cache-flow{grid-template-columns:49px 22px minmax(110px,1fr) 22px 68px;gap:4px}.activity-cache-cpu{padding:14px 5px}.activity-cache-box{padding:10px 6px}.activity-cache-slots{grid-template-columns:repeat(2,minmax(0,1fr))}.activity-cache-ram{padding:10px 5px}.activity-cache-ram-data{padding:3px 1px;font-size:7px}.activity-cache-request{width:38px;height:34px}.activity-cache-sequence{gap:4px}.activity-clock-row{grid-template-columns:76px minmax(20px,1fr) 74px}.activity-clock-row-label{font-size:9px}.activity-clock-row output{font-size:9px}.activity-cache-legend{gap:8px}.activity-core-job{min-width:19px;font-size:7px}.activity-core-history{gap:3px}.activity-queue-job{width:21px;height:23px}.activity-work-queue>div{gap:3px}.activity-core-counters{font-size:9px}}
 @media(prefers-reduced-motion:reduce){.activity-section *{animation:none!important;transition:none!important}}
 
 @media(max-width:1180px){.activity-builder-layout{grid-template-columns:1fr}.activity-component-bank{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.activity-component-tray{padding:16px}.activity-component-tray .activity-muted{margin-bottom:10px}.activity-selection-note{min-height:auto;padding:0;margin-top:11px}.activity-tray-legend{display:none}.activity-component-chip{min-height:47px}}
@@ -91,9 +165,9 @@
 </nav></div>
 <main id="main">
 <section class="panel" data-panel="explore" id="explore-panel">
-  <div class="section-head"><div><p class="eyebrow">THE SMALL CHIP BEHIND EVERY INSTRUCTION</p><h1>Bring the CPU to life<span class="orange">.</span></h1><p class="intro">Meet the parts. Follow the signals. Then write a program of your own.</p></div><button class="button primary" id="start-demo">Watch 7 + 5 happen <span aria-hidden="true">→</span></button></div>
+  <div class="section-head"><div><p class="eyebrow">THE SMALL CHIP BEHIND EVERY INSTRUCTION</p><h1>Bring the CPU to life<span class="orange">.</span></h1><p class="intro">Meet the parts. Follow the signals. Then write a program of your own.</p></div><button class="button primary" id="start-demo">Watch 0111 + 0101 <span aria-hidden="true">→</span></button></div>
   <div class="explore-layout">
-    <div class="card diagram-card"><div class="card-heading"><div><span class="tiny-tag teal-tag">INTERACTIVE MAP</span><h2>Inside a stored-program computer</h2></div><span class="small-muted">Select a component to explore</span></div><div id="explore-diagram" class="diagram-wrap"></div><div class="diagram-legend"><span><i class="dot purple-bg"></i>Control &amp; instructions</span><span><i class="dot orange-bg"></i>Arithmetic &amp; results</span><span><i class="dot teal-bg"></i>Memory &amp; transfers</span></div><p class="diagram-caption">A simplified Von Neumann model: instructions and data share the same RAM. The dashed boundary marks the CPU. CIR is also called IR. The CU decodes the instruction held in CIR and directs the ALU.</p></div>
+    <div class="card diagram-card"><div class="card-heading"><div><span class="tiny-tag teal-tag">INTERACTIVE MAP</span><h2>Inside a stored-program computer</h2></div><span class="small-muted">Select a component to explore</span></div><div id="explore-diagram" class="diagram-wrap"></div><div class="diagram-legend" aria-label="Component colour key"><span><i class="dot cpu-key-orange"></i>CU · ALU</span><span><i class="dot cpu-key-cyan"></i>PC · CIR</span><span><i class="dot cpu-key-green"></i>MAR</span><span><i class="dot cpu-key-blue"></i>ACC · MDR</span><span><i class="dot cpu-key-yellow"></i>RAM</span><span><i class="dot cpu-key-bus"></i>Buses</span></div><p class="diagram-caption">A simplified Von Neumann model: instructions and data share the same RAM. The dashed boundary marks the CPU. CIR is also called IR. The CU decodes the instruction held in CIR and directs the ALU.</p></div>
     <aside class="component-card card" id="component-detail" aria-live="polite"></aside>
   </div>
   <div class="concept-row">
@@ -103,17 +177,39 @@
   </div>
   <div class="explore-bottom">
     <article class="card memory-card"><p class="eyebrow">DON’T MIX THESE UP</p><h2>Three kinds of working storage</h2><div class="memory-levels"><button data-component="ACC"><b>Registers</b><span>Very small, immediate working values inside the CPU.</span><em>PC · MAR · MDR · CIR (IR) · ACC</em></button><button data-component="CACHE"><b>Cache</b><span>Fast copies of instructions and data that may be needed again.</span><em>Reduces waiting for RAM</em></button><button data-component="RAM"><b>Main memory</b><span>Stores programs and data currently in use.</span><em>Outside the CPU in this model</em></button></div></article>
-    <article class="card next-card"><span class="tiny-tag orange-tag">YOUR FIRST INVESTIGATION</span><h2>Where does the number go?</h2><p>If memory location <b>12</b> contains <b>7</b>, <code>LDA 12</code> loads the value <b>7</b> into the accumulator.</p><p class="small-muted">The address tells the CPU where to look. The contents tell it what to use.</p><button class="button light" data-go="simulate">Try a program <span aria-hidden="true">→</span></button></article>
+    <article class="card next-card"><span class="tiny-tag orange-tag">YOUR FIRST INVESTIGATION</span><h2>Where does the number go?</h2><p>If RAM address <b>1100</b> contains <b>0111</b>, <code>LDA 1100</code> copies exactly <b>0111</b> into the accumulator.</p><p class="small-muted">The address tells the CPU where to look. The contents tell it what to use.</p><button class="button light" data-go="simulate">Try a program <span aria-hidden="true">→</span></button></article>
   </div>
 </section>
 
 <section class="panel" data-panel="simulate" id="simulate-panel" hidden>
   <div class="section-head compact"><div><p class="eyebrow">FROM AN INSTRUCTION TO AN ACTION</p><h1>Watch it. Step it. Program it<span class="orange">.</span></h1><p class="intro">Follow each teaching microstep. The highlighted parts show what is working right now.</p></div><button class="button light" id="isa-button">Instruction set <span aria-hidden="true">→</span></button></div>
-  <div class="simulation-toolbar card"><div class="transport"><button class="button primary" id="run-button"><span aria-hidden="true">▶</span> Run</button><button class="button light" id="step-button">Step <span aria-hidden="true">→</span></button><button class="button light" id="instruction-button">Next instruction</button><button class="icon-button" id="reset-button" aria-label="Reset CPU and restore loaded program" title="Reset CPU">↻</button></div><div class="sim-settings"><label for="speed-select">Animation<select id="speed-select"><option value="1400">Slow</option><option value="750" selected>Normal</option><option value="250">Fast</option></select></label><label for="value-format">RAM view<select id="value-format"><option value="hex">Hex</option><option value="binary">Binary</option><option value="decimal">Denary</option></select></label></div><span id="machine-status" class="status-chip">Ready</span></div>
+  <div class="simulation-toolbar card"><div class="transport"><button class="button primary" id="run-button"><span aria-hidden="true">▶</span> Run</button><button class="button light" id="step-button">Step <span aria-hidden="true">→</span></button><button class="button light" id="instruction-button">Next instruction</button><button class="icon-button" id="reset-button" aria-label="Reset CPU and restore loaded program" title="Reset CPU">↻</button></div><div class="sim-settings"><label for="speed-select">Animation<select id="speed-select"><option value="1400">Slow</option><option value="750" selected>Normal</option><option value="250">Fast</option></select></label></div><span id="machine-status" class="status-chip">Ready</span></div>
   <div class="sim-grid">
-    <aside class="editor-card card"><div class="card-heading"><h2>Your program</h2><span class="tiny-tag purple-tag">16 BYTES</span></div><label class="field-label" for="sample-select">Start with an example</label><select id="sample-select" class="full-select"></select><div class="editor-mode"><label for="source-mode">Write in</label><select id="source-mode"><option value="assembly">Assembly</option><option value="machine">Machine code</option></select></div><textarea id="program-source" aria-label="Program source code" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off"></textarea><div class="editor-buttons"><button class="button teal" id="assemble-button">Assemble &amp; load</button><button class="icon-button" id="save-program" aria-label="Save program as a text file" title="Save program">↓</button></div><p class="source-hint" id="source-hint">Use labels such as <code>NUM: DAT 7</code>. Comments start with <code>;</code>.</p><div id="editor-message" class="editor-message" role="status"></div><div class="input-section"><label class="field-label" for="input-values">Input queue <span>−128 to 127</span></label><div class="input-row"><input id="input-values" type="text" value="5, 7" placeholder="e.g. 5, 7" aria-describedby="input-hint"><button class="button light" id="queue-button">Set</button></div><p id="input-hint" class="small-muted">Consumed by INP, one number at a time.</p><div id="input-queue" class="input-chips"></div></div><div id="input-wait" class="input-wait" hidden><label for="live-input">The CPU is waiting for a number.</label><div class="input-row"><input id="live-input" type="number" min="-128" max="127" step="1"><button id="submit-input" class="button teal">Send</button></div></div><details class="syntax-help"><summary>Quick coding guide</summary><p><b>LDA N</b> reads RAM[N]. <b>STA N</b> stores ACC in RAM[N]. <b>DAT</b> reserves a data byte; it is an assembler directive.</p><p><b>INP</b>, <b>OUT</b> and <b>HLT</b> have no operand. Branch targets can be addresses or labels.</p><p>Assembly is translated into bytes before execution. In machine-code mode, enter one binary byte, <code>0xNN</code>, or denary byte per line.</p></details></aside>
-    <div class="cpu-workspace"><div class="card live-diagram-card"><div class="live-heading"><div class="phase-strip" aria-label="Current cycle stage"><span data-phase="fetch">1 <b>Fetch</b></span><i>→</i><span data-phase="decode">2 <b>Decode</b></span><i>→</i><span data-phase="execute">3 <b>Execute</b></span></div><span class="instruction-count"><b id="instruction-count">0</b> instructions</span></div><div id="sim-diagram" class="diagram-wrap"></div><div class="instruction-word"><span>Instruction in CIR (IR)</span><div><code id="opcode-bits">0000</code><code id="operand-bits">0000</code></div><p><span class="purple-text">opcode</span><span class="teal-text">operand</span></p><b id="instruction-name">—</b></div><p class="diagram-caption">One byte = 4 opcode bits + 4 operand bits. Memory addresses run from 0 to 15.</p><p class="store-flow-note"><b>Store a result:</b> ALU → ACC → MDR → data bus → RAM <span>Memory is written when STA executes.</span></p></div><article class="step-story" aria-live="polite" aria-atomic="true"><div class="step-story-top"><span id="step-phase" class="tiny-tag teal-tag">READY TO FETCH</span><span id="microstep-count">0 microsteps</span></div><h2 id="step-title">Every program starts with an address.</h2><p id="step-detail">Press Step to copy the PC into the MAR. Then follow the instruction as it travels from RAM into the CPU.</p><div id="step-transfer" class="transfer-tag">PC → MAR</div></article><p class="model-note">Teaching microsteps show transfers clearly. They are not literal clock cycles. This is a tiny illustrative CPU, with signed 8-bit data (−128 to 127).</p></div>
-    <aside class="ram-column"><div class="card ram-card"><div class="card-heading"><h2>RAM</h2><span class="small-muted">instructions + data</span></div><div class="ram-table-wrap"><table class="ram-table"><thead><tr><th scope="col">Addr.</th><th scope="col" id="ram-value-head">Byte</th><th scope="col">Meaning</th></tr></thead><tbody id="ram-body"></tbody></table></div><p class="ram-mode-note small-muted" style="font-size:9px;margin:9px 0 0">Raw bytes can be instructions or data. “Meaning” shows a possible interpretation.</p><p class="ram-key"><span><i class="pc-marker"></i>next address (PC)</span><span><i class="mar-marker"></i>selected (MAR)</span></p></div><div class="output-card"><div class="output-heading"><h3>Output</h3><span>OUT → screen</span></div><div id="output-values" aria-live="polite"><span class="output-empty">Your results will appear here.</span></div></div><div class="sim-inspector" id="sim-component-detail">Select a component for a quick reminder of its role.</div></aside>
+    <aside class="editor-card card">
+      <div class="card-heading"><h2>Your program</h2><span class="tiny-tag purple-tag">4-BIT WORDS</span></div>
+      <label class="field-label" for="sample-select">Start with an example</label><select id="sample-select" class="full-select"></select>
+      <div class="editor-mode"><label for="source-mode">Write in</label><select id="source-mode"><option value="assembly">Assembly</option><option value="machine">Binary code</option></select></div>
+      <textarea id="program-source" aria-label="Program source code" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off"></textarea>
+      <div class="editor-buttons"><button class="button teal" id="assemble-button">Assemble &amp; load</button><button class="icon-button" id="save-program" aria-label="Save program as a text file" title="Save program">↓</button></div>
+      <p class="source-hint" id="source-hint">Use labels and binary data: <code>NUM: DAT 0111</code>. Comments start with <code>;</code>.</p>
+      <div id="editor-message" class="editor-message" role="status"></div>
+      <div class="input-section"><label class="field-label" for="input-values">Input queue <span>0000–1111</span></label><div class="input-row"><input id="input-values" type="text" value="" placeholder="e.g. 0101, 0111" aria-describedby="input-hint"><button class="button light" id="queue-button">Set</button></div><p id="input-hint" class="small-muted">INP copies one four-bit value into ACC.</p><div id="input-queue" class="input-chips"></div></div>
+      <div id="input-wait" class="input-wait" hidden><label for="live-input">Enter a four-bit binary value.</label><div class="input-row"><input id="live-input" type="text" inputmode="numeric" pattern="[01]{4}" maxlength="4" placeholder="0000" aria-label="Four-bit binary input"><button id="submit-input" class="button teal">Send</button></div></div>
+      <details class="syntax-help"><summary>Quick coding guide</summary><p><b>LDA N</b> copies RAM[N] into ACC. <b>STA N</b> copies ACC into RAM[N]. Use a label or a four-bit address for N.</p><p><b>DAT 0111</b> reserves a cell containing exactly <code>0111</code>. DAT is an assembler directive.</p><p>Addressed commands use two cells: an opcode, then its address. <b>INP</b>, <b>OUT</b> and <b>HLT</b> each use one cell.</p><p>In Binary code, enter one four-bit word per line. The bits you enter are the bits stored in RAM.</p></details>
+    </aside>
+    <div class="cpu-workspace">
+      <div class="card live-diagram-card">
+        <div class="live-heading"><div class="phase-strip" aria-label="Current cycle stage"><span data-phase="fetch">1 <b>Fetch</b></span><i>→</i><span data-phase="decode">2 <b>Decode</b></span><i>→</i><span data-phase="execute">3 <b>Execute</b></span></div><span class="instruction-count"><b id="instruction-count">0</b> instructions</span></div>
+        <div id="sim-diagram" class="diagram-wrap"></div>
+        <div class="ram-key single-ram-key"><span><i class="pc-marker"></i>next word (PC)</span><span><i class="mar-marker"></i>selected address (MAR)</span></div>
+        <div class="sim-values-row"><div class="instruction-word"><span>CIR · opcode</span><code id="opcode-bits">0000</code><b id="instruction-name">not fetched</b></div><div class="output-card"><div class="output-heading"><h3>Output</h3><span>OUT → screen</span></div><div id="output-values" aria-live="polite"><span class="output-empty">Your results will appear here.</span></div></div></div>
+        <p class="diagram-caption">Every cell and register holds four bits. An addressed command uses an opcode cell followed by an address cell.</p>
+        <p class="store-flow-note"><b>Store a result:</b> ALU → ACC → MDR → data bus → RAM <span>Copying keeps the bits unchanged. STA writes the value to RAM.</span></p>
+        <div class="sim-inspector" id="sim-component-detail">Select a component for a quick reminder of its role.</div>
+      </div>
+      <article class="step-story" aria-live="polite" aria-atomic="true"><div class="step-story-top"><span id="step-phase" class="tiny-tag teal-tag">READY TO FETCH</span><span id="microstep-count">0 microsteps</span></div><h2 id="step-title">Every program starts with an address.</h2><p id="step-detail">Press Step to copy the PC into the MAR. Then follow the instruction as it travels from RAM into the CPU.</p><div id="step-transfer" class="transfer-tag">PC → MAR</div></article>
+      <p class="model-note">A simple four-bit teaching CPU. The dial shows Fetch, Decode and Execute; each stage contains several teaching steps.</p>
+    </div>
   </div>
   <details class="card trace-card"><summary>Execution trace <span class="small-muted">See the transfers you have stepped through</span></summary><div class="trace-scroll"><table><thead><tr><th>Step</th><th>Stage</th><th>What happened</th><th>Transfer</th></tr></thead><tbody id="trace-body"><tr><td colspan="4">No steps yet. Press Step or Run.</td></tr></tbody></table></div></details>
   <div class="challenge-section card"><div><p class="eyebrow">YOUR TURN TO PROGRAM</p><h2>Small programs. Real understanding.</h2><p class="small-muted">Choose a challenge, load its starter, then test your solution against more than one input.</p></div><div class="challenge-controls"><label for="challenge-select" class="field-label">Programming challenge</label><select id="challenge-select" class="full-select"></select></div><div id="challenge-detail"></div><div class="challenge-actions"><button id="challenge-starter" class="button light">Load starter</button><button id="challenge-check" class="button teal">Check my program</button><button id="challenge-solution" class="text-button">Show a solution</button></div><div id="challenge-feedback" aria-live="polite"></div><pre id="challenge-answer" hidden></pre></div>
@@ -134,7 +230,7 @@
       <p class="activity-muted">Choose a piece. Find its job.</p>
       <div id="activity-component-bank" class="activity-component-bank" aria-label="Available CPU components"></div>
       <p id="activity-build-selection" class="activity-selection-note" aria-live="polite">No component selected.</p>
-      <div class="activity-tray-legend"><span class="activity-key activity-key-teal"></span>Processing &amp; control <span class="activity-key activity-key-purple"></span>Registers <span class="activity-key activity-key-orange"></span>Memory &amp; connections</div>
+      <div class="activity-tray-legend"><span class="activity-key activity-key-processor"></span>CU &amp; ALU <span class="activity-key activity-key-instruction"></span>PC &amp; CIR <span class="activity-key activity-key-address"></span>MAR <span class="activity-key activity-key-data"></span>ACC &amp; MDR <span class="activity-key activity-key-memory"></span>RAM <span class="activity-key activity-key-bus"></span>Control, address &amp; data buses</div>
     </aside>
     <div class="activity-card activity-builder-stage">
       <div class="activity-diagram-heading"><strong>A simplified computer</strong><span>Match roles, not a physical chip layout</span></div>
@@ -151,8 +247,8 @@
               <button class="activity-return" data-activity-remove="ALU" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
             </div>
               <div class="activity-slot" data-activity-slot="PC">
-              <p class="activity-role-clue">Address of the next instruction</p>
-              <button class="activity-drop-target" data-activity-place="PC" type="button" aria-label="Place a component: address of the next instruction">Place component</button>
+              <p class="activity-role-clue">Address of the next program word</p>
+              <button class="activity-drop-target" data-activity-place="PC" type="button" aria-label="Place a component: address of the next program word">Place component</button>
               <button class="activity-return" data-activity-remove="PC" type="button" hidden>Remove</button><p class="activity-slot-feedback"></p>
             </div>
               <div class="activity-slot" data-activity-slot="CU">
@@ -203,6 +299,7 @@
           </div>
           </div>
           <div class="activity-memory-boundary">
+            <strong class="activity-memory-title">RAM</strong>
             <div class="activity-memory-pixels" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
             <span class="activity-memory-outside">MAIN MEMORY · OUTSIDE THE CPU</span>
             <div class="activity-slot" data-activity-slot="RAM">
@@ -215,7 +312,7 @@
         </div>
       </div>
       <div class="activity-store-path activity-decode-path"><strong>CIR → CU → ALU</strong><span>The central CIR (also called IR) holds the current instruction. CU decodes it, then sends control signals that direct the ALU.</span></div>
-      <div class="activity-store-path"><strong>ALU → ACC → MDR → RAM</strong><span>The ALU’s result is saved in ACC. When <code>STA</code> executes, the CPU copies ACC to MDR, then writes that byte to RAM using the data bus.</span></div>
+      <div class="activity-store-path"><strong>ALU → ACC → MDR → RAM</strong><span>The ALU’s result is saved in ACC. When <code>STA</code> executes, the CPU copies ACC to MDR, then writes that four-bit word to RAM using the data bus.</span></div>
       <div class="activity-builder-actions">
         <button id="activity-build-check" class="activity-button activity-button-primary" type="button">Check my CPU <span aria-hidden="true">✓</span></button>
         <button id="activity-build-hint" class="activity-button" type="button">Give me a hint</button>
@@ -261,10 +358,10 @@
       <div class="activity-learning-note"><strong>More cores help with parallel work.</strong><p>If a job needs the previous result, it has to wait. Software must be able to split the work; real speed-ups also depend on coordination and shared resources.</p><small>One model time step is the time for one equal-sized job on one core.</small></div>
     </article>
     <article class="activity-card activity-cache-card" aria-labelledby="activity-cache-title">
-      <div class="activity-cache-top"><div><div class="activity-card-heading"><span class="activity-lab-number activity-orange">03</span><div><p class="activity-eyebrow">CACHE SIZE</p><h3 id="activity-cache-title">Keep useful data close</h3></div></div><p class="activity-card-intro">Cache is small, fast memory close to the CPU’s processing units. Look for repeated memory addresses.</p></div><fieldset class="activity-segment-field"><legend>Cache capacity</legend><div class="activity-segments"><label><input type="radio" name="activity-cache-size" value="0"><span>Off</span></label><label><input type="radio" name="activity-cache-size" value="2" checked><span>2 slots</span></label><label><input type="radio" name="activity-cache-size" value="4"><span>4 slots</span></label></div></fieldset></div>
+      <div class="activity-cache-top"><div><div class="activity-card-heading"><span class="activity-lab-number activity-orange">03</span><div><p class="activity-eyebrow">CACHE SIZE</p><h3 id="activity-cache-title">Keep useful data close</h3></div></div><p class="activity-card-intro">Cache is small, fast memory close to the CPU’s processing units. Look for repeated memory addresses. Addresses and data are shown in 4-bit binary.</p></div><fieldset class="activity-segment-field"><legend>Cache capacity</legend><div class="activity-segments"><label><input type="radio" name="activity-cache-size" value="0"><span>Off</span></label><label><input type="radio" name="activity-cache-size" value="2" checked><span>2 slots</span></label><label><input type="radio" name="activity-cache-size" value="4"><span>4 slots</span></label></div></fieldset></div>
       <div class="activity-cache-layout">
         <div>
-          <p class="activity-small-heading">CPU REQUESTS THESE ADDRESSES IN ORDER</p>
+          <p class="activity-small-heading">CPU REQUESTS THESE 4-BIT ADDRESSES IN ORDER</p>
           <div id="activity-cache-sequence" class="activity-cache-sequence" aria-label="Memory request sequence"></div>
           <div id="activity-cache-flow" class="activity-cache-flow" aria-label="CPU, cache and main memory"></div>
           <div class="activity-cache-legend"><span><i class="activity-key activity-key-teal"></i>Hit: cached copy found</span><span><i class="activity-key activity-key-orange"></i>Miss: read from RAM</span></div>
@@ -276,7 +373,7 @@
           <p class="activity-cost-model"><strong>Model cost:</strong> hit = 1 cycle; miss = 5 cycles total, including the RAM read and cache fill.</p>
         </div>
       </div>
-      <div class="activity-learning-note activity-cache-note"><strong>A larger cache can reduce slower RAM accesses.</strong><p>The benefit depends on which addresses the program uses. Try the same sequence with the cache off, 2 slots and 4 slots.</p><details><summary>About this cache model</summary><p>Each slot holds a copy of one memory location. A full cache replaces the least recently used entry. Occupied slots are ordered from least to most recently used, reading left to right and then top to bottom. Real caches usually transfer blocks of memory and use more complex arrangements. The timings here are teaching examples, not measurements of a real CPU.</p></details></div>
+      <div class="activity-learning-note activity-cache-note"><strong>A larger cache can reduce slower RAM accesses.</strong><p>The benefit depends on which addresses the program uses. Try the same sequence with the cache off, 2 slots and 4 slots.</p><details><summary>About this cache model</summary><p>Each slot holds a copy of one 4-bit data value. The @ symbol marks a memory address; every address and data value is displayed as four binary digits. A full cache replaces the least recently used entry. Occupied slots are ordered from least to most recently used, reading left to right and then top to bottom. Real caches usually transfer blocks of memory and use more complex arrangements. The timings here are teaching examples, not measurements of a real CPU.</p></details></div>
     </article>
   </div>
 </section>
@@ -291,53 +388,63 @@
 </section>
 </main>
 <footer class="site-footer"><span><b>CPU lab</b> · RGSV Computer Science</span><span>Explore → build → program → explain</span><button class="text-button" id="model-notes-button">Model &amp; sources</button></footer>
-<dialog id="notes-dialog"><div class="dialog-top"><span class="tiny-tag teal-tag">CLASSROOM GUIDE</span><button class="icon-button" data-close="notes-dialog" aria-label="Close teacher notes">×</button></div><h2>CPU revision, made visible.</h2><p>This self-contained lab supports Cambridge IGCSE Computer Science 0478 (2026–2028), section 3.1. Open the HTML file in a modern browser; the activities work offline.</p><h3>A suggested 40-minute lesson</h3><div class="lesson-plan"><span><b>5 min</b> Explore the parts</span><span><b>8 min</b> Build the CPU</span><span><b>12 min</b> Trace &amp; program</span><span><b>8 min</b> Investigate performance</span><span><b>7 min</b> Check understanding</span></div><h3>Following the result</h3><p>The ALU places a calculation result in ACC. When <code>STA</code> executes, ACC is copied to MDR; the CU sends WRITE and the data bus carries the word to RAM at the address held in MAR. CIR and IR name the same instruction register in this app. The CU decodes the instruction in CIR and sends control signals to select the ALU operation.</p><h3>What this model simplifies</h3><ul><li>One core, 16 shared RAM locations and 8-bit words. Each instruction has a 4-bit opcode and a 4-bit operand. This teaching instruction set is not a required Cambridge instruction encoding.</li><li>Data and ACC use signed integers from −128 to 127. RAM stores the underlying byte. Arithmetic outside this range stops with an explanation; actual processors have their own overflow behaviour.</li><li>For INP, OUT and HLT, the operand bits must be zero. PC wraps from 15 to 0. A branch replaces the next address.</li><li>DAT is an assembler directive, not a CPU instruction. RAM has no built-in distinction between instructions and data; if the PC reaches a data byte, the CPU tries to decode its bits.</li><li>Animation speed is for learning. Teaching microsteps are not hardware clock cycles. Cache and multi-core behaviour are explored separately in illustrative experiments.</li><li>Cache stores copies of memory contents. Registers hold the immediate working state. Main RAM is shown outside the CPU.</li></ul><h3>For a classroom discussion</h3><p>Ask students to predict ACC, PC and output before running. Then ask them to name the register, bus and control signal responsible for each transfer. Use single-step mode when introducing a new instruction.</p><p>All practice questions are original. This app is an independent teaching resource, not a Cambridge-endorsed product.</p><h3>Sources &amp; reference</h3><div id="source-links"></div><button class="button primary" data-close="notes-dialog">Back to the lab</button></dialog>
-<dialog id="isa-dialog"><div class="dialog-top"><span class="tiny-tag purple-tag">OUR TEACHING INSTRUCTION SET</span><button class="icon-button" data-close="isa-dialog" aria-label="Close instruction set">×</button></div><h2>One byte. One instruction.</h2><p>The first four bits say <b>what to do</b> (opcode). The last four bits give a <b>memory address</b> when needed (operand).</p><div class="encoding-example"><div><b>0001</b><span>LDA opcode</span></div><div><b>1100</b><span>address 12</span></div><span>→ <code>LDA 12</code></span></div><p>If RAM[12] contains 7, this instruction puts <b>7</b> into ACC. It does not put the address 12 into ACC.</p><div class="isa-table-wrap"><table class="isa-table"><thead><tr><th>Mnemonic</th><th>Opcode</th><th>What happens</th><th>Example</th></tr></thead><tbody id="isa-body"></tbody></table></div><p class="small-muted"><b>DAT</b> is an assembler directive that reserves a byte for data. It is not an instruction. Labels make addresses easier to remember; the assembler resolves them.</p><button class="button primary" data-close="isa-dialog">Let’s program</button></dialog>
+<dialog id="notes-dialog"><div class="dialog-top"><span class="tiny-tag teal-tag">CLASSROOM GUIDE</span><button class="icon-button" data-close="notes-dialog" aria-label="Close teacher notes">×</button></div><h2>CPU revision, made visible.</h2><p>This self-contained lab supports Cambridge IGCSE Computer Science 0478 (2026–2028), section 3.1. Open the HTML file in a modern browser; the activities work offline.</p><h3>A suggested 40-minute lesson</h3><div class="lesson-plan"><span><b>5 min</b> Explore the parts</span><span><b>8 min</b> Build the CPU</span><span><b>12 min</b> Trace &amp; program</span><span><b>8 min</b> Investigate performance</span><span><b>7 min</b> Check understanding</span></div><h3>The cycle dial</h3><p>The dial follows Fetch, Decode and Execute. In the simulator it follows the current instruction; in Explore it previews the repeating sequence. These stages can each take multiple hardware clock cycles.</p><h3>Following the result</h3><p>The ALU places a calculation result in ACC. When <code>STA</code> executes, ACC is copied to MDR; the CU sends WRITE and the data bus carries the word to RAM at the address held in MAR. CIR and IR name the same instruction register in this app. The CU decodes the instruction in CIR and sends control signals to select the ALU operation.</p><h3>What this model simplifies</h3><ul><li>One core and 16 shared RAM cells, each holding four bits. Data ranges from <code>0000</code> to <code>1111</code>. Arithmetic outside this range stops with an explanation.</li><li>CIR holds a four-bit opcode. Addressed commands use the next cell for a four-bit address, fetched during Execute. INP, OUT and HLT each use one cell. This is an illustrative instruction encoding.</li><li>PC points to the next program word in this model and wraps from <code>1111</code> to <code>0000</code>. A branch replaces this address.</li><li>DAT is an assembler directive, not a CPU instruction. RAM holds both instructions and data. Every copy preserves the four bits exactly.</li><li>Animation speed is for learning. Teaching steps are not hardware clock cycles. Cache and multiple cores are explored separately.</li><li>Cache stores copies of memory contents. Registers hold the immediate working state. The single main RAM view is outside the CPU.</li></ul><h3>For a classroom discussion</h3><p>Ask students to predict ACC, PC and output before running. Then ask them to name the register, bus and control signal responsible for each transfer. Use single-step mode when introducing a new instruction.</p><p>All practice questions are original. This app is an independent teaching resource, not a Cambridge-endorsed product.</p><h3>Sources &amp; reference</h3><div id="source-links"></div><button class="button primary" data-close="notes-dialog">Back to the lab</button></dialog>
+<dialog id="isa-dialog"><div class="dialog-top"><span class="tiny-tag purple-tag">OUR TEACHING INSTRUCTION SET</span><button class="icon-button" data-close="isa-dialog" aria-label="Close instruction set">×</button></div><h2>Four bits in each cell.</h2><p>The <b>opcode</b> says what to do. When a command needs an address, the next RAM cell contains that <b>address</b>.</p><div class="encoding-example"><div><b>0001</b><span>opcode cell · LDA</span></div><div><b>1100</b><span>next cell · address</span></div><span>→ <code>LDA 1100</code></span></div><p>If RAM[<code>1100</code>] contains <code>0111</code>, LDA copies exactly <b><code>0111</code></b> into MDR and then ACC.</p><div class="isa-table-wrap"><table class="isa-table"><thead><tr><th>Mnemonic</th><th>Opcode</th><th>What happens</th><th>Example</th></tr></thead><tbody id="isa-body"></tbody></table></div><p class="small-muted"><b>DAT</b> is an assembler directive that reserves a four-bit cell for data. It is not an instruction. Labels make addresses easier to remember; the assembler resolves them.</p><button class="button primary" data-close="isa-dialog">Let’s program</button></dialog>
 <script>/* CPU Lab: a deliberately small, deterministic teaching CPU.
- * A memory word is 8 bits. Instructions use a 4-bit opcode and a 4-bit
- * address. Data uses signed 8-bit two's complement. Microsteps are
- * teaching steps, not a claim about real processor clock cycles.
+ * Each RAM cell and each visible register holds one unsigned 4-bit word.
+ * An addressed instruction uses two RAM cells: opcode, then address.
+ * Microsteps show transfers for teaching, not literal hardware clock cycles.
  */
 (function (root) {
   'use strict';
 
   const MEMORY_SIZE = 16;
-  const MIN_DATA = -128;
-  const MAX_DATA = 127;
+  const WORD_BITS = 4;
+  const MIN_DATA = 0;
+  const MAX_DATA = 15;
+  const binary = word => word.toString(2).padStart(WORD_BITS, '0');
 
   const ISA = Object.freeze([
-    { mnemonic: 'HLT', opcode: 0, hasOperand: false, operand: false, pattern: '0000 0000', description: 'Stop the program.', example: 'HLT' },
-    { mnemonic: 'LDA', opcode: 1, hasOperand: true, operand: true, pattern: '0001 aaaa', description: 'Copy the signed value at a memory address into ACC.', example: 'LDA 12' },
-    { mnemonic: 'STA', opcode: 2, hasOperand: true, operand: true, pattern: '0010 aaaa', description: 'Copy ACC into a memory address.', example: 'STA 12' },
-    { mnemonic: 'ADD', opcode: 3, hasOperand: true, operand: true, pattern: '0011 aaaa', description: 'Add the signed value at a memory address to ACC.', example: 'ADD 12' },
-    { mnemonic: 'SUB', opcode: 4, hasOperand: true, operand: true, pattern: '0100 aaaa', description: 'Subtract the signed value at a memory address from ACC.', example: 'SUB 12' },
-    { mnemonic: 'INP', opcode: 5, hasOperand: false, operand: false, pattern: '0101 0000', description: 'Read one signed whole number into ACC.', example: 'INP' },
-    { mnemonic: 'OUT', opcode: 6, hasOperand: false, operand: false, pattern: '0110 0000', description: 'Send the signed value in ACC to the output.', example: 'OUT' },
-    { mnemonic: 'BRA', opcode: 7, hasOperand: true, operand: true, pattern: '0111 aaaa', description: 'Always branch: put the address into PC.', example: 'BRA 2' },
-    { mnemonic: 'BRZ', opcode: 8, hasOperand: true, operand: true, pattern: '1000 aaaa', description: 'Branch to the address if ACC equals zero.', example: 'BRZ 8' },
-    { mnemonic: 'BRP', opcode: 9, hasOperand: true, operand: true, pattern: '1001 aaaa', description: 'Branch to the address if ACC is zero or positive.', example: 'BRP 8' }
-  ].map(Object.freeze));
+    { mnemonic: 'HLT', opcode: 0, hasOperand: false, description: 'Stop the program.', example: 'HLT' },
+    { mnemonic: 'LDA', opcode: 1, hasOperand: true, description: 'Copy the four bits at a memory address into ACC.', example: 'LDA 1100' },
+    { mnemonic: 'STA', opcode: 2, hasOperand: true, description: 'Copy the four bits in ACC into a memory address.', example: 'STA 1100' },
+    { mnemonic: 'ADD', opcode: 3, hasOperand: true, description: 'Add the value at a memory address to ACC.', example: 'ADD 1100' },
+    { mnemonic: 'SUB', opcode: 4, hasOperand: true, description: 'Subtract the value at a memory address from ACC.', example: 'SUB 1100' },
+    { mnemonic: 'INP', opcode: 5, hasOperand: false, description: 'Copy one four-bit input value into ACC.', example: 'INP' },
+    { mnemonic: 'OUT', opcode: 6, hasOperand: false, description: 'Copy the four bits in ACC to the output.', example: 'OUT' },
+    { mnemonic: 'BRA', opcode: 7, hasOperand: true, description: 'Always branch: copy the following address word into PC.', example: 'BRA 0010' },
+    { mnemonic: 'BRZ', opcode: 8, hasOperand: true, description: 'Branch to the following address if ACC holds 0000.', example: 'BRZ 1000' }
+  ].map(item => Object.freeze(Object.assign({}, item, {
+    operand: item.hasOperand,
+    words: item.hasOperand ? 2 : 1,
+    opcodeBits: binary(item.opcode),
+    pattern: binary(item.opcode) + (item.hasOperand ? ' | aaaa' : '')
+  }))));
 
   const BY_NAME = new Map(ISA.map(item => [item.mnemonic, item]));
   const BY_OPCODE = new Map(ISA.map(item => [item.opcode, item]));
-  const toSigned = byte => byte > 127 ? byte - 256 : byte;
-  const toByte = signed => signed < 0 ? signed + 256 : signed;
-  const binary = byte => byte.toString(2).padStart(8, '0');
+  const validWord = word => typeof word === 'number' && Number.isInteger(word) && word >= MIN_DATA && word <= MAX_DATA;
+  const toWord = value => {
+    if (!validWord(value)) throw new Error('Use a four-bit value from 0000 to 1111.');
+    return value;
+  };
+  // Compatibility names for callers of the earlier model. Neither changes bits.
+  const toSigned = toWord;
+  const toByte = toWord;
   const stripComment = line => line.replace(/\/\/.*$|;.*$/g, '').trim();
   const lineError = (line, message) => new Error('Line ' + line + ': ' + message);
+  const memoryLimit = 'The program must fit in 16 four-bit RAM cells, at addresses 0000–1111.';
 
   function decodeWord(word) {
-    const opcode = word >>> 4;
-    const operand = word & 15;
-    const instruction = BY_OPCODE.get(opcode);
-    if (!instruction) return { opcode, operand, mnemonic: null, valid: false };
-    return { opcode, operand, mnemonic: instruction.mnemonic, valid: instruction.hasOperand || operand === 0, hasOperand: instruction.hasOperand };
+    const instruction = validWord(word) ? BY_OPCODE.get(word) : null;
+    if (!instruction) return { opcode: word, operand: null, mnemonic: null, valid: false, hasOperand: false, words: 1 };
+    return { opcode: word, operand: null, mnemonic: instruction.mnemonic, valid: true, hasOperand: instruction.hasOperand, words: instruction.words };
   }
 
   function assemble(source, mode) {
     mode = mode || 'assembly';
     if (typeof source !== 'string') throw new Error('The program must be text.');
-    if (mode !== 'assembly' && mode !== 'machine') throw new Error('Choose assembly or machine mode.');
+    if (mode !== 'assembly' && mode !== 'machine') throw new Error('Choose assembly or binary machine code.');
     const lines = source.split(/\r?\n/);
     const memory = Array(MEMORY_SIZE).fill(0);
     const listing = [];
@@ -347,20 +454,17 @@
       lines.forEach((original, index) => {
         const text = stripComment(original);
         if (!text) return;
-        if (listing.length >= MEMORY_SIZE) throw lineError(index + 1, 'The CPU has only 16 memory locations (addresses 0–15).');
-        const compact = text.replace(/\s+/g, '');
-        let word;
-        if (/^(?:0b)?[01]{8}$/i.test(compact)) word = parseInt(compact.replace(/^0b/i, ''), 2);
-        else if (/^0x[0-9a-f]{2}$/i.test(text)) word = parseInt(text.slice(2), 16);
-        else if (/^\d{1,3}$/.test(text) && Number(text) <= 255) word = Number(text);
-        else throw lineError(index + 1, 'Use one byte per line: 8 binary digits, 0x00–0xFF, or a denary value from 0 to 255.');
-        const decoded = decodeWord(word);
+        if (listing.length >= MEMORY_SIZE) throw lineError(index + 1, memoryLimit);
+        if (!/^[01]{4}$/.test(text)) throw lineError(index + 1, 'Use exactly four binary digits per RAM cell, for example 0101. Put each cell on its own line.');
+        const word = parseInt(text, 2);
         const address = listing.length;
         memory[address] = word;
-        listing.push({ address, sourceLine: index + 1, text: original.trim(), word, mnemonic: decoded.valid ? decoded.mnemonic : 'BYTE', isData: false, raw: true, operand: decoded.valid && decoded.hasOperand ? decoded.operand : null });
+        // A raw word has no built-in code/data label. The CPU decides when fetched.
+        listing.push({ address, sourceLine: index + 1, text: original.trim(), word, mnemonic: 'WORD', kind: 'raw', isData: false, isOperand: false, raw: true, operand: null, instructionAddress: null, words: 1 });
       });
     } else {
       const statements = [];
+      let nextAddress = 0;
       lines.forEach((original, index) => {
         let text = stripComment(original);
         if (!text) return;
@@ -368,71 +472,79 @@
         if (labelMatch) {
           const name = labelMatch[1].toUpperCase();
           if (Object.prototype.hasOwnProperty.call(labels, name)) throw lineError(index + 1, 'The label ' + name + ' has already been used.');
-          if (statements.length >= MEMORY_SIZE) throw lineError(index + 1, 'The label ' + name + ' would be outside addresses 0–15.');
-          labels[name] = statements.length;
+          if (nextAddress >= MEMORY_SIZE) throw lineError(index + 1, 'The label ' + name + ' would be outside addresses 0000–1111.');
+          labels[name] = nextAddress;
           text = text.slice(labelMatch[0].length).trim();
           if (!text) return;
         }
-        if (statements.length >= MEMORY_SIZE) throw lineError(index + 1, 'The CPU has only 16 memory locations (addresses 0–15).');
-        const match = text.match(/^([a-z]+)(?:\s+(.+))?$/i);
-        if (!match) throw lineError(index + 1, 'Use a mnemonic such as LDA 12. Write labels with a colon, for example TOTAL: DAT 0.');
+        // A space before the operand is recommended; LDA0110 also works.
+        const match = text.match(/^([a-z]+)(?:\s+(.+)|([01]{4}))?$/i);
+        if (!match) throw lineError(index + 1, 'Use a mnemonic and four-bit address or label, such as LDA 1100 or LDA TOTAL. Define data with TOTAL: DAT 0111.');
         const mnemonic = match[1].toUpperCase();
-        if (mnemonic !== 'DAT' && !BY_NAME.has(mnemonic)) throw lineError(index + 1, 'Unknown instruction ' + mnemonic + '. Use a listed mnemonic, or DAT for a data value.');
-        statements.push({ mnemonic, argument: match[2] ? match[2].trim() : '', sourceLine: index + 1, text: original.trim() });
+        if (mnemonic !== 'DAT' && !BY_NAME.has(mnemonic)) throw lineError(index + 1, 'Unknown instruction ' + mnemonic + '. Choose a listed mnemonic, or DAT for a data word.');
+        const instruction = BY_NAME.get(mnemonic);
+        const words = mnemonic === 'DAT' ? 1 : instruction.words;
+        if (nextAddress + words > MEMORY_SIZE) throw lineError(index + 1, memoryLimit + (words === 2 ? ' This instruction needs an opcode cell and an address cell.' : ''));
+        statements.push({ mnemonic, argument: (match[2] || match[3] || '').trim(), sourceLine: index + 1, text: original.trim(), address: nextAddress, words });
+        nextAddress += words;
       });
-      statements.forEach((statement, address) => {
-        const { mnemonic, argument, sourceLine, text } = statement;
-        let word;
-        let operand = null;
+      statements.forEach(statement => {
+        const { mnemonic, argument, sourceLine, text, address, words } = statement;
         if (mnemonic === 'DAT') {
-          if (!/^[+-]?\d+$/.test(argument)) throw lineError(sourceLine, 'DAT needs one signed whole number, for example DAT 7 or DAT -3.');
-          const data = Number(argument);
-          if (!Number.isSafeInteger(data) || data < MIN_DATA || data > MAX_DATA) throw lineError(sourceLine, 'An 8-bit signed data value must be from -128 to 127.');
-          word = toByte(data);
-        } else {
-          const instruction = BY_NAME.get(mnemonic);
-          if (instruction.hasOperand) {
-            if (!argument) throw lineError(sourceLine, mnemonic + ' needs a memory address (0–15) or a label.');
-            if (/^(?:\d+|0x[0-9a-f]+)$/i.test(argument)) operand = Number(argument);
-            else if (/^[a-z_][a-z0-9_]*$/i.test(argument)) {
-              const label = argument.toUpperCase();
-              if (!Object.prototype.hasOwnProperty.call(labels, label)) throw lineError(sourceLine, 'Unknown label ' + label + '. Define it with a colon, for example ' + label + ': DAT 0.');
-              operand = labels[label];
-            } else throw lineError(sourceLine, mnemonic + ' needs one address (0–15) or one label.');
-            if (!Number.isSafeInteger(operand) || operand < 0 || operand >= MEMORY_SIZE) throw lineError(sourceLine, 'Memory addresses must be from 0 to 15.');
-          } else if (argument) {
-            throw lineError(sourceLine, mnemonic + ' has no operand. Write only ' + mnemonic + '.');
-          }
-          word = (instruction.opcode << 4) | (operand === null ? 0 : operand);
+          if (!/^[01]{4}$/.test(argument)) throw lineError(sourceLine, 'DAT needs exactly four binary digits, for example DAT 0111.');
+          const word = parseInt(argument, 2);
+          memory[address] = word;
+          listing.push({ address, sourceLine, text, word, mnemonic, kind: 'data', isData: true, isOperand: false, operand: null, instructionAddress: null, words: 1 });
+          return;
         }
-        memory[address] = word;
-        listing.push({ address, sourceLine, text, word, mnemonic, isData: mnemonic === 'DAT', operand });
+        const instruction = BY_NAME.get(mnemonic);
+        let operand = null;
+        if (instruction.hasOperand) {
+          if (!argument) throw lineError(sourceLine, mnemonic + ' needs a four-bit address (0000–1111) or a label.');
+          if (/^[01]{4}$/.test(argument)) operand = parseInt(argument, 2);
+          else if (/^[a-z_][a-z0-9_]*$/i.test(argument)) {
+            const name = argument.toUpperCase();
+            if (!Object.prototype.hasOwnProperty.call(labels, name)) throw lineError(sourceLine, 'Unknown label ' + name + '. Define it with a colon, for example ' + name + ': DAT 0000.');
+            operand = labels[name];
+          } else throw lineError(sourceLine, mnemonic + ' needs exactly four binary digits or one label, for example ' + mnemonic + ' 1100.');
+        } else if (argument) {
+          throw lineError(sourceLine, mnemonic + ' has no operand. Write only ' + mnemonic + '.');
+        }
+        memory[address] = instruction.opcode;
+        listing.push({ address, sourceLine, text, word: instruction.opcode, opcode: instruction.opcode, mnemonic, kind: 'opcode', isData: false, isOperand: false, operand, operandAddress: instruction.hasOperand ? address + 1 : null, instructionAddress: address, words });
+        if (instruction.hasOperand) {
+          memory[address + 1] = operand;
+          listing.push({ address: address + 1, sourceLine, text: binary(operand) + ' ; address for ' + mnemonic, word: operand, mnemonic: 'ADDR', ownerMnemonic: mnemonic, kind: 'operand', isData: false, isOperand: true, operand, instructionAddress: address, words: 1 });
+        }
       });
     }
-    if (!listing.length) throw new Error('Write at least one instruction before loading the program.');
-    return { memory, listing, labels: Object.assign({}, labels), entry: 0, mode, source };
+    if (!listing.length) throw new Error('Write at least one instruction or data word before loading the program.');
+    return { memory, listing, labels: Object.assign({}, labels), entry: 0, mode, source, wordBits: WORD_BITS };
   }
 
   function validateInput(value) {
-    if (typeof value !== 'number' || !Number.isInteger(value) || value < MIN_DATA || value > MAX_DATA) {
-      throw new Error('Input must be a signed whole number from -128 to 127.');
-    }
+    if (!validWord(value)) throw new Error('Input must be one four-bit value, from 0000 to 1111.');
     return value;
+  }
+
+  function validateInputs(values) {
+    if (!Array.isArray(values)) throw new Error('Input must be a list of four-bit values, from 0000 to 1111.');
+    return Array.from(values, validateInput);
   }
 
   class CPU {
     constructor(program, inputArray) {
-      if (!program || !Array.isArray(program.memory) || program.memory.length !== MEMORY_SIZE || program.memory.some(value => !Number.isInteger(value) || value < 0 || value > 255)) {
-        throw new Error('Load a program containing exactly 16 memory bytes.');
+      if (!program || !Array.isArray(program.memory) || program.memory.length !== MEMORY_SIZE || Array.from(program.memory).some(value => !validWord(value))) {
+        throw new Error('Load a program containing exactly 16 four-bit RAM cells.');
       }
-      if (!Number.isInteger(program.entry) || program.entry < 0 || program.entry >= MEMORY_SIZE) throw new Error('The entry address must be from 0 to 15.');
+      if (!validWord(program.entry)) throw new Error('The entry address must be from 0000 to 1111.');
       this._program = { memory: program.memory.slice(), listing: (program.listing || []).map(row => Object.assign({}, row)), entry: program.entry };
-      this._initialInput = (inputArray || []).map(validateInput);
+      this._initialInput = validateInputs(inputArray === undefined ? [] : inputArray);
       this.reset();
     }
 
     reset(inputArray) {
-      if (inputArray !== undefined) this._initialInput = inputArray.map(validateInput);
+      if (inputArray !== undefined) this._initialInput = validateInputs(inputArray);
       this.memory = this._program.memory.slice();
       this.pc = this._program.entry;
       this.mar = 0;
@@ -452,6 +564,8 @@
       this.phase = 'fetch';
       this._fetchStage = 0;
       this._executeStage = 0;
+      this._operandStage = 0;
+      this._operandReady = false;
       this._aluResult = null;
       this._branchTaken = false;
       return this;
@@ -476,7 +590,7 @@
     }
 
     _event(phase, title, detail, extra) {
-      return Object.assign({ phase, title, detail, transfer: '', active: [], bus: null, direction: null, value: null, address: null, instructionComplete: false, progressed: true }, extra || {});
+      return Object.assign({ phase, title, detail, transfer: '', active: [], bus: null, direction: null, value: null, address: null, wordRole: null, instructionComplete: false, progressed: true }, extra || {});
     }
 
     _complete(event) {
@@ -484,6 +598,8 @@
       event.instructionComplete = true;
       this._fetchStage = 0;
       this._executeStage = 0;
+      this._operandStage = 0;
+      this._operandReady = false;
       return event;
     }
 
@@ -496,9 +612,7 @@
 
     step() {
       if (this.halted || this.error || (this.waiting && this.inputQueue.length === 0)) return this.lastEvent;
-      let event;
-      if (this._fetchStage <= 6) event = this._fetch();
-      else event = this._execute();
+      const event = this._fetchStage <= 6 ? this._fetch() : this._execute();
       if (event.progressed) this.microsteps += 1;
       this.phase = event.phase;
       event.microstep = this.microsteps;
@@ -508,156 +622,185 @@
       return event;
     }
 
+    _advancePC(phase, role) {
+      const previous = this.pc;
+      this.pc = (this.pc + 1) & MAX_DATA;
+      const wrapped = previous === MAX_DATA;
+      const detail = wrapped
+        ? 'Advance PC by 0001. Its four bits wrap from 1111 to 0000, the next RAM address.'
+        : 'Advance PC by 0001, from ' + binary(previous) + ' to ' + binary(this.pc) + '. It points to the next RAM word.';
+      return this._event(phase, 'Move PC to the next RAM word', detail, { transfer: 'PC ← PC + 0001', active: ['PC'], value: this.pc, address: this.pc, wordRole: role, wrapped });
+    }
+
     _fetch() {
       const stage = this._fetchStage++;
       if (stage === 0) {
         this.instructionAddress = this.pc;
         this.currentInstruction = null;
         this.mar = this.pc;
-        return this._event('fetch', 'Choose the next instruction', 'PC holds the address of the next instruction. Copy this address into MAR.', { transfer: 'PC → MAR', active: ['PC', 'MAR'], value: this.mar, address: this.mar });
+        return this._event('fetch', 'Choose the next instruction', 'Copy the four-bit address ' + binary(this.pc) + ' from PC into MAR.', { transfer: 'PC → MAR', active: ['PC', 'MAR'], value: this.mar, address: this.mar, wordRole: 'opcode' });
       }
       if (stage === 1) {
-        return this._event('fetch', 'Send the address to RAM', 'MAR sends address ' + this.mar + ' along the address bus. The address selects a memory location; it is not the instruction itself.', { transfer: 'MAR → RAM', active: ['MAR', 'RAM'], bus: 'address', direction: 'to-ram', value: this.mar, address: this.mar });
+        return this._event('fetch', 'Send the address to RAM', 'MAR sends address ' + binary(this.mar) + ' along the address bus. It selects the RAM cell to read.', { transfer: 'MAR → RAM', active: ['MAR', 'RAM'], bus: 'address', direction: 'to-ram', value: this.mar, address: this.mar, wordRole: 'opcode' });
       }
       if (stage === 2) {
-        return this._event('fetch', 'Ask RAM to read', 'The control unit sends a READ signal along the control bus. RAM is asked to return the byte at address ' + this.mar + '.', { transfer: 'CU → RAM · READ', active: ['CU', 'MAR', 'RAM'], bus: 'control', direction: 'to-ram', value: null, address: this.mar });
+        return this._event('fetch', 'Ask RAM to read', 'The CU sends READ along the control bus for the RAM cell at address ' + binary(this.mar) + '.', { transfer: 'CU → RAM · READ', active: ['CU', 'MAR', 'RAM'], bus: 'control', direction: 'to-ram', address: this.mar, wordRole: 'opcode' });
       }
       if (stage === 3) {
         this.mdr = this.memory[this.mar];
-        return this._event('fetch', 'Bring the instruction into the CPU', 'RAM sends ' + binary(this.mdr) + ' along the data bus. MDR temporarily holds this byte.', { transfer: 'RAM → MDR', active: ['RAM', 'MDR'], bus: 'data', direction: 'from-ram', value: this.mdr, address: this.mar });
+        return this._event('fetch', 'Bring the instruction into the CPU', 'RAM sends ' + binary(this.mdr) + ' along the data bus. MDR receives exactly the same four bits.', { transfer: 'RAM → MDR', active: ['RAM', 'MDR'], bus: 'data', direction: 'from-ram', value: this.mdr, address: this.mar, wordRole: 'opcode' });
       }
       if (stage === 4) {
         this.cir = this.mdr;
-        return this._event('fetch', 'Keep the current instruction', 'Copy the fetched instruction from MDR into CIR. CIR keeps it while the control unit decodes and executes it.', { transfer: 'MDR → CIR', active: ['MDR', 'CIR'], value: this.cir, address: this.instructionAddress });
+        return this._event('fetch', 'Keep the current instruction', 'Copy ' + binary(this.mdr) + ' from MDR into CIR without changing any bit. CIR holds this opcode while the CU decodes it.', { transfer: 'MDR → CIR', active: ['MDR', 'CIR'], value: this.cir, address: this.instructionAddress, wordRole: 'opcode' });
       }
-      if (stage === 5) {
-        const previous = this.pc;
-        this.pc = (this.pc + 1) & 15;
-        const wrapped = previous === 15;
-        return this._event('fetch', 'Move PC to the next address', wrapped ? 'This model has a 4-bit PC, so 15 + 1 wraps to 0. A later branch can replace this next address.' : 'Increment PC from ' + previous + ' to ' + this.pc + '. It now points to the next instruction, unless a branch changes it.', { transfer: 'PC ← PC + 1', active: ['PC'], value: this.pc, address: this.pc, wrapped });
-      }
+      if (stage === 5) return this._advancePC('fetch', 'opcode');
       const decoded = decodeWord(this.cir);
-      if (!decoded.mnemonic) return this._fail('Opcode ' + (this.cir >>> 4).toString(2).padStart(4, '0') + ' is not in this teaching CPU’s instruction set. Check the byte at address ' + this.instructionAddress + '.', { value: this.cir, address: this.instructionAddress });
-      if (!decoded.valid) return this._fail(decoded.mnemonic + ' has no operand: its last four bits must be 0000. Check the byte at address ' + this.instructionAddress + '.', { value: this.cir, address: this.instructionAddress });
-      this.currentInstruction = Object.assign({ word: this.cir, address: this.instructionAddress }, decoded);
+      if (!decoded.valid) return this._fail('Opcode ' + binary(this.cir) + ' is not in this teaching CPU’s instruction set. Check the word at address ' + binary(this.instructionAddress) + '.', { value: this.cir, address: this.instructionAddress, wordRole: 'opcode' });
+      this.currentInstruction = Object.assign({ word: this.cir, address: this.instructionAddress, operandAddress: decoded.hasOperand ? this.pc : null }, decoded);
       this._executeStage = 0;
-      const detail = decoded.hasOperand ? 'The control unit decodes opcode ' + decoded.opcode.toString(2).padStart(4, '0') + ' as ' + decoded.mnemonic + '. The operand ' + decoded.operand.toString(2).padStart(4, '0') + ' is memory address ' + decoded.operand + '.' : 'The control unit decodes opcode ' + decoded.opcode.toString(2).padStart(4, '0') + ' as ' + decoded.mnemonic + '. This instruction has no operand.';
-      return this._event('decode', 'Decode ' + decoded.mnemonic, detail, { transfer: 'CIR → CU', active: ['CIR', 'CU'], value: this.cir, address: decoded.hasOperand ? decoded.operand : null, mnemonic: decoded.mnemonic, operand: decoded.hasOperand ? decoded.operand : null });
+      this._operandStage = 0;
+      this._operandReady = !decoded.hasOperand;
+      this._aluResult = null;
+      this._branchTaken = false;
+      const detail = 'The CU decodes ' + binary(decoded.opcode) + ' as ' + decoded.mnemonic + '. ' + (decoded.hasOperand ? 'The following RAM cell contains its four-bit address. The CPU will read that cell next.' : 'This instruction uses only its opcode cell.');
+      return this._event('decode', 'Decode ' + decoded.mnemonic, detail, { transfer: 'CIR → CU', active: ['CIR', 'CU'], value: this.cir, mnemonic: decoded.mnemonic, operand: null, wordRole: 'opcode' });
+    }
+
+    _fetchAddressWord() {
+      const instruction = this.currentInstruction;
+      const stage = this._operandStage++;
+      if (stage === 0) {
+        this.mar = this.pc;
+        return this._event('execute', 'Locate the instruction’s address word', 'The next RAM cell, ' + binary(this.pc) + ', holds the address for ' + instruction.mnemonic + '. Copy PC into MAR to read it.', { transfer: 'PC → MAR', active: ['PC', 'MAR'], value: this.mar, address: this.mar, wordRole: 'address' });
+      }
+      if (stage === 1) {
+        return this._event('execute', 'Select the address-word cell', 'MAR sends ' + binary(this.mar) + ' along the address bus to select the cell containing the instruction’s address.', { transfer: 'MAR → RAM', active: ['MAR', 'RAM'], bus: 'address', direction: 'to-ram', value: this.mar, address: this.mar, wordRole: 'address' });
+      }
+      if (stage === 2) {
+        return this._event('execute', 'Read the address word', 'The CU sends READ for RAM address ' + binary(this.mar) + '.', { transfer: 'CU → RAM · READ', active: ['CU', 'MAR', 'RAM'], bus: 'control', direction: 'to-ram', address: this.mar, wordRole: 'address' });
+      }
+      if (stage === 3) {
+        this.mdr = this.memory[this.mar];
+        instruction.operand = this.mdr;
+        return this._event('execute', 'Bring the address word into MDR', 'RAM sends ' + binary(this.mdr) + ' unchanged into MDR. This word is the address used by ' + instruction.mnemonic + '; CIR keeps the opcode ' + binary(this.cir) + '.', { transfer: 'RAM → MDR', active: ['RAM', 'MDR'], bus: 'data', direction: 'from-ram', value: this.mdr, address: this.mar, operand: instruction.operand, wordRole: 'address' });
+      }
+      if (stage === 4) {
+        if (instruction.mnemonic === 'BRA' || instruction.mnemonic === 'BRZ') this._operandReady = true;
+        return this._advancePC('execute', 'address');
+      }
+      this.mar = this.mdr;
+      this._operandReady = true;
+      return this._event('execute', 'Use the fetched address', 'Copy the address ' + binary(this.mdr) + ' unchanged from MDR into MAR. MAR now selects the data cell for ' + instruction.mnemonic + '.', { transfer: 'MDR → MAR', active: ['MDR', 'CU', 'MAR'], value: this.mar, address: this.mar, operand: instruction.operand, wordRole: 'address' });
     }
 
     _execute() {
       const instruction = this.currentInstruction;
       const name = instruction.mnemonic;
-      const operand = instruction.operand;
+      if (!this._operandReady) return this._fetchAddressWord();
       const stage = this._executeStage;
 
       if (name === 'HLT') {
         this.halted = true;
-        return this._complete(this._event('halt', 'Program complete', 'HLT stops this program. The output and registers remain visible so you can inspect the result.', { transfer: 'CU · STOP', active: ['CU'] }));
+        return this._complete(this._event('halt', 'Program complete', 'HLT stops this program. The output and registers remain visible.', { transfer: 'CU · STOP', active: ['CU'] }));
       }
       if (name === 'INP') {
         if (!this.inputQueue.length) {
           this.waiting = true;
-          return this._event('input', 'Waiting for a number', 'INP needs an input value. Add a whole number from -128 to 127, then continue.', { transfer: 'INPUT → ACC', active: ['INPUT', 'CU', 'ACC'], progressed: false });
+          return this._event('input', 'Waiting for input', 'INP needs a four-bit input, from 0000 to 1111. Add it, then continue.', { transfer: 'INPUT → ACC', active: ['INPUT', 'CU', 'ACC'], progressed: false });
         }
         this.waiting = false;
         this.acc = this.inputQueue.shift();
-        return this._complete(this._event('execute', 'Read the input', 'The input value ' + this.acc + ' is copied into ACC under the control of the CU.', { transfer: 'INPUT → ACC', active: ['INPUT', 'CU', 'ACC'], value: this.acc }));
+        return this._complete(this._event('execute', 'Read the input', 'Copy the four input bits ' + binary(this.acc) + ' unchanged into ACC.', { transfer: 'INPUT → ACC', active: ['INPUT', 'CU', 'ACC'], value: this.acc, wordRole: 'data' }));
       }
       if (name === 'OUT') {
         this.output.push(this.acc);
-        return this._complete(this._event('execute', 'Send the result to output', 'OUT copies ' + this.acc + ' from ACC to the output. ACC still holds the same value.', { transfer: 'ACC → OUTPUT', active: ['ACC', 'CU', 'OUTPUT'], value: this.acc }));
+        return this._complete(this._event('execute', 'Send the result to output', 'Copy ' + binary(this.acc) + ' from ACC to the output. ACC keeps the same four bits.', { transfer: 'ACC → OUTPUT', active: ['ACC', 'CU', 'OUTPUT'], value: this.acc, wordRole: 'data' }));
       }
       if (name === 'BRA') {
-        this.pc = operand;
-        return this._complete(this._event('execute', 'Jump to address ' + operand, 'BRA changes PC to ' + operand + '. The next fetch starts at that address, rather than the next sequential address.', { transfer: 'CIR operand → PC', active: ['CIR', 'CU', 'PC'], value: this.pc, address: operand, branchTaken: true }));
+        this.pc = this.mdr;
+        return this._complete(this._event('execute', 'Jump to address ' + binary(this.pc), 'Copy the fetched address ' + binary(this.mdr) + ' from MDR into PC. The next instruction is fetched from that address.', { transfer: 'MDR → PC', active: ['MDR', 'CU', 'PC'], value: this.pc, address: this.pc, branchTaken: true, wordRole: 'address' }));
       }
-      if (name === 'BRZ' || name === 'BRP') {
+      if (name === 'BRZ') {
         if (stage === 0) {
-          this._branchTaken = name === 'BRZ' ? this.acc === 0 : this.acc >= 0;
+          this._branchTaken = this.acc === 0;
           this._executeStage += 1;
-          const condition = name === 'BRZ' ? 'equal to zero' : 'zero or positive';
-          return this._event('execute', 'Test the branch condition', 'This teaching CPU tests whether ACC (' + this.acc + ') is ' + condition + '. The test is ' + (this._branchTaken ? 'true' : 'false') + '.', { transfer: 'ACC → ALU → CU', active: ['ACC', 'ALU', 'CU'], value: this.acc, branchTaken: this._branchTaken });
+          return this._event('execute', 'Test the branch condition', 'Test whether ACC (' + binary(this.acc) + ') equals 0000. The condition is ' + (this._branchTaken ? 'true' : 'false') + '.', { transfer: 'ACC → ALU → CU', active: ['ACC', 'ALU', 'CU'], value: this.acc, branchTaken: this._branchTaken, wordRole: 'data' });
         }
-        if (this._branchTaken) this.pc = operand;
-        return this._complete(this._event('execute', this._branchTaken ? 'Take the branch' : 'Continue in sequence', this._branchTaken ? 'The condition is true, so the control unit replaces PC with address ' + operand + '.' : 'The condition is false, so PC stays at ' + this.pc + ' and execution continues in sequence.', { transfer: this._branchTaken ? 'CIR operand → PC' : 'PC unchanged', active: this._branchTaken ? ['CIR', 'CU', 'PC'] : ['CU', 'PC'], value: this.pc, address: this.pc, branchTaken: this._branchTaken }));
+        if (this._branchTaken) this.pc = this.mdr;
+        return this._complete(this._event('execute', this._branchTaken ? 'Take the branch' : 'Continue in sequence', this._branchTaken ? 'The condition is true. Copy the address ' + binary(this.mdr) + ' from MDR into PC.' : 'The condition is false. PC stays at ' + binary(this.pc) + ', after the instruction’s address word.', { transfer: this._branchTaken ? 'MDR → PC' : 'PC unchanged', active: this._branchTaken ? ['MDR', 'CU', 'PC'] : ['CU', 'PC'], value: this.pc, address: this.pc, branchTaken: this._branchTaken, wordRole: 'address' }));
       }
 
-      // All remaining instructions address memory: LDA, STA, ADD and SUB.
+      // LDA, STA, ADD and SUB already have the fetched data address in MAR.
       this._executeStage += 1;
       if (stage === 0) {
-        this.mar = operand;
-        return this._event('execute', 'Select the operand address', 'The operand in CIR is address ' + operand + '. Copy it into MAR so the CPU can access the data stored there.', { transfer: 'CIR operand → MAR', active: ['CIR', 'CU', 'MAR'], value: this.mar, address: this.mar });
-      }
-      if (stage === 1) {
-        return this._event('execute', 'Send the data address', 'MAR sends address ' + this.mar + ' to RAM along the address bus.', { transfer: 'MAR → RAM', active: ['MAR', 'RAM'], bus: 'address', direction: 'to-ram', value: this.mar, address: this.mar });
+        return this._event('execute', 'Send the data address', 'MAR sends ' + binary(this.mar) + ' to RAM along the address bus.', { transfer: 'MAR → RAM', active: ['MAR', 'RAM'], bus: 'address', direction: 'to-ram', value: this.mar, address: this.mar, wordRole: 'data' });
       }
       if (name === 'STA') {
-        if (stage === 2) {
-          this.mdr = toByte(this.acc);
-          return this._event('execute', 'Prepare the value to store', 'Copy ACC into MDR. The signed value ' + this.acc + ' is stored as the byte ' + binary(this.mdr) + '.', { transfer: 'ACC → MDR', active: ['ACC', 'MDR'], value: this.mdr, address: this.mar });
+        if (stage === 1) {
+          this.mdr = this.acc;
+          return this._event('execute', 'Prepare the value to store', 'Copy ' + binary(this.acc) + ' from ACC into MDR. All four bits stay the same.', { transfer: 'ACC → MDR', active: ['ACC', 'MDR'], value: this.mdr, address: this.mar, wordRole: 'data' });
         }
-        if (stage === 3) {
-          return this._event('execute', 'Ask RAM to write', 'The control unit sends a WRITE signal along the control bus. RAM will store the byte from MDR at address ' + this.mar + '.', { transfer: 'CU → RAM · WRITE', active: ['CU', 'MAR', 'RAM'], bus: 'control', direction: 'to-ram', address: this.mar });
+        if (stage === 2) {
+          return this._event('execute', 'Ask RAM to write', 'The CU sends WRITE along the control bus. RAM will store the word from MDR at address ' + binary(this.mar) + '.', { transfer: 'CU → RAM · WRITE', active: ['CU', 'MAR', 'RAM'], bus: 'control', direction: 'to-ram', address: this.mar, wordRole: 'data' });
         }
         this.memory[this.mar] = this.mdr;
         const original = this._program.listing.find(row => row.address === this.mar);
-        const overwroteInstruction = Boolean(original && !original.isData);
-        return this._complete(this._event('execute', 'Store the byte in RAM', 'MDR sends ' + binary(this.mdr) + ' along the data bus to address ' + this.mar + '. ACC keeps its value.' + (overwroteInstruction ? ' This replaces a byte originally used as an instruction.' : ''), { transfer: 'MDR → RAM', active: ['MDR', 'RAM'], bus: 'data', direction: 'to-ram', value: this.mdr, address: this.mar, overwroteInstruction }));
+        const overwroteInstruction = Boolean(original && (original.kind === 'opcode' || original.kind === 'operand'));
+        return this._complete(this._event('execute', 'Store the four bits in RAM', 'Copy ' + binary(this.mdr) + ' unchanged from MDR to RAM address ' + binary(this.mar) + ' along the data bus. ACC keeps its value.' + (overwroteInstruction ? ' This replaces a word originally used by an instruction.' : ''), { transfer: 'MDR → RAM', active: ['MDR', 'RAM'], bus: 'data', direction: 'to-ram', value: this.mdr, address: this.mar, overwroteInstruction, wordRole: 'data' }));
+      }
+      if (stage === 1) {
+        return this._event('execute', 'Read the data from RAM', 'The CU sends READ along the control bus for RAM address ' + binary(this.mar) + '.', { transfer: 'CU → RAM · READ', active: ['CU', 'MAR', 'RAM'], bus: 'control', direction: 'to-ram', address: this.mar, wordRole: 'data' });
       }
       if (stage === 2) {
-        return this._event('execute', 'Read the data from RAM', 'The control unit sends READ along the control bus for the data at address ' + this.mar + '.', { transfer: 'CU → RAM · READ', active: ['CU', 'MAR', 'RAM'], bus: 'control', direction: 'to-ram', address: this.mar });
-      }
-      if (stage === 3) {
         this.mdr = this.memory[this.mar];
-        return this._event('execute', 'Bring the data into MDR', 'RAM sends ' + binary(this.mdr) + ' along the data bus to MDR. Interpreted as signed 8-bit data, this value is ' + toSigned(this.mdr) + '.', { transfer: 'RAM → MDR', active: ['RAM', 'MDR'], bus: 'data', direction: 'from-ram', value: this.mdr, address: this.mar });
+        return this._event('execute', 'Bring the data into MDR', 'RAM sends ' + binary(this.mdr) + ' unchanged along the data bus. MDR holds exactly the same four bits as the selected RAM cell.', { transfer: 'RAM → MDR', active: ['RAM', 'MDR'], bus: 'data', direction: 'from-ram', value: this.mdr, address: this.mar, wordRole: 'data' });
       }
       if (name === 'LDA') {
-        this.acc = toSigned(this.mdr);
-        return this._complete(this._event('execute', 'Load the accumulator', 'Copy the signed value ' + this.acc + ' from MDR into ACC. The data in RAM is unchanged.', { transfer: 'MDR → ACC', active: ['MDR', 'ACC'], value: this.acc, address: this.mar }));
+        this.acc = this.mdr;
+        return this._complete(this._event('execute', 'Load the accumulator', 'Copy ' + binary(this.mdr) + ' from MDR into ACC without changing the bits. RAM keeps the same value.', { transfer: 'MDR → ACC', active: ['MDR', 'ACC'], value: this.acc, address: this.mar, wordRole: 'data' }));
       }
-      if (stage === 4) {
-        const right = toSigned(this.mdr);
+      if (stage === 3) {
+        const right = this.mdr;
         this._aluResult = name === 'ADD' ? this.acc + right : this.acc - right;
         const symbol = name === 'ADD' ? '+' : '−';
-        return this._event('execute', 'Calculate in the ALU', 'The ALU calculates ' + this.acc + ' ' + symbol + ' ' + right + ' = ' + this._aluResult + '. The result will be copied back to ACC.', { transfer: 'ACC, MDR → ALU', active: ['ACC', 'MDR', 'ALU'], value: this._aluResult, address: this.mar, alu: { operation: name, left: this.acc, right, result: this._aluResult } });
-      }
-      if (this._aluResult < MIN_DATA || this._aluResult > MAX_DATA) {
-        return this._fail('Arithmetic overflow: ' + this._aluResult + ' cannot fit in signed 8-bit ACC (-128 to 127). This teaching CPU stops instead of wrapping, so you can change the values and try again.', { transfer: 'ALU → ACC · overflow', active: ['ALU', 'ACC', 'CU'], value: this._aluResult, address: this.mar });
+        if (this._aluResult > MAX_DATA) return this._fail('Arithmetic overflow: ' + binary(this.acc) + ' + ' + binary(right) + ' needs more than four bits. ACC remains ' + binary(this.acc) + '.', { transfer: 'ALU · result not stored', active: ['ALU', 'ACC', 'CU'], address: this.mar, wordRole: 'data' });
+        if (this._aluResult < MIN_DATA) return this._fail('Arithmetic underflow: ' + binary(this.acc) + ' − ' + binary(right) + ' would go below 0000. ACC remains ' + binary(this.acc) + '.', { transfer: 'ALU · result not stored', active: ['ALU', 'ACC', 'CU'], address: this.mar, wordRole: 'data' });
+        return this._event('execute', 'Calculate in the ALU', 'The ALU calculates ' + binary(this.acc) + ' ' + symbol + ' ' + binary(right) + ' = ' + binary(this._aluResult) + '. The result will be copied to ACC.', { transfer: 'ACC, MDR → ALU', active: ['ACC', 'MDR', 'ALU'], value: this._aluResult, address: this.mar, alu: { operation: name, left: this.acc, right, result: this._aluResult }, wordRole: 'data' });
       }
       this.acc = this._aluResult;
-      return this._complete(this._event('execute', 'Save the calculation result', 'Copy the ALU result ' + this.acc + ' into ACC. The memory operand remains unchanged.', { transfer: 'ALU → ACC', active: ['ALU', 'ACC'], value: this.acc, address: this.mar }));
+      return this._complete(this._event('execute', 'Save the calculation result', 'Copy the four-bit result ' + binary(this.acc) + ' into ACC. The data in RAM is unchanged.', { transfer: 'ALU → ACC', active: ['ALU', 'ACC'], value: this.acc, address: this.mar, wordRole: 'data' }));
     }
   }
 
   const samples = Object.freeze([
     {
       id: 'load-add', title: 'Load and add',
-      description: 'Load 7 from memory, add 5, and output 12. A gentle first journey through the CPU.',
-      source: 'LDA A       ; Load the value at A\nADD B       ; Add the value at B\nOUT         ; Display ACC\nHLT         ; Stop\nA: DAT 7\nB: DAT 5',
+      description: 'Load 0111 from RAM, add 0101, and output 1100.',
+      source: 'LDA A       ; Load the bits at A\nADD B       ; Add the value at B\nOUT         ; Display ACC\nHLT         ; Stop\nA: DAT 0111\nB: DAT 0101',
       input: [], expected: [12]
     },
     {
-      id: 'add-two', title: 'Add two numbers',
-      description: 'Read two inputs, save the first in RAM, then add them. Start with 7 and 5.',
-      source: 'INP         ; First number → ACC\nSTA FIRST   ; Save it in RAM\nINP         ; Second number → ACC\nADD FIRST   ; Add the saved first number\nOUT\nHLT\nFIRST: DAT 0',
-      input: [7, 5], expected: [12]
+      id: 'add-two', title: 'Add two inputs',
+      description: 'Save the first input in RAM, then add it to the second. Try 0011 and 0100.',
+      source: 'INP         ; First input → ACC\nSTA FIRST   ; Save the same bits in RAM\nINP         ; Second input → ACC\nADD FIRST\nOUT\nHLT\nFIRST: DAT 0000',
+      input: [3, 4], expected: [7]
     },
     {
       id: 'countdown', title: 'Countdown',
-      description: 'Start with a number from 0 to 10. The program outputs it, subtracts 1, and loops until zero.',
-      source: 'INP\nLOOP: OUT\nBRZ DONE    ; Stop after outputting zero\nSUB ONE\nBRA LOOP    ; Repeat from LOOP\nDONE: HLT\nONE: DAT 1',
+      description: 'Output the starting value, subtract 0001, and repeat until 0000.',
+      source: 'INP\nLOOP: OUT\nBRZ DONE    ; Stop after outputting 0000\nSUB ONE\nBRA LOOP\nDONE: HLT\nONE: DAT 0001',
       input: [3], expected: [3, 2, 1, 0]
     },
     {
-      id: 'compare', title: 'Compare two numbers',
-      description: 'Output the larger of two numbers. Use inputs from -63 to 63 so the comparison subtraction stays in range.',
-      source: 'INP\nSTA FIRST\nINP\nSTA SECOND\nSUB FIRST   ; Compare second − first\nBRP SECOND_WINS\nLDA FIRST\nOUT\nHLT\nSECOND_WINS: LDA SECOND\nOUT\nHLT\nFIRST: DAT 0\nSECOND: DAT 0',
-      input: [9, 4], expected: [9]
+      id: 'store-result', title: 'Store a result',
+      description: 'Calculate 0111 + 0101 and copy the result 1100 through MDR into RAM.',
+      source: 'LDA A\nADD B\nSTA RESULT\nOUT\nHLT\nA: DAT 0111\nB: DAT 0101\nRESULT: DAT 0000',
+      input: [], expected: [12]
     }
   ]);
 
-  const CPUModel = Object.freeze({ ISA, assemble, CPU, samples, toSigned, toByte, decodeWord, MEMORY_SIZE, MIN_DATA, MAX_DATA });
+  const CPUModel = Object.freeze({ ISA, assemble, CPU, samples, binary, toWord, toSigned, toByte, decodeWord, MEMORY_SIZE, WORD_BITS, MIN_DATA, MAX_DATA });
   if (typeof module === 'object' && module.exports) module.exports = CPUModel;
   root.CPUModel = CPUModel;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
@@ -668,10 +811,10 @@
   window.CPUContent = {
     overview: {
       title: 'A tiny computer, one instruction at a time',
-      text: 'A CPU processes instructions and data. In the Von Neumann model, instructions and data share main memory. The CPU fetches a word, decodes it as an instruction and carries out the operation.',
+      text: 'A CPU processes instructions and data. In the Von Neumann model, instructions and data share main memory. The CPU fetches an instruction word, decodes its opcode and carries out the operation.',
       microprocessor: 'A microprocessor implements a CPU on a single integrated circuit, or chip.',
-      model: 'Our teaching CPU has 16 RAM locations, numbered 0–15. Each word contains 8 bits. Instructions use a 4-bit opcode and a 4-bit operand; data values use signed 8-bit integers from −128 to 127. This small instruction set is designed for learning; real processors use different encodings.',
-      distinction: 'An address tells us where a value is stored. The contents tell us what is stored there. LDA 12 loads the contents of RAM location 12, not the number 12.'
+      model: 'Our teaching CPU has 16 RAM cells, addressed from 0000 to 1111. Every cell and register holds four bits. An instruction starts with an opcode word; commands such as LDA use the following word for an address. Data ranges from 0000 to 1111. This small instruction set is designed for learning; real processors use different encodings.',
+      distinction: 'An address tells us where a value is stored. If RAM[1100] contains 0111, LDA 1100 copies 0111 through MDR into ACC. The bits stay unchanged during the copy.'
     },
     embedded: {
       title: 'Where else do CPUs work?',
@@ -680,50 +823,50 @@
     components: {
       PC: {
         name: 'Program counter',
-        role: 'Holds the address of the next instruction to fetch.',
-        example: 'PC = 3 means: fetch the next instruction from RAM location 3.',
-        examTip: 'The PC holds an address, not the instruction itself. A taken branch changes the PC.'
+        role: 'Holds the address of the next program word to fetch.',
+        example: 'PC = 0011 selects RAM[0011] for the next program-word fetch. PC advances after each word is fetched.',
+        examTip: 'For IGCSE, remember PC as the address of the next instruction. This model also uses PC to fetch a following address word. A taken branch changes PC.'
       },
       MAR: {
         name: 'Memory address register',
         role: 'Holds the address of the RAM location currently being read or written.',
-        example: 'To load the value in RAM[12], the CPU first puts 12 into the MAR.',
+        example: 'To read RAM[1100], the CPU puts the address 1100 into MAR.',
         examTip: 'MAR = where in memory. The address is carried to RAM on the address bus.'
       },
       MDR: {
         name: 'Memory data register',
         role: 'Temporarily holds the word being transferred between the CPU and RAM.',
-        example: 'If RAM[12] contains 7, reading location 12 copies 7 into the MDR.',
+        example: 'If RAM[1100] contains 0111, reading that cell puts exactly 0111 into MDR.',
         examTip: 'MDR = the contents being transferred. It can hold data or an instruction.'
       },
       CIR: {
         name: 'Current instruction register',
-        role: 'Holds the instruction currently being decoded and executed.',
-        example: 'CIR holds ADD 13. The CU decodes it, fetches the value from address 13, and directs the ALU to add that value to ACC.',
-        examTip: 'IR and CIR (current instruction register) refer to the same register here. The CU decodes this instruction; the PC holds the next fetch address.'
+        role: 'Holds the current instruction word: the four-bit opcode in this model.',
+        example: 'An ADD opcode travels unchanged: RAM 0011 → MDR 0011 → CIR 0011. The CU decodes it and fetches the following address word.',
+        examTip: 'IR and CIR name the same instruction register here. The CU decodes its opcode. In this model, an address operand is fetched separately from the next RAM cell.'
       },
       ACC: {
         name: 'Accumulator',
         role: 'Holds a working value and intermediate results of arithmetic or logical operations.',
-        example: 'If ACC = 7 and RAM[13] = 5, ADD 13 produces ACC = 12.',
+        example: 'If ACC = 0111 and RAM[1101] = 0101, ADD 1101 produces ACC = 1100.',
         examTip: 'In this model, LDA replaces ACC; ADD and SUB update it; STA copies it to RAM.'
       },
       CU: {
         name: 'Control unit',
         role: 'Decodes instructions and sends control signals to coordinate the CPU and memory.',
-        example: 'The CU requests a memory READ, then directs the ALU to add the fetched value.',
+        example: 'The CU decodes 0011 as ADD, requests the needed memory READs, then directs the ALU to add the fetched value.',
         examTip: 'Describe the CU as the coordinator. Arithmetic is performed by the ALU.'
       },
       ALU: {
         name: 'Arithmetic logic unit',
         role: 'Performs arithmetic and logical operations, including comparisons.',
-        example: 'The ALU adds 7 and 5. The result, 12, is placed in the accumulator.',
+        example: 'The ALU calculates 0111 + 0101 = 1100. The result 1100 is placed in ACC.',
         examTip: 'Arithmetic includes addition and subtraction. Logic includes comparisons and Boolean operations.'
       },
       RAM: {
         name: 'Main memory · RAM',
         role: 'Holds the program instructions and data currently being used. RAM is outside the CPU.',
-        example: 'RAM[0] might contain LDA 12, while RAM[12] contains the data value 7.',
+        example: 'RAM[0000] can hold 0001 (LDA), RAM[0001] its address word 1100, and RAM[1100] the data 0111.',
         examTip: 'Von Neumann architecture stores instructions and data in the same main memory. RAM is volatile.'
       },
       CACHE: {
@@ -741,13 +884,13 @@
       ADDRESS: {
         name: 'Address bus',
         role: 'Carries the address identifying a memory location. In this model it goes from CPU to RAM.',
-        example: 'MAR = 12 places the address 12 on the address bus to select RAM[12].',
+        example: 'MAR = 1100 sends the same bits 1100 along the address bus to select RAM[1100].',
         examTip: 'The address bus selects where to read or write. It does not carry the contents of that location.'
       },
       DATA: {
         name: 'Data bus',
         role: 'Transfers instructions and data words between the CPU and memory in either direction.',
-        example: 'A READ carries RAM → MDR. A WRITE carries MDR → RAM.',
+        example: 'A READ copies 0111 from RAM to MDR unchanged. A WRITE copies the word in MDR back to RAM.',
         examTip: 'Instructions travel on the data bus too. It is bidirectional.'
       },
       CONTROL: {
@@ -761,39 +904,39 @@
       'Copy PC to MAR',
       'Send the address and READ signal to RAM',
       'Copy the RAM word to MDR',
-      'Copy MDR to CIR; advance PC',
-      'Decode the instruction in the CU',
-      'Execute the instruction'
+      'Copy MDR to CIR; advance PC to the next word',
+      'Decode the opcode in the CU',
+      'Fetch any address word; execute the operation'
     ],
-    fdeNote: 'These are the stages used by our teaching model. Some real CPUs overlap operations. A display step is not a measurement of real clock cycles.',
+    fdeNote: 'In this model, an addressed instruction uses an opcode cell followed by an address cell. The dial follows the three instruction stages; each can take multiple hardware clock cycles.',
     quizzes: [
       {
         topic: 'Registers',
         question: 'Which register holds the address of the next instruction to fetch?',
         options: ['PC', 'CIR', 'ACC', 'MDR'],
         answer: 0,
-        explanation: 'The program counter holds the next fetch address. The CIR holds the instruction currently being processed.'
+        explanation: 'Between instructions, PC holds the address of the next opcode. CIR holds the current opcode while the CU decodes and executes it.'
       },
       {
         topic: 'Registers',
-        question: 'The CPU is about to read RAM location 12. Which register should hold 12?',
+        question: 'The CPU is about to read RAM[1100]. Which register should hold 1100?',
         options: ['ACC', 'MAR', 'CIR', 'MDR'],
         answer: 1,
         explanation: 'The memory address register holds the address of the location being accessed.'
       },
       {
         topic: 'Registers',
-        question: 'Which register holds a word that has just arrived from RAM?',
-        options: ['PC', 'ACC', 'MDR', 'Clock'],
-        answer: 2,
-        explanation: 'The memory data register holds the word transferred between RAM and the CPU. This may be data or an instruction.'
+        question: 'RAM[1100] contains 0111. After a READ, what should MDR contain?',
+        options: ['1100', '0111', '0011', '0000'],
+        answer: 1,
+        explanation: 'MDR receives the exact contents 0111. The address 1100 stays in MAR; copying does not change the data bits.'
       },
       {
         topic: 'Registers',
-        question: 'Where is an instruction held while the CU decodes it?',
+        question: 'Where is the current opcode held while the CU decodes it?',
         options: ['MAR', 'CIR', 'PC', 'Address bus'],
         answer: 1,
-        explanation: 'The current instruction register holds the instruction being decoded and executed.'
+        explanation: 'CIR holds the four-bit opcode in this teaching CPU. The CU decodes it to choose the operation.'
       },
       {
         topic: 'CPU units',
@@ -811,7 +954,7 @@
       },
       {
         topic: 'Buses',
-        question: 'Which bus carries a location number when the CPU selects a RAM cell?',
+        question: 'Which bus carries 1100 when the CPU selects RAM[1100]?',
         options: ['Data bus', 'Control bus', 'Address bus', 'Clock'],
         answer: 2,
         explanation: 'The address bus carries the address identifying which memory location to read or write.'
@@ -839,10 +982,10 @@
       },
       {
         topic: 'Fetch–decode–execute',
-        question: 'What does a taken BRA 4 instruction change?',
-        options: ['PC becomes 4.', 'ACC must become 4.', 'Every RAM cell becomes 4.', 'The clock rate becomes 4 GHz.'],
+        question: 'What does BRA 0100 change when it executes?',
+        options: ['PC becomes 0100.', 'ACC must become 0100.', 'Every RAM cell becomes 0100.', 'The clock rate changes.'],
         answer: 0,
-        explanation: 'BRA changes the PC, so the next instruction is fetched from address 4. It does not change ACC.'
+        explanation: 'BRA copies its address word 0100 into PC, so the next opcode is fetched from RAM[0100]. ACC stays unchanged.'
       },
       {
         topic: 'Instruction sets',
@@ -882,23 +1025,23 @@
     ],
     shortAnswers: [
       {
-        question: 'Describe how the CPU fetches the next instruction from RAM. Refer to registers and buses.',
+        question: 'Describe how this CPU fetches its next instruction word from RAM. Refer to registers and buses.',
         marks: 5,
         points: [
           'The address in PC is copied to MAR.',
           'The address travels to RAM on the address bus; the CU sends a READ signal on the control bus.',
-          'The selected instruction travels from RAM on the data bus into MDR.',
-          'The instruction is copied from MDR to CIR.',
-          'PC is advanced to the following instruction address.'
+          'The selected four-bit instruction word travels from RAM on the data bus into MDR.',
+          'The same four bits are copied from MDR to CIR.',
+          'PC advances to the next program word. An address word, when needed, is fetched during Execute.'
         ]
       },
       {
-        question: 'ACC contains 7 and RAM[13] contains 5. Explain what happens when ADD 13 executes.',
+        question: 'ACC contains 0111 and RAM[1101] contains 0101. Explain what happens when ADD 1101 executes.',
         marks: 3,
         points: [
-          '13 is a memory address: the CPU reads the value 5 from that location.',
-          'The ALU adds the fetched value 5 to the existing ACC value 7.',
-          'The result 12 is stored in ACC; RAM[13] is still 5.'
+          'The CPU reads the address word 1101, then copies RAM[1101] = 0101 into MDR unchanged.',
+          'The ALU adds the fetched value 0101 to ACC: 0111 + 0101 = 1100.',
+          'The result 1100 is stored in ACC; RAM[1101] remains 0101.'
         ]
       },
       {
@@ -936,7 +1079,7 @@
   const components = {
     CU: { short: 'CU', name: 'Control unit', type: 'unit', hint: 'The control unit decodes the instruction in CIR and directs the ALU. It connects directly to the control bus to send READ and WRITE signals.' },
     ALU: { short: 'ALU', name: 'Arithmetic logic unit', type: 'unit', hint: 'The arithmetic logic unit performs calculations and logical operations as directed by the CU. Its result is held in ACC, directly below it.' },
-    PC: { short: 'PC', name: 'Program counter', type: 'register', hint: 'The program counter holds an address: the location of the next instruction.' },
+    PC: { short: 'PC', name: 'Program counter', type: 'register', hint: 'In this model, PC holds the address of the next program word. For IGCSE, remember its usual role: holding the address of the next instruction to fetch.' },
     MAR: { short: 'MAR', name: 'Memory address register', type: 'register', hint: 'The memory address register holds the location being read or written. Its address travels directly onto the address bus.' },
     MDR: { short: 'MDR', name: 'Memory data register', type: 'register', hint: 'The memory data register holds an instruction or data travelling to or from RAM. It connects directly to the two-way data bus.' },
     CIR: { short: 'CIR', name: 'Current instruction register', type: 'register', hint: 'The current instruction register (CIR), also called the IR, holds the instruction for the CU to decode. The CU then directs the ALU.' },
@@ -953,7 +1096,8 @@
   const clock = { rate: 2, running: false, frame: 0, baseCycles: 0, chosenCycles: 0, chosenFinished: false };
   const cores = { count: 4, workload: 'parallel', completed: 0, steps: 0, history: [[], [], [], []], running: false, timer: 0 };
   const requestSequence = [1, 2, 1, 2, 3, 1, 2, 3, 4, 1, 2, 4];
-  const ramValues = { 1: 17, 2: 42, 3: 8, 4: 25 };
+  const ramValues = { 1: 7, 2: 5, 3: 8, 4: 12 };
+  const cacheBits = value => Number(value).toString(2).padStart(4, '0');
   const cache = { size: 2, cells: [], history: [], position: 0, hits: 0, misses: 0, cycles: 0, last: null, running: false, timer: 0 };
   let initialised = false;
   let buildWireFrame = 0;
@@ -999,7 +1143,7 @@
     };
     const slot = key => rect(board.querySelector('[data-activity-slot="' + key + '"]'));
     const memory = rect(board.querySelector('.activity-memory-boundary'));
-    const colours = { control: '#8b62c7', address: '#087e8b', data: '#397dc6', result: '#d28a33' };
+    const colours = { control: '#2469ff', address: '#2469ff', data: '#2469ff', result: '#4a87ff' };
     const marker = kind => 'url(#activity-build-arrow-' + kind + ')';
     const path = (d, kind, both, name) => '<path' + (name ? ' id="activity-build-wire-' + name + '"' : '') + ' class="activity-builder-wire" d="' + d + '" stroke="' + colours[kind] + '" marker-end="' + marker(kind) + '"' + (both ? ' marker-start="' + marker(kind) + '"' : '') + '/>';
     const pieces = ['<defs>' + Object.keys(colours).map(kind => '<marker id="activity-build-arrow-' + kind + '" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="' + colours[kind] + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker>').join('') + '</defs>'];
@@ -1042,7 +1186,7 @@
     const available = build.order.filter(key => !used.has(key));
     byId('activity-component-bank').innerHTML = available.length ? available.map(key => {
       const item = components[key];
-      return '<button type="button" draggable="true" class="activity-component-chip activity-' + item.type + '" data-activity-component="' + key + '" aria-pressed="' + (build.selected === key) + '" aria-label="Select ' + item.name + '"><strong>' + item.short + '</strong><small>' + item.name + '</small></button>';
+      return '<button type="button" draggable="true" class="activity-component-chip activity-' + item.type + '" data-activity-component="' + key + '" data-activity-colour="' + key + '" aria-pressed="' + (build.selected === key) + '" aria-label="Select ' + item.name + '"><strong>' + item.short + '</strong><small>' + item.name + '</small></button>';
     }).join('') : '<p class="activity-bank-empty">All pieces are on the board.<br>Check how they fit.</p>';
     byId('activity-build-count').textContent = used.size + ' / 11';
     byId('activity-build-selection').textContent = build.selected ? components[build.selected].name + ' selected. Choose a role in the diagram.' : 'No component selected.';
@@ -1054,6 +1198,8 @@
       const feedback = slot.querySelector('.activity-slot-feedback');
       slot.classList.remove('activity-slot-correct', 'activity-slot-wrong', 'activity-hint-target', 'activity-drop-over');
       target.className = 'activity-drop-target';
+      slot.dataset.activityColour = placed || '';
+      target.dataset.activityColour = placed || '';
       target.setAttribute('aria-pressed', String(Boolean(placed && build.selected === placed)));
       removal.hidden = !placed;
       if (placed) {
@@ -1365,17 +1511,17 @@
       const history = cache.history[index];
       const completed = Boolean(history);
       const classes = 'activity-cache-request' + (completed ? history.hit ? ' activity-cache-hit' : ' activity-cache-miss' : '') + (index === cache.position - 1 ? ' activity-request-current' : '');
-      return '<span class="' + classes + '" aria-label="Request ' + (index + 1) + ', address ' + address + (completed ? history.hit ? ', hit' : ', miss' : ', waiting') + '"><small>@</small><strong>' + address + '</strong></span>';
+      return '<span class="' + classes + '" aria-label="Request ' + (index + 1) + ', address ' + cacheBits(address) + (completed ? history.hit ? ', hit' : ', miss' : ', waiting') + '"><small>@</small><strong>' + cacheBits(address) + '</strong></span>';
     }).join('');
     const slots = cache.size ? '<div class="activity-cache-slots">' + Array.from({ length: cache.size }, (_, i) => {
       const address = cache.cells[i];
-      return address === undefined ? '<div class="activity-cache-cell"><strong>—</strong><small>empty</small></div>' : '<div class="activity-cache-cell activity-cache-filled' + (cache.last && cache.last.address === address ? ' activity-cache-hot' : '') + '"><small>address ' + address + '</small><strong>' + ramValues[address] + '</strong></div>';
+      return address === undefined ? '<div class="activity-cache-cell"><strong>—</strong><small>empty</small></div>' : '<div class="activity-cache-cell activity-cache-filled' + (cache.last && cache.last.address === address ? ' activity-cache-hot' : '') + '" role="group" aria-label="Address ' + cacheBits(address) + ', value ' + cacheBits(ramValues[address]) + '"><small>@' + cacheBits(address) + '</small><strong>' + cacheBits(ramValues[address]) + '</strong></div>';
     }).join('') + '</div>' : '<p class="activity-cache-off">No cached copies.<br>Every request uses RAM.</p>';
     const hit = cache.last && cache.last.hit;
     const miss = cache.last && !cache.last.hit;
     const firstArrow = cache.last ? ' activity-flow-active' + (hit ? ' activity-flow-hit' : '') : '';
     const secondArrow = miss ? ' activity-flow-active' : '';
-    byId('activity-cache-flow').innerHTML = '<div class="activity-cache-cpu"><span aria-hidden="true">▦</span>CPU</div><div class="activity-cache-arrow' + firstArrow + '" aria-hidden="true"></div><div class="activity-cache-box"><span>CACHE · ' + (cache.size ? cache.size + ' SLOTS' : 'OFF') + '</span>' + slots + '</div><div class="activity-cache-arrow' + secondArrow + '" aria-hidden="true"></div><div class="activity-cache-ram"><strong>RAM</strong>' + Object.keys(ramValues).map(address => '<div class="activity-cache-ram-data' + (miss && Number(address) === cache.last.address ? ' activity-ram-read' : '') + '"><span>@' + address + '</span><b>' + ramValues[address] + '</b></div>').join('') + '</div>';
+    byId('activity-cache-flow').innerHTML = '<div class="activity-cache-cpu"><span aria-hidden="true">▦</span>CPU</div><div class="activity-cache-arrow' + firstArrow + '" aria-hidden="true"></div><div class="activity-cache-box"><span>CACHE · ' + (cache.size ? cache.size + ' SLOTS' : 'OFF') + '</span>' + slots + '</div><div class="activity-cache-arrow' + secondArrow + '" aria-hidden="true"></div><div class="activity-cache-ram"><strong>RAM</strong>' + Object.keys(ramValues).map(address => '<div class="activity-cache-ram-data' + (miss && Number(address) === cache.last.address ? ' activity-ram-read' : '') + '"><span>@' + cacheBits(address) + '</span><b>' + cacheBits(ramValues[address]) + '</b></div>').join('') + '</div>';
     byId('activity-cache-hits').textContent = cache.hits;
     byId('activity-cache-misses').textContent = cache.misses;
     byId('activity-cache-cycles').textContent = cache.cycles;
@@ -1427,12 +1573,12 @@
     cache.history.push(cache.last);
     cache.position++;
     renderCache();
-    let message = 'Request ' + cache.position + ' / 12: address ' + address + '. ';
+    let message = 'Request ' + cache.position + ' / 12: address ' + cacheBits(address) + '. ';
     if (hit) {
-      message += 'HIT — use the cached value ' + ramValues[address] + '. +1 cycle.';
+      message += 'HIT — use the cached value ' + cacheBits(ramValues[address]) + '. +1 cycle.';
     } else {
-      message += 'MISS — read value ' + ramValues[address] + ' from RAM. +5 cycles.';
-      if (evicted !== null) message += ' Replace address ' + evicted + ', the least recently used entry.';
+      message += 'MISS — read value ' + cacheBits(ramValues[address]) + ' from RAM. +5 cycles.';
+      if (evicted !== null) message += ' Replace address ' + cacheBits(evicted) + ', the least recently used entry.';
       else if (cache.size) message += ' Keep a copy in cache.';
     }
     if (cache.position === requestSequence.length) {
@@ -1517,9 +1663,7 @@
   'use strict';
   const $ = id => document.getElementById(id);
   const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const bits = value => (value & 255).toString(2).padStart(8, '0');
-  const hex = value => '0x' + (value & 255).toString(16).toUpperCase().padStart(2, '0');
-  const pad = value => String(value).padStart(2, '0');
+  const bits = value => Number.isInteger(value) && value >= 0 && value <= 15 ? value.toString(2).padStart(4, '0') : '—';
   const visibleRegister = key => key === 'CIR' ? 'CIR (IR)' : key;
   const visibleCPUText = text => String(text);
   const content = window.CPUContent;
@@ -1532,6 +1676,12 @@
   let assemblyDraft = '', sourceMode = 'assembly';
   const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  const cpuPalette = {
+    CU:'#ff6c20', ALU:'#ff6c20', PC:'#2bcfff', CIR:'#2bcfff', MAR:'#9dd241',
+    ACC:'#4a87ff', MDR:'#4a87ff', RAM:'#ffeeaa',
+    ADDRESS:'#2469ff', DATA:'#2469ff', CONTROL:'#2469ff', CACHE:'#ffeeaa', CLOCK:'#f3228a'
+  };
+
   const cpuRoutes = {
     'pc-mar': 'M 388 176 V 202 H 621 V 225',
     'mdr-ir': 'M 621 392 V 350 H 476',
@@ -1539,51 +1689,90 @@
     'cu-alu': 'M 621 80 V 62 H 147 V 80',
     'mdr-alu': 'M 526 416 H 276 V 184 H 250',
     'alu-acc': 'M 147 244 V 392',
-    'acc-mdr': 'M 250 440 H 526'
+    'acc-mdr': 'M 250 440 H 526',
+    'mdr-mar': 'M 621 392 V 321'
   };
+
+  function cycleClock(prefix, live) {
+    const phases = [
+      {name:'fetch',label:'Fetch',x:0,y:-53,anchor:'middle'},
+      {name:'decode',label:'Decode',x:53,y:32,anchor:'start'},
+      {name:'execute',label:'Execute',x:-53,y:32,anchor:'end'}
+    ];
+    const arc = index => {
+      const angle = degrees => degrees*Math.PI/180;
+      const start=angle(index*120-145), end=angle(index*120-35), r=36;
+      return `M ${r*Math.cos(start)} ${r*Math.sin(start)} A ${r} ${r} 0 0 1 ${r*Math.cos(end)} ${r*Math.sin(end)}`;
+    };
+    return `<g id="${prefix}-cycle-clock" class="cycle-clock${live?'':' cycle-preview'}" role="img" aria-label="Fetch, decode, execute cycle${live?': ready to fetch':': animated stage preview'}" data-stage-index="0" data-clock-angle="0" transform="translate(388 514)">
+      <title>Fetch–decode–execute cycle. The dial shows instruction stages, not hardware clock cycles.</title>
+      <circle class="cycle-face" r="42"/>
+      ${phases.map((p,i)=>`<g class="cycle-stage${i===0?' active-stage':''}" data-cycle-stage="${p.name}"><path class="cycle-arc" d="${arc(i)}"/><text x="${p.x}" y="${p.y}" text-anchor="${p.anchor}">${p.label}</text></g>`).join('')}
+      <g id="${prefix}-cycle-hand" class="cycle-hand"><path d="M 0 6 V -27"/><path class="cycle-hand-tip" d="M -4 -22 L 0 -30 L 4 -22 Z"/></g>
+      <circle class="cycle-pin" r="4"/>
+      <text class="cycle-caption" x="0" y="58" text-anchor="middle">F–D–E cycle${live?'':' · preview'}</text>
+    </g>`;
+  }
+
+  function updateCycleClock(prefix, phase) {
+    const dial=$(prefix+'-cycle-clock'), hand=$(prefix+'-cycle-hand');
+    if(!dial||!hand)return;
+    const names=['fetch','decode','execute'];
+    const previous=Number(dial.dataset.stageIndex||0);
+    const mapped={fetch:0,decode:1,execute:2,halt:2,input:2};
+    const next=phase ? (mapped[phase]??previous) : 0;
+    const angle=phase ? Number(dial.dataset.clockAngle||0)+((next-previous+3)%3)*120 : 0;
+    dial.dataset.stageIndex=String(next);dial.dataset.clockAngle=String(angle);
+    hand.style.transform='rotate('+angle+'deg)';
+    dial.querySelectorAll('[data-cycle-stage]').forEach(node=>node.classList.toggle('active-stage',node.dataset.cycleStage===names[next]));
+    const state=phase==='halt'?'halted after execute':phase==='input'?'execute, waiting for input':phase==='error'?'stopped':phase?names[next]:'ready to fetch';
+    dial.setAttribute('aria-label','Fetch, decode, execute cycle: '+state);
+  }
 
   function diagram(prefix, live) {
     const register = (key,x,y,w,h,fill,subtitle) => {
       const alu = key === 'ALU';
       const valueY = alu ? y+100 : y+77;
-      const caption = {CU:'decodes & coordinates',ALU:'calculates & compares',PC:'next instruction address',MAR:'address sent to RAM',MDR:'word moving to / from RAM',CIR:'CU decodes this',ACC:'result held here first'}[key];
-      return `<g class="cpu-node" data-component="${key}" tabindex="0" role="button" aria-label="${key==='CIR'?'Current instruction register, CIR (IR)':esc(content.components[key].name)}"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="${fill}"/><text class="node-title" x="${x+16}" y="${y+31}">${key}</text><text class="node-name" x="${x+16}" y="${y+51}">${subtitle}</text><text class="node-value" id="${prefix}-value-${key}" x="${x+16}" y="${valueY}">${live ? (['CU','ALU'].includes(key)?'—':'0') : ''}</text>${live?'':`<text class="node-caption" x="${x+16}" y="${alu?y+93:y+76}">${caption}</text>`}${alu?`<text class="alu-result" id="${prefix}-alu-result" x="${x+16}" y="${y+137}">${live?'result → ACC':'7 + 5 = 12 → ACC'}</text>`:''}</g>`;
+      const caption = {CU:'decodes & coordinates',ALU:'calculates & compares',PC:'next program word',MAR:'address sent to RAM',MDR:'word moving to / from RAM',CIR:'CU decodes this',ACC:'result held here first'}[key];
+      return `<g class="cpu-node" data-component="${key}" tabindex="0" role="button" aria-label="${key==='CIR'?'Current instruction register, CIR (IR)':esc(content.components[key].name)}"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="${fill}"/><text class="node-title" x="${x+16}" y="${y+31}">${key}</text><text class="node-name" x="${x+16}" y="${y+51}">${subtitle}</text><text class="node-value" id="${prefix}-value-${key}" x="${x+16}" y="${valueY}">${live ? (['CU','ALU'].includes(key)?'—':'0000') : ''}</text>${live?'':`<text class="node-caption" x="${x+16}" y="${alu?y+93:y+76}">${caption}</text>`}${alu?`<text class="alu-result" id="${prefix}-alu-result" x="${x+16}" y="${y+137}">${live?'result → ACC':'0111 + 0101 → 1100'}</text>`:''}</g>`;
     };
     const arrow = (key,color) => `<marker id="${prefix}-arrow-${key}" markerWidth="7" markerHeight="7" refX="5.3" refY="3.5" orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M 1 1 L 5.5 3.5 L 1 6" fill="none" stroke="${color}" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></marker>`;
     const bus = (key,y,color,label,both) => `<g class="bus-group" data-component="${key}" tabindex="0" role="button" aria-label="${esc(content.components[key].name)}"><rect x="718" y="${y-31}" width="224" height="55" fill="transparent"/><path id="${prefix}-bus-${key}" class="bus-line" d="M 716 ${y} H 950" stroke="${color}" marker-end="url(#${prefix}-arrow-${key})" ${both?`marker-start="url(#${prefix}-arrow-${key})"`:''}/><circle class="bus-port" cx="716" cy="${y}" r="4" fill="${color}"/><text class="bus-label" x="833" y="${y-17}" fill="${color}" text-anchor="middle">${label}</text></g>`;
-    const wire = (name,color,arrowKey,both=false) => `<path id="${prefix}-wire-${name}" class="internal-route${name==='cu-alu'?' control-route':''}" d="${cpuRoutes[name]}" fill="none" stroke="${color}" marker-end="url(#${prefix}-arrow-${arrowKey})" ${both?`marker-start="url(#${prefix}-arrow-${arrowKey})"`:''}/>`;
-    return `<svg class="cpu-diagram cpu-diagram-v2 cpu-diagram-v3" viewBox="0 0 1160 620" role="group" aria-label="CPU: ALU top-left, ACC directly below and level with MDR on the right; CIR in the centre, PC and CU above, MAR and MDR connected directly to buses and RAM">
-      <defs>${arrow('ADDRESS','#087f8c')}${arrow('DATA','#397dc6')}${arrow('CONTROL','#8b62c7')}${arrow('WORK','#b9782e')}${arrow('INTERNAL','#a6b7c7')}</defs>
+    const wire = (name,color,arrowKey,both=false) => `<path id="${prefix}-wire-${name}" class="internal-route${name==='cu-alu'?' control-route':''}" d="${cpuRoutes[name]}" fill="none" stroke="${color}" style="--route-colour:${color}" marker-end="url(#${prefix}-arrow-${arrowKey})" ${both?`marker-start="url(#${prefix}-arrow-${arrowKey})"`:''}/>`;
+    return `<svg class="cpu-diagram cpu-diagram-v2 cpu-diagram-v3 cpu-diagram-v4" viewBox="0 0 1160 650" role="group" aria-label="CPU: ALU top-left, ACC directly below and level with MDR on the right; CIR in the centre, PC and CU above, MAR and MDR connected directly to buses and RAM">
+      <defs>${arrow('ADDRESS',cpuPalette.ADDRESS)}${arrow('DATA',cpuPalette.DATA)}${arrow('CONTROL',cpuPalette.CONTROL)}${arrow('WORK',cpuPalette.ALU)}${arrow('INSTRUCTION',cpuPalette.CIR)}${arrow('REGISTER',cpuPalette.MDR)}</defs>
       <text x="32" y="27" class="chip-label">CENTRAL PROCESSING UNIT</text>
-      <rect class="cpu-outline" x="16" y="43" width="730" height="510" rx="18"/>
-      ${wire('pc-mar','#afc4d5','INTERNAL')}
-      ${wire('mdr-ir','#b4c4d3','INTERNAL')}
-      ${wire('ir-cu','#b49ad5','CONTROL')}
-      ${wire('cu-alu','#b49ad5','CONTROL')}
-      ${wire('mdr-alu','#afc4d5','INTERNAL')}
-      ${wire('alu-acc','#d2a777','WORK',true)}
-      ${wire('acc-mdr','#d2a777','WORK',true)}
-      ${register('ALU',44,80,206,164,'#fff0da','Arithmetic logic unit')}
-      ${register('PC',300,80,176,96,'#e7effb','Program counter')}
-      ${register('CU',526,80,190,96,'#eee8fb','Control unit')}
-      ${register('CIR',300,262,176,112,'#eee8fb','Instruction register')}
-      ${register('MAR',526,225,190,96,'#ddf1ec','Memory address register')}
-      ${register('ACC',44,392,206,96,'#fff0da','Accumulator')}
-      ${register('MDR',526,392,190,96,'#e6f0fc','Memory data register')}
+      <rect class="cpu-outline" x="16" y="43" width="730" height="542" rx="18"/>
+      ${wire('pc-mar',cpuPalette.PC,'INSTRUCTION')}
+      ${wire('mdr-ir',cpuPalette.MDR,'REGISTER')}
+      ${wire('ir-cu',cpuPalette.CIR,'INSTRUCTION')}
+      ${wire('cu-alu',cpuPalette.CU,'WORK')}
+      ${wire('mdr-alu',cpuPalette.MDR,'REGISTER')}
+      ${wire('alu-acc',cpuPalette.ALU,'WORK',true)}
+      ${wire('acc-mdr',cpuPalette.ACC,'REGISTER',true)}
+      ${wire('mdr-mar',cpuPalette.MDR,'REGISTER')}
+      ${register('ALU',44,80,206,164,cpuPalette.ALU,'Arithmetic logic unit')}
+      ${register('PC',300,80,176,96,cpuPalette.PC,'Program counter')}
+      ${register('CU',526,80,190,96,cpuPalette.CU,'Control unit')}
+      ${register('CIR',300,262,176,112,cpuPalette.CIR,'Instruction register')}
+      ${register('MAR',526,225,190,96,cpuPalette.MAR,'Memory address register')}
+      ${register('ACC',44,392,206,96,cpuPalette.ACC,'Accumulator')}
+      ${register('MDR',526,392,190,96,cpuPalette.MDR,'Memory data register')}
       <text class="control-route-label" x="388" y="56" text-anchor="middle">CU selects the ALU operation</text>
       <text class="route-label" x="161" y="319">result ↓</text>
-      <text class="route-label" x="388" y="466" text-anchor="middle">copy on STA →</text>
-      ${bus('CONTROL',128,'#8b62c7','CONTROL BUS',true)}
-      ${bus('ADDRESS',273,'#087f8c','ADDRESS BUS',false)}
-      ${bus('DATA',440,'#397dc6','DATA BUS',true)}
+      <text class="route-label" x="388" y="428" text-anchor="middle">copy on STA →</text>
+      ${bus('CONTROL',128,cpuPalette.CONTROL,'CONTROL BUS',true)}
+      ${bus('ADDRESS',273,cpuPalette.ADDRESS,'ADDRESS BUS',false)}
+      ${bus('DATA',440,cpuPalette.DATA,'DATA BUS',true)}
       <text x="833" y="152" class="bus-caption" text-anchor="middle">READ / WRITE →</text>
       <text x="833" y="170" class="bus-caption" text-anchor="middle">← status / interrupts</text>
       <text x="833" y="297" class="bus-caption" text-anchor="middle">MAR selects the location</text>
       <text x="833" y="464" class="bus-caption" text-anchor="middle">MDR transfers the word</text>
-      <g class="cpu-node" data-component="RAM" tabindex="0" role="button" aria-label="Main memory RAM"><rect x="950" y="80" width="184" height="450" rx="13" fill="#e8f2ef"/><text class="node-title" x="970" y="115">RAM</text><text class="node-name" x="970" y="139">Main memory</text><text class="node-caption" x="970" y="163">instructions + data</text>${[0,1,2,3].map(n=>`<rect x="966" y="${206+n*62}" width="152" height="44" rx="7" fill="#ffffffc9"/><text x="978" y="${233+n*62}" id="${prefix}-ram-${n}" style="font-family:monospace;font-size:16px;fill:#326f72">${live?pad(n)+': 00000000':['00: LDA 4','01: ADD 5','04: 7','05: 5'][n]}</text>`).join('')}<text class="node-caption" x="970" y="505">16 addresses · 0 to 15</text></g>
-      ${live?`<g data-component="INPUT" class="extra-node"><rect x="44" y="575" width="206" height="30" rx="7"/><text x="147" y="595" text-anchor="middle">INPUT → ACC</text></g><g data-component="OUTPUT" class="extra-node"><rect x="510" y="575" width="206" height="30" rx="7"/><text x="613" y="595" text-anchor="middle">ACC → OUTPUT</text></g>`:`<g data-component="CACHE" tabindex="0" role="button" aria-label="Learn about cache memory" class="extra-node"><rect x="44" y="575" width="206" height="30" rx="7"/><text x="147" y="595" text-anchor="middle">+ EXPLORE CACHE</text></g><g data-component="CLOCK" tabindex="0" role="button" aria-label="Learn about the CPU clock" class="extra-node"><rect x="510" y="575" width="206" height="30" rx="7"/><text x="613" y="595" text-anchor="middle">+ EXPLORE THE CLOCK</text></g>`}
-      <circle id="${prefix}-packet" class="cpu-packet" r="8" visibility="hidden"><animateMotion id="${prefix}-motion" dur="0.65s" begin="indefinite" fill="freeze" path="M 0 0 L 1 1"/></circle>
-      <circle id="${prefix}-packet-secondary" class="cpu-packet cpu-packet-secondary" r="7" visibility="hidden"><animateMotion id="${prefix}-motion-secondary" dur="0.65s" begin="indefinite" fill="freeze" path="M 0 0 L 1 1"/></circle>
+      <g class="cpu-node single-ram" data-component="RAM" tabindex="0" role="button" aria-label="RAM: sixteen four-bit words"><rect x="950" y="80" width="184" height="505" rx="13" fill="#fff9e4"/><text class="node-title" x="970" y="115">RAM</text><text class="node-name" x="970" y="139">instructions + data</text><text class="ram-column-label" x="978" y="174">ADDRESS</text><text class="ram-column-label" x="1051" y="174">BITS</text>${Array.from({length:16},(_,n)=>`<g id="${prefix}-ram-row-${n}" class="ram-word-row" data-ram-address="${n}"><title id="${prefix}-ram-title-${n}">RAM[${bits(n)}]</title><rect x="966" y="${187+n*22}" width="152" height="20" rx="4" fill="${cpuPalette.RAM}"/><text class="ram-address-text" x="978" y="${202+n*22}">${bits(n)}</text><text class="ram-word-text" x="1051" y="${202+n*22}" id="${prefix}-ram-value-${n}">${live?'0000':bits([1,6,3,7,6,0,7,5,0,0,0,0,0,0,0,0][n])}</text></g>`).join('')}<text class="node-caption" x="970" y="566">4 bits in every cell</text></g>
+      ${cycleClock(prefix,live)}
+      ${live?`<g data-component="INPUT" class="extra-node"><rect x="44" y="605" width="206" height="30" rx="7"/><text x="147" y="625" text-anchor="middle">INPUT → ACC</text></g><g data-component="OUTPUT" class="extra-node"><rect x="510" y="605" width="206" height="30" rx="7"/><text x="613" y="625" text-anchor="middle">ACC → OUTPUT</text></g>`:`<g data-component="CACHE" tabindex="0" role="button" aria-label="Learn about cache memory" class="extra-node"><rect x="44" y="605" width="206" height="30" rx="7"/><text x="147" y="625" text-anchor="middle">+ EXPLORE CACHE</text></g><g data-component="CLOCK" tabindex="0" role="button" aria-label="Learn about the CPU clock" class="extra-node"><rect x="510" y="605" width="206" height="30" rx="7"/><text x="613" y="625" text-anchor="middle">+ EXPLORE THE CLOCK</text></g>`}
+      <g id="${prefix}-packet" class="cpu-packet" visibility="hidden"><rect x="-29" y="-15" width="58" height="30" rx="8"/><text id="${prefix}-packet-value" text-anchor="middle" y="5">0000</text><animateMotion id="${prefix}-motion" dur="0.65s" begin="indefinite" fill="freeze" path="M 0 0 L 1 1"/></g>
+      <g id="${prefix}-packet-secondary" class="cpu-packet cpu-packet-secondary" visibility="hidden"><rect x="-29" y="-15" width="58" height="30" rx="8"/><text id="${prefix}-packet-secondary-value" text-anchor="middle" y="5">0000</text><animateMotion id="${prefix}-motion-secondary" dur="0.65s" begin="indefinite" fill="freeze" path="M 0 0 L 1 1"/></g>
     </svg>`;
   }
 
@@ -1598,8 +1787,8 @@
       return;
     }
     selectedComponent = key;
-    $('component-detail').innerHTML = `<span class="tiny-tag ${['CU','CIR'].includes(key)?'purple-tag':['ALU','ACC'].includes(key)?'orange-tag':'teal-tag'}">${['PC','MAR','MDR','CIR','ACC'].includes(key)?'MEET A REGISTER':['ADDRESS','DATA','CONTROL'].includes(key)?'FOLLOW THE CONNECTION':'EXPLORE THE COMPONENT'}</span><div class="component-code">${esc(visibleRegister(key))}</div><h2>${esc(c.name)}</h2><p class="component-role">${esc(c.role)}</p><div class="example-box"><span>SEE IT IN ACTION</span><p>${esc(c.example)}</p></div><div class="exam-tip"><span>REMEMBER FOR THE EXAM</span><p>${esc(c.examTip)}</p></div><div class="component-pager"><button class="button light" id="component-prev">← Previous</button><button class="button light" id="component-next">Next part →</button></div>`;
-    $('component-detail').style.borderTopColor = ['CU','CIR','CONTROL'].includes(key) ? '#7557d5' : ['ALU','ACC'].includes(key)?'#ee973b':'#087f8c';
+    $('component-detail').innerHTML = `<span class="tiny-tag component-palette-tag" style="background:${cpuPalette[key]||'#edf3f5'};color:${['ADDRESS','DATA','CONTROL'].includes(key)?'#ffffff':key==='CLOCK'?'#000000':'#102237'}">${['PC','MAR','MDR','CIR','ACC'].includes(key)?'MEET A REGISTER':['ADDRESS','DATA','CONTROL'].includes(key)?'FOLLOW THE CONNECTION':'EXPLORE THE COMPONENT'}</span><div class="component-code">${esc(visibleRegister(key))}</div><h2>${esc(c.name)}</h2><p class="component-role">${esc(c.role)}</p><div class="example-box"><span>SEE IT IN ACTION</span><p>${esc(c.example)}</p></div><div class="exam-tip"><span>REMEMBER FOR THE EXAM</span><p>${esc(c.examTip)}</p></div><div class="component-pager"><button class="button light" id="component-prev">← Previous</button><button class="button light" id="component-next">Next part →</button></div>`;
+    $('component-detail').style.borderTopColor = cpuPalette[key] || '#172b45';
     document.querySelectorAll('#explore-diagram [data-component]').forEach(node=>node.classList.toggle('selected',node.dataset.component===key));
     $('component-prev').onclick=()=>showComponent(componentOrder[(componentOrder.indexOf(key)+12)%13]);
     $('component-next').onclick=()=>showComponent(componentOrder[(componentOrder.indexOf(key)+1)%13]);
@@ -1639,14 +1828,17 @@
       extraPath=cpuRoutes['mdr-alu'];routes=['alu-acc','mdr-alu','cu-alu'];
     }
     else if(transfer==='CIR → CU'){path=cpuRoutes['ir-cu'];routes=['ir-cu'];}
-    else if(transfer==='CIR operand → MAR')path='M 476 318 H 514 V 273 H 526';
-    else if(transfer==='CIR operand → PC')path='M 388 262 V 176';
-    else if(transfer==='INPUT → ACC')path='M 147 575 V 488';
-    else if(transfer==='ACC → OUTPUT')path='M 147 488 V 548 H 613 V 575';
+    else if(transfer==='MDR → MAR'){path=cpuRoutes['mdr-mar'];routes=['mdr-mar'];}
+    else if(transfer==='MDR → PC')path='M 526 416 H 488 V 190 H 388 V 176';
+    else if(transfer==='INPUT → ACC')path='M 147 605 V 488';
+    else if(transfer==='ACC → OUTPUT')path='M 147 488 V 580 H 613 V 605';
     else if(transfer==='ACC → ALU → CU'){
       path='M 147 392 V 244';extraPath='M 147 80 V 62 H 621 V 80';routes=['alu-acc','cu-alu'];
     }
     else if(event.phase==='decode'){path=cpuRoutes['ir-cu'];routes=['ir-cu'];}
+    const token=event.bus==='control'?(transfer.includes('WRITE')?'WRITE':'READ'):event.alu?bits(event.alu.left):bits(event.value);
+    $(prefix+'-packet-value').textContent=token;
+    $(prefix+'-packet-secondary-value').textContent=event.alu?bits(event.alu.right):'TEST';
     routes.forEach(id=>$(prefix+'-wire-'+id)?.classList.add('route-active'));
     if(!path||reducedMotion)return;
     const duration=(prefix==='sim'?Math.min(Number($('speed-select').value)*.85,900):800)+'ms';
@@ -1661,8 +1853,8 @@
   function parseInputs(text) {
     if(!text.trim())return [];
     return text.trim().split(/[,\s]+/).map(value=>{
-      if(!/^[+-]?\d+$/.test(value)||Number(value)<-128||Number(value)>127)throw Error('Input values must be whole numbers from −128 to 127, separated by commas or spaces.');
-      return Number(value);
+      if(!/^[01]{4}$/.test(value))throw Error('Enter four-bit binary values, such as 0101, separated by commas or spaces.');
+      return parseInt(value,2);
     });
   }
 
@@ -1677,8 +1869,8 @@
       const candidate=model.assemble($('program-source').value,$('source-mode').value);
       const inputs=parseInputs($('input-values').value);
       program=candidate;cpu=new model.CPU(program,inputs);trace=[];lastEvent=null;dirty=false;
-      editorMessage(`Loaded ${program.listing.length} of 16 memory bytes.`,true);
-      $('assemble-button').textContent=$('source-mode').value==='assembly'?'Assemble & load':'Load bytes';
+      editorMessage(`Loaded ${program.listing.length} of 16 four-bit memory cells.`,true);
+      $('assemble-button').textContent=$('source-mode').value==='assembly'?'Assemble & load':'Load binary';
       renderMachine();renderTrace();saveDraft();
       return true;
     }catch(error){dirty=true;editorMessage(error.message);setStatus('Fix your code','error');return false;}
@@ -1687,7 +1879,7 @@
   function setStatus(text,kind){$('machine-status').textContent=text;$('machine-status').className='status-chip'+(kind?' '+kind:'');}
 
   function saveDraft() {
-    try{localStorage.setItem('rgsv-cpu-lab-draft-v1',JSON.stringify({source:$('program-source').value,mode:$('source-mode').value,inputs:$('input-values').value}));}catch(_){}
+    try{localStorage.setItem('rgsv-cpu-lab-draft-v2-4bit',JSON.stringify({source:$('program-source').value,mode:$('source-mode').value,inputs:$('input-values').value}));}catch(_){}
   }
 
   function loadSample(id) {
@@ -1696,15 +1888,15 @@
     $('sample-select').value=sample.id;
     $('source-mode').value='assembly';sourceMode='assembly';
     $('program-source').value=sample.source;assemblyDraft=sample.source;
-    $('input-values').value=(sample.input||[]).join(', ');
+    $('input-values').value=(sample.input||[]).map(bits).join(', ');
     updateModeHint();dirty=true;assembleCurrent();
     editorMessage(sample.description,true);
   }
 
   function updateModeHint(){
     const machine=$('source-mode').value==='machine';
-    $('source-hint').innerHTML=machine?'One byte per line: <code>0001 0100</code>, <code>0x14</code> or <code>20</code>.':'Use labels such as <code>NUM: DAT 7</code>. Comments start with <code>;</code>.';
-    $('assemble-button').textContent=machine?'Load bytes':'Assemble & load';
+    $('source-hint').innerHTML=machine?'One four-bit word per line, such as <code>0001</code>. An address follows its opcode in the next cell.':'Use labels and binary data: <code>NUM: DAT 0111</code>. Comments start with <code>;</code>.';
+    $('assemble-button').textContent=machine?'Load binary':'Assemble & load';
   }
 
   function switchMode(){
@@ -1715,14 +1907,24 @@
       try{
         const p=model.assemble($('program-source').value,'assembly');
         assemblyDraft=$('program-source').value;
-        $('program-source').value=p.listing.map(r=>{const b=bits(r.word);return b.slice(0,4)+' '+b.slice(4)+' ; '+r.text;}).join('\n');
+        $('program-source').value=p.listing.map(r=>bits(r.word)+' ; '+r.text).join('\n');
       }catch(error){$('source-mode').value=sourceMode;editorMessage('Fix the assembly before converting it: '+error.message);return;}
     }else{
       try{
         const p=model.assemble($('program-source').value,'machine');
         let old=null;try{old=model.assemble(assemblyDraft,'assembly');}catch(_){}
         if(old && old.listing.length===p.listing.length && p.memory.every((x,i)=>x===old.memory[i]))$('program-source').value=assemblyDraft;
-        else $('program-source').value=p.listing.map(r=>{const d=model.decodeWord(r.word);return d.valid?d.mnemonic+(d.hasOperand?' '+d.operand:''):'DAT '+model.toSigned(r.word);}).join('\n');
+        else {
+          const lines=[];let address=0,afterHalt=false;
+          while(address<p.listing.length){
+            const d=model.decodeWord(p.memory[address]);
+            if(!afterHalt&&d.valid&&(!d.hasOperand||address+1<p.listing.length)){
+              lines.push(d.mnemonic+(d.hasOperand?' '+bits(p.memory[address+1]):''));
+              address+=d.hasOperand?2:1;if(d.mnemonic==='HLT')afterHalt=true;
+            }else{lines.push('DAT '+bits(p.memory[address]));address++;}
+          }
+          $('program-source').value=lines.join('\n');
+        }
       }catch(error){$('source-mode').value=sourceMode;editorMessage(error.message);return;}
     }
     sourceMode=next;updateModeHint();dirty=true;assembleCurrent();
@@ -1730,39 +1932,36 @@
 
   function renderMachine(){
     if(!cpu)return;
+    updateCycleClock('sim',lastEvent?.phase);
     ['PC','MAR','MDR','CIR','ACC'].forEach(key=>{
       const v=cpu[key.toLowerCase()];
-      $("sim-value-"+key).textContent=['MDR','CIR'].includes(key)?hex(v):key==='ACC'?String(v):pad(v);
+      $("sim-value-"+key).textContent=bits(v);
     });
     $('sim-value-CU').textContent=lastEvent?.phase==='decode'?'decode':lastEvent?.bus==='control'?(lastEvent.detail.includes('WRITE')?'WRITE':'READ'):'control';
-    $('sim-value-ALU').textContent=lastEvent?.alu?`${lastEvent.alu.left} ${lastEvent.alu.operation==='SUB'?'-':'+'} ${lastEvent.alu.right}`:'arithmetic / logic';
+    $('sim-value-ALU').textContent=lastEvent?.alu?`${bits(lastEvent.alu.left)} ${lastEvent.alu.operation==='SUB'?'-':'+'} ${bits(lastEvent.alu.right)}`:'ready';
     document.querySelectorAll('#sim-diagram [data-component]').forEach(node=>{
       const key=node.dataset.component;
       node.classList.toggle('active',!!(lastEvent && ((lastEvent.active||[]).includes(key)||key.toLowerCase()===lastEvent.bus)));
     });
-    $('sim-alu-result').textContent=lastEvent?.alu?'result '+lastEvent.alu.result+' → ACC':'result → ACC';
-    for(let n=0;n<4;n++)$('sim-ram-'+n).textContent=pad(n)+': '+bits(cpu.memory[n]);
-    const instructionBits=bits(cpu.cir);
-    $('opcode-bits').textContent=instructionBits.slice(0,4);$('operand-bits').textContent=instructionBits.slice(4);
+    $('sim-alu-result').textContent=lastEvent?.alu?'result '+bits(lastEvent.alu.result)+' → ACC':'result → ACC';
+    for(let n=0;n<16;n++){
+      $('sim-ram-value-'+n).textContent=bits(cpu.memory[n]);
+      const row=$('sim-ram-row-'+n), item=program.listing.find(r=>r.address===n);
+      row.classList.toggle('ram-next',cpu.pc===n&&!cpu.halted);
+      row.classList.toggle('ram-selected',cpu.mar===n);
+      row.classList.toggle('ram-active',lastEvent?.address===n);
+      $('sim-ram-title-'+n).textContent='RAM['+bits(n)+'] = '+bits(cpu.memory[n])+(item?.kind==='operand'?' · address word':item?.isData?' · data':item?.kind==='opcode'?' · opcode':'');
+    }
+    $('opcode-bits').textContent=bits(cpu.cir);
     const decoded=model.decodeWord(cpu.cir);
-    $('instruction-name').textContent=cpu.microsteps>=5?(decoded.valid?decoded.mnemonic+(decoded.hasOperand?' '+decoded.operand:''):'invalid byte'):'not fetched';
+    const current=cpu.currentInstruction;
+    $('instruction-name').textContent=cpu.microsteps>=5?(decoded.valid?decoded.mnemonic+(decoded.hasOperand&&current?.operand!==null&&current?.operand!==undefined?' '+bits(current.operand):''):'unknown opcode'):'not fetched';
     document.querySelectorAll('.phase-strip [data-phase]').forEach(el=>el.classList.toggle('active',el.dataset.phase===(lastEvent?.phase==='halt'?'execute':lastEvent?.phase==='input'?'execute':lastEvent?.phase)));
     $('instruction-count').textContent=cpu.instructions;
-    $('microstep-count').textContent=cpu.microsteps+' microsteps';
+    $('microstep-count').textContent=cpu.microsteps+(cpu.microsteps===1?' microstep':' microsteps');
     $('input-wait').hidden=!cpu.waiting;
-    $('input-queue').innerHTML=cpu.inputQueue.length?cpu.inputQueue.map(v=>'<span>'+v+'</span>').join(''):'<span class="queue-empty">Queue empty</span>';
-    $('output-values').innerHTML=cpu.output.length?cpu.output.map(v=>`<span class="output-number">${v}</span>`).join(''):'<span class="output-empty">Your results will appear here.</span>';
-    const format=$('value-format').value;
-    $('ram-value-head').textContent=format==='binary'?'Bits':format==='decimal'?'Raw byte':'Byte';
-    document.querySelector('.ram-table').classList.toggle('binary',format==='binary');
-    $('ram-body').innerHTML=cpu.memory.map((word,address)=>{
-      const listing=program.listing.find(r=>r.address===address);
-      const d=model.decodeWord(word);
-      const meaning=listing?.isData?'DAT '+model.toSigned(word):d.valid?d.mnemonic+(d.hasOperand?' '+d.operand:''):'data byte';
-      const number=format==='binary'?bits(word):format==='decimal'?word:hex(word);
-      const classes=[cpu.pc===address&&!cpu.halted?'next':'',cpu.mar===address?'selected':'',lastEvent?.address===address?'active-address':''].filter(Boolean).join(' ');
-      return `<tr class="${classes}" title="Address ${address}; byte ${word}; ${bits(word)}; signed interpretation ${model.toSigned(word)}"><td>${pad(address)}</td><td>${number}</td><td class="${listing?.isData?'data-meaning':!listing&&word===0?'empty-meaning':''}">${meaning}${!listing&&word===0?' · unused':''}</td></tr>`;
-    }).join('');
+    $('input-queue').innerHTML=cpu.inputQueue.length?cpu.inputQueue.map(v=>'<span>'+bits(v)+'</span>').join(''):'<span class="queue-empty">Queue empty</span>';
+    $('output-values').innerHTML=cpu.output.length?cpu.output.map(v=>`<span class="output-number">${bits(v)}</span>`).join(''):'<span class="output-empty">Your results will appear here.</span>';
     if(cpu.error)setStatus('Stopped: error','error');else if(cpu.waiting)setStatus('Needs input','waiting');else if(cpu.halted)setStatus('Halted');else if(running)setStatus('Running','running');else setStatus(cpu.microsteps?'Paused':'Ready');
     $('run-button').innerHTML=running?'<span aria-hidden="true">||</span> Pause':'<span aria-hidden="true">▶</span> Run';
     $('step-button').disabled=!!(cpu.halted&&!dirty);
@@ -1820,14 +2019,14 @@
   }
 
   const challenges=[
-    {title:'01 · Double a number',text:'Read a number from −64 to 63, double it, and output the result. Use a data location to remember the input.',tests:[{input:[5],output:[10]},{input:[8],output:[16]},{input:[-3],output:[-6]}],starter:'INP\n; Store the input, then add it to itself.\nOUT\nHLT\nNUM: DAT 0',solution:'INP\nSTA NUM\nADD NUM\nOUT\nHLT\nNUM: DAT 0'},
-    {title:'02 · Add two inputs',text:'Read two numbers and output their sum. Choose inputs whose sum is within −128 to 127. The second INP replaces ACC, so save the first number.',tests:[{input:[3,4],output:[7]},{input:[-2,5],output:[3]},{input:[10,0],output:[10]}],starter:'INP\n; Remember the first input.\nINP\n; Add the saved value.\nOUT\nHLT\nFIRST: DAT 0',solution:'INP\nSTA FIRST\nINP\nADD FIRST\nOUT\nHLT\nFIRST: DAT 0'},
-    {title:'03 · Countdown to zero',text:'Read a positive number. Output it, then count down one at a time, including zero. Stop when the countdown reaches zero.',tests:[{input:[3],output:[3,2,1,0]},{input:[1],output:[1,0]}],starter:'INP\nLOOP: OUT\n; Test for zero, subtract one, then loop.\nHLT\nONE: DAT 1',solution:'INP\nLOOP: OUT\nBRZ END\nSUB ONE\nBRA LOOP\nEND: HLT\nONE: DAT 1'},
-    {title:'04 · Find the larger number',text:'Read two numbers from −63 to 63 and output the larger one. This range keeps the subtraction within 8-bit limits. Use SUB and BRP to choose a branch. Equal inputs should output that same number.',tests:[{input:[4,7],output:[7]},{input:[9,2],output:[9]},{input:[5,5],output:[5]},{input:[-4,-7],output:[-4]}],starter:'INP\nSTA A\nINP\nSTA B\n; Compare A and B, then output the larger.\nHLT\nA: DAT 0\nB: DAT 0',solution:'INP\nSTA A\nINP\nSTA B\nSUB A\nBRP USE_B\nLDA A\nBRA PRINT\nUSE_B: LDA B\nPRINT: OUT\nHLT\nA: DAT 0\nB: DAT 0'}
+    {title:'01 · Double a value',text:'Read a binary value from 0000 to 0111, double it, and output the result. Keep a copy of the input in RAM.',tests:[{input:[5],output:[10]},{input:[7],output:[14]},{input:[0],output:[0]}],starter:'INP\n; Store the input, then add it to itself.\nOUT\nHLT\nNUM: DAT 0000',solution:'INP\nSTA NUM\nADD NUM\nOUT\nHLT\nNUM: DAT 0000'},
+    {title:'02 · Add two inputs',text:'Read two binary values and output their sum. The sum must fit in four bits. The second INP replaces ACC, so save the first input.',tests:[{input:[3,4],output:[7]},{input:[2,5],output:[7]},{input:[10,0],output:[10]}],starter:'INP\n; Remember the first input.\nINP\n; Add the saved value.\nOUT\nHLT\nFIRST: DAT 0000',solution:'INP\nSTA FIRST\nINP\nADD FIRST\nOUT\nHLT\nFIRST: DAT 0000'},
+    {title:'03 · Countdown to 0000',text:'Read a binary value. Output it, then subtract 0001 each time. Include 0000, then halt.',tests:[{input:[3],output:[3,2,1,0]},{input:[1],output:[1,0]},{input:[0],output:[0]}],starter:'INP\nLOOP: OUT\n; Test for zero, subtract 0001, then loop.\nHLT\nONE: DAT 0001',solution:'INP\nLOOP: OUT\nBRZ END\nSUB ONE\nBRA LOOP\nEND: HLT\nONE: DAT 0001'},
+    {title:'04 · Store and reload',requiresStoreReload:true,text:'Read a value and save it in RAM. Load 0000 into ACC, then reload the saved value and output it. The copied bits must stay identical.',tests:[{input:[7],output:[7]},{input:[12],output:[12]},{input:[15],output:[15]}],starter:'INP\n; Save the value.\nLDA ZERO\n; Reload the saved value.\nOUT\nHLT\nVALUE: DAT 0000\nZERO: DAT 0000',solution:'INP\nSTA VALUE\nLDA ZERO\nLDA VALUE\nOUT\nHLT\nVALUE: DAT 0000\nZERO: DAT 0000'}
   ];
   function showChallenge(){
     const c=challenges[Number($('challenge-select').value)];
-    $('challenge-detail').innerHTML=`<p>${esc(c.text)}</p><p class="small-muted" style="margin-top:7px">Tests: ${c.tests.map(t=>`input ${t.input.join(', ')} → output ${t.output.join(', ')}`).join(' &nbsp; | &nbsp; ')}</p>`;
+    $('challenge-detail').innerHTML=`<p>${esc(c.text)}</p><p class="small-muted" style="margin-top:7px">Tests: ${c.tests.map(t=>`input ${t.input.map(bits).join(', ')} → output ${t.output.map(bits).join(', ')}`).join(' &nbsp; | &nbsp; ')}</p>`;
     $('challenge-feedback').textContent='';$('challenge-answer').hidden=true;
   }
   function checkChallenge(){
@@ -1835,14 +2034,24 @@
     try{
       const p=model.assemble($('program-source').value,$('source-mode').value);
       const results=c.tests.map(t=>{
-        const testCPU=new model.CPU(p,t.input);let steps=0;
-        while(!testCPU.halted&&!testCPU.waiting&&steps<2500){testCPU.step();steps++;}
-        const passed=!testCPU.error&&testCPU.halted&&testCPU.inputQueue.length===0&&JSON.stringify(testCPU.output)===JSON.stringify(t.output);
-        let reason=testCPU.error||(!testCPU.halted?(testCPU.waiting?'requested more inputs':'did not halt within 2,500 teaching steps'):testCPU.inputQueue.length?'did not read every input':'output '+(testCPU.output.length?testCPU.output.join(', '):'(nothing)'));
+        const testCPU=new model.CPU(p,t.input);let steps=0,copyStage=0,savedAddress=null;
+        while(!testCPU.halted&&!testCPU.waiting&&steps<2500){
+          const event=testCPU.step();steps++;
+          if(c.requiresStoreReload){
+            if(copyStage===0&&event.transfer==='MDR → RAM'&&event.value===t.input[0]){savedAddress=event.address;copyStage=1;}
+            else if(copyStage===1&&event.transfer==='MDR → ACC'&&event.value===0)copyStage=2;
+            else if(copyStage===2&&event.transfer==='MDR → ACC'&&event.address===savedAddress&&event.value===t.input[0])copyStage=3;
+            else if(copyStage===3&&event.transfer==='ACC → OUTPUT'&&event.value===t.input[0])copyStage=4;
+          }
+        }
+        const sequencePassed=!c.requiresStoreReload||copyStage===4;
+        const passed=!testCPU.error&&testCPU.halted&&testCPU.inputQueue.length===0&&JSON.stringify(testCPU.output)===JSON.stringify(t.output)&&sequencePassed;
+        let reason=testCPU.error||(!testCPU.halted?(testCPU.waiting?'requested more inputs':'did not halt within 2,500 teaching steps'):testCPU.inputQueue.length?'did not read every input':'output '+(testCPU.output.length?testCPU.output.map(bits).join(', '):'(nothing)'));
+        if(!sequencePassed&&!testCPU.error)reason='store the input, load 0000, reload that same RAM cell, then output the value';
         return {passed,t,reason};
       });
       const all=results.every(r=>r.passed);
-      $('challenge-feedback').innerHTML=`<b class="${all?'feedback-pass':'feedback-fail'}">${all?'All tests passed. Well done!':'Keep going — '+results.filter(r=>r.passed).length+' of '+results.length+' tests passed.'}</b><br>`+results.map(r=>`<span class="${r.passed?'feedback-pass':'feedback-fail'}">${r.passed?'✓':'×'} Input ${r.t.input.join(', ')}: ${r.passed?'output '+r.t.output.join(', '):esc(r.reason)+'; expected '+r.t.output.join(', ')}</span>`).join('<br>');
+      $('challenge-feedback').innerHTML=`<b class="${all?'feedback-pass':'feedback-fail'}">${all?'All tests passed. Well done!':'Keep going — '+results.filter(r=>r.passed).length+' of '+results.length+' tests passed.'}</b><br>`+results.map(r=>`<span class="${r.passed?'feedback-pass':'feedback-fail'}">${r.passed?'✓':'×'} Input ${r.t.input.map(bits).join(', ')}: ${r.passed?'output '+r.t.output.map(bits).join(', '):esc(r.reason)+'; expected '+r.t.output.map(bits).join(', ')}</span>`).join('<br>');
     }catch(error){$('challenge-feedback').innerHTML='<span class="feedback-fail">'+esc(error.message)+'</span>';}
   }
 
@@ -1885,10 +2094,10 @@
     $('source-links').innerHTML=content.sources.map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)} →</a><p class="small-muted">${esc(s.note)}</p>`).join('');
     $('short-answers').innerHTML=content.shortAnswers.map((q,i)=>`<article class="written-card"><span class="mark-tag">QUESTION ${i+1} · ${q.marks} MARKS</span><h3 id="written-q-${i}">${esc(q.question)}</h3><textarea aria-labelledby="written-q-${i}" placeholder="Write your explanation here…"></textarea><details><summary>Reveal marking points</summary><ul>${q.points.map(p=>'<li>'+esc(p)+'</li>').join('')}</ul><p class="small-muted">Indicative points for self-checking; this is not an official mark scheme.</p></details></article>`).join('');
     $('revision-sheet').innerHTML=referenceHTML();
-    $('print-sheet').innerHTML=`<h1>CPU revision sheet</h1><p>RGSV · Cambridge IGCSE Computer Science 0478 · 2026–2028</p><table><thead><tr><th>Component</th><th>Purpose</th></tr></thead><tbody>${componentOrder.map(k=>`<tr><td><b>${visibleRegister(k)}</b> · ${esc(content.components[k].name)}</td><td>${esc(content.components[k].role)}</td></tr>`).join('')}</tbody></table><h2>The fetch–decode–execute cycle</h2><ol>${content.fdeSteps.map(s=>'<li>'+esc(s)+'</li>').join('')}</ol><p>${esc(content.overview.microprocessor)} ${esc(content.overview.distinction)}</p><h2>Performance</h2><p>Clock rate is measured in cycles per second, not instructions per second. More cache can reduce RAM waits. More cores can process independent work concurrently; sequential dependencies limit gains.</p><h2>Instruction sets &amp; embedded systems</h2><p>An instruction set contains the machine instructions a CPU supports. In assembly, mnemonics name instructions; an assembler encodes them as machine code. ${esc(content.embedded.text)}</p><p>Model: 8-bit words, 16 RAM locations, signed data −128 to 127. This app uses its own illustrative instruction encoding.</p><div class="print-questions"><h2>Exam-style practice</h2>${content.shortAnswers.map((q,i)=>`<article><h3>${i+1}. ${esc(q.question)} [${q.marks}]</h3><div style="height:80px;border-bottom:1px dotted #bbb"></div></article>`).join('')}</div><p>Curriculum source: Cambridge IGCSE 0478 syllabus 2026–2028, section 3.1, page 16. Questions are original.</p>`;
+    $('print-sheet').innerHTML=`<h1>CPU revision sheet</h1><p>RGSV · Cambridge IGCSE Computer Science 0478 · 2026–2028</p><table><thead><tr><th>Component</th><th>Purpose</th></tr></thead><tbody>${componentOrder.map(k=>`<tr><td><b>${visibleRegister(k)}</b> · ${esc(content.components[k].name)}</td><td>${esc(content.components[k].role)}</td></tr>`).join('')}</tbody></table><h2>The fetch–decode–execute cycle</h2><ol>${content.fdeSteps.map(s=>'<li>'+esc(s)+'</li>').join('')}</ol><p>${esc(content.overview.microprocessor)} ${esc(content.overview.distinction)}</p><h2>Performance</h2><p>Clock rate is measured in cycles per second, not instructions per second. More cache can reduce RAM waits. More cores can process independent work concurrently; sequential dependencies limit gains.</p><h2>Instruction sets &amp; embedded systems</h2><p>An instruction set contains the machine instructions a CPU supports. In assembly, mnemonics name instructions; an assembler encodes them as machine code. ${esc(content.embedded.text)}</p><p>Model: four-bit words and 16 RAM locations. Data ranges from 0000 to 1111. Addressed commands use an opcode cell followed by an address cell. This app uses its own illustrative instruction encoding.</p><div class="print-questions"><h2>Exam-style practice</h2>${content.shortAnswers.map((q,i)=>`<article><h3>${i+1}. ${esc(q.question)} [${q.marks}]</h3><div style="height:80px;border-bottom:1px dotted #bbb"></div></article>`).join('')}</div><p>Curriculum source: Cambridge IGCSE 0478 syllabus 2026–2028, section 3.1, page 16. Questions are original.</p>`;
     renderQuiz();renderOrder();
     let restored=false;
-    try{const saved=JSON.parse(localStorage.getItem('rgsv-cpu-lab-draft-v1')||'null');if(saved&&typeof saved.source==='string'&&saved.source.length<15000&&['assembly','machine'].includes(saved.mode)){$('program-source').value=saved.source;$('source-mode').value=saved.mode;sourceMode=saved.mode;$('input-values').value=String(saved.inputs||'');updateModeHint();dirty=true;restored=assembleCurrent();if(restored)editorMessage('Restored your last program on this device.',true);}}catch(_){}
+    try{const saved=JSON.parse(localStorage.getItem('rgsv-cpu-lab-draft-v2-4bit')||'null');if(saved&&typeof saved.source==='string'&&saved.source.length<15000&&['assembly','machine'].includes(saved.mode)){$('program-source').value=saved.source;$('source-mode').value=saved.mode;sourceMode=saved.mode;$('input-values').value=String(saved.inputs||'');updateModeHint();dirty=true;restored=assembleCurrent();if(restored)editorMessage('Restored your last program on this device.',true);}}catch(_){}
     if(!restored)loadSample('load-add');
     if(window.CPUActivities)window.CPUActivities.init();
 
@@ -1912,13 +2121,12 @@
     $('instruction-button').onclick=()=>startRun(true);
     $('run-button').onclick=()=>startRun(false);
     $('reset-button').onclick=()=>{pause();if(dirty){assembleCurrent();return;}try{cpu.reset(parseInputs($('input-values').value));trace=[];lastEvent=null;renderMachine();renderTrace();editorMessage('CPU reset. The loaded program and data have been restored.',true);}catch(error){editorMessage(error.message);}};
-    $('value-format').onchange=renderMachine;
     $('queue-button').onclick=()=>{try{const inputs=parseInputs($('input-values').value);pause();cpu.inputQueue=[];inputs.forEach(v=>cpu.provideInput(v));if(!inputs.length&&cpu.lastEvent?.phase==='input')cpu.waiting=true;editorMessage('Input queue updated. Press Run or Step to continue.',true);saveDraft();renderMachine();}catch(error){editorMessage(error.message);}};
-    function sendInput(){try{if(!$('live-input').value.trim())throw Error('Enter one whole number from −128 to 127.');cpu.provideInput(Number($('live-input').value));$('live-input').value='';renderMachine();editorMessage('Input received. Press Step or Run to continue.',true);}catch(error){editorMessage(error.message);}}
+    function sendInput(){try{const values=parseInputs($('live-input').value);if(values.length!==1)throw Error('Enter one four-bit binary value, such as 0111.');cpu.provideInput(values[0]);$('live-input').value='';renderMachine();editorMessage('Input received. Press Step or Run to continue.',true);}catch(error){editorMessage(error.message);}}
     $('submit-input').onclick=sendInput;$('live-input').onkeydown=e=>{if(e.key==='Enter')sendInput();};
     $('save-program').onclick=()=>{const blob=new Blob([$ ('program-source').value],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='cpu-program-'+$('source-mode').value+'.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
     $('challenge-select').onchange=showChallenge;
-    $('challenge-starter').onclick=()=>{pause();const c=challenges[Number($('challenge-select').value)];$('source-mode').value='assembly';sourceMode='assembly';$('program-source').value=c.starter;$('input-values').value=c.tests[0].input.join(', ');assemblyDraft=c.starter;updateModeHint();dirty=true;assembleCurrent();$('program-source').focus();};
+    $('challenge-starter').onclick=()=>{pause();const c=challenges[Number($('challenge-select').value)];$('source-mode').value='assembly';sourceMode='assembly';$('program-source').value=c.starter;$('input-values').value=c.tests[0].input.map(bits).join(', ');assemblyDraft=c.starter;updateModeHint();dirty=true;assembleCurrent();$('program-source').focus();};
     $('challenge-check').onclick=checkChallenge;
     $('challenge-solution').onclick=()=>{const pre=$('challenge-answer');pre.hidden=!pre.hidden;pre.textContent=challenges[Number($('challenge-select').value)].solution;};
     $('quiz-options').onclick=e=>{const option=e.target.closest('[data-answer]');if(!option||answers[quizIndex]!==null)return;answers[quizIndex]=Number(option.dataset.answer);renderQuiz();};
