@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#172b45">
+<meta name="theme-color" content="#f3f6f8">
 <meta name="description" content="Explore, build and program a CPU. A colourful, interactive revision lab for Cambridge IGCSE Computer Science 0478.">
 <title>CPU Lab · RGSV Computer Science</title>
 <style>:root{--navy:#172b45;--ink:#20344a;--muted:#637386;--orange:#ee973b;--purple:#7557d5;--teal:#087f8c;--blue:#397dc6;--paper:#f5f6f2;--border:#dfe5e6;--shadow:0 5px 20px #172b4505;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--paper);font-synthesis:none}*{box-sizing:border-box}body{margin:0}button,input,select,textarea{font:inherit}button,a,input,select,textarea,summary,[tabindex]{-webkit-tap-highlight-color:transparent}button{cursor:pointer}button:disabled{cursor:default;opacity:.45}button,a,input,select,textarea,summary,[tabindex]{outline-offset:4px}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid #397dc6}a{color:var(--teal)}button{color:inherit}button svg{pointer-events:none}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(28px,2.7vw,39px);letter-spacing:-1.4px;line-height:1.2;margin-bottom:10px;font-weight:760}h2{font-size:21px;letter-spacing:-.55px;line-height:1.3;margin-bottom:13px}h3{font-size:16px;line-height:1.4;margin-bottom:7px}p{line-height:1.6}code,pre,textarea,.node-value,.ram-table td:nth-child(2){font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace}code{background:#edf1f3;padding:2px 5px;border-radius:4px;font-size:.92em}button,select{touch-action:manipulation}select{padding:8px 30px 8px 10px;border:1px solid var(--border);border-radius:8px;background:white;color:var(--ink);font-size:13px;max-width:100%}input{min-width:0;border:1px solid #d8e0e5;border-radius:8px;padding:10px;background:white;color:var(--ink)}[hidden]{display:none!important}.skip-link{position:absolute;left:20px;top:-80px;z-index:100;background:white;padding:14px}.skip-link:focus{top:10px}.masthead{height:88px;background:var(--navy);padding:0 max(28px,calc((100vw - 1456px)/2));display:flex;align-items:center;justify-content:space-between;gap:20px;color:white}.brand{display:flex;gap:13px;align-items:center;color:#fff;text-decoration:none;white-space:nowrap}.brand>svg{width:44px;height:44px;color:var(--orange)}.brand>span{font-size:25px;line-height:1.2;letter-spacing:-.8px;font-weight:760}.brand b{font-weight:400}.brand small{display:block;font-size:8px;letter-spacing:1.6px;line-height:2.1;color:#c9d6e1;font-weight:500}.header-actions{display:flex;align-items:center;gap:28px}.syllabus-label{font-size:10px;font-weight:650;letter-spacing:1.2px;color:#d8e4ed}.syllabus-label span{color:var(--orange);padding:0 7px}.header-button{background:#ffffff0a;border:1px solid #ffffff30;border-radius:8px;color:#fff;font-size:12px;padding:11px 13px}.header-button:hover{background:#ffffff15}.header-button span{padding-left:10px;color:#eeb06d}.nav-shell{background:white;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:20}.tabs{max-width:1456px;padding:0 28px;margin:auto;display:flex;gap:15px;overflow-x:auto;scrollbar-width:thin}.tab{flex:1;white-space:nowrap;background:transparent;border:0;border-bottom:3px solid transparent;padding:21px 8px 18px;font-size:12px;font-weight:670;color:#718091;display:flex;gap:10px;justify-content:center;align-items:center}.tab:hover{color:var(--navy);background:#f7f9fa}.tab.active{color:var(--navy);border-color:var(--orange)}.tab-num{font-size:10px;font-weight:600;background:#eff3f4;width:24px;height:24px;border-radius:7px;display:grid;place-items:center}.tab.active .tab-num{background:#fff0df;color:#b76116}main{max-width:1456px;margin:auto;padding:34px 28px 46px;min-height:70vh}.section-head{display:flex;align-items:center;justify-content:space-between;gap:30px;margin-bottom:26px}.section-head.compact{margin-bottom:21px}.eyebrow{font-size:10px;letter-spacing:1.5px;font-weight:740;color:var(--teal);margin:0 0 10px;line-height:1.5}.intro{color:var(--muted);font-size:14px;margin:0;line-height:1.6}.orange{color:var(--orange)}.button{border:1px solid transparent;border-radius:9px;padding:11px 15px;font-size:12px;font-weight:680;display:inline-flex;align-items:center;justify-content:center;gap:10px;white-space:nowrap;text-decoration:none;transition:background .15s,transform .15s}.button:hover:not(:disabled){transform:translateY(-1px)}.button.primary{background:var(--navy);color:#fff}.button.primary:hover{background:#28435f}.button.teal{background:var(--teal);color:white}.button.teal:hover{background:#066b77}.button.light{background:#fff;border-color:#dce4e9;color:var(--navy)}.button.light:hover{background:#f1f5f6}.icon-button{background:#f1f4f5;border:1px solid #e2e7e9;border-radius:8px;min-width:38px;height:38px;font-size:21px;display:grid;place-items:center;line-height:1}.icon-button:hover{background:#e4ebee}.text-button{border:0;background:none;padding:8px 0;font-size:12px;font-weight:650;color:var(--teal);text-decoration:underline;text-underline-offset:3px}.small-muted{font-size:11px;color:var(--muted);line-height:1.55}.card{background:#fff;border:1px solid var(--border);border-radius:15px;box-shadow:var(--shadow)}.card-heading{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:14px}.card-heading h2{margin:0;font-size:16px}.tiny-tag{display:inline-block;font-size:9px;letter-spacing:1.1px;font-weight:750;padding:5px 8px;border-radius:5px}.teal-tag{color:#067481;background:#e6f4f2}.purple-tag{color:#7250be;background:#efebfb}.orange-tag{color:#a95d17;background:#fff0df}.purple-text{color:var(--purple)}.teal-text{color:var(--teal)}.purple-bg{background:var(--purple)}.orange-bg{background:var(--orange)}.teal-bg{background:var(--teal)}.purple-soft{background:#eee8fa;color:var(--purple)}.orange-soft{background:#fff0df;color:#ba681e}.teal-soft{background:#e2f3ef;color:var(--teal)}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px}.explore-layout{display:grid;grid-template-columns:minmax(0,2.4fr) minmax(265px,1fr);gap:22px}.diagram-card{padding:22px 23px 15px;overflow:hidden}.diagram-card .card-heading h2{font-size:17px;margin-top:9px}.diagram-card .card-heading>.small-muted{max-width:110px;text-align:right}.diagram-wrap{width:100%;min-width:0;line-height:0}.cpu-diagram{width:100%;height:auto;display:block;overflow:visible}.cpu-outline{fill:#f8fafc;stroke:#bccbd6;stroke-width:1.5;stroke-dasharray:6 5}.chip-label{font-size:12px;letter-spacing:1.8px;font-weight:750;fill:#687e91}.cpu-node{cursor:pointer;outline-offset:2px}.cpu-node rect{transition:stroke .15s,filter .15s;stroke:transparent;stroke-width:2}.cpu-node:hover rect,.cpu-node:focus rect{stroke:#435f79;filter:drop-shadow(0 3px 3px #152e4520)}.cpu-node.selected rect{stroke:var(--navy);stroke-width:2.5}.cpu-node.active rect{stroke:#172b45;stroke-width:3.2;filter:drop-shadow(0 0 5px #58c9bb80)}.node-title{font-size:21px;font-weight:780;fill:#23374f;letter-spacing:-.4px}.node-name{font-size:10px;fill:#546a80}.node-value{font-size:17px;font-weight:650;fill:#23374f}.node-caption{font-size:10px;fill:#5c7386}.bus-line{fill:none;stroke-width:4.5;stroke-linecap:round}.bus-label{font-size:10px;font-weight:700}.bus-group{cursor:pointer}.bus-group:hover .bus-line,.bus-group.active .bus-line{stroke-width:7}.bus-group.selected .bus-label{font-weight:900;text-decoration:underline}.inner-wire{fill:none;stroke:#c5d1db;stroke-width:2}.cpu-packet{fill:#fff;stroke:#152d46;stroke-width:2;filter:drop-shadow(0 1px 3px #18324e40);pointer-events:none}.extra-node{cursor:pointer}.extra-node rect{fill:#fff;stroke:#d5e1e7}.extra-node:hover rect,.extra-node.selected rect{stroke:#203c58;stroke-width:2}.extra-node text{fill:#526779;font-size:11px;font-weight:600}.diagram-legend{display:flex;gap:17px;justify-content:center;flex-wrap:wrap;font-size:10px;color:#62778a;margin-top:8px}.diagram-caption{font-size:10px;color:#708295;text-align:center;line-height:1.6;margin:13px 0 0}.component-card{padding:24px 24px 22px;display:flex;flex-direction:column;position:relative;overflow:hidden;border-top:4px solid var(--purple)}.component-code{font-size:43px;font-weight:800;letter-spacing:-2px;line-height:1.2;margin:21px 0 8px;color:var(--navy)}.component-card h2{font-size:20px;margin-bottom:14px}.component-role{font-size:13px;color:#52667c;line-height:1.75;margin-bottom:21px}.example-box{padding:15px;background:#f1f5f6;border-radius:9px;margin-bottom:15px}.example-box span,.exam-tip span{display:block;font-size:9px;font-weight:750;letter-spacing:1px;color:var(--teal);margin-bottom:7px}.example-box p,.exam-tip p{font-size:12px;line-height:1.65;margin:0}.exam-tip{border-top:1px solid var(--border);padding-top:15px;margin-top:auto}.exam-tip span{color:#9e631d}.component-pager{display:flex;gap:8px;margin-top:19px;align-items:center}.component-pager .button{flex:1;font-size:11px;padding:9px 10px}.concept-row{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:20px 0}.concept-card{border:1px solid var(--border);border-radius:12px;background:#fff;display:flex;align-items:center;gap:13px;padding:19px}.concept-icon{display:grid;place-items:center;flex-shrink:0;width:39px;height:43px;border-radius:9px;font-size:13px;font-weight:750}.concept-card h3{font-size:14px;margin:0 0 3px}.concept-card p{font-size:11px;margin:0;color:var(--muted)}.concept-arrow,.concept-repeat{margin-left:auto;font-size:24px;color:#bcc9d0}.explore-bottom{display:grid;grid-template-columns:1.65fr 1fr;gap:22px}.memory-card,.next-card{padding:24px}.memory-card h2,.next-card h2{font-size:18px}.memory-levels{display:flex;gap:10px;margin-top:18px}.memory-levels button{background:#f5f7f8;border:1px solid #e6ebed;border-radius:8px;padding:13px;text-align:left;flex:1;min-width:0;transition:background .15s}.memory-levels button:hover{background:#eaf2f4}.memory-levels b,.memory-levels span,.memory-levels em{display:block}.memory-levels b{font-size:13px;margin-bottom:8px}.memory-levels span{font-size:11px;color:#617487;line-height:1.7}.memory-levels em{font-size:9px;font-style:normal;margin-top:10px;color:var(--teal);line-height:1.5}.next-card{background:#fffaf2;border-color:#efdfc9}.next-card .tiny-tag{margin-bottom:12px}.next-card p{font-size:12px;line-height:1.75;margin-bottom:12px}.next-card .button{margin-top:5px}.simulation-toolbar{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;gap:15px;margin-bottom:19px}.transport{display:flex;gap:8px;align-items:center}.sim-settings{display:flex;gap:20px}.sim-settings label{font-size:10px;font-weight:650;display:flex;gap:7px;align-items:center}.sim-settings select{font-size:11px;padding-top:7px;padding-bottom:7px}.status-chip{font-size:10px;font-weight:750;border:1px solid #dce8e8;color:#0d7783;background:#eaf5f3;padding:6px 11px;border-radius:20px;min-width:60px;text-align:center}.status-chip.error{color:#ae3544;background:#fff0f2;border-color:#f1c9cf}.status-chip.running{color:#6344b1;background:#f0ebfb;border-color:#e1d7f5}.status-chip.waiting{color:#ad601d;background:#fff3df;border-color:#f2dfbf}.sim-grid{display:grid;grid-template-columns:minmax(240px,.92fr) minmax(0,2.05fr) minmax(220px,.82fr);gap:18px;align-items:start}.editor-card{padding:18px;min-width:0;overflow:hidden}.field-label{display:block;font-size:10px;font-weight:740;color:#5c6e80;letter-spacing:.15px;margin-bottom:7px}.field-label span{font-weight:400;float:right;color:#8795a2;font-size:9px}.full-select{width:100%;font-size:12px;padding:10px}.editor-mode{display:flex;justify-content:space-between;align-items:center;margin:15px 0 7px;font-size:10px;font-weight:650;color:#687c90}.editor-mode select{font-size:10px;border:none;background:#f1f4f6;padding:5px 23px 5px 8px}#program-source{display:block;width:100%;resize:vertical;min-height:260px;height:295px;line-height:1.85;font-size:13px;tab-size:2;color:#eaf4fd;background:#192d46;border:1px solid #203752;border-radius:9px;padding:15px 13px;white-space:pre;caret-color:#f4b76e;overflow:auto}#program-source::selection{background:#4b6286}.editor-buttons{display:flex;gap:8px;margin-top:10px}.editor-buttons>.button{flex:1}.source-hint{font-size:9px;line-height:1.7;color:#738598;margin:10px 0}.editor-message{font-size:11px;line-height:1.55;color:#b53541;overflow-wrap:anywhere}.editor-message.success{color:#087e70}.input-section{border-top:1px solid #e5ebed;padding-top:15px;margin-top:15px}.input-row{display:flex;gap:7px;align-items:center}.input-row input{width:100%;font-size:12px;padding:9px}.input-row .button{padding:9px 12px;font-size:11px}.input-section .small-muted{font-size:9px;margin:6px 0}.input-chips{display:flex;gap:5px;flex-wrap:wrap;min-height:22px}.input-chips span{font-size:10px;padding:4px 7px;border-radius:5px;background:#edf3f5;color:#356172}.input-chips .queue-empty{font-size:9px;background:transparent;color:#8896a5;padding:3px 0}.input-wait{padding:12px;background:#fff1d8;border:1px solid #f3d59e;border-radius:8px;margin-top:14px}.input-wait label{font-size:11px;line-height:1.5;display:block;margin-bottom:7px}.syntax-help{border-top:1px solid #e6ebee;padding-top:12px;margin-top:16px}.syntax-help summary{font-size:11px;font-weight:650;cursor:pointer}.syntax-help p{font-size:10px;color:#607487;line-height:1.7;margin:10px 0 0}.cpu-workspace{min-width:0}.live-diagram-card{padding:17px 15px 12px;overflow:hidden}.live-heading{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:3px}.phase-strip{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.phase-strip>span{font-size:9px;border-radius:6px;padding:7px 8px;background:#f2f4f6;color:#82909f}.phase-strip>span b{margin-left:3px;font-weight:680}.phase-strip>i{font-size:11px;color:#b9c5cd;font-style:normal}.phase-strip>span.active[data-phase=fetch]{background:#e7f2fb;color:#3672a7}.phase-strip>span.active[data-phase=decode]{background:#efe8fb;color:#7254b9}.phase-strip>span.active[data-phase=execute]{background:#e3f2ed;color:#087f72}.instruction-count{font-size:9px;color:#758699;white-space:nowrap}.instruction-count b{color:#24394d}.instruction-word{display:grid;grid-template-columns:1fr auto 1fr;gap:3px 15px;align-items:center;max-width:90%;margin:10px auto 2px}.instruction-word>span{font-size:9px;color:#7e8e9e}.instruction-word>div{display:flex;gap:4px}.instruction-word code{font-size:17px;letter-spacing:2px;background:#ede8fa;color:#6d4fb0;padding:5px 7px;font-weight:650}.instruction-word code+code{background:#dff2ef;color:#177e79}.instruction-word>p{grid-column:2;display:flex;margin:0;font-size:8px;justify-content:space-around;letter-spacing:.7px}.instruction-word>b{grid-column:3;grid-row:1;font-family:monospace;font-size:12px;color:#335167}.step-story{margin-top:16px;border:1px solid #dbe7e7;background:#eaf4f2;border-radius:13px;padding:20px 21px;min-height:195px}.step-story-top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:11px}.step-story-top>span:last-child{font-size:9px;color:#7b969a}.step-story h2{font-size:18px;margin-bottom:8px}.step-story p{font-size:12px;line-height:1.7;margin-bottom:13px;color:#496b70}.transfer-tag{display:inline-flex;align-items:center;background:white;border:1px solid #d3e4e3;border-radius:6px;padding:7px 10px;font-size:11px;font-family:monospace;color:#2a5f68}.step-story.is-error{background:#fff0f1;border-color:#f1d0d7}.step-story.is-error p{color:#a24852}.model-note{font-size:9px;line-height:1.7;color:#80919d;padding:0 8px;margin:10px 0}.ram-column{min-width:0}.ram-card{padding:17px 13px 12px;overflow:hidden}.ram-card .card-heading{gap:4px;margin-bottom:9px}.ram-card .card-heading .small-muted{font-size:8px}.ram-table{width:100%;border-collapse:collapse;font-size:10px;table-layout:fixed}.ram-table th{font-size:8px;color:#8395a5;font-weight:650;border-bottom:1px solid #e3eaee;padding:6px 5px;text-align:left}.ram-table th:first-child{width:22%}.ram-table th:nth-child(2){width:32%}.ram-table th:last-child{width:46%}.ram-table td{padding:6px 4px;line-height:1.45;border-bottom:1px solid #edf1f3;position:relative;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ram-table td:first-child{color:#8091a3;font-family:monospace;padding-left:9px}.ram-table tr.next td:first-child:before{position:absolute;left:0;top:9px;content:"";width:4px;height:10px;background:var(--purple);border-radius:2px}.ram-table tr.selected{background:#e9f5f2}.ram-table tr.active-address{box-shadow:inset 3px 0 0 #07948c;background:#e2f1ed}.ram-table td.data-meaning{color:#a9752a}.ram-table td.empty-meaning{color:#adb6bd}.ram-table.binary th:nth-child(2){width:40%}.ram-table.binary th:last-child{width:38%}.ram-table.binary td:nth-child(2){font-size:9px;letter-spacing:-.5px}.ram-key{display:flex;flex-direction:column;gap:4px;margin:10px 0 0;font-size:8px;color:#8795a5}.ram-key span{display:flex;align-items:center;gap:5px}.pc-marker{width:4px;height:9px;background:var(--purple);border-radius:2px}.mar-marker{width:8px;height:8px;background:#b7e6df;display:inline-block}.output-card{background:#183b48;color:white;border-radius:12px;padding:16px;margin-top:14px}.output-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px;gap:6px}.output-heading h3{font-size:12px;font-weight:650;margin:0}.output-heading>span{color:#8fb6bc;font-size:8px}.output-empty{font-size:10px;color:#8fb4bc;line-height:1.7}#output-values{display:flex;flex-wrap:wrap;gap:7px;max-height:160px;overflow:auto;min-height:24px}.output-number{font-size:22px;font-weight:700;font-family:monospace;color:#bdf4d9;padding:3px 6px;background:#204a56;border-radius:5px}.sim-inspector{font-size:10px;line-height:1.7;color:#6c7f8f;padding:13px 4px}.sim-inspector b{color:#29465b}.trace-card{padding:17px 20px;margin-top:17px}.trace-card summary,.revision-reference>summary{font-size:13px;font-weight:700;cursor:pointer}.trace-card summary .small-muted,.revision-reference>summary .small-muted{font-weight:400;margin-left:10px;font-size:10px}.trace-scroll{max-height:260px;overflow:auto;margin-top:16px}.trace-scroll table{width:100%;border-collapse:collapse;font-size:10px}.trace-scroll th{background:#f0f4f6;position:sticky;top:0;color:#62788c;font-weight:650}.trace-scroll th,.trace-scroll td{text-align:left;padding:8px;border-bottom:1px solid #e9eff1;line-height:1.5}.trace-scroll td:last-child{font-family:monospace;color:#31747d}.challenge-section{margin-top:22px;padding:25px;display:grid;grid-template-columns:1.5fr 1fr;gap:14px 28px}.challenge-section h2{font-size:19px;margin-bottom:9px}.challenge-section .small-muted{margin-bottom:0}.challenge-controls{align-self:center}.challenge-section #challenge-detail{grid-column:1/-1;font-size:12px;line-height:1.7;padding:14px 16px;background:#f4f7f7;border-radius:8px}.challenge-section #challenge-detail p{margin:0}.challenge-actions{grid-column:1/-1;display:flex;gap:9px;align-items:center;flex-wrap:wrap}.challenge-actions>.text-button{margin-left:auto}.challenge-section #challenge-feedback{grid-column:1/-1;font-size:12px;line-height:1.7}.challenge-section #challenge-feedback:empty{display:none}.feedback-pass{color:#06776d}.feedback-fail{color:#b1444e}.challenge-section pre{grid-column:1/-1;background:#193249;color:#e5f2fa;font-size:12px;line-height:1.7;padding:20px;border-radius:9px;margin:0;overflow:auto}.revision-grid{display:grid;grid-template-columns:1.12fr 1fr;gap:24px;align-items:start}.quiz-card,.order-card{padding:28px}.quiz-card .card-heading{margin-bottom:18px}.quiz-card .card-heading>span:last-child{font-size:11px;color:#788a9a}.quiz-progress{height:5px;background:#edf0f3;border-radius:10px;overflow:hidden;margin-bottom:26px}.quiz-progress>div{background:var(--purple);height:100%;width:0;transition:width .3s}.quiz-card h2{font-size:22px;line-height:1.5;min-height:67px}.quiz-card .eyebrow{margin-bottom:10px}.quiz-option{width:100%;display:flex;gap:12px;align-items:center;text-align:left;border:1px solid #dfe7eb;border-radius:9px;padding:12px 14px;background:white;font-size:12px;line-height:1.6;margin-bottom:9px}.quiz-option:hover:not(:disabled){background:#f5f8f9;border-color:#a7bdc7}.quiz-option:disabled{opacity:1}.quiz-option>span{flex-shrink:0;display:grid;place-items:center;width:25px;height:25px;border-radius:7px;background:#f1f4f6;color:#8a99a7;font-size:10px;font-weight:700}.quiz-option.correct{background:#ebf7f2;border-color:#86caba;color:#176a58}.quiz-option.correct>span{background:#087f70;color:white}.quiz-option.wrong{background:#fff0f1;border-color:#e2a4ad;color:#9c4250}.quiz-option.wrong>span{background:#bc5061;color:white}#quiz-explanation{font-size:12px;line-height:1.7;background:#f2f6f7;border-radius:8px;padding:14px;margin-top:16px}#quiz-explanation:empty{display:none}.quiz-footer{display:flex;justify-content:space-between;align-items:center;margin-top:23px;gap:12px}.quiz-footer>span{font-size:10px;color:#708395}.quiz-card>#quiz-reset{font-size:10px;margin-top:13px}.quiz-card #quiz-results{padding:17px;border-radius:9px;background:#eeeafb;margin-top:20px;font-size:12px;line-height:1.7}.order-card .tiny-tag{margin-bottom:17px}.order-card h2{font-size:21px}.order-card>.small-muted{margin-bottom:17px}.order-item{display:flex;gap:10px;align-items:center;padding:11px;background:#f5f7f8;border:1px solid #e1e8ec;border-radius:8px;margin-bottom:9px;cursor:grab;font-size:11px;line-height:1.5}.order-item>span:first-child{font-size:10px;color:#74909c;background:#e7eef1;border-radius:5px;padding:4px 6px;font-weight:700}.order-item>span:nth-child(2){flex:1}.order-item button{width:25px;height:26px;border:1px solid #dbe5e9;border-radius:5px;background:white;color:#4a7485;font-size:12px}.order-item.order-right{background:#e8f5ee;border-color:#92cdb8}.order-item.order-wrong{border-color:#dcb0b3}.order-actions{display:flex;gap:8px;margin-top:19px}#fde-feedback{font-size:11px;line-height:1.7;margin:14px 0 0}.written-section{margin-top:30px}.written-section .section-head h2{margin:0;font-size:22px}.short-answer-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:17px}.written-card{background:white;border:1px solid var(--border);border-radius:12px;padding:22px}.written-card h3{font-size:14px;line-height:1.6;margin-bottom:13px}.written-card .mark-tag{font-size:10px;color:var(--teal);font-weight:750;display:block;margin-bottom:8px}.written-card textarea{display:block;resize:vertical;width:100%;min-height:90px;border:1px solid #d8e2e7;border-radius:7px;padding:11px;font:12px/1.7 inherit;background:#fbfcfc;margin-bottom:13px}.written-card summary{cursor:pointer;color:var(--teal);font-size:11px;font-weight:680}.written-card ul{font-size:11px;line-height:1.8;padding-left:20px;color:#5e7586}.revision-reference{margin-top:25px;padding:23px}.revision-reference>div{margin-top:20px}.reference-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.reference-grid article{padding:14px;border:1px solid #e0e8eb;border-radius:8px}.reference-grid h3{font-size:13px}.reference-grid p{font-size:11px;color:#5e7385;margin:0}.reference-wide{grid-column:1/-1;font-size:12px;line-height:1.8}.reference-wide li{margin-bottom:4px}.print-sheet{display:none}.site-footer{max-width:1400px;padding:24px 0;margin:0 auto;border-top:1px solid #dce3e4;display:flex;align-items:center;justify-content:space-between;font-size:10px;color:#87939d;gap:20px}.site-footer b{color:#536776}.site-footer .text-button{font-size:10px;padding:0}dialog{width:min(710px,92vw);max-height:88vh;overflow:auto;border:1px solid #d5e0e5;border-radius:17px;padding:30px;color:var(--ink);box-shadow:0 25px 90px #142d4530}dialog::backdrop{background:#16293dc2;backdrop-filter:blur(3px)}.dialog-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}dialog h2{font-size:28px;letter-spacing:-1px}dialog h3{font-size:15px;margin-top:25px}dialog p,dialog li{font-size:12px;line-height:1.8;color:#536c80}dialog ul{padding-left:21px}dialog li{margin-bottom:8px}.lesson-plan{display:flex;gap:9px;flex-wrap:wrap}.lesson-plan span{padding:12px;background:#f1f6f7;border-radius:8px;font-size:10px}.lesson-plan b{display:block;color:var(--teal);font-size:12px;margin-bottom:3px}#source-links{margin:14px 0 24px}#source-links a{display:block;font-size:12px;line-height:1.7;margin:8px 0}.encoding-example{display:flex;align-items:center;gap:10px;background:#f5f7f8;padding:18px;border-radius:10px;margin:22px 0}.encoding-example>div{text-align:center;background:#eee7fa;padding:10px 17px;border-radius:8px}.encoding-example>div+div{background:#dff3ef}.encoding-example b{font-family:monospace;letter-spacing:3px;font-size:24px;color:var(--purple)}.encoding-example>div+div b{color:var(--teal)}.encoding-example div span{display:block;font-size:9px;color:#667e8e;margin-top:7px}.encoding-example>span{margin-left:auto;font-size:13px}.isa-table-wrap{overflow:auto}.isa-table{width:100%;border-collapse:collapse;font-size:11px;margin:20px 0}.isa-table th{font-size:10px;color:#718697;background:#f2f5f7;text-align:left;white-space:nowrap}.isa-table td,.isa-table th{padding:10px 9px;border-bottom:1px solid #e4eaee;line-height:1.6}.isa-table td:first-child{font-weight:700;color:var(--purple);font-family:monospace}.isa-table td:nth-child(2){font-family:monospace;color:var(--teal)}.isa-table td:last-child{white-space:nowrap;font-family:monospace}.empty-state{padding:20px;font-size:12px;color:#647e8f}
@@ -112,6 +112,18 @@
 @media(max-width:1100px){.sim-values-row{grid-template-columns:1fr}}
 @media(max-width:760px){.instruction-full{flex-wrap:wrap}.sim-values-row{grid-template-columns:1fr}}
 
+/* Slim RGSV header, matching the Pseudocode Studio identity. */
+@media screen{
+.masthead{height:54px;padding:0 16px;background:#f3f6f8;color:#162b38;border-bottom:1px solid #dce5ea;gap:12px}
+.brand{gap:9px;color:#162b38}
+.brand .rgsv-logo{display:block;width:32px;height:37px;object-fit:contain;flex:none;border-radius:3px}
+.brand>span{font-size:20px;line-height:1.2;font-weight:750;letter-spacing:-.4px}
+.masthead .header-button{height:29px;padding:5px 10px;border:1px solid #d8e1e7;border-radius:6px;color:#40566b;background:#fff;font-size:11px}
+.nav-shell .tabs{height:48px}
+.nav-shell .tab{padding-top:10px;padding-bottom:10px}
+main:has(#build-panel:not([hidden])){padding-top:16px}
+}
+
 .activity-section{--activity-navy:#172b45;--activity-teal:#087e8b;--activity-purple:#7557d5;--activity-orange:#d97712;--activity-line:#dce4e7;--activity-muted:#617181;color:var(--activity-navy)}
 .activity-section[hidden]{display:none!important}.activity-section *{box-sizing:border-box}.activity-section button,.activity-section input,.activity-section select{font:inherit}.activity-section button{cursor:pointer}.activity-section button:disabled{cursor:default;opacity:.55}.activity-section button:focus-visible,.activity-section select:focus-visible,.activity-section summary:focus-visible{outline:3px solid #37adbd;outline-offset:4px}.activity-section [hidden]{display:none!important}
 .activity-section-head{display:flex;gap:24px;align-items:center;justify-content:space-between;margin:0 0 24px}.activity-section-head h2{font-size:clamp(27px,3vw,40px);letter-spacing:-1.2px;line-height:1.14;margin:7px 0 12px}.activity-section-head p:not(.activity-eyebrow){font-size:15px;line-height:1.65;color:var(--activity-muted);max-width:760px;margin:0}.activity-eyebrow{font-size:10px!important;letter-spacing:1.7px;font-weight:800;margin:0;color:var(--activity-teal);line-height:1.6}.activity-progress-pill{border:1px solid var(--activity-line);background:#fff;border-radius:16px;padding:15px 23px;display:flex;flex-direction:column;align-items:center;flex-shrink:0}.activity-progress-pill span{font-weight:800;font-size:26px;letter-spacing:-1px}.activity-progress-pill small{font-size:11px;color:var(--activity-muted);margin-top:3px}.activity-model-label{border:1px solid var(--activity-line);color:var(--activity-muted);font-weight:700;letter-spacing:1px;font-size:10px;padding:10px 14px;border-radius:30px;flex-shrink:0}
@@ -129,12 +141,12 @@
 .activity-builder-stage{padding:20px;min-width:0}.activity-diagram-heading{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:18px}.activity-diagram-heading strong{font-size:13px}.activity-diagram-heading span{color:var(--activity-muted);font-size:10px}
 .activity-scroll-hint{display:none;font-size:10px;line-height:1.6;margin:0 0 12px;color:var(--activity-muted)}
 .activity-board-scroll{max-width:100%;overflow-x:auto;padding:3px 2px 12px;overscroll-behavior-x:contain;scrollbar-width:thin;border-radius:12px}.activity-board-scroll:focus-visible{outline:3px solid #37adbd;outline-offset:3px}
-/* Compact tracks keep ALU at the midpoint of the 441px CPU frame. */
-.activity-builder-board{--activity-build-row:77px;--activity-build-gap:10px;--activity-build-top:38px;--activity-build-lead:67px;--activity-build-tracks:var(--activity-build-row) var(--activity-build-lead) var(--activity-build-row) var(--activity-build-gap) var(--activity-build-row) var(--activity-build-gap) var(--activity-build-row);display:grid;grid-template-columns:minmax(490px,2.2fr) minmax(140px,.65fr) minmax(150px,.7fr);gap:20px;align-items:start;position:relative;isolation:isolate;min-width:850px;width:100%}
+/* Shorter gaps bring the CPU parts closer while keeping separate connection lanes. */
+.activity-builder-board{--activity-build-row:77px;--activity-build-gap:8px;--activity-build-top:28px;--activity-build-lead:44px;--activity-build-tracks:var(--activity-build-row) var(--activity-build-lead) var(--activity-build-row) var(--activity-build-gap) var(--activity-build-row) var(--activity-build-gap) var(--activity-build-row);display:grid;grid-template-columns:minmax(460px,2.2fr) minmax(140px,.65fr) minmax(145px,.7fr);gap:14px;align-items:start;position:relative;isolation:isolate;min-width:790px;width:100%}
 .activity-builder-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:1}.activity-builder-wire{fill:none;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}.activity-builder-port{fill:#fff;stroke-width:2}.activity-builder-wire-label{font:700 8px ui-sans-serif,system-ui,sans-serif;fill:#6d7c8b;paint-order:stroke;stroke:#f5f7fc;stroke-width:4px;stroke-linejoin:round}
 .activity-cpu-boundary{padding:6px 8px;border:2px solid #d4dcee;border-radius:15px;background:#f5f7fc;position:relative;min-width:0}
-.activity-boundary-label{height:18px;font-size:9px;letter-spacing:1.15px;font-weight:800;display:flex;gap:8px;align-items:center;margin:0 0 12px;color:#4f6088;white-space:nowrap}.activity-mini-chip{font-size:19px;color:#5c6c94;line-height:1}
-.activity-cpu-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:var(--activity-build-tracks);gap:0 14px;align-items:stretch}
+.activity-boundary-label{height:18px;font-size:9px;letter-spacing:1.15px;font-weight:800;display:flex;gap:8px;align-items:center;margin:0 0 2px;color:#4f6088;white-space:nowrap}.activity-mini-chip{font-size:19px;color:#5c6c94;line-height:1}
+.activity-cpu-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:var(--activity-build-tracks);gap:0 10px;align-items:stretch}
 .activity-cpu-grid [data-activity-slot="PC"]{grid-column:2;grid-row:1}
 .activity-cpu-grid [data-activity-slot="CU"]{grid-column:3;grid-row:1}
 .activity-cpu-grid [data-activity-slot="ALU"]{grid-column:1;grid-row:3;align-self:stretch;background:#fff7eb;border-color:#efd8b5}
@@ -200,12 +212,13 @@
 @media(max-width:680px){.activity-section-head{gap:12px;margin-bottom:18px}.activity-section-head h2{font-size:29px;letter-spacing:-.9px}.activity-section-head p:not(.activity-eyebrow){font-size:13px}.activity-progress-pill{padding:12px;min-width:90px}.activity-progress-pill span{font-size:22px}.activity-progress-pill small{font-size:9px;text-align:center}.activity-card{padding:18px;border-radius:15px}.activity-cache-top{display:block}.activity-cache-top .activity-segment-field{margin:17px 0}.activity-cache-flow{grid-template-columns:49px 16px minmax(118px,1fr) 16px 78px;gap:4px}.activity-cache-cpu{padding:14px 5px}.activity-cache-box{padding:10px 6px}.activity-cache-cell strong{font-size:10px}.activity-cache-slots{grid-template-columns:repeat(2,minmax(0,1fr))}.activity-cache-ram{padding:10px 5px}.activity-cache-ram-data{padding:3px 1px;font-size:7px}.activity-cache-request{width:38px;height:34px}.activity-cache-sequence{gap:4px}.activity-clock-row{grid-template-columns:76px minmax(20px,1fr) 74px}.activity-clock-row-label{font-size:9px}.activity-clock-row output{font-size:9px}.activity-cache-legend{gap:8px}.activity-core-job{min-width:19px;font-size:7px}.activity-core-history{gap:3px}.activity-queue-job{width:21px;height:23px}.activity-work-queue>div{gap:3px}.activity-core-counters{font-size:9px}}
 @media(prefers-reduced-motion:reduce){.activity-section *{animation:none!important;transition:none!important}}
 
-@media(max-width:1180px){.activity-builder-layout{grid-template-columns:1fr}.activity-component-bank{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.activity-component-tray{padding:16px}.activity-component-tray .activity-muted{margin-bottom:10px}.activity-selection-note{min-height:auto;padding:0;margin-top:11px}.activity-tray-legend{display:none}.activity-component-chip{min-height:47px}}
+@media(max-width:1080px){.activity-builder-layout{grid-template-columns:1fr}.activity-component-bank{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.activity-component-tray{padding:16px}.activity-component-tray .activity-muted{margin-bottom:10px}.activity-selection-note{min-height:auto;padding:0;margin-top:11px}.activity-tray-legend{display:none}.activity-component-chip{min-height:47px}}
 @media(max-width:900px){.activity-component-bank{grid-template-columns:repeat(3,minmax(0,1fr))}.activity-builder-stage{padding:15px}.activity-scroll-hint{display:block}.activity-store-path{display:block}.activity-store-path strong{display:block;margin-bottom:5px}}
 @media(max-width:680px){.activity-component-bank{grid-template-columns:repeat(2,minmax(0,1fr))}.activity-component-chip{gap:8px}.activity-component-chip strong{font-size:11px}.activity-component-chip small{font-size:9px}.activity-builder-stage{padding:14px}.activity-diagram-heading{display:block}.activity-diagram-heading span{display:block;margin-top:6px}.activity-builder-actions{gap:6px}.activity-builder-actions .activity-button{font-size:11px!important;padding:10px}}
 
 /* Compact build workspace: keep all eleven pieces and the complete diagram in view. */
-#build-panel .activity-section-head{gap:14px;margin-bottom:10px}
+#build-panel{max-width:1140px;margin-inline:auto}
+#build-panel .activity-section-head{gap:12px;margin-bottom:8px}
 #build-panel .activity-section-head>div:first-child{display:flex;align-items:center;gap:16px;min-width:0}
 #build-panel .activity-section-head .activity-eyebrow{display:none}
 #build-panel .activity-section-head h2{font-size:24px;line-height:1.2;letter-spacing:-.6px;white-space:nowrap;margin:0}
@@ -213,13 +226,13 @@
 #build-panel .activity-progress-pill{flex-direction:row;gap:6px;padding:6px 9px;border-radius:9px;min-width:0}
 #build-panel .activity-progress-pill span{font-size:18px;letter-spacing:-.4px;white-space:nowrap}
 #build-panel .activity-progress-pill small{font-size:10px;margin:0;white-space:nowrap}
-#build-panel .activity-builder-layout{grid-template-columns:198px minmax(0,1fr);gap:12px}
+#build-panel .activity-builder-layout{grid-template-columns:190px minmax(0,1fr);gap:10px}
 #build-panel .activity-component-tray,#build-panel .activity-builder-stage{padding:10px;border-radius:12px}
 #build-panel .activity-component-tray .activity-card-heading{flex-wrap:nowrap;gap:4px;margin-bottom:7px}
 #build-panel .activity-component-tray h3{font-size:13px;margin:0;line-height:18px}
 #build-panel .activity-component-tray .activity-tiny-label{font-size:7px;letter-spacing:.3px;white-space:nowrap}
-#build-panel .activity-component-bank{gap:4px;min-height:0}
-#build-panel .activity-component-chip{height:30px;min-height:30px;padding:3px 7px;border-radius:6px;gap:6px}
+#build-panel .activity-component-bank{gap:3px;min-height:0}
+#build-panel .activity-component-chip{height:28px;min-height:28px;padding:2px 7px;border-radius:6px;gap:6px}
 #build-panel .activity-component-chip strong{font-size:11px;min-width:36px;letter-spacing:0}
 #build-panel .activity-component-chip small{font-size:10px;line-height:1.1}
 #build-panel .activity-bank-empty{padding:14px 4px;font-size:11px;margin:0}
@@ -260,15 +273,88 @@
 #build-panel .activity-build-notes .activity-store-path{display:block;padding:8px 10px;margin-top:7px;line-height:1.5}
 #build-panel .activity-build-notes .activity-store-path strong{display:block;font-size:11px;margin-bottom:3px}
 #build-panel .activity-build-notes .activity-tray-legend{display:grid;grid-template-columns:8px 1fr 8px 1fr;gap:5px 7px;padding-top:8px;margin-top:8px}
-@media(max-width:1180px){#build-panel .activity-builder-layout{grid-template-columns:1fr}#build-panel .activity-component-bank{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}#build-panel .activity-component-tray .activity-card-heading{justify-content:flex-start;gap:12px}#build-panel .activity-section-head>div:first-child{display:block}#build-panel .activity-section-head h2{margin-bottom:4px}}
+@media(max-width:1080px){#build-panel .activity-builder-layout{grid-template-columns:1fr}#build-panel .activity-component-bank{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}#build-panel .activity-component-tray .activity-card-heading{justify-content:flex-start;gap:12px}#build-panel .activity-section-head>div:first-child{display:block}#build-panel .activity-section-head h2{margin-bottom:4px}}
 @media(max-width:680px){#build-panel .activity-section-head{gap:10px}#build-panel .activity-section-head h2{font-size:22px}#build-panel .activity-section-head p:not(.activity-eyebrow){font-size:11px}#build-panel .activity-progress-pill{flex-direction:column;gap:1px;padding:5px 7px}#build-panel .activity-progress-pill small{font-size:8px}#build-panel .activity-component-bank{grid-template-columns:repeat(2,minmax(0,1fr))}#build-panel .activity-diagram-heading{display:block}#build-panel .activity-builder-actions{justify-content:flex-start;margin-top:6px}#build-panel .activity-build-footer{display:block}#build-panel .activity-build-notes{max-width:none;margin-top:3px}}
+
+/* Cache mini-lab: addresses request a word; contents return right to left. */
+.activity-cache-card .activity-cache-layout{grid-template-columns:1fr;gap:18px}
+.activity-cache-card .activity-cache-top .activity-card-intro{max-width:760px}
+.activity-cache-card .activity-cache-request{width:46px;height:42px;gap:4px}
+.activity-cache-request.activity-request-pending{background:#edf3ff;border-color:#638cda}
+.activity-cache-card .activity-cache-request small{font-size:7px}
+.activity-cache-viewport{overflow-x:auto;overscroll-behavior-x:contain;max-width:100%;padding:3px 3px 8px;border-radius:12px;scrollbar-width:thin}
+.activity-cache-viewport:focus-visible{outline:3px solid #37adbd;outline-offset:2px}
+.activity-cache-card .activity-cache-flow{--cache-cpu-width:145px;--cache-ram-width:215px;display:grid;grid-template-columns:var(--cache-cpu-width) 70px minmax(180px,1fr) 40px var(--cache-ram-width);grid-template-rows:auto minmax(205px,auto) 75px;gap:12px 10px;align-items:stretch;min-width:760px;max-width:none;min-height:0;margin:12px 0 0}
+.activity-cache-address-request{grid-column:1/-1;display:flex;align-items:center;gap:12px;padding:8px 10px;border:1px dashed #dce4ec;border-radius:7px;background:#f8fafc;color:#677b8e;font-size:11px}
+.activity-cache-address-request>span{font-size:8px;font-weight:800;letter-spacing:.7px;white-space:nowrap}
+.activity-cache-address-request p{margin:0;line-height:1.5}
+.activity-cache-address-request p>span{padding:0 5px;color:#899aae}
+.activity-cache-address-request b{color:#364e66}
+.activity-cache-card .activity-cache-cpu{grid-row:2;grid-column:1;min-height:205px;padding:15px 11px;gap:0;border:2px solid #233b57;border-radius:12px;background:#172b45;box-shadow:none;text-align:center;justify-content:flex-start;color:#fff}
+.activity-cache-card .activity-cache-cpu span{font-size:inherit;font-weight:inherit;line-height:inherit}
+.activity-cache-card .activity-cache-node-title{display:block;margin:0;font-size:14px;font-weight:800;letter-spacing:.5px;line-height:1.4}
+.activity-cache-card .activity-cache-node-title small{font-size:10px;font-weight:600;letter-spacing:0;color:#8873a2;margin-left:5px}
+.activity-cache-cpu .activity-cache-receipt-label{display:block;font-size:9px;color:#b9cada;line-height:1.5;margin:15px 0 8px}
+#activity-cache-cpu-binary{display:block;font:800 18px/1.4 Consolas,"Liberation Mono",monospace;letter-spacing:.3px;white-space:nowrap;color:#fff}
+.activity-cache-card #activity-cache-cpu-meaning{display:block;font-size:10px;font-weight:500;line-height:1.5;color:#c6d5e4;margin:9px 0}
+#activity-cache-cpu-meaning b{display:block;font-size:15px;line-height:1.5;color:#fff}
+.activity-cache-card #activity-cache-cpu-source{font-size:9px;font-weight:500;line-height:1.5;color:#b9cada;margin-top:auto}
+.activity-cache-card .activity-cache-cpu-received{border-color:#42b49a;box-shadow:0 0 0 3px #dff4ed}
+.activity-cache-card .activity-cache-box{grid-row:2;grid-column:3;border:2px solid #d9cdec;background:#fbf8ff;padding:13px 11px;min-height:205px;display:flex;flex-direction:column;color:#71509f}
+.activity-cache-card .activity-cache-slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:12px}
+.activity-cache-card .activity-cache-cell{min-height:60px;padding:6px 3px;gap:4px}
+.activity-cache-card .activity-cache-cell small{font-size:8px}
+.activity-cache-card .activity-cache-cell strong{font-size:12px;letter-spacing:0;white-space:nowrap}
+.activity-cache-card .activity-cache-cell>span{font-size:8px;line-height:1.35;text-align:center;color:#7d6b98}
+.activity-cache-card .activity-cache-cell.activity-cache-hot{background:#e5f5ec;border-color:#5fa783;box-shadow:0 0 0 1px #8dc3a6}
+.activity-cache-card .activity-cache-source-active{border-color:#42a17e;box-shadow:0 0 0 3px #e7f4ed}
+.activity-cache-card .activity-cache-off{margin:auto 0;font-size:12px;color:#897b9c}
+.activity-cache-node-status{font-size:10px;line-height:1.5;font-weight:650;text-align:center;margin:10px 0 0;padding-top:4px;color:#806895}
+.activity-cache-card .activity-cache-ram{grid-row:2;grid-column:5;min-height:205px;padding:13px 9px;border:2px solid #ecd7b8;background:#fff9ef;border-radius:11px;color:#90652e}
+.activity-cache-ram-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:13px}
+.activity-cache-ram-heading>span{border-radius:4px;background:#f1e9db;padding:4px 6px;color:#8d806b;font-size:8px;font-weight:800;letter-spacing:.4px}
+.activity-cache-card .activity-cache-ram-active{border-color:#d99831;box-shadow:0 0 0 3px #fff1d9}
+.activity-cache-ram-active .activity-cache-ram-heading>span{background:#d58c1e;color:#fff}
+.activity-cache-card .activity-cache-ram-headings,.activity-cache-card .activity-cache-ram-data{display:grid;grid-template-columns:33px 75px minmax(0,1fr);align-items:center;column-gap:6px;padding:7px 4px;white-space:nowrap}
+.activity-cache-ram-headings{font-size:7px;font-weight:750;color:#a08661;border-bottom:1px solid #ead9bd;margin-bottom:4px}
+.activity-cache-card .activity-cache-ram-data{font-size:11px;line-height:1.3;border-bottom:1px solid #f0e5d3;border-radius:4px}
+.activity-cache-card .activity-cache-ram-data b{font-size:11px;color:#6f532f}
+.activity-cache-card .activity-cache-ram-data small{font-size:9px;font-family:ui-sans-serif,system-ui,sans-serif;color:#8a6d46}
+.activity-cache-card .activity-cache-ram-data.activity-ram-read{background:#ffe1aa;color:#774c15;border-color:#e7b65d;box-shadow:0 0 0 1px #e7b65d}
+.activity-cache-ram-caption{font-size:8px;line-height:1.5;color:#a38c6a;margin:10px 0 0;text-align:center}
+.activity-cache-return-path{--return-colour:#c5ced8;grid-row:3;grid-column:1/-1;position:relative;margin-left:calc(var(--cache-cpu-width)/2);margin-right:calc(var(--cache-ram-width)/2);height:75px;color:#8a99a8}
+.activity-cache-return-cache{margin-right:calc(50% + 20px)}
+.activity-cache-return-path::before,.activity-cache-return-path::after{content:"";position:absolute;top:-12px;height:38px;width:3px;background:var(--return-colour);opacity:0}
+.activity-cache-return-path::before{right:0}
+.activity-cache-return-path::after{left:0}
+.activity-cache-return-rail{position:absolute;top:24px;left:0;right:0;height:4px;border-radius:4px;background:var(--return-colour);opacity:.55}
+.activity-cache-return-rail::before{content:"";position:absolute;left:-2px;top:-5px;width:0;height:0;border-right:11px solid var(--return-colour);border-top:7px solid transparent;border-bottom:7px solid transparent}
+.activity-cache-return-path>p{position:absolute;top:36px;left:-35px;right:-35px;margin:0;font-size:10px;line-height:1.5;font-weight:750;text-align:center;white-space:nowrap}
+.activity-cache-route-visible{--return-colour:#d59631;color:#97611b}
+.activity-cache-return-cache.activity-cache-route-visible{--return-colour:#259874;color:#237c60}
+.activity-cache-route-visible::before,.activity-cache-route-visible::after,.activity-cache-route-visible .activity-cache-return-rail{opacity:1}
+.activity-cache-route-waiting{--return-colour:#d4c5af;color:#9a886e}
+.activity-cache-return-packet{position:absolute;z-index:2;top:-12px;left:0;display:block;padding:5px 6px;min-width:80px;text-align:center;border:1px solid var(--return-colour);border-radius:5px;background:#fffdf8;box-shadow:0 2px 5px #172b451a;color:#8f5f21;font:800 12px/1 Consolas,"Liberation Mono",monospace;animation:activity-cache-word-return var(--cache-travel-time) linear both}
+.activity-cache-return-cache .activity-cache-return-packet{color:#197451;background:#f4fff9}
+@keyframes activity-cache-word-return{from{left:calc(100% - 80px)}to{left:0}}
+.activity-cache-card .activity-cache-scoreboard{display:grid;grid-template-columns:235px minmax(0,1fr);gap:12px 20px;border-left:0;border-top:1px solid #e5ebee;padding:18px 0 0}
+.activity-cache-card .activity-cache-stats{grid-column:1;align-self:start}
+.activity-cache-card .activity-cache-stats>div{padding:10px 7px}
+.activity-cache-card .activity-cache-scoreboard .activity-feedback{grid-column:2;min-height:0;margin:0;font-size:12px;line-height:1.7;align-self:center}
+.activity-cache-card .activity-inline-actions{grid-column:1/-1;margin-top:0}
+.activity-cache-card .activity-cost-model{grid-column:1/-1;margin:0}
+.activity-cache-card .activity-cache-legend{margin-top:5px;font-size:10px}
+.activity-cache-card .activity-segments input:disabled+span{opacity:.5;cursor:wait}
+.activity-cache-card .activity-cache-note{margin-top:15px}
+@media(max-width:680px){.activity-cache-card .activity-cache-scoreboard{grid-template-columns:1fr;gap:14px}.activity-cache-card .activity-cache-scoreboard .activity-feedback{grid-column:1}.activity-cache-card .activity-cache-stats{max-width:340px;width:100%}.activity-cache-card .activity-cache-request{width:40px;height:38px}.activity-cache-card .activity-cache-top .activity-segment-field{margin-top:12px}.activity-cache-card .activity-cache-legend{gap:10px;font-size:9px}}
+@media(prefers-reduced-motion:reduce){.activity-cache-return-packet{animation:none!important;left:calc(50% - 40px)}}
 </style>
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to the lab</a>
 <header class="masthead">
-  <a class="brand" href="#explore" aria-label="CPU Lab home"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="10" y="10" width="28" height="28" rx="7" fill="currentColor"/><rect x="17" y="17" width="14" height="14" rx="3" fill="#172b45"/><path d="M17 3v7m14-7v7M17 38v7m14-7v7M3 17h7m-7 14h7m28-14h7m-7 14h7" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg><span>CPU <b>lab</b><small>REIGATE GRAMMAR SCHOOL VIETNAM</small></span></a>
-  <div class="header-actions"><span class="syllabus-label">IGCSE 0478 <span>·</span> COMPUTER ARCHITECTURE</span><button class="header-button" id="notes-button">Teacher notes <span aria-hidden="true">→</span></button></div>
+  <a class="brand" href="#explore" aria-label="CPU Lab home"><img class="rgsv-logo" src="data:image/png;base64,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" alt="Reigate Grammar School Vietnam crest" width="32" height="37"><span>CPU Lab</span></a>
+  <button class="header-button" id="notes-button">Teacher notes <span aria-hidden="true">→</span></button>
 </header>
 <div class="nav-shell"><nav class="tabs" aria-label="Learning sections">
   <button class="tab active" data-tab="explore" aria-current="page"><span class="tab-num">01</span> Explore the CPU</button>
@@ -358,7 +444,7 @@
           <svg id="activity-builder-wires" class="activity-builder-wires" aria-hidden="true" focusable="false"></svg>
           <div class="activity-cpu-boundary">
             <div class="activity-boundary-label"><span class="activity-mini-chip" aria-hidden="true">▦</span> CENTRAL PROCESSING UNIT</div>
-            <div class="activity-cpu-grid" role="group" aria-label="Cycle clock top-left, PC top-middle, CU top-right, ALU at the vertical midpoint on the left beneath the clock, CIR at the same level in the centre, and ACC below ALU and level with MDR at the bottom">
+            <div class="activity-cpu-grid" role="group" aria-label="Cycle clock top-left, PC top-middle, CU top-right, ALU on the left beneath the clock, CIR at the same level in the centre, and ACC below ALU and level with MDR at the bottom">
               <div class="activity-builder-clock">
                 <svg viewBox="0 0 164 77" role="img" aria-label="Fetch, decode, execute cycle">
                   <title>The three instruction stages. This reference dial is not a component to place.</title>
@@ -492,13 +578,13 @@
       <div class="activity-learning-note"><strong>More cores help with parallel work.</strong><p>If a job needs the previous result, it has to wait. Software must be able to split the work; real speed-ups also depend on coordination and shared resources.</p><small>One model time step is the time for one equal-sized job on one core.</small></div>
     </article>
     <article class="activity-card activity-cache-card" aria-labelledby="activity-cache-title">
-      <div class="activity-cache-top"><div><div class="activity-card-heading"><span class="activity-lab-number activity-orange">03</span><div><p class="activity-eyebrow">CACHE SIZE</p><h3 id="activity-cache-title">Keep useful data close</h3></div></div><p class="activity-card-intro">Cache is small, fast memory close to the CPU’s processing units. Look for repeated memory addresses. Addresses are shown in denary. Data values use 8-bit binary.</p></div><fieldset class="activity-segment-field"><legend>Cache capacity</legend><div class="activity-segments"><label><input type="radio" name="activity-cache-size" value="0"><span>Off</span></label><label><input type="radio" name="activity-cache-size" value="2" checked><span>2 slots</span></label><label><input type="radio" name="activity-cache-size" value="4"><span>4 slots</span></label></div></fieldset></div>
+      <div class="activity-cache-top"><div><div class="activity-card-heading"><span class="activity-lab-number activity-orange">03</span><div><p class="activity-eyebrow">CACHE SIZE</p><h3 id="activity-cache-title">Keep instructions and data close</h3></div></div><p class="activity-card-intro">Watch an instruction or data travel from RAM into the CPU. Keep a copy in cache, then request the same address again to receive it faster.</p></div><fieldset class="activity-segment-field"><legend>Cache capacity</legend><div class="activity-segments"><label><input type="radio" name="activity-cache-size" value="0"><span>Off</span></label><label><input type="radio" name="activity-cache-size" value="2" checked><span>2 slots</span></label><label><input type="radio" name="activity-cache-size" value="4"><span>4 slots</span></label></div></fieldset></div>
       <div class="activity-cache-layout">
         <div>
-          <p class="activity-small-heading">CPU REQUESTS THESE 4-BIT ADDRESSES IN ORDER</p>
+          <p class="activity-small-heading">CPU REQUESTS THESE ADDRESSES IN ORDER · DENARY</p>
           <div id="activity-cache-sequence" class="activity-cache-sequence" aria-label="Memory request sequence"></div>
-          <div id="activity-cache-flow" class="activity-cache-flow" aria-label="CPU, cache and main memory"></div>
-          <div class="activity-cache-legend"><span><i class="activity-key activity-key-teal"></i>Hit: cached copy found</span><span><i class="activity-key activity-key-orange"></i>Miss: read from RAM</span></div>
+          <div class="activity-cache-viewport" tabindex="0" role="region" aria-label="Cache demonstration. Scroll sideways on a small screen."><div id="activity-cache-flow" class="activity-cache-flow" aria-label="Contents return from RAM or cache on the right to the CPU on the left"></div></div>
+          <div class="activity-cache-legend"><span><i class="activity-key activity-key-teal"></i>Hit: CACHE → CPU · RAM idle</span><span><i class="activity-key activity-key-orange"></i>Miss: RAM → CPU · keep a copy</span></div>
         </div>
         <div class="activity-cache-scoreboard">
           <div class="activity-cache-stats"><div><strong id="activity-cache-hits">0</strong><span>HITS</span></div><div><strong id="activity-cache-misses">0</strong><span>MISSES</span></div><div><strong id="activity-cache-cycles">0</strong><span>CYCLES</span></div></div>
@@ -507,7 +593,7 @@
           <p class="activity-cost-model"><strong>Model cost:</strong> hit = 1 cycle; miss = 5 cycles total, including the RAM read and cache fill.</p>
         </div>
       </div>
-      <div class="activity-learning-note activity-cache-note"><strong>A larger cache can reduce slower RAM accesses.</strong><p>The benefit depends on which addresses the program uses. Try the same sequence with the cache off, 2 slots and 4 slots.</p><details><summary>About this cache model</summary><p>Each slot holds a copy of one 8-bit data value. The @ symbol marks a denary memory address; each data value is displayed as eight binary digits. A full cache replaces the least recently used entry. Occupied slots are ordered from least to most recently used, reading left to right and then top to bottom. Real caches usually transfer blocks of memory and use more complex arrangements. The timings here are teaching examples, not measurements of a real CPU.</p></details></div>
+      <div class="activity-learning-note activity-cache-note"><strong>A larger cache can reduce slower RAM accesses.</strong><p>The benefit depends on which addresses the program uses. Try the same sequence with the cache off, 2 slots and 4 slots.</p><details><summary>About this cache model</summary><p>Each slot keeps a copy of one 8-bit instruction or data word. Addresses are denary. The same eight bits appear in RAM, the cache copy, and the CPU. The instruction words here are LDA 3 and ADD 4; the data words are 7 and 5. This demonstration reads those words without executing a program. A full cache replaces the least recently used entry. Occupied slots are ordered from least to most recently used, reading left to right and then top to bottom. Real caches usually transfer blocks of memory and use more complex arrangements. The timings here are teaching examples, not measurements of a real CPU.</p></details></div>
     </article>
   </div>
 </section>
@@ -1206,9 +1292,14 @@
   const clock = { rate: 2, running: false, frame: 0, baseCycles: 0, chosenCycles: 0, chosenFinished: false };
   const cores = { count: 4, workload: 'parallel', completed: 0, steps: 0, history: [[], [], [], []], running: false, timer: 0 };
   const requestSequence = [1, 2, 1, 2, 3, 1, 2, 3, 4, 1, 2, 4];
-  const ramValues = { 1: 7, 2: 5, 3: 8, 4: 12 };
+  const ramWords = {
+    1: { value: 19, type: 'Instruction', meaning: 'LDA 3' },
+    2: { value: 52, type: 'Instruction', meaning: 'ADD 4' },
+    3: { value: 7, type: 'Data', meaning: '7 denary' },
+    4: { value: 5, type: 'Data', meaning: '5 denary' }
+  };
   const cacheBits = value => Number(value).toString(2).padStart(8, '0');
-  const cache = { size: 2, cells: [], history: [], position: 0, hits: 0, misses: 0, cycles: 0, last: null, running: false, timer: 0 };
+  const cache = { size: 2, cells: [], history: [], position: 0, hits: 0, misses: 0, cycles: 0, last: null, pending: null, stage: 'idle', running: false, timer: 0 };
   let initialised = false;
   let buildWireFrame = 0;
 
@@ -1281,8 +1372,8 @@
     // Separate CU ports and lanes keep the decode and ALU-control paths from crossing.
     pieces.push(path('M' + cir.cx + ' ' + cir.top + ' V' + decodeY + ' H' + decodeX + ' V' + cu.bottom, 'control', false, 'cir-cu'));
     pieces.push(path('M' + controlX + ' ' + cu.bottom + ' V' + controlY + ' H' + alu.cx + ' V' + alu.top, 'control', false, 'cu-alu'));
-    pieces.push(label('instruction to CU', (cir.cx + decodeX) / 2, decodeY - 8, 'middle'));
-    pieces.push(label('CU directs ALU', (controlX + alu.cx) / 2, controlY - 8, 'middle'));
+    pieces.push(label('instruction to CU', (cir.cx + decodeX) / 2, decodeY - 5, 'middle'));
+    pieces.push(label('CU directs ALU', (controlX + alu.cx) / 2, controlY - 5, 'middle'));
     // Use a higher MDR port so instruction copies never share the ACC-to-MDR line.
     pieces.push(path('M' + mdr.left + ' ' + instructionY + ' H' + cir.cx + ' V' + cir.bottom, 'data', false, 'mdr-cir'));
     pieces.push(label('copy instruction', cir.cx + 10, (cir.bottom + instructionY) / 2 + 3));
@@ -1620,33 +1711,94 @@
     }
   }
 
+  function cacheResultMessage() {
+    const current = cache.pending;
+    if (current) {
+      const word = ramWords[current.address];
+      const prefix = 'Request ' + (cache.position + 1) + ' / 12 · address ' + current.address + '. ';
+      if (cache.stage === 'request') return prefix + (cache.size ? 'Check the cache for a copy.' : 'Cache is off, so ask RAM.');
+      if (cache.stage === 'ram-read') return prefix + 'MISS — RAM reads the ' + word.type.toLowerCase() + '. The CPU is waiting.';
+      if (cache.stage === 'ram-return') return prefix + 'RAM → CPU: return ' + cacheBits(word.value) + ' unchanged.' + (cache.size ? ' A copy will be kept in cache when it arrives.' : ' No copy is kept because cache is off.');
+      return prefix + 'HIT — CACHE → CPU: return ' + cacheBits(word.value) + '. RAM stays idle.';
+    }
+    if (!cache.last) return cache.size ? 'Request the first address. The cache starts empty.' : 'Cache is off. Every request reads from RAM.';
+    const last = cache.last;
+    const word = ramWords[last.address];
+    let message = 'Received ' + cacheBits(word.value) + ' · ' + word.type + ': ' + word.meaning + '. ';
+    message += last.hit ? 'HIT: from cache, +1 cycle. RAM stayed idle.' : 'MISS: from RAM, +5 cycles.';
+    if (!last.hit && cache.size) message += ' The same eight bits are now copied in cache.';
+    if (last.evicted !== null) message += ' Replaced address ' + last.evicted + ', the least recently used copy.';
+    if (cache.position === requestSequence.length) message += ' Sequence complete: ' + cache.cycles + ' model cycles; cache off takes 60.';
+    return message;
+  }
+
   function renderCache() {
+    const pending = cache.pending;
+    const current = pending || cache.last;
+    const busy = Boolean(pending);
+    const returning = cache.stage === 'ram-return' || cache.stage === 'cache-return';
+    const ramReading = busy && !pending.hit && (cache.stage === 'ram-read' || cache.stage === 'ram-return');
+    const showRoute = current && cache.stage !== 'request';
+    const received = cache.last ? ramWords[cache.last.address] : null;
+    const activeIndex = pending ? cache.position : cache.position - 1;
     byId('activity-cache-sequence').innerHTML = requestSequence.map((address, index) => {
       const history = cache.history[index];
-      const completed = Boolean(history);
-      const classes = 'activity-cache-request' + (completed ? history.hit ? ' activity-cache-hit' : ' activity-cache-miss' : '') + (index === cache.position - 1 ? ' activity-request-current' : '');
-      return '<span class="' + classes + '" aria-label="Request ' + (index + 1) + ', address ' + address + (completed ? history.hit ? ', hit' : ', miss' : ', waiting') + '"><small>@</small><strong>' + address + '</strong></span>';
+      const classes = 'activity-cache-request' + (history ? history.hit ? ' activity-cache-hit' : ' activity-cache-miss' : '') + (index === activeIndex ? ' activity-request-current' : '') + (pending && index === activeIndex ? ' activity-request-pending' : '');
+      return '<span class="' + classes + '" aria-label="Request ' + (index + 1) + ', address ' + address + (history ? history.hit ? ', hit' : ', miss' : pending && index === activeIndex ? ', in progress' : ', waiting') + '"><small>address</small><strong>' + address + '</strong></span>';
     }).join('');
     const slots = cache.size ? '<div class="activity-cache-slots">' + Array.from({ length: cache.size }, (_, i) => {
       const address = cache.cells[i];
-      return address === undefined ? '<div class="activity-cache-cell"><strong>—</strong><small>empty</small></div>' : '<div class="activity-cache-cell activity-cache-filled' + (cache.last && cache.last.address === address ? ' activity-cache-hot' : '') + '" role="group" aria-label="Address ' + address + ', value ' + cacheBits(ramValues[address]) + '"><small>@' + address + '</small><strong>' + cacheBits(ramValues[address]) + '</strong></div>';
+      if (address === undefined) return '<div class="activity-cache-cell"><strong>—</strong><small>empty slot</small></div>';
+      const word = ramWords[address];
+      const hot = current && current.address === address && cache.stage !== 'request';
+      return '<div class="activity-cache-cell activity-cache-filled' + (hot ? ' activity-cache-hot' : '') + '" data-cache-address="' + address + '" role="group" aria-label="Address ' + address + ', ' + word.type + ', ' + word.meaning + ', ' + cacheBits(word.value) + '"><small>Address ' + address + '</small><strong>' + cacheBits(word.value) + '</strong><span>' + word.type + ' · ' + word.meaning + '</span></div>';
     }).join('') + '</div>' : '<p class="activity-cache-off">No cached copies.<br>Every request uses RAM.</p>';
-    const hit = cache.last && cache.last.hit;
-    const miss = cache.last && !cache.last.hit;
-    const firstArrow = cache.last ? ' activity-flow-active' + (hit ? ' activity-flow-hit' : '') : '';
-    const secondArrow = miss ? ' activity-flow-active' : '';
-    byId('activity-cache-flow').innerHTML = '<div class="activity-cache-cpu"><span aria-hidden="true">▦</span>CPU</div><div class="activity-cache-arrow' + firstArrow + '" aria-hidden="true"></div><div class="activity-cache-box"><span>CACHE · ' + (cache.size ? cache.size + ' SLOTS' : 'OFF') + '</span>' + slots + '</div><div class="activity-cache-arrow' + secondArrow + '" aria-hidden="true"></div><div class="activity-cache-ram"><strong>RAM</strong>' + Object.keys(ramValues).map(address => '<div class="activity-cache-ram-data' + (miss && Number(address) === cache.last.address ? ' activity-ram-read' : '') + '"><span>@' + address + '</span><b>' + cacheBits(ramValues[address]) + '</b></div>').join('') + '</div>';
+    const cacheStatus = busy ? cache.stage === 'request' ? 'Looking for address ' + pending.address : pending.hit ? 'HIT · sending its copy' : cache.size ? 'MISS · waiting for the copy' : 'Cache is off' : cache.last && cache.size ? cache.last.hit ? 'Copy used again' : 'Copy saved after arrival' : cache.size ? 'Starts empty' : 'Cache is off';
+    const requestText = pending ? 'CPU asks for address <b>' + pending.address + '</b> <span aria-hidden="true">→</span> ' + (cache.size ? 'check cache' : 'read RAM') : cache.last ? 'Request ' + cache.position + ' of 12 complete · address ' + cache.last.address : 'Addresses are denary. Returned contents are eight bits.';
+    const source = current && current.hit ? 'cache' : 'ram';
+    const currentWord = current ? ramWords[current.address] : null;
+    const routeTitle = showRoute ? (cache.stage === 'ram-read' ? 'Waiting for RAM…' : 'CPU ← ' + source.toUpperCase() + ' · ' + currentWord.type.toLowerCase() + (returning ? ' travelling' : ' received')) : 'Contents travel from right to left into the CPU';
+    const flow = byId('activity-cache-flow');
+    flow.dataset.stage = cache.stage;
+    flow.dataset.source = current ? source : 'none';
+    flow.setAttribute('aria-busy', String(busy));
+    flow.innerHTML = '<div class="activity-cache-address-request"><span>ADDRESS REQUEST</span><p>' + requestText + '</p></div>' +
+      '<div class="activity-cache-cpu' + (!busy && received ? ' activity-cache-cpu-received' : '') + '"><strong class="activity-cache-node-title">CPU</strong><small class="activity-cache-receipt-label">' + (busy ? 'Waiting for this request' : received ? 'Received contents' : 'Waiting for a request') + '</small><output id="activity-cache-cpu-binary">' + (received ? cacheBits(received.value) : '────────') + '</output><span id="activity-cache-cpu-meaning">' + (received ? received.type + '<b>' + received.meaning + '</b>' : 'Instruction or data will appear here') + '</span><small id="activity-cache-cpu-source">' + (received ? 'From ' + (cache.last.hit ? 'CACHE' : 'RAM') + ' · address ' + cache.last.address + (busy ? ' (previous request)' : '') : 'The eight bits stay unchanged') + '</small></div>' +
+      '<div class="activity-cache-box' + (busy && pending.hit && returning ? ' activity-cache-source-active' : '') + '"><strong class="activity-cache-node-title">CACHE <small>' + (cache.size ? cache.size + ' slots' : 'off') + '</small></strong>' + slots + '<p id="activity-cache-copy-status" class="activity-cache-node-status">' + cacheStatus + '</p></div>' +
+      '<div class="activity-cache-ram' + (ramReading ? ' activity-cache-ram-active' : '') + '"><div class="activity-cache-ram-heading"><strong class="activity-cache-node-title">RAM</strong><span id="activity-cache-ram-status">' + (ramReading ? 'READING' : 'IDLE') + '</span></div><div class="activity-cache-ram-headings"><span>Address</span><span>8-bit contents</span><span>Meaning</span></div>' + Object.keys(ramWords).map(address => {
+        const word = ramWords[address];
+        return '<div class="activity-cache-ram-data' + (ramReading && Number(address) === pending.address ? ' activity-ram-read' : '') + '" data-ram-address="' + address + '"><span>' + address + '</span><b>' + cacheBits(word.value) + '</b><small>' + (word.type === 'Instruction' ? word.meaning : word.value + ' denary') + '</small></div>';
+      }).join('') + '<p class="activity-cache-ram-caption">Instructions and data share RAM.</p></div>' +
+      '<div id="activity-cache-return-path" class="activity-cache-return-path activity-cache-return-' + source + (showRoute ? ' activity-cache-route-visible' : '') + (returning ? ' activity-cache-route-moving' : '') + (cache.stage === 'ram-read' ? ' activity-cache-route-waiting' : '') + '" style="--cache-travel-time:' + (current && current.hit ? 450 : 900) + 'ms"><div class="activity-cache-return-rail" aria-hidden="true">' + (returning ? '<span class="activity-cache-return-packet">' + cacheBits(currentWord.value) + '</span>' : '') + '</div><p id="activity-cache-return-label">' + routeTitle + '</p></div>';
     byId('activity-cache-hits').textContent = cache.hits;
     byId('activity-cache-misses').textContent = cache.misses;
     byId('activity-cache-cycles').textContent = cache.cycles;
-    byId('activity-cache-step').disabled = cache.position >= requestSequence.length;
+    byId('activity-cache-result').textContent = cacheResultMessage();
+    byId('activity-cache-step').disabled = busy || cache.running || cache.position >= requestSequence.length;
+    queryAll('input[name="activity-cache-size"]').forEach(input => { input.disabled = busy || cache.running; });
+    byId('activity-cache-run').disabled = busy && !cache.running;
+    byId('activity-cache-run').textContent = cache.running ? 'Pause' : busy ? 'Delivering…' : cache.position === requestSequence.length ? 'Run again' : cache.position ? 'Resume sequence' : 'Run sequence';
   }
 
   function stopCache() {
-    if (cache.timer) clearInterval(cache.timer);
+    if (cache.timer) clearTimeout(cache.timer);
     cache.timer = 0;
     cache.running = false;
-    byId('activity-cache-run').textContent = cache.position === requestSequence.length ? 'Run again' : cache.position ? 'Resume sequence' : 'Run sequence';
+    cache.pending = null;
+    cache.stage = cache.last ? 'received' : 'idle';
+    renderCache();
+  }
+
+  function scheduleCache(callback, delay) {
+    if (cache.timer) clearTimeout(cache.timer);
+    cache.timer = setTimeout(() => {
+      cache.timer = 0;
+      if (document.hidden || performancePanelHidden()) {
+        stopCache();
+        return;
+      }
+      callback();
+    }, delay);
   }
 
   function resetCache() {
@@ -1659,69 +1811,75 @@
     cache.misses = 0;
     cache.cycles = 0;
     cache.last = null;
+    cache.stage = 'idle';
     renderCache();
-    byId('activity-cache-run').textContent = 'Run sequence';
-    byId('activity-cache-result').textContent = cache.size ? 'Request the first address. The cache starts empty.' : 'The cache is off. Each of the 12 requests will read from RAM.';
   }
 
-  function advanceCache() {
-    if (cache.position >= requestSequence.length) return;
-    const address = requestSequence[cache.position];
-    const cacheIndex = cache.cells.indexOf(address);
-    const hit = cacheIndex !== -1;
-    let evicted = null;
-    if (hit) {
+  function receiveCacheWord() {
+    if (!cache.pending) return;
+    const request = cache.pending;
+    // Commit only on arrival: cancelling an unfinished animation changes no memory or counters.
+    if (request.hit) {
       cache.hits++;
       cache.cycles++;
-      cache.cells.splice(cacheIndex, 1);
-      cache.cells.push(address);
+      cache.cells.splice(cache.cells.indexOf(request.address), 1);
+      cache.cells.push(request.address);
     } else {
       cache.misses++;
       cache.cycles += 5;
       if (cache.size) {
-        if (cache.cells.length === cache.size) evicted = cache.cells.shift();
-        cache.cells.push(address);
+        if (cache.cells.length === cache.size) cache.cells.shift();
+        cache.cells.push(request.address);
       }
     }
-    cache.last = { address, hit, evicted };
-    cache.history.push(cache.last);
+    cache.last = request;
+    cache.history.push(request);
     cache.position++;
+    cache.pending = null;
+    cache.stage = 'received';
+    const complete = cache.position === requestSequence.length;
+    if (complete) cache.running = false;
     renderCache();
-    let message = 'Request ' + cache.position + ' / 12: address ' + address + '. ';
-    if (hit) {
-      message += 'HIT — use the cached value ' + cacheBits(ramValues[address]) + '. +1 cycle.';
-    } else {
-      message += 'MISS — read value ' + cacheBits(ramValues[address]) + ' from RAM. +5 cycles.';
-      if (evicted !== null) message += ' Replace address ' + evicted + ', the least recently used entry.';
-      else if (cache.size) message += ' Keep a copy in cache.';
-    }
-    if (cache.position === requestSequence.length) {
-      stopCache();
-      message += ' Sequence complete: ' + cache.cycles + ' model cycles. With no cache, this sequence takes 60 cycles.';
-      notifyCompletion('cache', { size: cache.size, hits: cache.hits, misses: cache.misses, cycles: cache.cycles });
-    }
-    byId('activity-cache-result').textContent = message;
+    if (complete) notifyCompletion('cache', { size: cache.size, hits: cache.hits, misses: cache.misses, cycles: cache.cycles });
+    else if (cache.running) scheduleCache(advanceCache, 650);
+  }
+
+  function returnCacheWord() {
+    if (!cache.pending) return;
+    cache.stage = cache.pending.hit ? 'cache-return' : 'ram-return';
+    renderCache();
+    scheduleCache(receiveCacheWord, cache.pending.hit ? 450 : 900);
+  }
+
+  function advanceCache() {
+    if (cache.pending || cache.position >= requestSequence.length) return;
+    const address = requestSequence[cache.position];
+    const hit = cache.cells.includes(address);
+    cache.pending = { address, hit, evicted: !hit && cache.size && cache.cells.length === cache.size ? cache.cells[0] : null };
+    cache.stage = 'request';
+    renderCache();
+    scheduleCache(() => {
+      if (!cache.pending) return;
+      if (cache.pending.hit) returnCacheWord();
+      else {
+        cache.stage = 'ram-read';
+        renderCache();
+        scheduleCache(returnCacheWord, 650);
+      }
+    }, 350);
   }
 
   function toggleCacheRun() {
     if (cache.running) {
+      const unfinished = Boolean(cache.pending);
       stopCache();
-      byId('activity-cache-result').textContent = 'Paused after request ' + cache.position + '. Resume or use Next request to continue.';
+      byId('activity-cache-result').textContent = 'Paused after ' + cache.position + ' completed requests.' + (unfinished ? ' The unfinished request will restart when you continue.' : ' Resume or use Next request to continue.');
       return;
     }
+    if (cache.pending) return;
     if (cache.position === requestSequence.length) resetCache();
     cache.running = true;
-    byId('activity-cache-run').textContent = 'Pause';
     advanceCache();
-    if (cache.running) {
-      cache.timer = setInterval(() => {
-        if (performancePanelHidden()) {
-          stopCache();
-          return;
-        }
-        advanceCache();
-      }, 850);
-    }
   }
 
   function pauseAll() {
@@ -1731,7 +1889,7 @@
       byId('activity-clock-result').textContent = 'Comparison paused. Run it again to restart both CPUs together.';
     }
     if (cores.running) stopCores();
-    if (cache.running) stopCache();
+    if (cache.running || cache.pending || cache.timer) stopCache();
   }
 
   function setupPerformance() {
@@ -1767,7 +1925,7 @@
         build: { placements: Object.assign({}, build.placements), selected: build.selected, revealed: build.revealed, correct: componentKeys.filter(key => build.placements[key] === key).length },
         clock: { rate: clock.rate, running: clock.running, referenceCycles: Math.floor(clock.baseCycles), chosenCycles: Math.floor(clock.chosenCycles) },
         cores: { count: cores.count, workload: cores.workload, completed: cores.completed, steps: cores.steps, history: cores.history.map(jobs => jobs.slice()), running: cores.running },
-        cache: { size: cache.size, entries: cache.cells.slice(), requests: cache.position, hits: cache.hits, misses: cache.misses, cycles: cache.cycles, running: cache.running }
+        cache: { size: cache.size, entries: cache.cells.slice(), requests: cache.position, hits: cache.hits, misses: cache.misses, cycles: cache.cycles, running: cache.running, stage: cache.stage, inFlight: Boolean(cache.pending), cpuValue: cache.last ? ramWords[cache.last.address].value : null }
       };
     }
   };
