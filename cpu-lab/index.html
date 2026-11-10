@@ -276,78 +276,109 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
 @media(max-width:1080px){#build-panel .activity-builder-layout{grid-template-columns:1fr}#build-panel .activity-component-bank{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}#build-panel .activity-component-tray .activity-card-heading{justify-content:flex-start;gap:12px}#build-panel .activity-section-head>div:first-child{display:block}#build-panel .activity-section-head h2{margin-bottom:4px}}
 @media(max-width:680px){#build-panel .activity-section-head{gap:10px}#build-panel .activity-section-head h2{font-size:22px}#build-panel .activity-section-head p:not(.activity-eyebrow){font-size:11px}#build-panel .activity-progress-pill{flex-direction:column;gap:1px;padding:5px 7px}#build-panel .activity-progress-pill small{font-size:8px}#build-panel .activity-component-bank{grid-template-columns:repeat(2,minmax(0,1fr))}#build-panel .activity-diagram-heading{display:block}#build-panel .activity-builder-actions{justify-content:flex-start;margin-top:6px}#build-panel .activity-build-footer{display:block}#build-panel .activity-build-notes{max-width:none;margin-top:3px}}
 
-/* Cache mini-lab: addresses request a word; contents return right to left. */
-.activity-cache-card .activity-cache-layout{grid-template-columns:1fr;gap:18px}
-.activity-cache-card .activity-cache-top .activity-card-intro{max-width:760px}
-.activity-cache-card .activity-cache-request{width:46px;height:42px;gap:4px}
-.activity-cache-request.activity-request-pending{background:#edf3ff;border-color:#638cda}
+/* Cache is a compact nearby store; RAM sits across the longer access path. */
+.activity-cache-card{min-width:0;padding:20px}
+.activity-cache-card .activity-cache-top{gap:20px;align-items:center}
+.activity-cache-card .activity-card-heading{margin-bottom:8px}
+.activity-cache-card .activity-card-heading h3{font-size:21px}
+.activity-cache-card .activity-cache-top .activity-card-intro{max-width:780px;font-size:12px;line-height:1.5;margin:0}
+.activity-cache-card .activity-cache-layout{grid-template-columns:minmax(0,1fr);gap:12px;margin-top:12px}
+.activity-cache-card .activity-cache-layout>div{min-width:0}
+.activity-cache-card .activity-cache-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0 13px}
+.activity-cache-card .activity-cache-actions .activity-button{min-height:34px;padding:8px 12px;font-size:11px!important}
+.activity-cache-start-note{font-size:11px;line-height:1.5;color:#6f5b94;margin:0 0 0 4px}
+.activity-cache-card .activity-small-heading{margin-bottom:7px;font-size:8px;letter-spacing:.8px}
+.activity-cache-card .activity-cache-sequence{gap:5px}
+.activity-cache-card .activity-cache-request{width:43px;height:34px;gap:2px}
 .activity-cache-card .activity-cache-request small{font-size:7px}
-.activity-cache-viewport{overflow-x:auto;overscroll-behavior-x:contain;max-width:100%;padding:3px 3px 8px;border-radius:12px;scrollbar-width:thin}
+.activity-cache-card .activity-cache-request strong{font-size:12px}
+.activity-cache-request.activity-request-pending{background:#edf3ff;border-color:#638cda}
+.activity-cache-viewport{overflow-x:auto;overscroll-behavior-x:contain;max-width:100%;padding:3px 3px 4px;border-radius:12px;scrollbar-width:thin}
 .activity-cache-viewport:focus-visible{outline:3px solid #37adbd;outline-offset:2px}
-.activity-cache-card .activity-cache-flow{--cache-cpu-width:145px;--cache-ram-width:215px;display:grid;grid-template-columns:var(--cache-cpu-width) 70px minmax(180px,1fr) 40px var(--cache-ram-width);grid-template-rows:auto minmax(205px,auto) 75px;gap:12px 10px;align-items:stretch;min-width:760px;max-width:none;min-height:0;margin:12px 0 0}
-.activity-cache-address-request{grid-column:1/-1;display:flex;align-items:center;gap:12px;padding:8px 10px;border:1px dashed #dce4ec;border-radius:7px;background:#f8fafc;color:#677b8e;font-size:11px}
-.activity-cache-address-request>span{font-size:8px;font-weight:800;letter-spacing:.7px;white-space:nowrap}
-.activity-cache-address-request p{margin:0;line-height:1.5}
-.activity-cache-address-request p>span{padding:0 5px;color:#899aae}
-.activity-cache-address-request b{color:#364e66}
-.activity-cache-card .activity-cache-cpu{grid-row:2;grid-column:1;min-height:205px;padding:15px 11px;gap:0;border:2px solid #233b57;border-radius:12px;background:#172b45;box-shadow:none;text-align:center;justify-content:flex-start;color:#fff}
+.activity-cache-card .activity-cache-flow{--cache-cpu-width:170px;--cache-ram-width:240px;display:grid;grid-template-columns:170px 54px 240px minmax(120px,1fr) 240px;grid-template-rows:210px 60px;gap:8px 0;align-items:stretch;min-width:824px;max-width:none;min-height:0;margin:10px 0 0}
+.activity-cache-card .activity-cache-cpu{grid-row:1;grid-column:1;min-height:0;padding:13px 10px;gap:0;border:2px solid #233b57;border-radius:12px;background:#172b45;box-shadow:none;text-align:center;justify-content:flex-start;color:#fff}
 .activity-cache-card .activity-cache-cpu span{font-size:inherit;font-weight:inherit;line-height:inherit}
-.activity-cache-card .activity-cache-node-title{display:block;margin:0;font-size:14px;font-weight:800;letter-spacing:.5px;line-height:1.4}
+.activity-cache-card .activity-cache-node-title{display:block;margin:0;font-size:15px;font-weight:800;letter-spacing:.5px;line-height:1.3}
 .activity-cache-card .activity-cache-node-title small{font-size:10px;font-weight:600;letter-spacing:0;color:#8873a2;margin-left:5px}
-.activity-cache-cpu .activity-cache-receipt-label{display:block;font-size:9px;color:#b9cada;line-height:1.5;margin:15px 0 8px}
-#activity-cache-cpu-binary{display:block;font:800 18px/1.4 Consolas,"Liberation Mono",monospace;letter-spacing:.3px;white-space:nowrap;color:#fff}
-.activity-cache-card #activity-cache-cpu-meaning{display:block;font-size:10px;font-weight:500;line-height:1.5;color:#c6d5e4;margin:9px 0}
-#activity-cache-cpu-meaning b{display:block;font-size:15px;line-height:1.5;color:#fff}
-.activity-cache-card #activity-cache-cpu-source{font-size:9px;font-weight:500;line-height:1.5;color:#b9cada;margin-top:auto}
+.activity-cache-cpu .activity-cache-receipt-label{display:block;font-size:10px;color:#b9cada;line-height:1.4;margin:13px 0 8px}
+#activity-cache-cpu-binary{display:block;font:800 20px/1.4 Consolas,"Liberation Mono",monospace;letter-spacing:.3px;white-space:nowrap;color:#fff}
+.activity-cache-card #activity-cache-cpu-meaning{display:block;font-size:10px;font-weight:500;line-height:1.4;color:#c6d5e4;margin:8px 0}
+#activity-cache-cpu-meaning b{display:block;font-size:16px;line-height:1.5;color:#fff}
+.activity-cache-card #activity-cache-cpu-source{font-size:10px;font-weight:500;line-height:1.4;color:#b9cada;margin-top:auto}
 .activity-cache-card .activity-cache-cpu-received{border-color:#42b49a;box-shadow:0 0 0 3px #dff4ed}
-.activity-cache-card .activity-cache-box{grid-row:2;grid-column:3;border:2px solid #d9cdec;background:#fbf8ff;padding:13px 11px;min-height:205px;display:flex;flex-direction:column;color:#71509f}
-.activity-cache-card .activity-cache-slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:12px}
-.activity-cache-card .activity-cache-cell{min-height:60px;padding:6px 3px;gap:4px}
-.activity-cache-card .activity-cache-cell small{font-size:8px}
-.activity-cache-card .activity-cache-cell strong{font-size:12px;letter-spacing:0;white-space:nowrap}
-.activity-cache-card .activity-cache-cell>span{font-size:8px;line-height:1.35;text-align:center;color:#7d6b98}
-.activity-cache-card .activity-cache-cell.activity-cache-hot{background:#e5f5ec;border-color:#5fa783;box-shadow:0 0 0 1px #8dc3a6}
+.activity-cache-card .activity-cache-box{grid-row:1;grid-column:3;border:2px solid #c9b4e5;border-radius:11px;background:#faf6ff;padding:10px;min-height:0;display:flex;flex-direction:column;color:#684497}
+.activity-cache-recent-note{font-size:9px;line-height:1.35;color:#886da6;margin:3px 0 0}
+.activity-cache-card .activity-cache-slots{display:grid;grid-template-columns:1fr;gap:5px;margin-top:7px}
+.activity-cache-card .activity-cache-slots[data-capacity="4"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+.activity-cache-card .activity-cache-cell{height:55px;min-height:55px;padding:4px 3px;gap:3px;border-radius:6px}
+.activity-cache-card .activity-cache-cell small{font-size:8px;line-height:1.1}
+.activity-cache-card .activity-cache-cell strong{font-size:14px;letter-spacing:0;white-space:nowrap;line-height:1.15}
+.activity-cache-card .activity-cache-cell>span{font-size:9px;line-height:1.1;text-align:center;color:#7d6b98}
+.activity-cache-card .activity-cache-slots[data-capacity="4"] .activity-cache-cell strong{font-size:12px}
+.activity-cache-card .activity-cache-slots[data-capacity="4"] .activity-cache-cell>span{font-size:8px}
+.activity-cache-card .activity-cache-cell.activity-cache-hot{background:#e2f6eb;border-color:#58a77e;box-shadow:0 0 0 1px #8dc3a6}
 .activity-cache-card .activity-cache-source-active{border-color:#42a17e;box-shadow:0 0 0 3px #e7f4ed}
 .activity-cache-card .activity-cache-off{margin:auto 0;font-size:12px;color:#897b9c}
-.activity-cache-node-status{font-size:10px;line-height:1.5;font-weight:650;text-align:center;margin:10px 0 0;padding-top:4px;color:#806895}
-.activity-cache-card .activity-cache-ram{grid-row:2;grid-column:5;min-height:205px;padding:13px 9px;border:2px solid #ecd7b8;background:#fff9ef;border-radius:11px;color:#90652e}
-.activity-cache-ram-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:13px}
-.activity-cache-ram-heading>span{border-radius:4px;background:#f1e9db;padding:4px 6px;color:#8d806b;font-size:8px;font-weight:800;letter-spacing:.4px}
+.activity-cache-node-status{font-size:10px;line-height:1.3;font-weight:650;text-align:center;margin:7px 0 0;color:#806895}
+.activity-cache-distance-note{grid-row:1;grid-column:4;align-self:center;justify-self:center;max-width:170px;padding:10px 12px;text-align:center;color:#8190a1}
+.activity-cache-distance-note strong{display:block;font-size:12px;line-height:1.45;margin-bottom:7px}
+.activity-cache-distance-note span{display:block;font-size:10px;line-height:1.5}
+.activity-cache-distance-hit{color:#23815f}
+.activity-cache-distance-miss{color:#a27127}
+.activity-cache-card .activity-cache-ram{grid-row:1;grid-column:5;min-height:0;padding:11px 10px;border:2px solid #ecd7b8;background:#fff9ef;border-radius:11px;color:#90652e}
+.activity-cache-ram-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px}
+.activity-cache-ram-heading>span{border-radius:4px;background:#f1e9db;padding:4px 6px;color:#8d806b;font-size:9px;font-weight:800;letter-spacing:.4px}
 .activity-cache-card .activity-cache-ram-active{border-color:#d99831;box-shadow:0 0 0 3px #fff1d9}
 .activity-cache-ram-active .activity-cache-ram-heading>span{background:#d58c1e;color:#fff}
-.activity-cache-card .activity-cache-ram-headings,.activity-cache-card .activity-cache-ram-data{display:grid;grid-template-columns:33px 75px minmax(0,1fr);align-items:center;column-gap:6px;padding:7px 4px;white-space:nowrap}
-.activity-cache-ram-headings{font-size:7px;font-weight:750;color:#a08661;border-bottom:1px solid #ead9bd;margin-bottom:4px}
+.activity-cache-card .activity-cache-ram-headings,.activity-cache-card .activity-cache-ram-data{display:grid;grid-template-columns:36px 80px minmax(0,1fr);align-items:center;column-gap:6px;padding:5px 4px;white-space:nowrap}
+.activity-cache-ram-headings{font-size:8px;font-weight:750;color:#a08661;border-bottom:1px solid #ead9bd;margin-bottom:3px}
 .activity-cache-card .activity-cache-ram-data{font-size:11px;line-height:1.3;border-bottom:1px solid #f0e5d3;border-radius:4px}
-.activity-cache-card .activity-cache-ram-data b{font-size:11px;color:#6f532f}
-.activity-cache-card .activity-cache-ram-data small{font-size:9px;font-family:ui-sans-serif,system-ui,sans-serif;color:#8a6d46}
+.activity-cache-card .activity-cache-ram-data b{font-size:12px;color:#6f532f}
+.activity-cache-card .activity-cache-ram-data small{font-size:10px;font-family:ui-sans-serif,system-ui,sans-serif;color:#8a6d46}
 .activity-cache-card .activity-cache-ram-data.activity-ram-read{background:#ffe1aa;color:#774c15;border-color:#e7b65d;box-shadow:0 0 0 1px #e7b65d}
-.activity-cache-ram-caption{font-size:8px;line-height:1.5;color:#a38c6a;margin:10px 0 0;text-align:center}
-.activity-cache-return-path{--return-colour:#c5ced8;grid-row:3;grid-column:1/-1;position:relative;margin-left:calc(var(--cache-cpu-width)/2);margin-right:calc(var(--cache-ram-width)/2);height:75px;color:#8a99a8}
-.activity-cache-return-cache{margin-right:calc(50% + 20px)}
-.activity-cache-return-path::before,.activity-cache-return-path::after{content:"";position:absolute;top:-12px;height:38px;width:3px;background:var(--return-colour);opacity:0}
+.activity-cache-ram-caption{font-size:9px;line-height:1.3;color:#a38c6a;margin:8px 0 0;text-align:center}
+/* Exact centres: CPU 85px; cache 344px; RAM 120px from the right. */
+.activity-cache-return-path{--return-colour:#c5ced8;grid-row:2;grid-column:1/-1;position:relative;margin-left:85px;margin-right:120px;height:60px;color:#8a99a8}
+.activity-cache-return-cache{width:259px;margin-right:0}
+.activity-cache-return-path::before,.activity-cache-return-path::after{content:"";position:absolute;top:-8px;height:31px;width:3px;background:var(--return-colour);opacity:0}
 .activity-cache-return-path::before{right:0}
 .activity-cache-return-path::after{left:0}
-.activity-cache-return-rail{position:absolute;top:24px;left:0;right:0;height:4px;border-radius:4px;background:var(--return-colour);opacity:.55}
-.activity-cache-return-rail::before{content:"";position:absolute;left:-2px;top:-5px;width:0;height:0;border-right:11px solid var(--return-colour);border-top:7px solid transparent;border-bottom:7px solid transparent}
-.activity-cache-return-path>p{position:absolute;top:36px;left:-35px;right:-35px;margin:0;font-size:10px;line-height:1.5;font-weight:750;text-align:center;white-space:nowrap}
+.activity-cache-return-rail{position:absolute;top:21px;left:0;right:0;height:3px;border-radius:3px;background:var(--return-colour);opacity:.4}
+.activity-cache-return-rail::before{content:"";position:absolute;left:17px;top:-5px;width:0;height:0;border-right:10px solid var(--return-colour);border-top:6px solid transparent;border-bottom:6px solid transparent}
+.activity-cache-return-rail::after{content:"";position:absolute;left:-4.5px;top:-31px;width:0;height:0;border-bottom:9px solid var(--return-colour);border-left:6px solid transparent;border-right:6px solid transparent;opacity:0}
+.activity-cache-return-path>p{position:absolute;top:33px;left:-55px;right:-55px;margin:0;font-size:10px;line-height:1.45;font-weight:750;text-align:center;white-space:nowrap}
 .activity-cache-route-visible{--return-colour:#d59631;color:#97611b}
 .activity-cache-return-cache.activity-cache-route-visible{--return-colour:#259874;color:#237c60}
-.activity-cache-route-visible::before,.activity-cache-route-visible::after,.activity-cache-route-visible .activity-cache-return-rail{opacity:1}
+.activity-cache-route-visible::before,.activity-cache-route-visible::after,.activity-cache-route-visible .activity-cache-return-rail,.activity-cache-route-visible .activity-cache-return-rail::after{opacity:1}
 .activity-cache-route-waiting{--return-colour:#d4c5af;color:#9a886e}
-.activity-cache-return-packet{position:absolute;z-index:2;top:-12px;left:0;display:block;padding:5px 6px;min-width:80px;text-align:center;border:1px solid var(--return-colour);border-radius:5px;background:#fffdf8;box-shadow:0 2px 5px #172b451a;color:#8f5f21;font:800 12px/1 Consolas,"Liberation Mono",monospace;animation:activity-cache-word-return var(--cache-travel-time) linear both}
+.activity-cache-return-packet{position:absolute;z-index:2;top:-10px;left:0;display:block;width:92px;min-width:0;padding:4px 5px;text-align:center;border:1px solid var(--return-colour);border-radius:5px;background:#fffdf8;box-shadow:0 2px 5px #172b451a;color:#8f5f21;font:800 12px/1 Consolas,"Liberation Mono",monospace;animation:activity-cache-word-return var(--cache-travel-time) linear both}
 .activity-cache-return-cache .activity-cache-return-packet{color:#197451;background:#f4fff9}
-@keyframes activity-cache-word-return{from{left:calc(100% - 80px)}to{left:0}}
-.activity-cache-card .activity-cache-scoreboard{display:grid;grid-template-columns:235px minmax(0,1fr);gap:12px 20px;border-left:0;border-top:1px solid #e5ebee;padding:18px 0 0}
-.activity-cache-card .activity-cache-stats{grid-column:1;align-self:start}
-.activity-cache-card .activity-cache-stats>div{padding:10px 7px}
-.activity-cache-card .activity-cache-scoreboard .activity-feedback{grid-column:2;min-height:0;margin:0;font-size:12px;line-height:1.7;align-self:center}
-.activity-cache-card .activity-inline-actions{grid-column:1/-1;margin-top:0}
-.activity-cache-card .activity-cost-model{grid-column:1/-1;margin:0}
-.activity-cache-card .activity-cache-legend{margin-top:5px;font-size:10px}
+@keyframes activity-cache-word-return{from{left:calc(100% - 92px)}to{left:0}}
+.activity-cache-card .activity-cache-legend{margin-top:3px;font-size:10px;gap:18px}
+.activity-cache-time-comparison{display:grid;grid-template-columns:minmax(0,1fr) 148px;gap:8px 16px;padding:12px 15px;border:1px solid #dbe7e2;border-radius:10px;background:#f7fbf9;margin-top:12px}
+.activity-cache-time-comparison>header,.activity-cache-time-heading{grid-column:1/-1;display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:2px}
+.activity-cache-time-comparison h4{font-size:13px;line-height:1.3;margin:0;color:#284e40}
+.activity-cache-time-comparison>header small,.activity-cache-time-heading small{font-size:9px;line-height:1.4;color:#718579}
+.activity-cache-time-row{grid-column:1;display:grid;grid-template-columns:112px minmax(50px,1fr) 66px;gap:9px;align-items:center}
+.activity-cache-time-row>span{font-size:10px;line-height:1.35;color:#60756c}
+.activity-cache-time-row>output{font:700 11px/1.3 ui-sans-serif,system-ui,sans-serif;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;color:#456253}
+.activity-cache-time-track{height:13px;border-radius:4px;background:#e5ece8;overflow:hidden}
+.activity-cache-time-track>i{display:block;height:100%;width:0;border-radius:4px;background:#259874;transition:width .25s ease}
+.activity-cache-time-row[data-kind="ram"] .activity-cache-time-track>i{background:#d6a24c}
+.activity-cache-saved-panel{grid-column:2;grid-row:2/span 2;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;border-left:1px solid #d8e8df;color:#26815e;font-size:11px;line-height:1.3;text-align:center;padding-left:12px}
+#activity-cache-saved{font-variant-numeric:tabular-nums;font-size:25px;line-height:1.1;letter-spacing:-.5px;display:block}
+.activity-cache-card .activity-cache-scoreboard{display:grid;grid-template-columns:205px minmax(0,1fr);gap:12px 18px;border-left:0;border-top:1px solid #e5ebee;padding:12px 0 0}
+.activity-cache-card .activity-cache-stats{grid-column:1;gap:6px;align-self:center}
+.activity-cache-card .activity-cache-stats>div{padding:7px 5px;gap:2px;border-radius:7px}
+.activity-cache-card .activity-cache-stats strong{font-size:20px}
+.activity-cache-card .activity-cache-stats span{font-size:7px}
+.activity-cache-card .activity-cache-scoreboard .activity-feedback{grid-column:2;min-height:0;margin:0;padding:9px 11px;font-size:11px;line-height:1.5;align-self:center}
+.activity-cache-card .activity-cost-model{grid-column:1/-1;margin:0;font-size:9px}
 .activity-cache-card .activity-segments input:disabled+span{opacity:.5;cursor:wait}
-.activity-cache-card .activity-cache-note{margin-top:15px}
-@media(max-width:680px){.activity-cache-card .activity-cache-scoreboard{grid-template-columns:1fr;gap:14px}.activity-cache-card .activity-cache-scoreboard .activity-feedback{grid-column:1}.activity-cache-card .activity-cache-stats{max-width:340px;width:100%}.activity-cache-card .activity-cache-request{width:40px;height:38px}.activity-cache-card .activity-cache-top .activity-segment-field{margin-top:12px}.activity-cache-card .activity-cache-legend{gap:10px;font-size:9px}}
-@media(prefers-reduced-motion:reduce){.activity-cache-return-packet{animation:none!important;left:calc(50% - 40px)}}
+.activity-cache-card .activity-cache-note{margin-top:10px;padding-top:8px}
+.activity-cache-card .activity-cache-note details{margin-top:0}
+@media(max-width:680px){.activity-cache-card{padding:16px}.activity-cache-card .activity-cache-top{display:block}.activity-cache-card .activity-cache-top .activity-segment-field{margin:12px 0 0}.activity-cache-card .activity-cache-actions{gap:6px}.activity-cache-start-note{flex-basis:100%;margin:0}.activity-cache-card .activity-cache-request{width:38px;height:33px}.activity-cache-card .activity-cache-legend{gap:10px;font-size:9px}.activity-cache-time-comparison{grid-template-columns:minmax(0,1fr);gap:9px;padding:10px}.activity-cache-time-comparison>header,.activity-cache-time-heading{display:block}.activity-cache-time-comparison>header small,.activity-cache-time-heading small{display:block;margin-top:3px}.activity-cache-time-row{grid-template-columns:93px minmax(30px,1fr) 60px;gap:6px}.activity-cache-time-row>span{font-size:9px}.activity-cache-saved-panel{grid-column:1;grid-row:auto;flex-direction:row;gap:8px;padding:7px 0 0;border-left:0;border-top:1px solid #d8e8df}.activity-cache-saved-panel #activity-cache-saved{font-size:22px}.activity-cache-card .activity-cache-scoreboard{grid-template-columns:1fr;gap:9px}.activity-cache-card .activity-cache-stats{width:220px;max-width:100%}.activity-cache-card .activity-cache-scoreboard .activity-feedback{grid-column:1}}
+@media(prefers-reduced-motion:reduce){.activity-cache-return-packet{animation:none!important;left:calc(50% - 46px)}.activity-cache-time-track>i{transition:none!important}}
 </style>
 </head>
 <body>
@@ -578,22 +609,30 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
       <div class="activity-learning-note"><strong>More cores help with parallel work.</strong><p>If a job needs the previous result, it has to wait. Software must be able to split the work; real speed-ups also depend on coordination and shared resources.</p><small>One model time step is the time for one equal-sized job on one core.</small></div>
     </article>
     <article class="activity-card activity-cache-card" aria-labelledby="activity-cache-title">
-      <div class="activity-cache-top"><div><div class="activity-card-heading"><span class="activity-lab-number activity-orange">03</span><div><p class="activity-eyebrow">CACHE SIZE</p><h3 id="activity-cache-title">Keep instructions and data close</h3></div></div><p class="activity-card-intro">Watch an instruction or data travel from RAM into the CPU. Keep a copy in cache, then request the same address again to receive it faster.</p></div><fieldset class="activity-segment-field"><legend>Cache capacity</legend><div class="activity-segments"><label><input type="radio" name="activity-cache-size" value="0"><span>Off</span></label><label><input type="radio" name="activity-cache-size" value="2" checked><span>2 slots</span></label><label><input type="radio" name="activity-cache-size" value="4"><span>4 slots</span></label></div></fieldset></div>
+      <div class="activity-cache-top">
+        <div><div class="activity-card-heading"><span class="activity-lab-number activity-orange">03</span><div><p class="activity-eyebrow">CACHE</p><h3 id="activity-cache-title">Reuse a nearby copy. Save time.</h3></div></div><p class="activity-card-intro">Cache is small, fast memory close to the CPU. Recent instructions and data stay here, ready to use again — like reusing a saved file in a browser cache.</p></div>
+        <fieldset class="activity-segment-field"><legend>Cache capacity</legend><div class="activity-segments"><label><input type="radio" name="activity-cache-size" value="0"><span>Off</span></label><label><input type="radio" name="activity-cache-size" value="2" checked><span>2 slots</span></label><label><input type="radio" name="activity-cache-size" value="4"><span>4 slots</span></label></div></fieldset>
+      </div>
+      <div class="activity-inline-actions activity-cache-actions"><button id="activity-cache-step" class="activity-button activity-button-primary" type="button">Next request <span aria-hidden="true">▶</span></button><button id="activity-cache-run" class="activity-button" type="button">Play requests</button><button id="activity-cache-reset" class="activity-button" type="button">Reset</button><span class="activity-cache-start-note">Recent copies are already saved.</span></div>
       <div class="activity-cache-layout">
         <div>
-          <p class="activity-small-heading">CPU REQUESTS THESE ADDRESSES IN ORDER · DENARY</p>
+          <p class="activity-small-heading">NEXT CPU REQUESTS · ADDRESSES IN DENARY</p>
           <div id="activity-cache-sequence" class="activity-cache-sequence" aria-label="Memory request sequence"></div>
-          <div class="activity-cache-viewport" tabindex="0" role="region" aria-label="Cache demonstration. Scroll sideways on a small screen."><div id="activity-cache-flow" class="activity-cache-flow" aria-label="Contents return from RAM or cache on the right to the CPU on the left"></div></div>
-          <div class="activity-cache-legend"><span><i class="activity-key activity-key-teal"></i>Hit: CACHE → CPU · RAM idle</span><span><i class="activity-key activity-key-orange"></i>Miss: RAM → CPU · keep a copy</span></div>
+          <div class="activity-cache-viewport" tabindex="0" role="region" aria-label="CPU on the left, nearby cache in the middle, RAM farther to the right. Scroll sideways on a small screen."><div id="activity-cache-flow" class="activity-cache-flow" aria-label="Recent contents return from cache or RAM to the CPU"></div></div>
+          <div class="activity-cache-legend"><span><i class="activity-key activity-key-teal"></i>Copy found: CACHE → CPU · 1 cycle</span><span><i class="activity-key activity-key-orange"></i>Copy missing: RAM → CPU · 5 cycles</span></div>
+        </div>
+        <div id="activity-cache-time-comparison" class="activity-cache-time-comparison" role="group" aria-label="Waiting time comparison">
+          <header class="activity-cache-time-heading"><h4>Time for these requests</h4><small>Compare the same completed requests. Shorter bar = less waiting.</small></header>
+          <div class="activity-cache-time-row" data-kind="ram"><span>RAM every time</span><div class="activity-cache-time-track"><i id="activity-cache-without-bar"></i></div><output id="activity-cache-without-time">0 cycles</output></div>
+          <div class="activity-cache-time-row" data-kind="cache"><span id="activity-cache-with-label">Using cache</span><div class="activity-cache-time-track"><i id="activity-cache-with-bar"></i></div><output id="activity-cache-with-time">0 cycles</output></div>
+          <div class="activity-cache-saved-panel"><strong id="activity-cache-saved">0</strong><span>cycles saved</span><small id="activity-cache-saving-percent">Ready to compare</small></div>
         </div>
         <div class="activity-cache-scoreboard">
-          <div class="activity-cache-stats"><div><strong id="activity-cache-hits">0</strong><span>HITS</span></div><div><strong id="activity-cache-misses">0</strong><span>MISSES</span></div><div><strong id="activity-cache-cycles">0</strong><span>CYCLES</span></div></div>
-          <p id="activity-cache-result" class="activity-feedback" role="status">Request the first address. The cache starts empty.</p>
-          <div class="activity-inline-actions"><button id="activity-cache-step" class="activity-button activity-button-primary" type="button">Next request <span aria-hidden="true">→</span></button><button id="activity-cache-run" class="activity-button" type="button">Run sequence</button><button id="activity-cache-reset" class="activity-button" type="button">Reset</button></div>
-          <p class="activity-cost-model"><strong>Model cost:</strong> hit = 1 cycle; miss = 5 cycles total, including the RAM read and cache fill.</p>
+          <div class="activity-cache-stats"><div><strong id="activity-cache-hits">0</strong><span>CACHE HITS</span></div><div><strong id="activity-cache-misses">0</strong><span>RAM READS</span></div><div><strong id="activity-cache-cycles">0</strong><span>CYCLES</span></div></div>
+          <p id="activity-cache-result" class="activity-feedback" role="status">Recent copies are already saved. Request them again to see the time saving.</p>
         </div>
       </div>
-      <div class="activity-learning-note activity-cache-note"><strong>A larger cache can reduce slower RAM accesses.</strong><p>The benefit depends on which addresses the program uses. Try the same sequence with the cache off, 2 slots and 4 slots.</p><details><summary>About this cache model</summary><p>Each slot keeps a copy of one 8-bit instruction or data word. Addresses are denary. The same eight bits appear in RAM, the cache copy, and the CPU. The instruction words here are LDA 3 and ADD 4; the data words are 7 and 5. This demonstration reads those words without executing a program. A full cache replaces the least recently used entry. Occupied slots are ordered from least to most recently used, reading left to right and then top to bottom. Real caches usually transfer blocks of memory and use more complex arrangements. The timings here are teaching examples, not measurements of a real CPU.</p></details></div>
+      <div class="activity-learning-note activity-cache-note"><details><summary>How this model works</summary><p>We join a CPU that has already read addresses 1 and 3 from RAM. Their exact eight-bit copies start in cache. Reset restores those recent copies. The time comparison counts only the requests shown above; it does not include the earlier reads. A cache hit means the same address is still present. A miss fetches from RAM and keeps a copy, replacing the least recently used entry when full. The demonstration reads words without executing a program. Cache is fast memory, usually on the processor; the longer and shorter paths illustrate the access-time difference. One cache access costs 1 model cycle and a RAM access costs 5 model cycles here. Real timings vary. Addresses are denary, and contents stay in eight-bit binary.</p></details></div>
     </article>
   </div>
 </section>
@@ -1291,7 +1330,11 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
   const build = { placements: {}, selected: null, order: [], checked: false, revealed: false, hint: null };
   const clock = { rate: 2, running: false, frame: 0, baseCycles: 0, chosenCycles: 0, chosenFinished: false };
   const cores = { count: 4, workload: 'parallel', completed: 0, steps: 0, history: [[], [], [], []], running: false, timer: 0 };
-  const requestSequence = [1, 2, 1, 2, 3, 1, 2, 3, 4, 1, 2, 4];
+  const requestSequence = [1, 3, 2, 3, 2, 3, 4, 3, 4, 3, 1, 3];
+  // A running CPU already has copies from earlier RAM reads. Those earlier reads
+  // are outside this comparison; every counter below counts this sequence only.
+  const recentCacheAddresses = [1, 3];
+  const cacheTiming = { lookup: 200, ramRead: 600, hitReturn: 600, ramReturn: 3200, receipt: 650 };
   const ramWords = {
     1: { value: 19, type: 'Instruction', meaning: 'LDA 3' },
     2: { value: 52, type: 'Instruction', meaning: 'ADD 4' },
@@ -1716,19 +1759,19 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
     if (current) {
       const word = ramWords[current.address];
       const prefix = 'Request ' + (cache.position + 1) + ' / 12 · address ' + current.address + '. ';
-      if (cache.stage === 'request') return prefix + (cache.size ? 'Check the cache for a copy.' : 'Cache is off, so ask RAM.');
-      if (cache.stage === 'ram-read') return prefix + 'MISS — RAM reads the ' + word.type.toLowerCase() + '. The CPU is waiting.';
-      if (cache.stage === 'ram-return') return prefix + 'RAM → CPU: return ' + cacheBits(word.value) + ' unchanged.' + (cache.size ? ' A copy will be kept in cache when it arrives.' : ' No copy is kept because cache is off.');
-      return prefix + 'HIT — CACHE → CPU: return ' + cacheBits(word.value) + '. RAM stays idle.';
+      if (cache.stage === 'request') return prefix + (cache.size ? 'Look for this address in the recent cached copies.' : 'Cache is off, so read RAM.');
+      if (cache.stage === 'ram-read') return prefix + (cache.size ? 'Not in cache. ' : 'Cache is off. ') + 'The CPU must wait for RAM: 5 model cycles.';
+      if (cache.stage === 'ram-return') return prefix + 'RAM → CPU: ' + cacheBits(word.value) + ' travels back unchanged.' + (cache.size ? ' Keep a copy for the next time this address is needed.' : ' Cache is off, so no copy is saved.');
+      return prefix + 'Already in cache! CACHE → CPU takes 1 cycle. RAM is not needed: save 4 cycles.';
     }
-    if (!cache.last) return cache.size ? 'Request the first address. The cache starts empty.' : 'Cache is off. Every request reads from RAM.';
+    if (!cache.last) return cache.size ? 'Addresses 1 and 3 are recent copies saved by earlier CPU reads. Start the requests to reuse them.' : 'Cache is off. Every request must go all the way to RAM.';
     const last = cache.last;
     const word = ramWords[last.address];
     let message = 'Received ' + cacheBits(word.value) + ' · ' + word.type + ': ' + word.meaning + '. ';
-    message += last.hit ? 'HIT: from cache, +1 cycle. RAM stayed idle.' : 'MISS: from RAM, +5 cycles.';
-    if (!last.hit && cache.size) message += ' The same eight bits are now copied in cache.';
-    if (last.evicted !== null) message += ' Replaced address ' + last.evicted + ', the least recently used copy.';
-    if (cache.position === requestSequence.length) message += ' Sequence complete: ' + cache.cycles + ' model cycles; cache off takes 60.';
+    message += last.hit ? 'From CACHE in 1 cycle. RAM was not needed — 4 cycles saved.' : 'From RAM in 5 cycles.';
+    if (!last.hit && cache.size) message += ' A recent copy is now saved in cache.';
+    if (last.evicted !== null) message += ' It replaces the least recently used copy at address ' + last.evicted + '.';
+    if (cache.position === requestSequence.length) message += ' Finished: ' + cache.hits + ' of 12 requests used cache; ' + (cache.position * 5 - cache.cycles) + ' cycles saved.';
     return message;
   }
 
@@ -1738,46 +1781,58 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
     const busy = Boolean(pending);
     const returning = cache.stage === 'ram-return' || cache.stage === 'cache-return';
     const ramReading = busy && !pending.hit && (cache.stage === 'ram-read' || cache.stage === 'ram-return');
-    const showRoute = current && cache.stage !== 'request';
     const received = cache.last ? ramWords[cache.last.address] : null;
+    const source = current ? current.hit ? 'cache' : 'ram' : cache.size ? 'cache' : 'ram';
     const activeIndex = pending ? cache.position : cache.position - 1;
     byId('activity-cache-sequence').innerHTML = requestSequence.map((address, index) => {
       const history = cache.history[index];
       const classes = 'activity-cache-request' + (history ? history.hit ? ' activity-cache-hit' : ' activity-cache-miss' : '') + (index === activeIndex ? ' activity-request-current' : '') + (pending && index === activeIndex ? ' activity-request-pending' : '');
       return '<span class="' + classes + '" aria-label="Request ' + (index + 1) + ', address ' + address + (history ? history.hit ? ', hit' : ', miss' : pending && index === activeIndex ? ', in progress' : ', waiting') + '"><small>address</small><strong>' + address + '</strong></span>';
     }).join('');
-    const slots = cache.size ? '<div class="activity-cache-slots">' + Array.from({ length: cache.size }, (_, i) => {
+    const slots = cache.size ? '<div class="activity-cache-slots" data-capacity="' + cache.size + '">' + Array.from({ length: cache.size }, (_, i) => {
       const address = cache.cells[i];
-      if (address === undefined) return '<div class="activity-cache-cell"><strong>—</strong><small>empty slot</small></div>';
+      if (address === undefined) return '<div class="activity-cache-cell"><strong>—</strong><small>free slot</small></div>';
       const word = ramWords[address];
       const hot = current && current.address === address && cache.stage !== 'request';
-      return '<div class="activity-cache-cell activity-cache-filled' + (hot ? ' activity-cache-hot' : '') + '" data-cache-address="' + address + '" role="group" aria-label="Address ' + address + ', ' + word.type + ', ' + word.meaning + ', ' + cacheBits(word.value) + '"><small>Address ' + address + '</small><strong>' + cacheBits(word.value) + '</strong><span>' + word.type + ' · ' + word.meaning + '</span></div>';
-    }).join('') + '</div>' : '<p class="activity-cache-off">No cached copies.<br>Every request uses RAM.</p>';
-    const cacheStatus = busy ? cache.stage === 'request' ? 'Looking for address ' + pending.address : pending.hit ? 'HIT · sending its copy' : cache.size ? 'MISS · waiting for the copy' : 'Cache is off' : cache.last && cache.size ? cache.last.hit ? 'Copy used again' : 'Copy saved after arrival' : cache.size ? 'Starts empty' : 'Cache is off';
-    const requestText = pending ? 'CPU asks for address <b>' + pending.address + '</b> <span aria-hidden="true">→</span> ' + (cache.size ? 'check cache' : 'read RAM') : cache.last ? 'Request ' + cache.position + ' of 12 complete · address ' + cache.last.address : 'Addresses are denary. Returned contents are eight bits.';
-    const source = current && current.hit ? 'cache' : 'ram';
-    const currentWord = current ? ramWords[current.address] : null;
-    const routeTitle = showRoute ? (cache.stage === 'ram-read' ? 'Waiting for RAM…' : 'CPU ← ' + source.toUpperCase() + ' · ' + currentWord.type.toLowerCase() + (returning ? ' travelling' : ' received')) : 'Contents travel from right to left into the CPU';
+      return '<div class="activity-cache-cell activity-cache-filled' + (hot ? ' activity-cache-hot' : '') + '" data-cache-address="' + address + '" role="group" aria-label="Recent copy, address ' + address + ', ' + word.type + ', ' + word.meaning + ', ' + cacheBits(word.value) + '"><small>Address ' + address + '</small><strong>' + cacheBits(word.value) + '</strong><span>' + word.type + ' · ' + word.meaning + '</span></div>';
+    }).join('') + '</div>' : '<p class="activity-cache-off">Cache is off.<br>Every request uses RAM.</p>';
+    const cacheStatus = busy ? cache.stage === 'request' ? cache.size ? 'Looking for address ' + pending.address : 'Cache is off · read RAM' : pending.hit ? 'Copy found · send it to CPU' : cache.size ? 'No copy of address ' + pending.address : 'Cache is off' : cache.last && cache.size ? cache.last.hit ? 'Copy kept for another request' : 'New copy saved for reuse' : cache.size ? 'Ready to reuse these copies' : 'No copies saved';
+    const cacheNote = cache.size ? cache.position ? 'Recent copies of RAM contents' : 'Saved by earlier CPU reads' : 'Switch on to keep recent copies';
+    const cpuLabel = busy ? 'Needs address ' + pending.address : received ? 'Received address ' + cache.last.address : 'Next request: address ' + requestSequence[0];
+    const distanceTitle = current && current.hit ? 'RAM not needed' : ramReading ? 'Reading RAM…' : current ? 'RAM was needed' : cache.size ? 'RAM only if needed' : 'RAM for every request';
+    const distanceDetail = current && current.hit ? 'The recent copy is nearby. Save 4 cycles.' : ramReading ? 'A longer wait: 5 cycles. The same eight bits return to the CPU.' : current ? cache.size ? 'The returned word is also kept in cache.' : 'Every request takes 5 cycles.' : cache.size ? 'If the address is missing from cache, read RAM: 5 cycles.' : 'No copies are saved. Each request takes 5 cycles.';
+    const routeTitle = current ? cache.stage === 'request' ? cache.size ? 'Checking the recent copies…' : 'Requesting contents from RAM…' : cache.stage === 'ram-read' ? 'Waiting for RAM · 5-cycle access' : current.hit ? 'CACHE → CPU · 1 cycle · 4 cycles saved' : 'RAM → CPU · 5 cycles' + (!busy && cache.size ? ' · copy saved' : '') : cache.size ? 'Nearby cache → CPU · 1 cycle when a copy is found' : 'RAM → CPU · 5 cycles for every request';
     const flow = byId('activity-cache-flow');
     flow.dataset.stage = cache.stage;
     flow.dataset.source = current ? source : 'none';
     flow.setAttribute('aria-busy', String(busy));
-    flow.innerHTML = '<div class="activity-cache-address-request"><span>ADDRESS REQUEST</span><p>' + requestText + '</p></div>' +
-      '<div class="activity-cache-cpu' + (!busy && received ? ' activity-cache-cpu-received' : '') + '"><strong class="activity-cache-node-title">CPU</strong><small class="activity-cache-receipt-label">' + (busy ? 'Waiting for this request' : received ? 'Received contents' : 'Waiting for a request') + '</small><output id="activity-cache-cpu-binary">' + (received ? cacheBits(received.value) : '────────') + '</output><span id="activity-cache-cpu-meaning">' + (received ? received.type + '<b>' + received.meaning + '</b>' : 'Instruction or data will appear here') + '</span><small id="activity-cache-cpu-source">' + (received ? 'From ' + (cache.last.hit ? 'CACHE' : 'RAM') + ' · address ' + cache.last.address + (busy ? ' (previous request)' : '') : 'The eight bits stay unchanged') + '</small></div>' +
-      '<div class="activity-cache-box' + (busy && pending.hit && returning ? ' activity-cache-source-active' : '') + '"><strong class="activity-cache-node-title">CACHE <small>' + (cache.size ? cache.size + ' slots' : 'off') + '</small></strong>' + slots + '<p id="activity-cache-copy-status" class="activity-cache-node-status">' + cacheStatus + '</p></div>' +
-      '<div class="activity-cache-ram' + (ramReading ? ' activity-cache-ram-active' : '') + '"><div class="activity-cache-ram-heading"><strong class="activity-cache-node-title">RAM</strong><span id="activity-cache-ram-status">' + (ramReading ? 'READING' : 'IDLE') + '</span></div><div class="activity-cache-ram-headings"><span>Address</span><span>8-bit contents</span><span>Meaning</span></div>' + Object.keys(ramWords).map(address => {
+    flow.innerHTML = '<div class="activity-cache-cpu' + (!busy && received ? ' activity-cache-cpu-received' : '') + '"><strong class="activity-cache-node-title">CPU</strong><small class="activity-cache-receipt-label">' + cpuLabel + '</small><output id="activity-cache-cpu-binary">' + (received ? cacheBits(received.value) : '────────') + '</output><span id="activity-cache-cpu-meaning">' + (received ? received.type + '<b>' + received.meaning + '</b>' : 'Receives an instruction or data') + '</span><small id="activity-cache-cpu-source">' + (received ? 'From ' + (cache.last.hit ? 'CACHE' : 'RAM') + (busy ? ' · previous request' : ' · bits unchanged') : cache.size ? 'Look in cache first' : 'Read from RAM every time') + '</small></div>' +
+      '<div class="activity-cache-box' + (busy && pending.hit && returning ? ' activity-cache-source-active' : '') + '"><strong class="activity-cache-node-title">CACHE <small>' + (cache.size ? cache.size + ' slots' : 'off') + '</small></strong><p class="activity-cache-recent-note">' + cacheNote + '</p>' + slots + '<p id="activity-cache-copy-status" class="activity-cache-node-status">' + cacheStatus + '</p></div>' +
+      '<div class="activity-cache-distance-note' + (current && current.hit ? ' activity-cache-distance-hit' : ramReading ? ' activity-cache-distance-miss' : '') + '"><strong>' + distanceTitle + '</strong><span>' + distanceDetail + '</span></div>' +
+      '<div class="activity-cache-ram' + (ramReading ? ' activity-cache-ram-active' : '') + (current && current.hit ? ' activity-cache-ram-idle' : '') + '"><div class="activity-cache-ram-heading"><strong class="activity-cache-node-title">RAM</strong><span id="activity-cache-ram-status">' + (ramReading ? 'READING' : 'IDLE') + '</span></div><div class="activity-cache-ram-headings"><span>Address</span><span>8-bit contents</span><span>Meaning</span></div>' + Object.keys(ramWords).map(address => {
         const word = ramWords[address];
         return '<div class="activity-cache-ram-data' + (ramReading && Number(address) === pending.address ? ' activity-ram-read' : '') + '" data-ram-address="' + address + '"><span>' + address + '</span><b>' + cacheBits(word.value) + '</b><small>' + (word.type === 'Instruction' ? word.meaning : word.value + ' denary') + '</small></div>';
       }).join('') + '<p class="activity-cache-ram-caption">Instructions and data share RAM.</p></div>' +
-      '<div id="activity-cache-return-path" class="activity-cache-return-path activity-cache-return-' + source + (showRoute ? ' activity-cache-route-visible' : '') + (returning ? ' activity-cache-route-moving' : '') + (cache.stage === 'ram-read' ? ' activity-cache-route-waiting' : '') + '" style="--cache-travel-time:' + (current && current.hit ? 450 : 900) + 'ms"><div class="activity-cache-return-rail" aria-hidden="true">' + (returning ? '<span class="activity-cache-return-packet">' + cacheBits(currentWord.value) + '</span>' : '') + '</div><p id="activity-cache-return-label">' + routeTitle + '</p></div>';
+      '<div id="activity-cache-return-path" class="activity-cache-return-path activity-cache-return-' + source + ' activity-cache-route-visible' + (returning ? ' activity-cache-route-moving' : '') + (cache.stage === 'request' || cache.stage === 'ram-read' ? ' activity-cache-route-waiting' : '') + '" style="--cache-travel-time:' + (current && current.hit ? cacheTiming.hitReturn : cacheTiming.ramReturn) + 'ms"><div class="activity-cache-return-rail" aria-hidden="true">' + (returning ? '<span class="activity-cache-return-packet">' + cacheBits(ramWords[current.address].value) + '</span>' : '') + '</div><p id="activity-cache-return-label">' + routeTitle + '</p></div>';
+    document.querySelector('.activity-cache-start-note').textContent = cache.size ? 'Recent copies stay saved between requests.' : 'Cache is off: every request reads RAM.';
     byId('activity-cache-hits').textContent = cache.hits;
     byId('activity-cache-misses').textContent = cache.misses;
     byId('activity-cache-cycles').textContent = cache.cycles;
+    const withoutCache = cache.position * 5;
+    const saved = withoutCache - cache.cycles;
+    byId('activity-cache-without-time').textContent = withoutCache + ' cycles';
+    byId('activity-cache-with-time').textContent = cache.cycles + (cache.cycles === 1 ? ' cycle' : ' cycles');
+    byId('activity-cache-without-bar').style.width = (withoutCache ? 100 : 0) + '%';
+    byId('activity-cache-with-bar').style.width = (withoutCache ? cache.cycles / withoutCache * 100 : 0) + '%';
+    byId('activity-cache-with-label').textContent = cache.size ? 'Using cache' : 'Cache off';
+    byId('activity-cache-saved').textContent = saved;
+    byId('activity-cache-saving-percent').textContent = withoutCache ? Math.round(saved / withoutCache * 100) + '% less waiting' : 'Ready to compare';
+    byId('activity-cache-time-comparison').setAttribute('aria-label', 'Time for ' + cache.position + ' completed requests: RAM every time ' + withoutCache + ' cycles, this run ' + cache.cycles + ' cycles, ' + saved + ' cycles saved.');
     byId('activity-cache-result').textContent = cacheResultMessage();
     byId('activity-cache-step').disabled = busy || cache.running || cache.position >= requestSequence.length;
     queryAll('input[name="activity-cache-size"]').forEach(input => { input.disabled = busy || cache.running; });
     byId('activity-cache-run').disabled = busy && !cache.running;
-    byId('activity-cache-run').textContent = cache.running ? 'Pause' : busy ? 'Delivering…' : cache.position === requestSequence.length ? 'Run again' : cache.position ? 'Resume sequence' : 'Run sequence';
+    byId('activity-cache-run').textContent = cache.running ? 'Pause' : busy ? 'Delivering…' : cache.position === requestSequence.length ? 'Play again' : cache.position ? 'Continue playing' : 'Play requests';
   }
 
   function stopCache() {
@@ -1804,7 +1859,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
   function resetCache() {
     stopCache();
     cache.size = Number(document.querySelector('input[name="activity-cache-size"]:checked').value);
-    cache.cells = [];
+    cache.cells = cache.size ? recentCacheAddresses.slice(-cache.size) : [];
     cache.history = [];
     cache.position = 0;
     cache.hits = 0;
@@ -1841,14 +1896,14 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
     if (complete) cache.running = false;
     renderCache();
     if (complete) notifyCompletion('cache', { size: cache.size, hits: cache.hits, misses: cache.misses, cycles: cache.cycles });
-    else if (cache.running) scheduleCache(advanceCache, 650);
+    else if (cache.running) scheduleCache(advanceCache, cacheTiming.receipt);
   }
 
   function returnCacheWord() {
     if (!cache.pending) return;
     cache.stage = cache.pending.hit ? 'cache-return' : 'ram-return';
     renderCache();
-    scheduleCache(receiveCacheWord, cache.pending.hit ? 450 : 900);
+    scheduleCache(receiveCacheWord, cache.pending.hit ? cacheTiming.hitReturn : cacheTiming.ramReturn);
   }
 
   function advanceCache() {
@@ -1864,9 +1919,9 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
       else {
         cache.stage = 'ram-read';
         renderCache();
-        scheduleCache(returnCacheWord, 650);
+        scheduleCache(returnCacheWord, cacheTiming.ramRead);
       }
-    }, 350);
+    }, cacheTiming.lookup);
   }
 
   function toggleCacheRun() {
