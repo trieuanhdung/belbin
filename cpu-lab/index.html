@@ -39,7 +39,7 @@
 @keyframes cpu-cycle-label{0%{fill:#c30a65}33.333%{fill:#4b5e73}100%{fill:#4b5e73}}
 @media(prefers-reduced-motion:reduce){.cycle-hand{transition:none}.cycle-preview .cycle-hand,.cycle-preview .cycle-stage .cycle-dot,.cycle-preview .cycle-stage text{animation:none}}
 
-/* One shared RAM view; all machine words remain eight-bit binary. */
+/* One shared RAM view; all machine data remains eight-bit binary. */
 .sim-grid{grid-template-columns:minmax(230px,280px) minmax(0,1fr)}
 .sim-grid>.editor-card{grid-column:1;grid-row:1}.sim-grid>.cpu-workspace{grid-column:2;grid-row:1;min-width:0}
 .sim-values-row{display:grid;grid-template-columns:1fr 1.1fr;gap:14px;margin:14px 2px 9px;align-items:stretch}
@@ -71,7 +71,7 @@
 .cpu-diagram-v5 .single-ram .ram-written>rect{stroke:#e27626;stroke-width:2}.cpu-diagram-v5 .single-ram .ram-active>rect{stroke:#102237;stroke-width:2.5}
 .step-story.is-write-signal{background:#fff1df;border-color:#ee9a4c}
 
-/* Full eight-bit words, with the opcode and operand made visible during Decode. */
+/* Full eight-bit data, with the opcode and operand made visible during Decode. */
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .sim-values-row{grid-template-columns:minmax(280px,1.4fr) minmax(170px,1fr)}
 .sim-values-row .instruction-word{display:block;padding:11px 13px}
@@ -276,7 +276,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
 @media(max-width:1080px){#build-panel .activity-builder-layout{grid-template-columns:1fr}#build-panel .activity-component-bank{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}#build-panel .activity-component-tray .activity-card-heading{justify-content:flex-start;gap:12px}#build-panel .activity-section-head>div:first-child{display:block}#build-panel .activity-section-head h2{margin-bottom:4px}}
 @media(max-width:680px){#build-panel .activity-section-head{gap:10px}#build-panel .activity-section-head h2{font-size:22px}#build-panel .activity-section-head p:not(.activity-eyebrow){font-size:11px}#build-panel .activity-progress-pill{flex-direction:column;gap:1px;padding:5px 7px}#build-panel .activity-progress-pill small{font-size:8px}#build-panel .activity-component-bank{grid-template-columns:repeat(2,minmax(0,1fr))}#build-panel .activity-diagram-heading{display:block}#build-panel .activity-builder-actions{justify-content:flex-start;margin-top:6px}#build-panel .activity-build-footer{display:block}#build-panel .activity-build-notes{max-width:none;margin-top:3px}}
 
-/* Cache is a compact nearby store; RAM sits across the longer access path. */
+/* Cache sits directly in the single data path between CPU and RAM. */
 .activity-cache-card{min-width:0;padding:20px}
 .activity-cache-card .activity-cache-top{gap:20px;align-items:center}
 .activity-cache-card .activity-card-heading{margin-bottom:8px}
@@ -295,66 +295,61 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
 .activity-cache-request.activity-request-pending{background:#edf3ff;border-color:#638cda}
 .activity-cache-viewport{overflow-x:auto;overscroll-behavior-x:contain;max-width:100%;padding:3px 3px 4px;border-radius:12px;scrollbar-width:thin}
 .activity-cache-viewport:focus-visible{outline:3px solid #37adbd;outline-offset:2px}
-.activity-cache-card .activity-cache-flow{--cache-cpu-width:170px;--cache-ram-width:240px;display:grid;grid-template-columns:170px 54px 240px minmax(120px,1fr) 240px;grid-template-rows:210px 60px;gap:8px 0;align-items:stretch;min-width:824px;max-width:none;min-height:0;margin:10px 0 0}
-.activity-cache-card .activity-cache-cpu{grid-row:1;grid-column:1;min-height:0;padding:13px 10px;gap:0;border:2px solid #233b57;border-radius:12px;background:#172b45;box-shadow:none;text-align:center;justify-content:flex-start;color:#fff}
+/* One inline connection: CPU, cache and RAM all share the same horizontal axis. */
+.activity-cache-card .activity-cache-flow{display:grid;grid-template-columns:160px minmax(90px,.28fr) 280px minmax(150px,1fr) 250px;grid-template-rows:310px;gap:0;align-items:center;min-width:930px;max-width:none;min-height:0;margin:12px 0 0;position:relative}
+.activity-cache-card .activity-cache-cpu{grid-row:1;grid-column:1;align-self:center;display:flex;flex-direction:column;min-height:210px;height:210px;padding:13px 10px;gap:0;border:2px solid #233b57;border-radius:12px;background:#172b45;box-shadow:none;text-align:center;justify-content:flex-start;color:#fff;position:relative;z-index:2}
 .activity-cache-card .activity-cache-cpu span{font-size:inherit;font-weight:inherit;line-height:inherit}
 .activity-cache-card .activity-cache-node-title{display:block;margin:0;font-size:15px;font-weight:800;letter-spacing:.5px;line-height:1.3}
 .activity-cache-card .activity-cache-node-title small{font-size:10px;font-weight:600;letter-spacing:0;color:#8873a2;margin-left:5px}
 .activity-cache-cpu .activity-cache-receipt-label{display:block;font-size:10px;color:#b9cada;line-height:1.4;margin:13px 0 8px}
-#activity-cache-cpu-binary{display:block;font:800 20px/1.4 Consolas,"Liberation Mono",monospace;letter-spacing:.3px;white-space:nowrap;color:#fff}
+#activity-cache-cpu-binary{display:block;font:800 19px/1.4 Consolas,"Liberation Mono",monospace;letter-spacing:.2px;white-space:nowrap;color:#fff}
 .activity-cache-card #activity-cache-cpu-meaning{display:block;font-size:10px;font-weight:500;line-height:1.4;color:#c6d5e4;margin:8px 0}
 #activity-cache-cpu-meaning b{display:block;font-size:16px;line-height:1.5;color:#fff}
-.activity-cache-card #activity-cache-cpu-source{font-size:10px;font-weight:500;line-height:1.4;color:#b9cada;margin-top:auto}
+.activity-cache-card #activity-cache-cpu-source{font-size:9px;font-weight:500;line-height:1.4;color:#b9cada;margin-top:auto}
 .activity-cache-card .activity-cache-cpu-received{border-color:#42b49a;box-shadow:0 0 0 3px #dff4ed}
-.activity-cache-card .activity-cache-box{grid-row:1;grid-column:3;border:2px solid #c9b4e5;border-radius:11px;background:#faf6ff;padding:10px;min-height:0;display:flex;flex-direction:column;color:#684497}
+.activity-cache-card .activity-cache-box{grid-row:1;grid-column:3;align-self:center;min-height:210px;border:2px solid #bba1df;border-radius:11px;background:#faf6ff;padding:10px;display:flex;flex-direction:column;color:#684497;position:relative;z-index:2}
 .activity-cache-recent-note{font-size:9px;line-height:1.35;color:#886da6;margin:3px 0 0}
-.activity-cache-card .activity-cache-slots{display:grid;grid-template-columns:1fr;gap:5px;margin-top:7px}
-.activity-cache-card .activity-cache-slots[data-capacity="4"]{grid-template-columns:repeat(2,minmax(0,1fr))}
-.activity-cache-card .activity-cache-cell{height:55px;min-height:55px;padding:4px 3px;gap:3px;border-radius:6px}
+.activity-cache-card .activity-cache-slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;margin-top:7px}
+.activity-cache-card .activity-cache-slots[data-capacity="2"]{grid-template-columns:1fr}
+.activity-cache-card .activity-cache-cell{height:55px;min-height:55px;padding:4px 3px;gap:3px;border-radius:6px;min-width:0}
+.activity-cache-card .activity-cache-slots[data-capacity="8"] .activity-cache-cell{height:49px;min-height:49px;gap:2px;padding:3px}
 .activity-cache-card .activity-cache-cell small{font-size:8px;line-height:1.1}
-.activity-cache-card .activity-cache-cell strong{font-size:14px;letter-spacing:0;white-space:nowrap;line-height:1.15}
-.activity-cache-card .activity-cache-cell>span{font-size:9px;line-height:1.1;text-align:center;color:#7d6b98}
-.activity-cache-card .activity-cache-slots[data-capacity="4"] .activity-cache-cell strong{font-size:12px}
-.activity-cache-card .activity-cache-slots[data-capacity="4"] .activity-cache-cell>span{font-size:8px}
+.activity-cache-card .activity-cache-cell strong{font-size:13px;letter-spacing:0;white-space:nowrap;line-height:1.15}
+.activity-cache-card .activity-cache-slots[data-capacity="2"] .activity-cache-cell strong{font-size:15px}
+.activity-cache-card .activity-cache-cell>span{font-size:8px;line-height:1.1;text-align:center;color:#7d6b98}
 .activity-cache-card .activity-cache-cell.activity-cache-hot{background:#e2f6eb;border-color:#58a77e;box-shadow:0 0 0 1px #8dc3a6}
 .activity-cache-card .activity-cache-source-active{border-color:#42a17e;box-shadow:0 0 0 3px #e7f4ed}
-.activity-cache-card .activity-cache-off{margin:auto 0;font-size:12px;color:#897b9c}
 .activity-cache-node-status{font-size:10px;line-height:1.3;font-weight:650;text-align:center;margin:7px 0 0;color:#806895}
-.activity-cache-distance-note{grid-row:1;grid-column:4;align-self:center;justify-self:center;max-width:170px;padding:10px 12px;text-align:center;color:#8190a1}
-.activity-cache-distance-note strong{display:block;font-size:12px;line-height:1.45;margin-bottom:7px}
-.activity-cache-distance-note span{display:block;font-size:10px;line-height:1.5}
-.activity-cache-distance-hit{color:#23815f}
-.activity-cache-distance-miss{color:#a27127}
-.activity-cache-card .activity-cache-ram{grid-row:1;grid-column:5;min-height:0;padding:11px 10px;border:2px solid #ecd7b8;background:#fff9ef;border-radius:11px;color:#90652e}
-.activity-cache-ram-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px}
+/* These are the two exposed portions of one line passing through cache. */
+.activity-cache-link{grid-row:1;align-self:stretch;position:relative;min-width:0;--cache-link-colour:#c8d5df;--cache-link-active:#258c78;--cache-travel-time:800ms}
+.activity-cache-link[data-link="cpu-cache"]{grid-column:2}
+.activity-cache-link[data-link="cache-ram"]{grid-column:4}
+.activity-cache-link-label{position:absolute;left:5px;right:5px;bottom:calc(50% + 18px);margin:0;font-size:10px;line-height:1.35;font-weight:650;text-align:center;color:#7c8b99;overflow-wrap:break-word}
+.activity-cache-link-rail{position:absolute;top:50%;left:0;right:0;height:4px;transform:translateY(-50%);background:var(--cache-link-colour)}
+.activity-cache-link-rail::before{content:"";position:absolute;left:3px;top:-5px;border-right:11px solid var(--cache-link-colour);border-top:7px solid transparent;border-bottom:7px solid transparent}
+.activity-cache-link-rail::after{content:"";position:absolute;right:-3px;top:-2px;width:8px;height:8px;border-radius:50%;background:var(--cache-link-colour)}
+.activity-cache-link.is-active{--cache-link-colour:var(--cache-link-active)}
+.activity-cache-link.is-active .activity-cache-link-label{color:#247a61}
+.activity-cache-link.is-muted{--cache-link-colour:#dfe5ea}
+.activity-cache-link.is-muted .activity-cache-link-label{color:#8a97a3}
+.activity-cache-link.is-waiting{--cache-link-colour:#c4ced7}
+.activity-cache-inline-packet{position:absolute;z-index:3;top:50%;left:0;transform:translateY(-50%);display:block;box-sizing:border-box;width:76px;min-width:0;padding:6px 4px;border:1px solid #24866e;border-radius:5px;background:#f5fff9;box-shadow:0 2px 5px #172b451a;text-align:center;color:#176b51;font:800 11px/1 Consolas,"Liberation Mono",monospace;white-space:nowrap;animation:activity-cache-data-return var(--cache-travel-time) linear both}
+.activity-cache-link-rail>.activity-cache-inline-packet{top:50%}
+@keyframes activity-cache-data-return{from{left:calc(100% - 76px)}to{left:0}}
+.activity-cache-route-status{grid-column:1/-1;margin:8px 0 0;padding:8px 12px;border:1px solid #dce7e2;border-radius:7px;background:#f5faf7;font-size:11px;line-height:1.45;color:#416858;text-align:center;min-height:33px}
+.activity-cache-card .activity-cache-ram{grid-row:1;grid-column:5;align-self:center;height:310px;min-height:0;padding:11px 10px;border:2px solid #ecd7b8;background:#fff9ef;border-radius:11px;color:#90652e;position:relative;z-index:2}
+.activity-cache-ram-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
 .activity-cache-ram-heading>span{border-radius:4px;background:#f1e9db;padding:4px 6px;color:#8d806b;font-size:9px;font-weight:800;letter-spacing:.4px}
 .activity-cache-card .activity-cache-ram-active{border-color:#d99831;box-shadow:0 0 0 3px #fff1d9}
 .activity-cache-ram-active .activity-cache-ram-heading>span{background:#d58c1e;color:#fff}
-.activity-cache-card .activity-cache-ram-headings,.activity-cache-card .activity-cache-ram-data{display:grid;grid-template-columns:36px 80px minmax(0,1fr);align-items:center;column-gap:6px;padding:5px 4px;white-space:nowrap}
+.activity-cache-card .activity-cache-ram-headings,.activity-cache-card .activity-cache-ram-data{display:grid;grid-template-columns:36px 80px minmax(0,1fr);align-items:center;column-gap:6px;padding:4px;white-space:nowrap}
 .activity-cache-ram-headings{font-size:8px;font-weight:750;color:#a08661;border-bottom:1px solid #ead9bd;margin-bottom:3px}
-.activity-cache-card .activity-cache-ram-data{font-size:11px;line-height:1.3;border-bottom:1px solid #f0e5d3;border-radius:4px}
+.activity-cache-card .activity-cache-ram-data{font-size:11px;line-height:1.3;min-height:24px;border-bottom:1px solid #f0e5d3;border-radius:4px}
 .activity-cache-card .activity-cache-ram-data b{font-size:12px;color:#6f532f}
 .activity-cache-card .activity-cache-ram-data small{font-size:10px;font-family:ui-sans-serif,system-ui,sans-serif;color:#8a6d46}
 .activity-cache-card .activity-cache-ram-data.activity-ram-read{background:#ffe1aa;color:#774c15;border-color:#e7b65d;box-shadow:0 0 0 1px #e7b65d}
 .activity-cache-ram-caption{font-size:9px;line-height:1.3;color:#a38c6a;margin:8px 0 0;text-align:center}
-/* Exact centres: CPU 85px; cache 344px; RAM 120px from the right. */
-.activity-cache-return-path{--return-colour:#c5ced8;grid-row:2;grid-column:1/-1;position:relative;margin-left:85px;margin-right:120px;height:60px;color:#8a99a8}
-.activity-cache-return-cache{width:259px;margin-right:0}
-.activity-cache-return-path::before,.activity-cache-return-path::after{content:"";position:absolute;top:-8px;height:31px;width:3px;background:var(--return-colour);opacity:0}
-.activity-cache-return-path::before{right:0}
-.activity-cache-return-path::after{left:0}
-.activity-cache-return-rail{position:absolute;top:21px;left:0;right:0;height:3px;border-radius:3px;background:var(--return-colour);opacity:.4}
-.activity-cache-return-rail::before{content:"";position:absolute;left:17px;top:-5px;width:0;height:0;border-right:10px solid var(--return-colour);border-top:6px solid transparent;border-bottom:6px solid transparent}
-.activity-cache-return-rail::after{content:"";position:absolute;left:-4.5px;top:-31px;width:0;height:0;border-bottom:9px solid var(--return-colour);border-left:6px solid transparent;border-right:6px solid transparent;opacity:0}
-.activity-cache-return-path>p{position:absolute;top:33px;left:-55px;right:-55px;margin:0;font-size:10px;line-height:1.45;font-weight:750;text-align:center;white-space:nowrap}
-.activity-cache-route-visible{--return-colour:#d59631;color:#97611b}
-.activity-cache-return-cache.activity-cache-route-visible{--return-colour:#259874;color:#237c60}
-.activity-cache-route-visible::before,.activity-cache-route-visible::after,.activity-cache-route-visible .activity-cache-return-rail,.activity-cache-route-visible .activity-cache-return-rail::after{opacity:1}
-.activity-cache-route-waiting{--return-colour:#d4c5af;color:#9a886e}
-.activity-cache-return-packet{position:absolute;z-index:2;top:-10px;left:0;display:block;width:92px;min-width:0;padding:4px 5px;text-align:center;border:1px solid var(--return-colour);border-radius:5px;background:#fffdf8;box-shadow:0 2px 5px #172b451a;color:#8f5f21;font:800 12px/1 Consolas,"Liberation Mono",monospace;animation:activity-cache-word-return var(--cache-travel-time) linear both}
-.activity-cache-return-cache .activity-cache-return-packet{color:#197451;background:#f4fff9}
-@keyframes activity-cache-word-return{from{left:calc(100% - 92px)}to{left:0}}
-.activity-cache-card .activity-cache-legend{margin-top:3px;font-size:10px;gap:18px}
+.activity-cache-card .activity-cache-legend{margin-top:7px;font-size:10px;gap:18px}
 .activity-cache-time-comparison{display:grid;grid-template-columns:minmax(0,1fr) 148px;gap:8px 16px;padding:12px 15px;border:1px solid #dbe7e2;border-radius:10px;background:#f7fbf9;margin-top:12px}
 .activity-cache-time-comparison>header,.activity-cache-time-heading{grid-column:1/-1;display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:2px}
 .activity-cache-time-comparison h4{font-size:13px;line-height:1.3;margin:0;color:#284e40}
@@ -378,7 +373,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
 .activity-cache-card .activity-cache-note{margin-top:10px;padding-top:8px}
 .activity-cache-card .activity-cache-note details{margin-top:0}
 @media(max-width:680px){.activity-cache-card{padding:16px}.activity-cache-card .activity-cache-top{display:block}.activity-cache-card .activity-cache-top .activity-segment-field{margin:12px 0 0}.activity-cache-card .activity-cache-actions{gap:6px}.activity-cache-start-note{flex-basis:100%;margin:0}.activity-cache-card .activity-cache-request{width:38px;height:33px}.activity-cache-card .activity-cache-legend{gap:10px;font-size:9px}.activity-cache-time-comparison{grid-template-columns:minmax(0,1fr);gap:9px;padding:10px}.activity-cache-time-comparison>header,.activity-cache-time-heading{display:block}.activity-cache-time-comparison>header small,.activity-cache-time-heading small{display:block;margin-top:3px}.activity-cache-time-row{grid-template-columns:93px minmax(30px,1fr) 60px;gap:6px}.activity-cache-time-row>span{font-size:9px}.activity-cache-saved-panel{grid-column:1;grid-row:auto;flex-direction:row;gap:8px;padding:7px 0 0;border-left:0;border-top:1px solid #d8e8df}.activity-cache-saved-panel #activity-cache-saved{font-size:22px}.activity-cache-card .activity-cache-scoreboard{grid-template-columns:1fr;gap:9px}.activity-cache-card .activity-cache-stats{width:220px;max-width:100%}.activity-cache-card .activity-cache-scoreboard .activity-feedback{grid-column:1}}
-@media(prefers-reduced-motion:reduce){.activity-cache-return-packet{animation:none!important;left:calc(50% - 46px)}.activity-cache-time-track>i{transition:none!important}}
+@media(prefers-reduced-motion:reduce){.activity-cache-inline-packet{animation:none!important;left:calc(50% - 38px)}.activity-cache-time-track>i{transition:none!important}}
 </style>
 </head>
 <body>
@@ -417,7 +412,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
   <div class="simulation-toolbar card"><div class="transport"><button class="button primary" id="run-button"><span aria-hidden="true">▶</span> Run</button><button class="button light" id="step-button">Step <span aria-hidden="true">→</span></button><button class="button light" id="instruction-button">Next instruction</button><button class="icon-button" id="reset-button" aria-label="Reset CPU and restore loaded program" title="Reset CPU">↻</button></div><div class="sim-settings"><label for="speed-select">Animation<select id="speed-select"><option value="1400">Slow</option><option value="750" selected>Normal</option><option value="250">Fast</option></select></label></div><span id="machine-status" class="status-chip">Ready</span></div>
   <div class="sim-grid">
     <aside class="editor-card card">
-      <div class="card-heading"><h2>Your program</h2><span class="tiny-tag purple-tag">8-BIT WORDS</span></div>
+      <div class="card-heading"><h2>Your program</h2><span class="tiny-tag purple-tag">8-BIT DATA</span></div>
       <label class="field-label" for="sample-select">Start with an example</label><select id="sample-select" class="full-select"></select>
       <div class="editor-mode"><label for="source-mode">Write in</label><select id="source-mode"><option value="assembly">Assembly</option><option value="machine">Binary code</option></select></div>
       <textarea id="program-source" aria-label="Program source code" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off"></textarea>
@@ -426,7 +421,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
       <div id="editor-message" class="editor-message" role="status"></div>
       <div class="input-section"><label class="field-label" for="input-values">Input queue <span>8-bit binary</span></label><div class="input-row"><input id="input-values" type="text" value="" placeholder="00000101, 00000111" aria-describedby="input-hint"><button class="button light" id="queue-button">Set</button></div><p id="input-hint" class="small-muted">INP copies one eight-bit value into ACC.</p><div id="input-queue" class="input-chips"></div></div>
       <div id="input-wait" class="input-wait" hidden><label for="live-input">Enter an eight-bit binary value.</label><div class="input-row"><input id="live-input" type="text" inputmode="numeric" pattern="[01]{8}" maxlength="8" placeholder="00000000" aria-label="Eight-bit binary input"><button id="submit-input" class="button teal">Send</button></div></div>
-      <details class="syntax-help"><summary>Quick coding guide</summary><p><b>LDA N</b> copies RAM[N] into ACC. <b>STA N</b> copies ACC into RAM[N]. Use a label or a denary address from 0 to 15 for N.</p><p><b>DAT 00000111</b> reserves a cell containing exactly <code>00000111</code>. DAT is an assembler directive.</p><p>Each instruction uses one cell: a <b>4-bit opcode</b> followed by a <b>4-bit operand</b>. <b>INP</b>, <b>OUT</b> and <b>HLT</b> use <code>0000</code> for the unused operand.</p><p>In Binary code, enter one eight-bit word per line. The bits you enter are the bits stored in RAM.</p></details>
+      <details class="syntax-help"><summary>Quick coding guide</summary><p><b>LDA N</b> copies RAM[N] into ACC. <b>STA N</b> copies ACC into RAM[N]. Use a label or a denary address from 0 to 15 for N.</p><p><b>DAT 00000111</b> reserves a cell containing exactly <code>00000111</code>. DAT is an assembler directive.</p><p>Each instruction uses one cell: a <b>4-bit opcode</b> followed by a <b>4-bit operand</b>. <b>INP</b>, <b>OUT</b> and <b>HLT</b> use <code>0000</code> for the unused operand.</p><p>In Binary code, enter one eight-bit data value per line. The bits you enter are the bits stored in RAM.</p></details>
     </aside>
     <div class="cpu-workspace">
       <div class="card live-diagram-card">
@@ -567,7 +562,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
         <div id="activity-build-feedback" class="activity-feedback" role="status">Match each role. You can move any piece again.</div>
         <details class="activity-build-notes"><summary>How the parts work</summary>
           <div class="activity-store-path activity-decode-path"><strong>CIR → CU → ALU</strong><span>The central CIR (also called IR) holds the current instruction. CU decodes it, then sends control signals that direct the ALU.</span></div>
-      <div class="activity-store-path"><strong>ALU → ACC → MDR → RAM</strong><span>The ALU’s result is saved in ACC. When <code>STA</code> executes, the CPU copies ACC to MDR, then writes that eight-bit word to RAM using the data bus.</span></div>
+      <div class="activity-store-path"><strong>ALU → ACC → MDR → RAM</strong><span>The ALU’s result is saved in ACC. When <code>STA</code> executes, the CPU copies ACC to MDR, then writes that eight-bit data to RAM using the data bus.</span></div>
           <div class="activity-tray-legend"><span class="activity-key activity-key-processor"></span>CU &amp; ALU <span class="activity-key activity-key-instruction"></span>PC &amp; CIR <span class="activity-key activity-key-address"></span>MAR &amp; MDR <span class="activity-key activity-key-data"></span>ACC <span class="activity-key activity-key-memory"></span>RAM <span class="activity-key activity-key-bus"></span>Control, address &amp; data buses</div>
         </details>
       </div>
@@ -610,16 +605,16 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
     </article>
     <article class="activity-card activity-cache-card" aria-labelledby="activity-cache-title">
       <div class="activity-cache-top">
-        <div><div class="activity-card-heading"><span class="activity-lab-number activity-orange">03</span><div><p class="activity-eyebrow">CACHE</p><h3 id="activity-cache-title">Reuse a nearby copy. Save time.</h3></div></div><p class="activity-card-intro">Cache is small, fast memory close to the CPU. Recent instructions and data stay here, ready to use again — like reusing a saved file in a browser cache.</p></div>
-        <fieldset class="activity-segment-field"><legend>Cache capacity</legend><div class="activity-segments"><label><input type="radio" name="activity-cache-size" value="0"><span>Off</span></label><label><input type="radio" name="activity-cache-size" value="2" checked><span>2 slots</span></label><label><input type="radio" name="activity-cache-size" value="4"><span>4 slots</span></label></div></fieldset>
+        <div><div class="activity-card-heading"><span class="activity-lab-number activity-orange">03</span><div><p class="activity-eyebrow">CACHE</p><h3 id="activity-cache-title">Data passes through cache</h3></div></div><p class="activity-card-intro">Data fetched from RAM enters cache before reaching the CPU. Cache keeps the most recently used items. A repeated request can stop at cache.</p></div>
+        <fieldset class="activity-segment-field"><legend>Cache capacity</legend><div class="activity-segments"><label><input type="radio" name="activity-cache-size" value="2" checked><span>2 items</span></label><label><input type="radio" name="activity-cache-size" value="4"><span>4 items</span></label><label><input type="radio" name="activity-cache-size" value="8"><span>8 items</span></label></div></fieldset>
       </div>
-      <div class="activity-inline-actions activity-cache-actions"><button id="activity-cache-step" class="activity-button activity-button-primary" type="button">Next request <span aria-hidden="true">▶</span></button><button id="activity-cache-run" class="activity-button" type="button">Play requests</button><button id="activity-cache-reset" class="activity-button" type="button">Reset</button><span class="activity-cache-start-note">Recent copies are already saved.</span></div>
+      <div class="activity-inline-actions activity-cache-actions"><button id="activity-cache-step" class="activity-button activity-button-primary" type="button">Next request <span aria-hidden="true">▶</span></button><button id="activity-cache-run" class="activity-button" type="button">Play requests</button><button id="activity-cache-reset" class="activity-button" type="button">Reset</button><span class="activity-cache-start-note">Data follows one line through cache.</span></div>
       <div class="activity-cache-layout">
         <div>
           <p class="activity-small-heading">NEXT CPU REQUESTS · ADDRESSES IN DENARY</p>
           <div id="activity-cache-sequence" class="activity-cache-sequence" aria-label="Memory request sequence"></div>
-          <div class="activity-cache-viewport" tabindex="0" role="region" aria-label="CPU on the left, nearby cache in the middle, RAM farther to the right. Scroll sideways on a small screen."><div id="activity-cache-flow" class="activity-cache-flow" aria-label="Recent contents return from cache or RAM to the CPU"></div></div>
-          <div class="activity-cache-legend"><span><i class="activity-key activity-key-teal"></i>Copy found: CACHE → CPU · 1 cycle</span><span><i class="activity-key activity-key-orange"></i>Copy missing: RAM → CPU · 5 cycles</span></div>
+          <div class="activity-cache-viewport" tabindex="0" role="region" aria-label="CPU, cache and RAM on one horizontal data transmission path. Scroll sideways on a small screen."><div id="activity-cache-flow" class="activity-cache-flow" aria-label="Data from RAM passes through cache before reaching the CPU"></div></div>
+          <div class="activity-cache-legend"><span><i class="activity-key activity-key-teal"></i>Hit: CACHE → CPU · RAM idle · 1 cycle</span><span><i class="activity-key activity-key-orange"></i>Miss: RAM → CACHE → CPU · 5 cycles</span></div>
         </div>
         <div id="activity-cache-time-comparison" class="activity-cache-time-comparison" role="group" aria-label="Waiting time comparison">
           <header class="activity-cache-time-heading"><h4>Time for these requests</h4><small>Compare the same completed requests. Shorter bar = less waiting.</small></header>
@@ -629,10 +624,10 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
         </div>
         <div class="activity-cache-scoreboard">
           <div class="activity-cache-stats"><div><strong id="activity-cache-hits">0</strong><span>CACHE HITS</span></div><div><strong id="activity-cache-misses">0</strong><span>RAM READS</span></div><div><strong id="activity-cache-cycles">0</strong><span>CYCLES</span></div></div>
-          <p id="activity-cache-result" class="activity-feedback" role="status">Recent copies are already saved. Request them again to see the time saving.</p>
+          <p id="activity-cache-result" class="activity-feedback" role="status">Data follows one line through cache. Request them again to see the time saving.</p>
         </div>
       </div>
-      <div class="activity-learning-note activity-cache-note"><details><summary>How this model works</summary><p>We join a CPU that has already read addresses 1 and 3 from RAM. Their exact eight-bit copies start in cache. Reset restores those recent copies. The time comparison counts only the requests shown above; it does not include the earlier reads. A cache hit means the same address is still present. A miss fetches from RAM and keeps a copy, replacing the least recently used entry when full. The demonstration reads words without executing a program. Cache is fast memory, usually on the processor; the longer and shorter paths illustrate the access-time difference. One cache access costs 1 model cycle and a RAM access costs 5 model cycles here. Real timings vary. Addresses are denary, and contents stay in eight-bit binary.</p></details></div>
+      <div class="activity-learning-note activity-cache-note"><details><summary>How this model works</summary><p>There is one transmission path: CPU ← CACHE ← RAM. On a miss, data arrives from RAM, is kept in cache, and is forwarded unchanged to the CPU. On a hit, only the CPU–cache part of that same path is used; RAM stays idle. Choose a capacity of 2, 4 or 8 items. The least recently used item is replaced when cache is full. Cache entries are ordered from least to most recently used, reading left to right and then top to bottom. Two earlier reads have already saved addresses 1 and 3; Reset restores those copies. The comparison counts only the requests shown above, not the earlier reads. A cache hit costs 1 model cycle; a miss costs 5 cycles in total, including the RAM read and saving its copy. The animation is slowed down for teaching. This activity reads instructions and data without executing a program. Addresses are denary, and the same eight bits are preserved at every transfer. Cache is fast memory, usually on the processor; this diagram illustrates its place in the access path.</p></details></div>
     </article>
   </div>
 </section>
@@ -647,10 +642,10 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
 </section>
 </main>
 <footer class="site-footer"><span><b>CPU lab</b> · RGSV Computer Science</span><span>Explore → build → program → explain</span><button class="text-button" id="model-notes-button">Model &amp; sources</button></footer>
-<dialog id="notes-dialog"><div class="dialog-top"><span class="tiny-tag teal-tag">CLASSROOM GUIDE</span><button class="icon-button" data-close="notes-dialog" aria-label="Close teacher notes">×</button></div><h2>CPU revision, made visible.</h2><p>This self-contained lab supports Cambridge IGCSE Computer Science 0478 (2026–2028), section 3.1. Open the HTML file in a modern browser; the activities work offline.</p><h3>A suggested 40-minute lesson</h3><div class="lesson-plan"><span><b>5 min</b> Explore the parts</span><span><b>8 min</b> Build the CPU</span><span><b>12 min</b> Trace &amp; program</span><span><b>8 min</b> Investigate performance</span><span><b>7 min</b> Check understanding</span></div><h3>The cycle dial</h3><p>The clock has three labelled dots for Fetch, Decode and Execute. The current stage is highlighted. In the simulator it follows the current instruction; in Explore it previews the repeating sequence. These stages can each take multiple hardware clock cycles.</p><h3>Following the result</h3><p>The ALU places a calculation result in ACC. When <code>STA</code> executes, ACC is copied to MDR; the CU sends WRITE and the data bus carries the word to RAM at the address held in MAR. CIR and IR name the same instruction register in this app. The CU decodes the instruction in CIR and sends control signals to select the ALU operation.</p><h3>Seeing Decode</h3><p>During Decode, an instruction-set table highlights the matching opcode and shows the selected action. At Execute, the table closes and the ALU shows ADD, SUBTRACT or CHECK ZERO when needed. Other instructions leave the ALU idle. This lookup table explains the CU’s decoding circuitry; it is a teaching aid.</p><h3>What this model simplifies</h3><ul><li>One core and 16 shared RAM cells, each holding eight bits. RAM addresses are shown in denary, 0–15. Data ranges from <code>00000000</code> to <code>11111111</code> (denary 0–255). Arithmetic outside this range stops with an explanation.</li><li>CIR holds the complete eight-bit instruction: a four-bit opcode and a four-bit operand. Each instruction occupies one cell. The operand supplies an address, or is 0000 when unused. This is an illustrative instruction encoding.</li><li>PC points to the next instruction and wraps from address 15 to 0, shown in the register as <code>00001111</code> to <code>00000000</code>. A branch replaces this address.</li><li>DAT is an assembler directive, not a CPU instruction. RAM holds both instructions and data. Its Meaning column shows an instruction mnemonic or denary value as a reading aid. Every copy preserves the eight bits exactly.</li><li>Animation speed is for learning. Teaching steps are not hardware clock cycles. Cache and multiple cores are explored separately.</li><li>Cache stores copies of memory contents. Registers hold the immediate working state. The single main RAM view is outside the CPU.</li></ul><h3>For a classroom discussion</h3><p>Ask students to predict ACC, PC and output before running. Then ask them to name the register, bus and control signal responsible for each transfer. Use single-step mode when introducing a new instruction.</p><p>All practice questions are original. This app is an independent teaching resource, not a Cambridge-endorsed product.</p><h3>Sources &amp; reference</h3><div id="source-links"></div><button class="button primary" data-close="notes-dialog">Back to the lab</button></dialog>
+<dialog id="notes-dialog"><div class="dialog-top"><span class="tiny-tag teal-tag">CLASSROOM GUIDE</span><button class="icon-button" data-close="notes-dialog" aria-label="Close teacher notes">×</button></div><h2>CPU revision, made visible.</h2><p>This self-contained lab supports Cambridge IGCSE Computer Science 0478 (2026–2028), section 3.1. Open the HTML file in a modern browser; the activities work offline.</p><h3>A suggested 40-minute lesson</h3><div class="lesson-plan"><span><b>5 min</b> Explore the parts</span><span><b>8 min</b> Build the CPU</span><span><b>12 min</b> Trace &amp; program</span><span><b>8 min</b> Investigate performance</span><span><b>7 min</b> Check understanding</span></div><h3>The cycle dial</h3><p>The clock has three labelled dots for Fetch, Decode and Execute. The current stage is highlighted. In the simulator it follows the current instruction; in Explore it previews the repeating sequence. These stages can each take multiple hardware clock cycles.</p><h3>Following the result</h3><p>The ALU places a calculation result in ACC. When <code>STA</code> executes, ACC is copied to MDR; the CU sends WRITE and the data bus carries the data to RAM at the address held in MAR. CIR and IR name the same instruction register in this app. The CU decodes the instruction in CIR and sends control signals to select the ALU operation.</p><h3>Seeing Decode</h3><p>During Decode, an instruction-set table highlights the matching opcode and shows the selected action. At Execute, the table closes and the ALU shows ADD, SUBTRACT or CHECK ZERO when needed. Other instructions leave the ALU idle. This lookup table explains the CU’s decoding circuitry; it is a teaching aid.</p><h3>What this model simplifies</h3><ul><li>One core and 16 shared RAM cells, each holding eight bits. RAM addresses are shown in denary, 0–15. Data ranges from <code>00000000</code> to <code>11111111</code> (denary 0–255). Arithmetic outside this range stops with an explanation.</li><li>CIR holds the complete eight-bit instruction: a four-bit opcode and a four-bit operand. Each instruction occupies one cell. The operand supplies an address, or is 0000 when unused. This is an illustrative instruction encoding.</li><li>PC points to the next instruction and wraps from address 15 to 0, shown in the register as <code>00001111</code> to <code>00000000</code>. A branch replaces this address.</li><li>DAT is an assembler directive, not a CPU instruction. RAM holds both instructions and data. Its Meaning column shows an instruction mnemonic or denary value as a reading aid. Every copy preserves the eight bits exactly.</li><li>Animation speed is for learning. Teaching steps are not hardware clock cycles. Cache and multiple cores are explored separately.</li><li>Cache stores copies of memory contents. Registers hold the immediate working state. The single main RAM view is outside the CPU.</li></ul><h3>For a classroom discussion</h3><p>Ask students to predict ACC, PC and output before running. Then ask them to name the register, bus and control signal responsible for each transfer. Use single-step mode when introducing a new instruction.</p><p>All practice questions are original. This app is an independent teaching resource, not a Cambridge-endorsed product.</p><h3>Sources &amp; reference</h3><div id="source-links"></div><button class="button primary" data-close="notes-dialog">Back to the lab</button></dialog>
 <dialog id="isa-dialog"><div class="dialog-top"><span class="tiny-tag purple-tag">OUR TEACHING INSTRUCTION SET</span><button class="icon-button" data-close="isa-dialog" aria-label="Close instruction set">×</button></div><h2>Eight bits. One instruction.</h2><p>The first four bits are the <b>opcode</b>: what to do. The last four bits are the <b>operand</b>: the address to use, or <code>0000</code> when no operand is needed.</p><div class="encoding-example"><div><b>0001</b><span>opcode · LDA</span></div><div><b>1100</b><span>operand · address 12</span></div><span>→ <code>LDA 12</code></span></div><p>The complete instruction is <code>00011100</code>. If RAM[<code>12</code>] contains <code>00000111</code>, LDA copies exactly <b><code>00000111</code></b> into MDR and then ACC.</p><div class="isa-table-wrap"><table class="isa-table"><thead><tr><th>Mnemonic</th><th>Opcode</th><th>What happens</th><th>Example</th></tr></thead><tbody id="isa-body"></tbody></table></div><p class="small-muted"><b>DAT</b> is an assembler directive that reserves an eight-bit cell for data. It is not an instruction. Labels make addresses easier to remember; the assembler resolves them.</p><button class="button primary" data-close="isa-dialog">Let’s program</button></dialog>
 <script>/* CPU Lab: a deliberately small, deterministic teaching CPU.
- * Each RAM cell and each visible register holds one unsigned 8-bit word.
+ * Each RAM cell and each visible register holds one unsigned 8-bit data value.
  * Each instruction packs a 4-bit opcode and 4-bit operand into one RAM cell.
  * Microsteps show transfers for teaching, not literal hardware clock cycles.
  */
@@ -722,7 +717,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
         const word = parseInt(text, 2);
         const address = listing.length;
         memory[address] = word;
-        // A raw word has no built-in code/data label. The CPU decides when fetched.
+        // Raw binary data has no built-in code/data label. The CPU decides when fetched.
         listing.push({ address, sourceLine: index + 1, text: original.trim(), word, mnemonic: 'WORD', kind: 'raw', isData: false, isOperand: false, raw: true, operand: null, instructionAddress: null, words: 1 });
       });
     } else {
@@ -744,7 +739,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
         const match = text.match(/^([a-z]+)(?:\s+(.+)|(\d+))?$/i);
         if (!match) throw lineError(index + 1, 'Use a mnemonic and denary address or label, such as LDA 12 or LDA TOTAL. Define data with TOTAL: DAT 00000111.');
         const mnemonic = match[1].toUpperCase();
-        if (mnemonic !== 'DAT' && !BY_NAME.has(mnemonic)) throw lineError(index + 1, 'Unknown instruction ' + mnemonic + '. Choose a listed mnemonic, or DAT for a data word.');
+        if (mnemonic !== 'DAT' && !BY_NAME.has(mnemonic)) throw lineError(index + 1, 'Unknown instruction ' + mnemonic + '. Choose a listed mnemonic, or DAT for data.');
         const instruction = BY_NAME.get(mnemonic);
         const words = mnemonic === 'DAT' ? 1 : instruction.words;
         if (nextAddress + words > MEMORY_SIZE) throw lineError(index + 1, memoryLimit);
@@ -780,7 +775,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
         listing.push({ address, sourceLine, text, word, opcode: instruction.opcode, mnemonic, kind: 'opcode', isData: false, isOperand: false, operand, operandAddress: null, instructionAddress: address, words });
       });
     }
-    if (!listing.length) throw new Error('Write at least one instruction or data word before loading the program.');
+    if (!listing.length) throw new Error('Write at least one instruction or data value before loading the program.');
     return { memory, listing, labels: Object.assign({}, labels), entry: 0, mode, source, wordBits: WORD_BITS };
   }
 
@@ -887,7 +882,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
       const detail = wrapped
         ? 'Advance PC by 00000001. After RAM address 15, PC returns from 00001111 to 00000000 (address 0).'
         : 'Advance PC by 00000001, from ' + binary(previous) + ' to ' + binary(this.pc) + '. It selects RAM address ' + this.pc + '.';
-      return this._event(phase, 'Move PC to the next RAM word', detail, { transfer: 'PC ← PC + 00000001', active: ['PC'], value: this.pc, address: this.pc, wordRole: role, wrapped });
+      return this._event(phase, 'Move PC to the next RAM location', detail, { transfer: 'PC ← PC + 00000001', active: ['PC'], value: this.pc, address: this.pc, wordRole: role, wrapped });
     }
 
     _fetch() {
@@ -916,7 +911,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
       const decoded = decodeWord(this.cir);
       if (!decoded.valid) {
         const reason = decoded.mnemonic ? decoded.mnemonic + ' requires a zero operand.' : 'The opcode is not in this teaching CPU’s instruction set.';
-        return this._fail('Instruction ' + binary(this.cir) + ' is invalid. ' + reason + ' Check the word at RAM address ' + this.instructionAddress + '.', { value: this.cir, address: this.instructionAddress, wordRole: 'opcode' });
+        return this._fail('Instruction ' + binary(this.cir) + ' is invalid. ' + reason + ' Check the data at RAM address ' + this.instructionAddress + '.', { value: this.cir, address: this.instructionAddress, wordRole: 'opcode' });
       }
       this.currentInstruction = Object.assign({ word: this.cir, address: this.instructionAddress, operandAddress: null }, decoded);
       this._executeStage = 0;
@@ -977,12 +972,12 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
           return this._event('execute', 'Prepare the value to store', 'Copy ' + binary(this.acc) + ' from ACC into MDR. All eight bits stay the same.', { transfer: 'ACC → MDR', active: ['ACC', 'MDR'], value: this.mdr, address: this.mar, wordRole: 'data' });
         }
         if (stage === 3) {
-          return this._event('execute', 'Ask RAM to write', 'The CU sends WRITE along the control bus. RAM will store the word from MDR at address ' + this.mar + '.', { transfer: 'CU → RAM · WRITE', active: ['CU', 'MAR', 'RAM'], bus: 'control', direction: 'to-ram', address: this.mar, wordRole: 'data' });
+          return this._event('execute', 'Ask RAM to write', 'The CU sends WRITE along the control bus. RAM will store the data from MDR at address ' + this.mar + '.', { transfer: 'CU → RAM · WRITE', active: ['CU', 'MAR', 'RAM'], bus: 'control', direction: 'to-ram', address: this.mar, wordRole: 'data' });
         }
         this.memory[this.mar] = this.mdr;
         const original = this._program.listing.find(row => row.address === this.mar);
         const overwroteInstruction = Boolean(original && original.kind === 'opcode');
-        return this._complete(this._event('execute', 'Store the eight bits in RAM', 'Copy ' + binary(this.mdr) + ' unchanged from MDR to RAM address ' + this.mar + ' along the data bus. ACC keeps its value.' + (overwroteInstruction ? ' This replaces a word originally used by an instruction.' : ''), { transfer: 'MDR → RAM', active: ['MDR', 'RAM'], bus: 'data', direction: 'to-ram', value: this.mdr, address: this.mar, overwroteInstruction, wordRole: 'data' }));
+        return this._complete(this._event('execute', 'Store the eight bits in RAM', 'Copy ' + binary(this.mdr) + ' unchanged from MDR to RAM address ' + this.mar + ' along the data bus. ACC keeps its value.' + (overwroteInstruction ? ' This replaces data originally used by an instruction.' : ''), { transfer: 'MDR → RAM', active: ['MDR', 'RAM'], bus: 'data', direction: 'to-ram', value: this.mdr, address: this.mar, overwroteInstruction, wordRole: 'data' }));
       }
       if (stage === 2) {
         return this._event('execute', 'Read the data from RAM', 'The CU sends READ along the control bus for RAM address ' + this.mar + '.', { transfer: 'CU → RAM · READ', active: ['CU', 'MAR', 'RAM'], bus: 'control', direction: 'to-ram', address: this.mar, wordRole: 'data' });
@@ -1046,7 +1041,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
   window.CPUContent = {
     overview: {
       title: 'A tiny computer, one instruction at a time',
-      text: 'A CPU processes instructions and data. In the Von Neumann model, instructions and data share main memory. The CPU fetches an instruction word, decodes its opcode and carries out the operation.',
+      text: 'A CPU processes instructions and data. In the Von Neumann model, instructions and data share main memory. The CPU fetches an instruction, decodes its opcode and carries out the operation.',
       microprocessor: 'A microprocessor implements a CPU on a single integrated circuit, or chip.',
       model: 'Our teaching CPU has 16 RAM cells, with denary addresses 0 to 15. Every cell and register holds eight bits. Each instruction fits in one cell: a four-bit opcode followed by a four-bit operand. Data ranges from 00000000 to 11111111 (denary 0 to 255). This 4 + 4 encoding is a small teaching model; real processors use different encodings.',
       distinction: 'An address tells us where a value is stored. If RAM[12] contains 00000111, LDA 12 copies 00000111 through MDR into ACC. The bits stay unchanged during the copy. RAM addresses are labelled in denary; the address register and bus show the same address in eight-bit binary.'
@@ -1070,7 +1065,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
       },
       MDR: {
         name: 'Memory data register',
-        role: 'Temporarily holds the word being transferred between the CPU and RAM.',
+        role: 'Temporarily holds the data being transferred between the CPU and RAM.',
         example: 'If RAM[12] contains 00000111, reading that cell puts exactly 00000111 into MDR.',
         examTip: 'MDR = the contents being transferred. It can hold data or an instruction.'
       },
@@ -1107,7 +1102,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
       CACHE: {
         name: 'Cache memory',
         role: 'Keeps copies of recently or frequently used instructions and data in fast memory close to the CPU.',
-        example: 'A cache hit supplies a needed word quickly. A miss requires access to slower main memory.',
+        example: 'A cache hit supplies the required data quickly. A miss requires access to slower main memory.',
         examTip: 'A larger cache can reduce waiting for RAM. The benefit depends on what the program accesses.'
       },
       CLOCK: {
@@ -1124,21 +1119,21 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
       },
       DATA: {
         name: 'Data bus',
-        role: 'Transfers instructions and data words between the CPU and memory in either direction.',
-        example: 'A READ copies 00000111 from RAM to MDR unchanged. A WRITE copies the complete eight-bit word in MDR back to RAM.',
+        role: 'Transfers instructions and data between the CPU and memory in either direction.',
+        example: 'A READ copies 00000111 from RAM to MDR unchanged. A WRITE copies the complete eight-bit data in MDR back to RAM.',
         examTip: 'Instructions travel on the data bus too. It is bidirectional.'
       },
       CONTROL: {
         name: 'Control bus',
         role: 'Carries control and status signals that coordinate operations.',
-        example: 'For STA, the CU sends WRITE to RAM before MDR sends the unchanged eight-bit result on the data bus. READ requests a word from RAM. Other control lines can carry status or interrupt signals back.',
+        example: 'For STA, the CU sends WRITE to RAM before MDR sends the unchanged eight-bit result on the data bus. READ requests data from RAM. Other control lines can carry status or interrupt signals back.',
         examTip: 'Name a signal, such as READ or WRITE. Different lines in the control bus can have different directions.'
       }
     },
     fdeSteps: [
       'Copy PC to MAR',
       'Send the address and READ signal to RAM',
-      'Copy the RAM word to MDR',
+      'Copy the data from RAM to MDR',
       'Copy all eight bits from MDR to CIR; advance PC',
       'Decode the opcode and operand in the CU',
       'Execute the operation; read or write data if needed'
@@ -1199,7 +1194,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
         question: 'Which statement about the data bus is correct?',
         options: ['It carries only addresses.', 'It carries instructions and data.', 'It carries only READ and WRITE signals.', 'It permanently stores the next instruction.'],
         answer: 1,
-        explanation: 'Instructions are represented as words too. The data bus transfers words between CPU and memory in either direction.'
+        explanation: 'Instructions are represented as binary data too. The data bus transfers instructions and data between CPU and memory in either direction.'
       },
       {
         topic: 'Architecture',
@@ -1239,9 +1234,9 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
       {
         topic: 'Cache',
         question: 'Why can a cache hit improve performance?',
-        options: ['The CPU obtains a needed word from fast cache.', 'It increases the number of cores.', 'It converts all instructions into one-bit instructions.', 'It saves the program permanently after power is removed.'],
+        options: ['The CPU obtains the required data from fast cache.', 'It increases the number of cores.', 'It converts all instructions into one-bit instructions.', 'It saves the program permanently after power is removed.'],
         answer: 0,
-        explanation: 'A hit means a needed instruction or data word is already in fast cache, reducing the wait for main memory.'
+        explanation: 'A hit means the required instruction or data is already in fast cache, reducing the wait for main memory.'
       },
       {
         topic: 'Cores',
@@ -1260,12 +1255,12 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
     ],
     shortAnswers: [
       {
-        question: 'Describe how this CPU fetches its next instruction word from RAM. Refer to registers and buses.',
+        question: 'Describe how this CPU fetches its next instruction from RAM. Refer to registers and buses.',
         marks: 5,
         points: [
           'The address in PC is copied to MAR.',
           'The address travels to RAM on the address bus; the CU sends a READ signal on the control bus.',
-          'The selected eight-bit instruction word travels from RAM on the data bus into MDR.',
+          'The selected eight-bit instruction travels from RAM on the data bus into MDR.',
           'The same eight bits are copied from MDR to CIR unchanged.',
           'PC advances to the next instruction address; this sixteen-cell model wraps from address 15 to 0.'
         ]
@@ -1314,7 +1309,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
   const components = {
     CU: { short: 'CU', name: 'Control unit', type: 'unit', hint: 'The control unit decodes the instruction in CIR and directs the ALU. It connects directly to the control bus to send READ and WRITE signals.' },
     ALU: { short: 'ALU', name: 'Arithmetic logic unit', type: 'unit', hint: 'The arithmetic logic unit performs calculations and logical operations as directed by the CU. Its result is held in ACC at the bottom-left, ready to be copied to MDR when STA executes.' },
-    PC: { short: 'PC', name: 'Program counter', type: 'register', hint: 'The program counter holds the address of the next instruction to fetch. Each instruction occupies one eight-bit memory word.' },
+    PC: { short: 'PC', name: 'Program counter', type: 'register', hint: 'The program counter holds the address of the next instruction to fetch. Each instruction occupies one RAM cell holding eight bits of data.' },
     MAR: { short: 'MAR', name: 'Memory address register', type: 'register', hint: 'The memory address register holds the location being read or written. Its address travels directly onto the address bus.' },
     MDR: { short: 'MDR', name: 'Memory data register', type: 'register', hint: 'The memory data register holds an instruction or data travelling to or from RAM. It connects directly to the two-way data bus.' },
     CIR: { short: 'CIR', name: 'Current instruction register', type: 'register', hint: 'The current instruction register (CIR), also called the IR, holds the instruction for the CU to decode. The CU then directs the ALU.' },
@@ -1330,16 +1325,20 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
   const build = { placements: {}, selected: null, order: [], checked: false, revealed: false, hint: null };
   const clock = { rate: 2, running: false, frame: 0, baseCycles: 0, chosenCycles: 0, chosenFinished: false };
   const cores = { count: 4, workload: 'parallel', completed: 0, steps: 0, history: [[], [], [], []], running: false, timer: 0 };
-  const requestSequence = [1, 3, 2, 3, 2, 3, 4, 3, 4, 3, 1, 3];
+  const requestSequence = [2, 3, 2, 3, 4, 3, 5, 3, 6, 3, 7, 3, 8, 3, 7, 3, 6, 3, 1, 3];
   // A running CPU already has copies from earlier RAM reads. Those earlier reads
   // are outside this comparison; every counter below counts this sequence only.
   const recentCacheAddresses = [1, 3];
-  const cacheTiming = { lookup: 200, ramRead: 600, hitReturn: 600, ramReturn: 3200, receipt: 650 };
+  const cacheTiming = { lookup: 150, ramRead: 250, ramToCache: 1500, cacheFill: 250, cacheToCpu: 350, receipt: 550 };
   const ramWords = {
     1: { value: 19, type: 'Instruction', meaning: 'LDA 3' },
     2: { value: 52, type: 'Instruction', meaning: 'ADD 4' },
     3: { value: 7, type: 'Data', meaning: '7 denary' },
-    4: { value: 5, type: 'Data', meaning: '5 denary' }
+    4: { value: 5, type: 'Data', meaning: '5 denary' },
+    5: { value: 24, type: 'Instruction', meaning: 'LDA 8' },
+    6: { value: 56, type: 'Instruction', meaning: 'ADD 8' },
+    7: { value: 12, type: 'Data', meaning: '12 denary' },
+    8: { value: 9, type: 'Data', meaning: '9 denary' }
   };
   const cacheBits = value => Number(value).toString(2).padStart(8, '0');
   const cache = { size: 2, cells: [], history: [], position: 0, hits: 0, misses: 0, cycles: 0, last: null, pending: null, stage: 'idle', running: false, timer: 0 };
@@ -1757,21 +1756,21 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
   function cacheResultMessage() {
     const current = cache.pending;
     if (current) {
-      const word = ramWords[current.address];
-      const prefix = 'Request ' + (cache.position + 1) + ' / 12 · address ' + current.address + '. ';
-      if (cache.stage === 'request') return prefix + (cache.size ? 'Look for this address in the recent cached copies.' : 'Cache is off, so read RAM.');
-      if (cache.stage === 'ram-read') return prefix + (cache.size ? 'Not in cache. ' : 'Cache is off. ') + 'The CPU must wait for RAM: 5 model cycles.';
-      if (cache.stage === 'ram-return') return prefix + 'RAM → CPU: ' + cacheBits(word.value) + ' travels back unchanged.' + (cache.size ? ' Keep a copy for the next time this address is needed.' : ' Cache is off, so no copy is saved.');
-      return prefix + 'Already in cache! CACHE → CPU takes 1 cycle. RAM is not needed: save 4 cycles.';
+      const data = ramWords[current.address];
+      const prefix = 'Request ' + (cache.position + 1) + ' / ' + requestSequence.length + ' · address ' + current.address + '. ';
+      if (cache.stage === 'request') return prefix + 'Check whether this address is in cache.';
+      if (cache.stage === 'ram-read') return prefix + 'MISS: the data is not in cache, so read RAM.';
+      if (cache.stage === 'ram-to-cache') return prefix + 'RAM → CACHE: ' + cacheBits(data.value) + ' enters cache along the transmission line.';
+      if (cache.stage === 'cache-fill') return prefix + 'Cache keeps ' + cacheBits(data.value) + '.' + (current.evicted !== null ? ' It replaces the least recently used item, address ' + current.evicted + '.' : '') + ' Now send the same data on to the CPU.';
+      return prefix + (current.hit ? 'HIT: CACHE → CPU. RAM is not needed. 1 cycle instead of 5.' : 'CACHE → CPU: forward the same ' + cacheBits(data.value) + '. Its copy stays in cache.');
     }
-    if (!cache.last) return cache.size ? 'Addresses 1 and 3 are recent copies saved by earlier CPU reads. Start the requests to reuse them.' : 'Cache is off. Every request must go all the way to RAM.';
+    if (!cache.last) return 'Cache contains two recent copies from earlier reads. The first request is missing, so watch RAM → CACHE → CPU.';
     const last = cache.last;
-    const word = ramWords[last.address];
-    let message = 'Received ' + cacheBits(word.value) + ' · ' + word.type + ': ' + word.meaning + '. ';
-    message += last.hit ? 'From CACHE in 1 cycle. RAM was not needed — 4 cycles saved.' : 'From RAM in 5 cycles.';
-    if (!last.hit && cache.size) message += ' A recent copy is now saved in cache.';
-    if (last.evicted !== null) message += ' It replaces the least recently used copy at address ' + last.evicted + '.';
-    if (cache.position === requestSequence.length) message += ' Finished: ' + cache.hits + ' of 12 requests used cache; ' + (cache.position * 5 - cache.cycles) + ' cycles saved.';
+    const data = ramWords[last.address];
+    let message = 'CPU received ' + cacheBits(data.value) + ' · ' + data.type + ': ' + data.meaning + '. ';
+    message += last.hit ? 'Cache supplied the data; RAM was not needed. 4 cycles saved.' : 'RAM supplied the data through cache. A copy remains in cache.';
+    if (last.evicted !== null) message += ' Replaced address ' + last.evicted + ', the least recently used item.';
+    if (cache.position === requestSequence.length) message += ' Finished: ' + cache.hits + ' of ' + requestSequence.length + ' requests used cache; ' + (cache.position * 5 - cache.cycles) + ' cycles saved.';
     return message;
   }
 
@@ -1779,42 +1778,48 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
     const pending = cache.pending;
     const current = pending || cache.last;
     const busy = Boolean(pending);
-    const returning = cache.stage === 'ram-return' || cache.stage === 'cache-return';
-    const ramReading = busy && !pending.hit && (cache.stage === 'ram-read' || cache.stage === 'ram-return');
+    const stage = cache.stage;
+    const miss = Boolean(current && !current.hit);
+    const fromRam = stage === 'ram-to-cache';
+    const toCpu = stage === 'cache-to-cpu';
+    const ramReading = busy && !pending.hit && (stage === 'ram-read' || fromRam);
     const received = cache.last ? ramWords[cache.last.address] : null;
-    const source = current ? current.hit ? 'cache' : 'ram' : cache.size ? 'cache' : 'ram';
+    const currentData = current ? ramWords[current.address] : null;
     const activeIndex = pending ? cache.position : cache.position - 1;
     byId('activity-cache-sequence').innerHTML = requestSequence.map((address, index) => {
       const history = cache.history[index];
       const classes = 'activity-cache-request' + (history ? history.hit ? ' activity-cache-hit' : ' activity-cache-miss' : '') + (index === activeIndex ? ' activity-request-current' : '') + (pending && index === activeIndex ? ' activity-request-pending' : '');
       return '<span class="' + classes + '" aria-label="Request ' + (index + 1) + ', address ' + address + (history ? history.hit ? ', hit' : ', miss' : pending && index === activeIndex ? ', in progress' : ', waiting') + '"><small>address</small><strong>' + address + '</strong></span>';
     }).join('');
-    const slots = cache.size ? '<div class="activity-cache-slots" data-capacity="' + cache.size + '">' + Array.from({ length: cache.size }, (_, i) => {
+    const slots = '<div class="activity-cache-slots" data-capacity="' + cache.size + '">' + Array.from({ length: cache.size }, (_, i) => {
       const address = cache.cells[i];
-      if (address === undefined) return '<div class="activity-cache-cell"><strong>—</strong><small>free slot</small></div>';
-      const word = ramWords[address];
-      const hot = current && current.address === address && cache.stage !== 'request';
-      return '<div class="activity-cache-cell activity-cache-filled' + (hot ? ' activity-cache-hot' : '') + '" data-cache-address="' + address + '" role="group" aria-label="Recent copy, address ' + address + ', ' + word.type + ', ' + word.meaning + ', ' + cacheBits(word.value) + '"><small>Address ' + address + '</small><strong>' + cacheBits(word.value) + '</strong><span>' + word.type + ' · ' + word.meaning + '</span></div>';
-    }).join('') + '</div>' : '<p class="activity-cache-off">Cache is off.<br>Every request uses RAM.</p>';
-    const cacheStatus = busy ? cache.stage === 'request' ? cache.size ? 'Looking for address ' + pending.address : 'Cache is off · read RAM' : pending.hit ? 'Copy found · send it to CPU' : cache.size ? 'No copy of address ' + pending.address : 'Cache is off' : cache.last && cache.size ? cache.last.hit ? 'Copy kept for another request' : 'New copy saved for reuse' : cache.size ? 'Ready to reuse these copies' : 'No copies saved';
-    const cacheNote = cache.size ? cache.position ? 'Recent copies of RAM contents' : 'Saved by earlier CPU reads' : 'Switch on to keep recent copies';
+      if (address === undefined) return '<div class="activity-cache-cell"><strong>—</strong><small>free space</small></div>';
+      const data = ramWords[address];
+      const hot = current && current.address === address && stage !== 'request';
+      return '<div class="activity-cache-cell activity-cache-filled' + (hot ? ' activity-cache-hot' : '') + '" data-cache-address="' + address + '" role="group" aria-label="Recent copy, address ' + address + ', ' + data.type + ', ' + data.meaning + ', ' + cacheBits(data.value) + '"><small>Address ' + address + '</small><strong>' + cacheBits(data.value) + '</strong><span>' + data.meaning + '</span></div>';
+    }).join('') + '</div>';
+    const cacheStatus = stage === 'cache-fill' ? 'Copy saved · now forward to CPU' : toCpu ? 'Sending data · keeping its copy' : busy ? stage === 'request' ? 'Checking address ' + pending.address : 'Waiting for data from RAM' : cache.last ? 'Recent data stays here for reuse' : 'Two copies from earlier reads';
     const cpuLabel = busy ? 'Needs address ' + pending.address : received ? 'Received address ' + cache.last.address : 'Next request: address ' + requestSequence[0];
-    const distanceTitle = current && current.hit ? 'RAM not needed' : ramReading ? 'Reading RAM…' : current ? 'RAM was needed' : cache.size ? 'RAM only if needed' : 'RAM for every request';
-    const distanceDetail = current && current.hit ? 'The recent copy is nearby. Save 4 cycles.' : ramReading ? 'A longer wait: 5 cycles. The same eight bits return to the CPU.' : current ? cache.size ? 'The returned word is also kept in cache.' : 'Every request takes 5 cycles.' : cache.size ? 'If the address is missing from cache, read RAM: 5 cycles.' : 'No copies are saved. Each request takes 5 cycles.';
-    const routeTitle = current ? cache.stage === 'request' ? cache.size ? 'Checking the recent copies…' : 'Requesting contents from RAM…' : cache.stage === 'ram-read' ? 'Waiting for RAM · 5-cycle access' : current.hit ? 'CACHE → CPU · 1 cycle · 4 cycles saved' : 'RAM → CPU · 5 cycles' + (!busy && cache.size ? ' · copy saved' : '') : cache.size ? 'Nearby cache → CPU · 1 cycle when a copy is found' : 'RAM → CPU · 5 cycles for every request';
+    const leftState = toCpu || stage === 'received' ? 'is-active' : stage === 'request' ? 'is-waiting' : 'is-muted';
+    const rightState = miss && stage !== 'request' ? stage === 'ram-read' ? 'is-waiting' : 'is-active' : 'is-muted';
+    const leftLabel = toCpu ? 'CACHE → CPU' : stage === 'received' ? current.hit ? 'Cache hit · 1 cycle' : 'Forwarded to CPU' : 'CACHE → CPU';
+    const rightLabel = current && current.hit ? 'RAM not needed' : stage === 'ram-read' ? 'Reading RAM…' : fromRam ? 'RAM → CACHE' : miss ? 'Data kept in cache' : 'RAM → CACHE';
+    const packet = active => active ? '<span class="activity-cache-inline-packet">' + cacheBits(currentData.value) + '</span>' : '';
+    const routeStatus = stage === 'request' ? 'Look in cache first.' : stage === 'ram-read' ? 'Cache miss: fetch the missing data from RAM.' : fromRam ? '1. Data from RAM enters cache.' : stage === 'cache-fill' ? '2. Cache keeps the recent data.' : toCpu ? current.hit ? 'Cache hit: send the saved data straight to CPU. RAM stays idle.' : '3. Forward the same data to CPU; keep the copy in cache.' : current ? current.hit ? 'Cache hit: only the CPU–cache part of this line was used.' : 'RAM → CACHE → CPU: data passed through cache and was retained.' : 'One transmission path: CPU ← CACHE ← RAM.';
     const flow = byId('activity-cache-flow');
-    flow.dataset.stage = cache.stage;
-    flow.dataset.source = current ? source : 'none';
+    flow.dataset.stage = stage;
+    flow.dataset.source = current ? current.hit ? 'cache' : 'ram' : 'none';
     flow.setAttribute('aria-busy', String(busy));
-    flow.innerHTML = '<div class="activity-cache-cpu' + (!busy && received ? ' activity-cache-cpu-received' : '') + '"><strong class="activity-cache-node-title">CPU</strong><small class="activity-cache-receipt-label">' + cpuLabel + '</small><output id="activity-cache-cpu-binary">' + (received ? cacheBits(received.value) : '────────') + '</output><span id="activity-cache-cpu-meaning">' + (received ? received.type + '<b>' + received.meaning + '</b>' : 'Receives an instruction or data') + '</span><small id="activity-cache-cpu-source">' + (received ? 'From ' + (cache.last.hit ? 'CACHE' : 'RAM') + (busy ? ' · previous request' : ' · bits unchanged') : cache.size ? 'Look in cache first' : 'Read from RAM every time') + '</small></div>' +
-      '<div class="activity-cache-box' + (busy && pending.hit && returning ? ' activity-cache-source-active' : '') + '"><strong class="activity-cache-node-title">CACHE <small>' + (cache.size ? cache.size + ' slots' : 'off') + '</small></strong><p class="activity-cache-recent-note">' + cacheNote + '</p>' + slots + '<p id="activity-cache-copy-status" class="activity-cache-node-status">' + cacheStatus + '</p></div>' +
-      '<div class="activity-cache-distance-note' + (current && current.hit ? ' activity-cache-distance-hit' : ramReading ? ' activity-cache-distance-miss' : '') + '"><strong>' + distanceTitle + '</strong><span>' + distanceDetail + '</span></div>' +
-      '<div class="activity-cache-ram' + (ramReading ? ' activity-cache-ram-active' : '') + (current && current.hit ? ' activity-cache-ram-idle' : '') + '"><div class="activity-cache-ram-heading"><strong class="activity-cache-node-title">RAM</strong><span id="activity-cache-ram-status">' + (ramReading ? 'READING' : 'IDLE') + '</span></div><div class="activity-cache-ram-headings"><span>Address</span><span>8-bit contents</span><span>Meaning</span></div>' + Object.keys(ramWords).map(address => {
-        const word = ramWords[address];
-        return '<div class="activity-cache-ram-data' + (ramReading && Number(address) === pending.address ? ' activity-ram-read' : '') + '" data-ram-address="' + address + '"><span>' + address + '</span><b>' + cacheBits(word.value) + '</b><small>' + (word.type === 'Instruction' ? word.meaning : word.value + ' denary') + '</small></div>';
+    flow.innerHTML = '<div class="activity-cache-cpu' + (!busy && received ? ' activity-cache-cpu-received' : '') + '"><strong class="activity-cache-node-title">CPU</strong><small class="activity-cache-receipt-label">' + cpuLabel + '</small><output id="activity-cache-cpu-binary">' + (received ? cacheBits(received.value) : '────────') + '</output><span id="activity-cache-cpu-meaning">' + (received ? received.type + '<b>' + received.meaning + '</b>' : 'Receives instructions and data') + '</span><small id="activity-cache-cpu-source">' + (busy ? 'Waiting for this request' : received ? 'Same eight bits received' : 'Look in cache first') + '</small></div>' +
+      '<div class="activity-cache-link ' + leftState + '" data-link="cpu-cache" style="--cache-travel-time:' + cacheTiming.cacheToCpu + 'ms"><span class="activity-cache-link-label">' + leftLabel + '</span><div class="activity-cache-link-rail" aria-hidden="true">' + packet(toCpu) + '</div></div>' +
+      '<div class="activity-cache-box' + (stage === 'cache-fill' || toCpu ? ' activity-cache-source-active' : '') + '"><strong class="activity-cache-node-title">CACHE <small>' + cache.cells.length + ' / ' + cache.size + ' items</small></strong><p class="activity-cache-recent-note">Keep the ' + cache.size + ' most recently used items</p>' + slots + '<p id="activity-cache-copy-status" class="activity-cache-node-status">' + cacheStatus + '</p></div>' +
+      '<div class="activity-cache-link ' + rightState + '" data-link="cache-ram" style="--cache-travel-time:' + cacheTiming.ramToCache + 'ms"><span class="activity-cache-link-label">' + rightLabel + '</span><div class="activity-cache-link-rail" aria-hidden="true">' + packet(fromRam) + '</div></div>' +
+      '<div class="activity-cache-ram' + (ramReading ? ' activity-cache-ram-active' : '') + (current && current.hit ? ' activity-cache-ram-idle' : '') + '"><div class="activity-cache-ram-heading"><strong class="activity-cache-node-title">RAM</strong><span id="activity-cache-ram-status">' + (ramReading ? 'READING' : 'IDLE') + '</span></div><div class="activity-cache-ram-headings"><span>Address</span><span>8-bit data</span><span>Meaning</span></div>' + Object.keys(ramWords).map(address => {
+        const data = ramWords[address];
+        return '<div class="activity-cache-ram-data' + (ramReading && Number(address) === pending.address ? ' activity-ram-read' : '') + '" data-ram-address="' + address + '"><span>' + address + '</span><b>' + cacheBits(data.value) + '</b><small>' + (data.type === 'Instruction' ? data.meaning : data.value + ' denary') + '</small></div>';
       }).join('') + '<p class="activity-cache-ram-caption">Instructions and data share RAM.</p></div>' +
-      '<div id="activity-cache-return-path" class="activity-cache-return-path activity-cache-return-' + source + ' activity-cache-route-visible' + (returning ? ' activity-cache-route-moving' : '') + (cache.stage === 'request' || cache.stage === 'ram-read' ? ' activity-cache-route-waiting' : '') + '" style="--cache-travel-time:' + (current && current.hit ? cacheTiming.hitReturn : cacheTiming.ramReturn) + 'ms"><div class="activity-cache-return-rail" aria-hidden="true">' + (returning ? '<span class="activity-cache-return-packet">' + cacheBits(ramWords[current.address].value) + '</span>' : '') + '</div><p id="activity-cache-return-label">' + routeTitle + '</p></div>';
-    document.querySelector('.activity-cache-start-note').textContent = cache.size ? 'Recent copies stay saved between requests.' : 'Cache is off: every request reads RAM.';
+      '<p id="activity-cache-route-status" class="activity-cache-route-status">' + routeStatus + '</p>';
+    document.querySelector('.activity-cache-start-note').textContent = 'The same line is used for every request.';
     byId('activity-cache-hits').textContent = cache.hits;
     byId('activity-cache-misses').textContent = cache.misses;
     byId('activity-cache-cycles').textContent = cache.cycles;
@@ -1824,7 +1829,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
     byId('activity-cache-with-time').textContent = cache.cycles + (cache.cycles === 1 ? ' cycle' : ' cycles');
     byId('activity-cache-without-bar').style.width = (withoutCache ? 100 : 0) + '%';
     byId('activity-cache-with-bar').style.width = (withoutCache ? cache.cycles / withoutCache * 100 : 0) + '%';
-    byId('activity-cache-with-label').textContent = cache.size ? 'Using cache' : 'Cache off';
+    byId('activity-cache-with-label').textContent = 'Using cache';
     byId('activity-cache-saved').textContent = saved;
     byId('activity-cache-saving-percent').textContent = withoutCache ? Math.round(saved / withoutCache * 100) + '% less waiting' : 'Ready to compare';
     byId('activity-cache-time-comparison').setAttribute('aria-label', 'Time for ' + cache.position + ' completed requests: RAM every time ' + withoutCache + ' cycles, this run ' + cache.cycles + ' cycles, ' + saved + ' cycles saved.');
@@ -1839,6 +1844,9 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
     if (cache.timer) clearTimeout(cache.timer);
     cache.timer = 0;
     cache.running = false;
+    // An interrupted transfer is rolled back as one teaching step. Completed
+    // reads stay cached; restarting repeats the unfinished request in full.
+    if (cache.pending && cache.pending.cacheApplied) cache.cells = cache.pending.beforeCells.slice();
     cache.pending = null;
     cache.stage = cache.last ? 'received' : 'idle';
     renderCache();
@@ -1848,10 +1856,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
     if (cache.timer) clearTimeout(cache.timer);
     cache.timer = setTimeout(() => {
       cache.timer = 0;
-      if (document.hidden || performancePanelHidden()) {
-        stopCache();
-        return;
-      }
+      if (document.hidden || performancePanelHidden()) { stopCache(); return; }
       callback();
     }, delay);
   }
@@ -1859,7 +1864,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
   function resetCache() {
     stopCache();
     cache.size = Number(document.querySelector('input[name="activity-cache-size"]:checked').value);
-    cache.cells = cache.size ? recentCacheAddresses.slice(-cache.size) : [];
+    cache.cells = recentCacheAddresses.slice();
     cache.history = [];
     cache.position = 0;
     cache.hits = 0;
@@ -1870,10 +1875,9 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
     renderCache();
   }
 
-  function receiveCacheWord() {
+  function receiveCacheData() {
     if (!cache.pending) return;
     const request = cache.pending;
-    // Commit only on arrival: cancelling an unfinished animation changes no memory or counters.
     if (request.hit) {
       cache.hits++;
       cache.cycles++;
@@ -1882,13 +1886,9 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
     } else {
       cache.misses++;
       cache.cycles += 5;
-      if (cache.size) {
-        if (cache.cells.length === cache.size) cache.cells.shift();
-        cache.cells.push(request.address);
-      }
     }
-    cache.last = request;
-    cache.history.push(request);
+    cache.last = { address: request.address, hit: request.hit, evicted: request.evicted };
+    cache.history.push(cache.last);
     cache.position++;
     cache.pending = null;
     cache.stage = 'received';
@@ -1899,27 +1899,45 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
     else if (cache.running) scheduleCache(advanceCache, cacheTiming.receipt);
   }
 
-  function returnCacheWord() {
+  function sendCacheData() {
     if (!cache.pending) return;
-    cache.stage = cache.pending.hit ? 'cache-return' : 'ram-return';
+    cache.stage = 'cache-to-cpu';
     renderCache();
-    scheduleCache(receiveCacheWord, cache.pending.hit ? cacheTiming.hitReturn : cacheTiming.ramReturn);
+    scheduleCache(receiveCacheData, cacheTiming.cacheToCpu);
+  }
+
+  function retainCacheData() {
+    if (!cache.pending) return;
+    const request = cache.pending;
+    if (cache.cells.length === cache.size) cache.cells.shift();
+    cache.cells.push(request.address);
+    request.cacheApplied = true;
+    cache.stage = 'cache-fill';
+    renderCache();
+    scheduleCache(sendCacheData, cacheTiming.cacheFill);
+  }
+
+  function sendRamData() {
+    if (!cache.pending) return;
+    cache.stage = 'ram-to-cache';
+    renderCache();
+    scheduleCache(retainCacheData, cacheTiming.ramToCache);
   }
 
   function advanceCache() {
     if (cache.pending || cache.position >= requestSequence.length) return;
     const address = requestSequence[cache.position];
     const hit = cache.cells.includes(address);
-    cache.pending = { address, hit, evicted: !hit && cache.size && cache.cells.length === cache.size ? cache.cells[0] : null };
+    cache.pending = { address, hit, evicted: !hit && cache.cells.length === cache.size ? cache.cells[0] : null, beforeCells: cache.cells.slice(), cacheApplied: false };
     cache.stage = 'request';
     renderCache();
     scheduleCache(() => {
       if (!cache.pending) return;
-      if (cache.pending.hit) returnCacheWord();
+      if (cache.pending.hit) sendCacheData();
       else {
         cache.stage = 'ram-read';
         renderCache();
-        scheduleCache(returnCacheWord, cacheTiming.ramRead);
+        scheduleCache(sendRamData, cacheTiming.ramRead);
       }
     }, cacheTiming.lookup);
   }
@@ -1928,7 +1946,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
     if (cache.running) {
       const unfinished = Boolean(cache.pending);
       stopCache();
-      byId('activity-cache-result').textContent = 'Paused after ' + cache.position + ' completed requests.' + (unfinished ? ' The unfinished request will restart when you continue.' : ' Resume or use Next request to continue.');
+      byId('activity-cache-result').textContent = 'Paused after ' + cache.position + ' completed requests.' + (unfinished ? ' The unfinished transfer will restart when you continue.' : ' Continue or use Next request.');
       return;
     }
     if (cache.pending) return;
@@ -2097,7 +2115,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
       const dualValue = key === 'ACC' || key === 'MDR';
       const valueY = alu ? y+99 : dualValue ? y+67 : y+77;
       const initialValue = live ? 0 : 12;
-      const caption = {CU:'decodes & coordinates',PC:'next instruction',MAR:'address sent to RAM',MDR:'word moving to / from RAM',CIR:'CU decodes this',ACC:'result held here first'}[key];
+      const caption = {CU:'decodes & coordinates',PC:'next instruction',MAR:'address sent to RAM',MDR:'data moving to / from RAM',CIR:'CU decodes this',ACC:'result held here first'}[key];
       return `<g class="cpu-node" data-component="${key}" tabindex="0" role="button" aria-label="${key==='CIR'?'Current instruction register, CIR (IR)':esc(content.components[key].name)}${dualValue?' · binary '+bits(initialValue)+' · denary '+initialValue:''}"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="${fill}"/><text class="node-title" x="${x+16}" y="${y+(dualValue?28:31)}">${key}</text><text class="node-name" x="${x+16}" y="${y+(dualValue?44:51)}">${subtitle}</text>${alu?`<rect class="alu-mode-bg" x="${x+10}" y="${y+57}" width="${w-20}" height="22" rx="5"/><text class="alu-operation" id="${prefix}-alu-operation" x="${x+16}" y="${y+73}">${live?'READY':'ADD +'}</text>`:''}<text class="node-value" id="${prefix}-value-${key}" x="${x+16}" y="${valueY}">${dualValue?bits(initialValue):live ? (['CU','ALU'].includes(key)?'—':'00000000') : alu?'00000111':''}</text>${dualValue?`<text class="register-denary" id="${prefix}-denary-${key}" x="${x+16}" y="${y+86}">Denary: ${initialValue}</text>`:''}${live||alu||dualValue?'':`<text class="node-caption" x="${x+16}" y="${y+76}">${caption}</text>`}${alu?`<text class="alu-second" id="${prefix}-alu-second" x="${x+16}" y="${y+121}">${live?'':'+ 00000101'}</text><text class="alu-result" id="${prefix}-alu-result" x="${x+16}" y="${y+145}">${live?'result → ACC':'= 00001100'}</text>`:''}</g>`;
     };
     const arrow = (key,color) => `<marker id="${prefix}-arrow-${key}" markerWidth="7" markerHeight="7" refX="5.3" refY="3.5" orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M 1 1 L 5.5 3.5 L 1 6" fill="none" stroke="${color}" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></marker>`;
@@ -2134,8 +2152,8 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
       <g id="${prefix}-control-status" class="control-signal-status" data-signal="idle" role="img" aria-label="${live?'Control bus ready':'CU sends READ and WRITE to RAM'}"><rect x="754" y="375" width="158" height="32" rx="7"/><text id="${prefix}-control-signal" x="833" y="397" text-anchor="middle">${live?'READY':'READ / WRITE →'}</text></g>
       <text x="833" y="424" class="bus-caption" text-anchor="middle">← status / interrupts</text>
       <text x="833" y="520" class="bus-caption" text-anchor="middle">MAR selects the location</text>
-      <text x="833" y="626" class="bus-caption" text-anchor="middle">MDR transfers the word</text>
-      <g class="cpu-node single-ram" data-component="RAM" tabindex="0" role="button" aria-label="RAM: sixteen eight-bit words, denary addresses 0 to 15"><rect x="950" y="80" width="274" height="591" rx="13" fill="#fff9e4"/><text class="node-title" x="970" y="115">RAM</text><text class="node-name" x="970" y="139">instructions + data</text><text class="ram-column-label" x="978" y="174">ADDRESS</text><text class="ram-column-label" x="1035" y="174">BITS</text><text class="ram-column-label" x="1135" y="174">MEANING</text>${Array.from({length:16},(_,n)=>`<g id="${prefix}-ram-row-${n}" class="ram-word-row" data-ram-address="${n}"><title id="${prefix}-ram-title-${n}">RAM[${n}]</title><rect x="966" y="${187+n*27}" width="242" height="25" rx="4" fill="${cpuPalette.RAM}"/><text class="ram-address-text" x="978" y="${205+n*27}">${n}</text><text class="ram-word-text" x="1035" y="${205+n*27}" id="${prefix}-ram-value-${n}">${live?'00000000':bits(exampleWords[n])}</text><text class="ram-meaning-text" x="1135" y="${205+n*27}" id="${prefix}-ram-meaning-${n}">${live?'0':ramMeaning(exampleWords[n],exampleInstructions.has(n))}</text></g>`).join('')}<text class="node-caption" id="${prefix}-ram-last-write" x="970" y="641">8 bits in every cell</text><text class="node-caption" x="970" y="658">Meaning = mnemonic or denary</text></g>
+      <text x="833" y="626" class="bus-caption" text-anchor="middle">MDR transfers the data</text>
+      <g class="cpu-node single-ram" data-component="RAM" tabindex="0" role="button" aria-label="RAM: sixteen cells of eight-bit data, denary addresses 0 to 15"><rect x="950" y="80" width="274" height="591" rx="13" fill="#fff9e4"/><text class="node-title" x="970" y="115">RAM</text><text class="node-name" x="970" y="139">instructions + data</text><text class="ram-column-label" x="978" y="174">ADDRESS</text><text class="ram-column-label" x="1035" y="174">BITS</text><text class="ram-column-label" x="1135" y="174">MEANING</text>${Array.from({length:16},(_,n)=>`<g id="${prefix}-ram-row-${n}" class="ram-word-row" data-ram-address="${n}"><title id="${prefix}-ram-title-${n}">RAM[${n}]</title><rect x="966" y="${187+n*27}" width="242" height="25" rx="4" fill="${cpuPalette.RAM}"/><text class="ram-address-text" x="978" y="${205+n*27}">${n}</text><text class="ram-word-text" x="1035" y="${205+n*27}" id="${prefix}-ram-value-${n}">${live?'00000000':bits(exampleWords[n])}</text><text class="ram-meaning-text" x="1135" y="${205+n*27}" id="${prefix}-ram-meaning-${n}">${live?'0':ramMeaning(exampleWords[n],exampleInstructions.has(n))}</text></g>`).join('')}<text class="node-caption" id="${prefix}-ram-last-write" x="970" y="641">8 bits in every cell</text><text class="node-caption" x="970" y="658">Meaning = mnemonic or denary</text></g>
       ${cycleClock(prefix,live)}
       ${live?decodeLookup():''}
       ${live?`<g data-component="INPUT" class="extra-node"><rect x="44" y="690" width="206" height="30" rx="7"/><text x="147" y="710" text-anchor="middle">INPUT → ACC</text></g><g data-component="OUTPUT" class="extra-node"><rect x="510" y="690" width="206" height="30" rx="7"/><text x="613" y="710" text-anchor="middle">ACC → OUTPUT</text></g>`:`<g data-component="CACHE" tabindex="0" role="button" aria-label="Learn about cache memory" class="extra-node"><rect x="44" y="690" width="206" height="30" rx="7"/><text x="147" y="710" text-anchor="middle">+ EXPLORE CACHE</text></g><g data-component="CLOCK" tabindex="0" role="button" aria-label="Learn about the CPU clock" class="extra-node"><rect x="510" y="690" width="206" height="30" rx="7"/><text x="613" y="710" text-anchor="middle">+ EXPLORE THE CLOCK</text></g>`}
@@ -2267,7 +2285,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
 
   function updateModeHint(){
     const machine=$('source-mode').value==='machine';
-    $('source-hint').innerHTML=machine?'One eight-bit word per line, such as <code>00011100</code>. Each instruction packs a 4-bit opcode and 4-bit operand.':'Use labels and binary data: <code>NUM: DAT 00000111</code>. Comments start with <code>;</code>.';
+    $('source-hint').innerHTML=machine?'One eight-bit data value per line, such as <code>00011100</code>. Each instruction packs a 4-bit opcode and 4-bit operand.':'Use labels and binary data: <code>NUM: DAT 00000111</code>. Comments start with <code>;</code>.';
     $('assemble-button').textContent=machine?'Load binary':'Assemble & load';
   }
 
@@ -2541,7 +2559,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
     $('source-links').innerHTML=content.sources.map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)} →</a><p class="small-muted">${esc(s.note)}</p>`).join('');
     $('short-answers').innerHTML=content.shortAnswers.map((q,i)=>`<article class="written-card"><span class="mark-tag">QUESTION ${i+1} · ${q.marks} MARKS</span><h3 id="written-q-${i}">${esc(q.question)}</h3><textarea aria-labelledby="written-q-${i}" placeholder="Write your explanation here…"></textarea><details><summary>Reveal marking points</summary><ul>${q.points.map(p=>'<li>'+esc(p)+'</li>').join('')}</ul><p class="small-muted">Indicative points for self-checking; this is not an official mark scheme.</p></details></article>`).join('');
     $('revision-sheet').innerHTML=referenceHTML();
-    $('print-sheet').innerHTML=`<h1>CPU revision sheet</h1><p>RGSV · Cambridge IGCSE Computer Science 0478 · 2026–2028</p><table><thead><tr><th>Component</th><th>Purpose</th></tr></thead><tbody>${componentOrder.map(k=>`<tr><td><b>${visibleRegister(k)}</b> · ${esc(content.components[k].name)}</td><td>${esc(content.components[k].role)}</td></tr>`).join('')}</tbody></table><h2>The fetch–decode–execute cycle</h2><ol>${content.fdeSteps.map(s=>'<li>'+esc(s)+'</li>').join('')}</ol><p>${esc(content.overview.microprocessor)} ${esc(content.overview.distinction)}</p><h2>Performance</h2><p>Clock rate is measured in cycles per second, not instructions per second. More cache can reduce RAM waits. More cores can process independent work concurrently; sequential dependencies limit gains.</p><h2>Instruction sets &amp; embedded systems</h2><p>An instruction set contains the machine instructions a CPU supports. In assembly, mnemonics name instructions; an assembler encodes them as machine code. ${esc(content.embedded.text)}</p><p>Model: eight-bit words and 16 RAM locations at denary addresses 0–15. Data ranges from 00000000 to 11111111. Each instruction packs a four-bit opcode and four-bit operand into one cell. This app uses its own illustrative instruction encoding.</p><div class="print-questions"><h2>Exam-style practice</h2>${content.shortAnswers.map((q,i)=>`<article><h3>${i+1}. ${esc(q.question)} [${q.marks}]</h3><div style="height:80px;border-bottom:1px dotted #bbb"></div></article>`).join('')}</div><p>Curriculum source: Cambridge IGCSE 0478 syllabus 2026–2028, section 3.1, page 16. Questions are original.</p>`;
+    $('print-sheet').innerHTML=`<h1>CPU revision sheet</h1><p>RGSV · Cambridge IGCSE Computer Science 0478 · 2026–2028</p><table><thead><tr><th>Component</th><th>Purpose</th></tr></thead><tbody>${componentOrder.map(k=>`<tr><td><b>${visibleRegister(k)}</b> · ${esc(content.components[k].name)}</td><td>${esc(content.components[k].role)}</td></tr>`).join('')}</tbody></table><h2>The fetch–decode–execute cycle</h2><ol>${content.fdeSteps.map(s=>'<li>'+esc(s)+'</li>').join('')}</ol><p>${esc(content.overview.microprocessor)} ${esc(content.overview.distinction)}</p><h2>Performance</h2><p>Clock rate is measured in cycles per second, not instructions per second. More cache can reduce RAM waits. More cores can process independent work concurrently; sequential dependencies limit gains.</p><h2>Instruction sets &amp; embedded systems</h2><p>An instruction set contains the machine instructions a CPU supports. In assembly, mnemonics name instructions; an assembler encodes them as machine code. ${esc(content.embedded.text)}</p><p>Model: eight-bit data and 16 RAM locations at denary addresses 0–15. Data ranges from 00000000 to 11111111. Each instruction packs a four-bit opcode and four-bit operand into one cell. This app uses its own illustrative instruction encoding.</p><div class="print-questions"><h2>Exam-style practice</h2>${content.shortAnswers.map((q,i)=>`<article><h3>${i+1}. ${esc(q.question)} [${q.marks}]</h3><div style="height:80px;border-bottom:1px dotted #bbb"></div></article>`).join('')}</div><p>Curriculum source: Cambridge IGCSE 0478 syllabus 2026–2028, section 3.1, page 16. Questions are original.</p>`;
     renderQuiz();renderOrder();
     let restored=false;
     try{
