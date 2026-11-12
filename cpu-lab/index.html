@@ -276,104 +276,203 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
 @media(max-width:1080px){#build-panel .activity-builder-layout{grid-template-columns:1fr}#build-panel .activity-component-bank{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}#build-panel .activity-component-tray .activity-card-heading{justify-content:flex-start;gap:12px}#build-panel .activity-section-head>div:first-child{display:block}#build-panel .activity-section-head h2{margin-bottom:4px}}
 @media(max-width:680px){#build-panel .activity-section-head{gap:10px}#build-panel .activity-section-head h2{font-size:22px}#build-panel .activity-section-head p:not(.activity-eyebrow){font-size:11px}#build-panel .activity-progress-pill{flex-direction:column;gap:1px;padding:5px 7px}#build-panel .activity-progress-pill small{font-size:8px}#build-panel .activity-component-bank{grid-template-columns:repeat(2,minmax(0,1fr))}#build-panel .activity-diagram-heading{display:block}#build-panel .activity-builder-actions{justify-content:flex-start;margin-top:6px}#build-panel .activity-build-footer{display:block}#build-panel .activity-build-notes{max-width:none;margin-top:3px}}
 
-/* Cache sits directly in the single data path between CPU and RAM. */
-.activity-cache-card{min-width:0;padding:20px}
-.activity-cache-card .activity-cache-top{gap:20px;align-items:center}
-.activity-cache-card .activity-card-heading{margin-bottom:8px}
-.activity-cache-card .activity-card-heading h3{font-size:21px}
-.activity-cache-card .activity-cache-top .activity-card-intro{max-width:780px;font-size:12px;line-height:1.5;margin:0}
-.activity-cache-card .activity-cache-layout{grid-template-columns:minmax(0,1fr);gap:12px;margin-top:12px}
-.activity-cache-card .activity-cache-layout>div{min-width:0}
-.activity-cache-card .activity-cache-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0 13px}
-.activity-cache-card .activity-cache-actions .activity-button{min-height:34px;padding:8px 12px;font-size:11px!important}
-.activity-cache-start-note{font-size:11px;line-height:1.5;color:#6f5b94;margin:0 0 0 4px}
-.activity-cache-card .activity-small-heading{margin-bottom:7px;font-size:8px;letter-spacing:.8px}
-.activity-cache-card .activity-cache-sequence{gap:5px}
-.activity-cache-card .activity-cache-request{width:43px;height:34px;gap:2px}
-.activity-cache-card .activity-cache-request small{font-size:7px}
-.activity-cache-card .activity-cache-request strong{font-size:12px}
-.activity-cache-request.activity-request-pending{background:#edf3ff;border-color:#638cda}
-.activity-cache-viewport{overflow-x:auto;overscroll-behavior-x:contain;max-width:100%;padding:3px 3px 4px;border-radius:12px;scrollbar-width:thin}
-.activity-cache-viewport:focus-visible{outline:3px solid #37adbd;outline-offset:2px}
-/* One inline connection: CPU, cache and RAM all share the same horizontal axis. */
-.activity-cache-card .activity-cache-flow{display:grid;grid-template-columns:160px minmax(90px,.28fr) 280px minmax(150px,1fr) 250px;grid-template-rows:310px;gap:0;align-items:center;min-width:930px;max-width:none;min-height:0;margin:12px 0 0;position:relative}
-.activity-cache-card .activity-cache-cpu{grid-row:1;grid-column:1;align-self:center;display:flex;flex-direction:column;min-height:210px;height:210px;padding:13px 10px;gap:0;border:2px solid #233b57;border-radius:12px;background:#172b45;box-shadow:none;text-align:center;justify-content:flex-start;color:#fff;position:relative;z-index:2}
-.activity-cache-card .activity-cache-cpu span{font-size:inherit;font-weight:inherit;line-height:inherit}
-.activity-cache-card .activity-cache-node-title{display:block;margin:0;font-size:15px;font-weight:800;letter-spacing:.5px;line-height:1.3}
-.activity-cache-card .activity-cache-node-title small{font-size:10px;font-weight:600;letter-spacing:0;color:#8873a2;margin-left:5px}
-.activity-cache-cpu .activity-cache-receipt-label{display:block;font-size:10px;color:#b9cada;line-height:1.4;margin:13px 0 8px}
-#activity-cache-cpu-binary{display:block;font:800 19px/1.4 Consolas,"Liberation Mono",monospace;letter-spacing:.2px;white-space:nowrap;color:#fff}
-.activity-cache-card #activity-cache-cpu-meaning{display:block;font-size:10px;font-weight:500;line-height:1.4;color:#c6d5e4;margin:8px 0}
-#activity-cache-cpu-meaning b{display:block;font-size:16px;line-height:1.5;color:#fff}
-.activity-cache-card #activity-cache-cpu-source{font-size:9px;font-weight:500;line-height:1.4;color:#b9cada;margin-top:auto}
-.activity-cache-card .activity-cache-cpu-received{border-color:#42b49a;box-shadow:0 0 0 3px #dff4ed}
-.activity-cache-card .activity-cache-box{grid-row:1;grid-column:3;align-self:center;min-height:210px;border:2px solid #bba1df;border-radius:11px;background:#faf6ff;padding:10px;display:flex;flex-direction:column;color:#684497;position:relative;z-index:2}
-.activity-cache-recent-note{font-size:9px;line-height:1.35;color:#886da6;margin:3px 0 0}
-.activity-cache-card .activity-cache-slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;margin-top:7px}
-.activity-cache-card .activity-cache-slots[data-capacity="2"]{grid-template-columns:1fr}
-.activity-cache-card .activity-cache-cell{height:55px;min-height:55px;padding:4px 3px;gap:3px;border-radius:6px;min-width:0}
-.activity-cache-card .activity-cache-slots[data-capacity="8"] .activity-cache-cell{height:49px;min-height:49px;gap:2px;padding:3px}
-.activity-cache-card .activity-cache-cell small{font-size:8px;line-height:1.1}
-.activity-cache-card .activity-cache-cell strong{font-size:13px;letter-spacing:0;white-space:nowrap;line-height:1.15}
-.activity-cache-card .activity-cache-slots[data-capacity="2"] .activity-cache-cell strong{font-size:15px}
-.activity-cache-card .activity-cache-cell>span{font-size:8px;line-height:1.1;text-align:center;color:#7d6b98}
-.activity-cache-card .activity-cache-cell.activity-cache-hot{background:#e2f6eb;border-color:#58a77e;box-shadow:0 0 0 1px #8dc3a6}
-.activity-cache-card .activity-cache-source-active{border-color:#42a17e;box-shadow:0 0 0 3px #e7f4ed}
-.activity-cache-node-status{font-size:10px;line-height:1.3;font-weight:650;text-align:center;margin:7px 0 0;color:#806895}
-/* These are the two exposed portions of one line passing through cache. */
-.activity-cache-link{grid-row:1;align-self:stretch;position:relative;min-width:0;--cache-link-colour:#c8d5df;--cache-link-active:#258c78;--cache-travel-time:800ms}
-.activity-cache-link[data-link="cpu-cache"]{grid-column:2}
-.activity-cache-link[data-link="cache-ram"]{grid-column:4}
-.activity-cache-link-label{position:absolute;left:5px;right:5px;bottom:calc(50% + 18px);margin:0;font-size:10px;line-height:1.35;font-weight:650;text-align:center;color:#7c8b99;overflow-wrap:break-word}
-.activity-cache-link-rail{position:absolute;top:50%;left:0;right:0;height:4px;transform:translateY(-50%);background:var(--cache-link-colour)}
-.activity-cache-link-rail::before{content:"";position:absolute;left:3px;top:-5px;border-right:11px solid var(--cache-link-colour);border-top:7px solid transparent;border-bottom:7px solid transparent}
-.activity-cache-link-rail::after{content:"";position:absolute;right:-3px;top:-2px;width:8px;height:8px;border-radius:50%;background:var(--cache-link-colour)}
-.activity-cache-link.is-active{--cache-link-colour:var(--cache-link-active)}
-.activity-cache-link.is-active .activity-cache-link-label{color:#247a61}
-.activity-cache-link.is-muted{--cache-link-colour:#dfe5ea}
-.activity-cache-link.is-muted .activity-cache-link-label{color:#8a97a3}
-.activity-cache-link.is-waiting{--cache-link-colour:#c4ced7}
-.activity-cache-inline-packet{position:absolute;z-index:3;top:50%;left:0;transform:translateY(-50%);display:block;box-sizing:border-box;width:76px;min-width:0;padding:6px 4px;border:1px solid #24866e;border-radius:5px;background:#f5fff9;box-shadow:0 2px 5px #172b451a;text-align:center;color:#176b51;font:800 11px/1 Consolas,"Liberation Mono",monospace;white-space:nowrap;animation:activity-cache-data-return var(--cache-travel-time) linear both}
-.activity-cache-link-rail>.activity-cache-inline-packet{top:50%}
-@keyframes activity-cache-data-return{from{left:calc(100% - 76px)}to{left:0}}
-.activity-cache-route-status{grid-column:1/-1;margin:8px 0 0;padding:8px 12px;border:1px solid #dce7e2;border-radius:7px;background:#f5faf7;font-size:11px;line-height:1.45;color:#416858;text-align:center;min-height:33px}
-.activity-cache-card .activity-cache-ram{grid-row:1;grid-column:5;align-self:center;height:310px;min-height:0;padding:11px 10px;border:2px solid #ecd7b8;background:#fff9ef;border-radius:11px;color:#90652e;position:relative;z-index:2}
-.activity-cache-ram-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
-.activity-cache-ram-heading>span{border-radius:4px;background:#f1e9db;padding:4px 6px;color:#8d806b;font-size:9px;font-weight:800;letter-spacing:.4px}
-.activity-cache-card .activity-cache-ram-active{border-color:#d99831;box-shadow:0 0 0 3px #fff1d9}
-.activity-cache-ram-active .activity-cache-ram-heading>span{background:#d58c1e;color:#fff}
-.activity-cache-card .activity-cache-ram-headings,.activity-cache-card .activity-cache-ram-data{display:grid;grid-template-columns:36px 80px minmax(0,1fr);align-items:center;column-gap:6px;padding:4px;white-space:nowrap}
-.activity-cache-ram-headings{font-size:8px;font-weight:750;color:#a08661;border-bottom:1px solid #ead9bd;margin-bottom:3px}
-.activity-cache-card .activity-cache-ram-data{font-size:11px;line-height:1.3;min-height:24px;border-bottom:1px solid #f0e5d3;border-radius:4px}
-.activity-cache-card .activity-cache-ram-data b{font-size:12px;color:#6f532f}
-.activity-cache-card .activity-cache-ram-data small{font-size:10px;font-family:ui-sans-serif,system-ui,sans-serif;color:#8a6d46}
-.activity-cache-card .activity-cache-ram-data.activity-ram-read{background:#ffe1aa;color:#774c15;border-color:#e7b65d;box-shadow:0 0 0 1px #e7b65d}
-.activity-cache-ram-caption{font-size:9px;line-height:1.3;color:#a38c6a;margin:8px 0 0;text-align:center}
-.activity-cache-card .activity-cache-legend{margin-top:7px;font-size:10px;gap:18px}
-.activity-cache-time-comparison{display:grid;grid-template-columns:minmax(0,1fr) 148px;gap:8px 16px;padding:12px 15px;border:1px solid #dbe7e2;border-radius:10px;background:#f7fbf9;margin-top:12px}
-.activity-cache-time-comparison>header,.activity-cache-time-heading{grid-column:1/-1;display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:2px}
-.activity-cache-time-comparison h4{font-size:13px;line-height:1.3;margin:0;color:#284e40}
-.activity-cache-time-comparison>header small,.activity-cache-time-heading small{font-size:9px;line-height:1.4;color:#718579}
-.activity-cache-time-row{grid-column:1;display:grid;grid-template-columns:112px minmax(50px,1fr) 66px;gap:9px;align-items:center}
-.activity-cache-time-row>span{font-size:10px;line-height:1.35;color:#60756c}
-.activity-cache-time-row>output{font:700 11px/1.3 ui-sans-serif,system-ui,sans-serif;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;color:#456253}
-.activity-cache-time-track{height:13px;border-radius:4px;background:#e5ece8;overflow:hidden}
-.activity-cache-time-track>i{display:block;height:100%;width:0;border-radius:4px;background:#259874;transition:width .25s ease}
-.activity-cache-time-row[data-kind="ram"] .activity-cache-time-track>i{background:#d6a24c}
-.activity-cache-saved-panel{grid-column:2;grid-row:2/span 2;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;border-left:1px solid #d8e8df;color:#26815e;font-size:11px;line-height:1.3;text-align:center;padding-left:12px}
-#activity-cache-saved{font-variant-numeric:tabular-nums;font-size:25px;line-height:1.1;letter-spacing:-.5px;display:block}
-.activity-cache-card .activity-cache-scoreboard{display:grid;grid-template-columns:205px minmax(0,1fr);gap:12px 18px;border-left:0;border-top:1px solid #e5ebee;padding:12px 0 0}
-.activity-cache-card .activity-cache-stats{grid-column:1;gap:6px;align-self:center}
-.activity-cache-card .activity-cache-stats>div{padding:7px 5px;gap:2px;border-radius:7px}
-.activity-cache-card .activity-cache-stats strong{font-size:20px}
-.activity-cache-card .activity-cache-stats span{font-size:7px}
-.activity-cache-card .activity-cache-scoreboard .activity-feedback{grid-column:2;min-height:0;margin:0;padding:9px 11px;font-size:11px;line-height:1.5;align-self:center}
-.activity-cache-card .activity-cost-model{grid-column:1/-1;margin:0;font-size:9px}
-.activity-cache-card .activity-segments input:disabled+span{opacity:.5;cursor:wait}
-.activity-cache-card .activity-cache-note{margin-top:10px;padding-top:8px}
-.activity-cache-card .activity-cache-note details{margin-top:0}
-@media(max-width:680px){.activity-cache-card{padding:16px}.activity-cache-card .activity-cache-top{display:block}.activity-cache-card .activity-cache-top .activity-segment-field{margin:12px 0 0}.activity-cache-card .activity-cache-actions{gap:6px}.activity-cache-start-note{flex-basis:100%;margin:0}.activity-cache-card .activity-cache-request{width:38px;height:33px}.activity-cache-card .activity-cache-legend{gap:10px;font-size:9px}.activity-cache-time-comparison{grid-template-columns:minmax(0,1fr);gap:9px;padding:10px}.activity-cache-time-comparison>header,.activity-cache-time-heading{display:block}.activity-cache-time-comparison>header small,.activity-cache-time-heading small{display:block;margin-top:3px}.activity-cache-time-row{grid-template-columns:93px minmax(30px,1fr) 60px;gap:6px}.activity-cache-time-row>span{font-size:9px}.activity-cache-saved-panel{grid-column:1;grid-row:auto;flex-direction:row;gap:8px;padding:7px 0 0;border-left:0;border-top:1px solid #d8e8df}.activity-cache-saved-panel #activity-cache-saved{font-size:22px}.activity-cache-card .activity-cache-scoreboard{grid-template-columns:1fr;gap:9px}.activity-cache-card .activity-cache-stats{width:220px;max-width:100%}.activity-cache-card .activity-cache-scoreboard .activity-feedback{grid-column:1}}
-@media(prefers-reduced-motion:reduce){.activity-cache-inline-packet{animation:none!important;left:calc(50% - 38px)}.activity-cache-time-track>i{transition:none!important}}
+/* All three performance experiments share one compact desktop workspace. */
+@media screen {
+  main:has(#performance-panel:not([hidden])){max-width:none;min-height:0;padding:12px 20px 14px}
+  body:has(#performance-panel:not([hidden])) .site-footer{max-width:none;margin:0 20px;padding:8px 0;font-size:9px}
+  #performance-panel .activity-section-head{gap:10px;margin-bottom:10px;align-items:center}
+  #performance-panel .activity-section-head>div{display:flex;align-items:center;flex-wrap:wrap;gap:5px 18px}
+  #performance-panel .activity-section-head .activity-eyebrow{display:none}
+  #performance-panel .activity-section-head h2{font-size:24px;line-height:1.2;letter-spacing:-.6px;margin:0}
+  #performance-panel .activity-section-head p:not(.activity-eyebrow){font-size:12px;line-height:1.4;margin:0}
+  #performance-panel .activity-model-label{font-size:8px;padding:6px 9px}
+  #performance-panel .activity-performance-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.4fr);gap:12px;align-items:stretch}
+  #performance-panel .activity-performance-grid>.activity-card{grid-column:auto;min-width:0;padding:12px;border-radius:12px;display:flex;flex-direction:column}
+  #performance-panel .activity-card-heading{gap:8px;margin-bottom:8px;min-height:30px}
+  #performance-panel .activity-card-heading h3{font-size:17px;line-height:1.15;letter-spacing:-.35px;margin:2px 0 0}
+  #performance-panel .activity-card-heading .activity-eyebrow{font-size:8px!important;letter-spacing:1.15px;line-height:1.35}
+  #performance-panel .activity-lab-number{width:29px;height:30px;border-radius:8px;font-size:11px}
+  #performance-panel .activity-card-intro{font-size:12px;line-height:1.45;margin:0 0 10px}
+  #performance-panel .activity-segment-field legend,#performance-panel .activity-select-field{font-size:10px;line-height:1.4;margin-bottom:4px}
+  #performance-panel .activity-segments{padding:2px;gap:2px;border-radius:7px}
+  #performance-panel .activity-segments span{min-width:30px;padding:5px 9px;font-size:10px;border-radius:4px}
+  #performance-panel .activity-button{min-height:30px;padding:7px 10px;font-size:11px!important;gap:6px;border-radius:7px;line-height:1.15}
+  #performance-panel .activity-inline-actions{gap:6px;margin-top:10px;flex-wrap:wrap}
+  #performance-panel .activity-feedback{min-height:0;margin:10px 0 12px;padding:9px 10px;font-size:11px;line-height:1.45;border-radius:7px}
+  #performance-panel .activity-learning-note{margin-top:auto;padding-top:8px;font-size:11px;line-height:1.5}
+  #performance-panel .activity-performance-notes>summary{cursor:pointer;font-size:11px;line-height:1.45;font-weight:650;color:#526b7a}
+  #performance-panel .activity-performance-notes[open]>summary{margin-bottom:8px}
+  #performance-panel .activity-performance-notes>strong{display:block;font-size:11px;margin:6px 0}
+  #performance-panel .activity-performance-notes p{font-size:11px;line-height:1.55}
+  #performance-panel .activity-performance-notes small{font-size:10px;line-height:1.4}
+  #performance-panel .activity-clock-comparison{gap:14px;margin-top:18px}
+  #performance-panel .activity-clock-row{grid-template-columns:76px minmax(35px,1fr) 73px;gap:8px;min-height:40px}
+  #performance-panel .activity-clock-row-label{font-size:10px;line-height:1.4}
+  #performance-panel .activity-clock-row-label strong{font-size:15px;margin-top:2px}
+  #performance-panel .activity-clock-track{height:16px}
+  #performance-panel .activity-clock-row output{font-size:10px}
+  #performance-panel .activity-cores-controls{gap:10px;flex-wrap:nowrap}
+  #performance-panel .activity-select-field{min-width:0;gap:4px;flex:1;margin:0}
+  #performance-panel .activity-select-field select{height:30px;padding:5px 6px;font-size:10px;border-radius:6px}
+  #performance-panel .activity-work-queue{gap:6px;margin-top:10px}
+  #performance-panel .activity-work-queue>span{font-size:8px;letter-spacing:.5px}
+  #performance-panel .activity-work-queue>div{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:3px;flex:1;min-width:0}
+  #performance-panel .activity-queue-job{width:auto;height:21px;border-radius:4px;font-size:9px}
+  #performance-panel .activity-core-lanes{gap:4px;margin-top:10px;min-height:116px;align-content:start}
+  #performance-panel .activity-core-lane{min-height:26px;padding:4px 6px;gap:7px;border-radius:6px}
+  #performance-panel .activity-core-label{min-width:45px;gap:5px;font-size:10px}
+  #performance-panel .activity-core-label:before{width:6px;height:6px}
+  #performance-panel .activity-core-history{gap:3px;min-height:17px}
+  #performance-panel .activity-core-job{min-width:16px;height:17px;padding:1px 3px;font-size:8px;border-radius:3px}
+  #performance-panel .activity-core-idle{font-size:9px}
+  #performance-panel .activity-core-counters{gap:7px;font-size:10px;margin-top:8px}
+  #performance-panel .activity-core-counters strong{font-size:12px}
+}
+@media screen and (max-width:999px){
+  #performance-panel .activity-performance-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #performance-panel .activity-cache-card{grid-column:1/-1!important}
+  #performance-panel .activity-section-head{align-items:flex-start}
+  #performance-panel .activity-model-label{display:none}
+}
+@media screen and (max-width:620px){
+  main:has(#performance-panel:not([hidden])){padding:12px}
+  #performance-panel .activity-performance-grid{grid-template-columns:minmax(0,1fr)}
+  #performance-panel .activity-section-head h2{font-size:21px}
+}
+@media screen and (min-width:1000px) and (max-height:760px){
+  main:has(#performance-panel:not([hidden])){padding:8px 16px}
+  body:has(#performance-panel:not([hidden])) .site-footer{display:none}
+  #performance-panel .activity-section-head{margin-bottom:6px}
+  #performance-panel .activity-section-head h2{font-size:21px}
+  #performance-panel .activity-performance-grid{gap:10px}
+  #performance-panel .activity-performance-grid>.activity-card{padding:10px}
+  #performance-panel .activity-clock-comparison{gap:10px;margin-top:12px}
+  #performance-panel .activity-core-lanes{min-height:104px;gap:3px;margin-top:8px}
+  #performance-panel .activity-core-lane{min-height:24px;padding:3px 6px}
+  #performance-panel .activity-feedback{margin-top:8px;margin-bottom:10px;padding:7px 9px}
+}
+
+/* Compact cache column: one continuous path, CPU <- CACHE <- RAM. */
+#performance-panel .activity-cache-card{min-width:0;padding:12px;container-type:inline-size}
+#performance-panel .activity-cache-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:start}
+#performance-panel .activity-cache-card .activity-card-heading{margin-bottom:5px;gap:8px}
+#performance-panel .activity-cache-card .activity-card-heading h3{font-size:16px;line-height:1.15}
+#performance-panel .activity-cache-card .activity-card-intro{max-width:none;font-size:11px;line-height:1.35;margin:0}
+#performance-panel .activity-cache-top .activity-segment-field{margin:0;flex-shrink:0}
+#performance-panel .activity-cache-top .activity-segment-field legend{font-size:9px;margin-bottom:3px}
+#performance-panel .activity-cache-top .activity-segments{padding:2px;gap:1px;border-radius:6px}
+#performance-panel .activity-cache-top .activity-segments span{padding:5px 7px;min-width:0;font-size:10px;border-radius:4px}
+#performance-panel .activity-cache-actions{display:flex;gap:5px;align-items:center;flex-wrap:wrap;margin:8px 0 7px}
+#performance-panel .activity-cache-actions .activity-button{min-height:28px;padding:5px 8px;font-size:10px!important;gap:5px;border-radius:6px}
+#performance-panel .activity-cache-start-note{display:none}
+#performance-panel .activity-cache-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;margin-top:0}
+#performance-panel .activity-cache-layout>div{min-width:0}
+#performance-panel .activity-cache-card .activity-small-heading{margin:0 0 4px;font-size:8px;letter-spacing:.55px;line-height:1.25}
+#performance-panel .activity-cache-sequence{display:grid;grid-template-columns:repeat(20,minmax(0,1fr));gap:3px}
+#performance-panel .activity-cache-request{width:auto;height:20px;min-width:0;border-radius:4px;gap:0}
+#performance-panel .activity-cache-request small{display:none}
+#performance-panel .activity-cache-request strong{font-size:10px;line-height:1}
+#performance-panel .activity-cache-request.activity-request-pending{background:#edf3ff;border-color:#638cda}
+#performance-panel .activity-cache-viewport{overflow:visible;max-width:100%;padding:3px 0 0;border-radius:8px}
+#performance-panel .activity-cache-viewport:focus-visible{outline:3px solid #37adbd;outline-offset:2px}
+/* The nodes meet the same horizontal rail. The farther RAM segment is longer. */
+#performance-panel .activity-cache-flow{display:grid;grid-template-columns:65px minmax(20px,.55fr) minmax(116px,1.5fr) minmax(28px,1fr) minmax(128px,1.8fr);grid-template-rows:196px;gap:0;align-items:center;min-width:0;max-width:none;min-height:0;margin:3px 0 0;position:relative}
+#performance-panel .activity-cache-cpu{grid-row:1;grid-column:1;align-self:center;display:flex;flex-direction:column;align-items:center;min-height:114px;height:114px;padding:8px 3px;gap:0;border:1px solid #233b57;border-radius:7px;background:#172b45;box-shadow:none;text-align:center;justify-content:flex-start;color:#fff;position:relative;z-index:2}
+#performance-panel .activity-cache-cpu span{font-size:inherit;font-weight:inherit;line-height:inherit}
+#performance-panel .activity-cache-node-title{display:block;margin:0;font-size:12px;font-weight:800;letter-spacing:.2px;line-height:1.2}
+#performance-panel .activity-cache-node-title small{font-size:8px;font-weight:600;letter-spacing:0;color:#8873a2;margin-left:3px;white-space:nowrap}
+#performance-panel .activity-cache-receipt-label{display:block;font-size:8px;color:#c8d9e8;line-height:1.25;margin:8px 0 5px}
+#performance-panel #activity-cache-cpu-binary{display:block;font:800 10px/1.35 Consolas,"Liberation Mono",monospace;letter-spacing:0;white-space:nowrap;color:#fff}
+#performance-panel #activity-cache-cpu-meaning{display:block;font-size:8px;font-weight:500;line-height:1.25;color:#c6d5e4;margin:6px 0 0}
+#performance-panel #activity-cache-cpu-meaning b{display:block;font-size:11px;line-height:1.4;color:#fff;white-space:nowrap}
+#performance-panel #activity-cache-cpu-source{display:none}
+#performance-panel .activity-cache-cpu-received{border-color:#42b49a;box-shadow:0 0 0 2px #dff4ed}
+#performance-panel .activity-cache-box{grid-row:1;grid-column:3;align-self:center;min-height:114px;border:1px solid #bba1df;border-radius:7px;background:#faf6ff;padding:6px 5px;display:flex;flex-direction:column;color:#684497;position:relative;z-index:2}
+#performance-panel .activity-cache-recent-note{display:none}
+#performance-panel .activity-cache-slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px;margin-top:5px}
+#performance-panel .activity-cache-slots[data-capacity="2"]{grid-template-columns:1fr}
+#performance-panel .activity-cache-cell{height:38px;min-height:38px;padding:2px 1px;gap:1px;border-radius:4px;min-width:0}
+#performance-panel .activity-cache-slots[data-capacity="8"] .activity-cache-cell{height:34px;min-height:34px;gap:1px;padding:2px 1px}
+#performance-panel .activity-cache-cell small{font-size:7px;line-height:1.1}
+#performance-panel .activity-cache-cell strong{font-size:9.5px;letter-spacing:-.2px;white-space:nowrap;line-height:1.1}
+#performance-panel .activity-cache-slots[data-capacity="2"] .activity-cache-cell strong{font-size:11px;letter-spacing:0}
+#performance-panel .activity-cache-cell>span{font-size:7px;line-height:1.1;text-align:center;color:#71598b}
+#performance-panel .activity-cache-cell.activity-cache-hot{background:#e2f6eb;border-color:#58a77e;box-shadow:0 0 0 1px #8dc3a6}
+#performance-panel .activity-cache-source-active{border-color:#42a17e;box-shadow:0 0 0 2px #e7f4ed}
+#performance-panel .activity-cache-node-status{display:none}
+#performance-panel .activity-cache-link{grid-row:1;align-self:stretch;position:relative;min-width:0;--cache-link-colour:#c8d5df;--cache-link-active:#258c78;--cache-travel-time:800ms}
+#performance-panel .activity-cache-link[data-link="cpu-cache"]{grid-column:2}
+#performance-panel .activity-cache-link[data-link="cache-ram"]{grid-column:4}
+#performance-panel .activity-cache-link-label{position:absolute;left:1px;right:1px;bottom:calc(50% + 10px);margin:0;font-size:8px;line-height:1.15;font-weight:650;text-align:center;color:#687b8b;overflow-wrap:normal}
+#performance-panel .activity-cache-link-rail{position:absolute;top:50%;left:0;right:0;height:3px;transform:translateY(-50%);background:var(--cache-link-colour)}
+#performance-panel .activity-cache-link-rail::before{content:"";position:absolute;left:1px;top:-3px;border-right:7px solid var(--cache-link-colour);border-top:4.5px solid transparent;border-bottom:4.5px solid transparent}
+#performance-panel .activity-cache-link-rail::after{content:"";position:absolute;right:-2px;top:-1px;width:5px;height:5px;border-radius:50%;background:var(--cache-link-colour)}
+#performance-panel .activity-cache-link.is-active{--cache-link-colour:var(--cache-link-active)}
+#performance-panel .activity-cache-link.is-active .activity-cache-link-label{color:#247a61}
+#performance-panel .activity-cache-link.is-muted{--cache-link-colour:#dfe5ea}
+#performance-panel .activity-cache-link.is-muted .activity-cache-link-label{color:#8a97a3}
+#performance-panel .activity-cache-link.is-waiting{--cache-link-colour:#c4ced7}
+#performance-panel .activity-cache-inline-packet{position:absolute;z-index:3;top:50%;left:0;transform:translate(-50%,-50%);display:block;box-sizing:border-box;width:56px;min-width:0;padding:4px 2px;border:1px solid #24866e;border-radius:4px;background:#f5fff9;box-shadow:0 1px 4px #172b451a;text-align:center;color:#176b51;font:800 9px/1 Consolas,"Liberation Mono",monospace;white-space:nowrap;animation:activity-cache-data-return var(--cache-travel-time) linear both}
+@keyframes activity-cache-data-return{from{left:100%}to{left:0}}
+#performance-panel .activity-cache-route-status{grid-column:1/-1;margin:3px 0 0;padding:4px 6px;border:1px solid #dce7e2;border-radius:5px;background:#f5faf7;font-size:10px;line-height:1.3;color:#416858;text-align:center;min-height:23px}
+#performance-panel .activity-cache-ram{grid-row:1;grid-column:5;align-self:center;height:190px;min-height:0;padding:6px 5px;border:1px solid #ecd7b8;background:#fff9ef;border-radius:7px;color:#90652e;position:relative;z-index:2}
+#performance-panel .activity-cache-ram-heading{display:flex;align-items:center;justify-content:space-between;gap:4px;margin-bottom:5px}
+#performance-panel .activity-cache-ram-heading>span{border-radius:3px;background:#f1e9db;padding:3px 4px;color:#8d806b;font-size:7px;font-weight:800;letter-spacing:.2px}
+#performance-panel .activity-cache-ram-active{border-color:#d99831;box-shadow:0 0 0 2px #fff1d9}
+#performance-panel .activity-cache-ram-active .activity-cache-ram-heading>span{background:#d58c1e;color:#fff}
+#performance-panel .activity-cache-ram-headings,#performance-panel .activity-cache-ram-data{display:grid;grid-template-columns:16px 49px minmax(0,1fr);align-items:center;column-gap:3px;padding:2px 1px;white-space:nowrap}
+#performance-panel .activity-cache-ram-headings{font-size:7px;font-weight:750;color:#8d734d;border-bottom:1px solid #ead9bd;margin-bottom:2px;line-height:1.1}
+#performance-panel .activity-cache-ram-data{font-size:9px;line-height:1.2;min-height:17px;border-bottom:1px solid #f0e5d3;border-radius:3px}
+#performance-panel .activity-cache-ram-data b{font-size:9.5px;letter-spacing:-.1px;color:#6f532f}
+#performance-panel .activity-cache-ram-data small{font-size:8px;font-family:ui-sans-serif,system-ui,sans-serif;color:#8a6d46}
+#performance-panel .activity-cache-ram-data.activity-ram-read{background:#ffe1aa;color:#774c15;border-color:#e7b65d;box-shadow:0 0 0 1px #e7b65d}
+#performance-panel .activity-cache-ram-caption{display:none}
+#performance-panel .activity-cache-legend{margin-top:5px;font-size:9px;gap:4px 10px;line-height:1.25;justify-content:space-between}
+#performance-panel .activity-cache-time-comparison{display:grid;grid-template-columns:minmax(0,1fr) 68px;gap:4px 8px;padding:6px 8px;border:1px solid #dbe7e2;border-radius:7px;background:#f7fbf9;margin-top:0}
+#performance-panel .activity-cache-time-heading{grid-column:1/-1;display:block;margin-bottom:0}
+#performance-panel .activity-cache-time-comparison h4{font-size:11px;line-height:1.25;margin:0;color:#284e40}
+#performance-panel .activity-cache-time-heading small{display:none}
+#performance-panel .activity-cache-time-row{grid-column:1;display:grid;grid-template-columns:71px minmax(20px,1fr) 51px;gap:5px;align-items:center}
+#performance-panel .activity-cache-time-row>span{font-size:9px;line-height:1.25;color:#60756c}
+#performance-panel .activity-cache-time-row>output{font:700 9px/1.3 ui-sans-serif,system-ui,sans-serif;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;color:#456253}
+#performance-panel .activity-cache-time-track{height:9px;border-radius:3px;background:#e5ece8;overflow:hidden}
+#performance-panel .activity-cache-time-track>i{display:block;height:100%;width:0;border-radius:3px;background:#259874;transition:width .25s ease}
+#performance-panel .activity-cache-time-row[data-kind="ram"] .activity-cache-time-track>i{background:#d6a24c}
+#performance-panel .activity-cache-saved-panel{grid-column:2;grid-row:2/span 2;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px;border-left:1px solid #d8e8df;color:#26815e;font-size:8px;line-height:1.15;text-align:center;padding-left:5px}
+#performance-panel #activity-cache-saved{font-variant-numeric:tabular-nums;font-size:19px;line-height:1;letter-spacing:-.3px;display:block}
+#performance-panel #activity-cache-saving-percent{display:none}
+#performance-panel .activity-cache-scoreboard{display:grid;grid-template-columns:1fr;gap:5px;border:0;padding:0}
+#performance-panel .activity-cache-stats{display:flex;grid-column:1;gap:5px;align-self:center}
+#performance-panel .activity-cache-stats>div{display:flex;flex-direction:row;justify-content:center;align-items:center;padding:4px 5px;gap:5px;border-radius:5px}
+#performance-panel .activity-cache-stats strong{font-size:16px;line-height:1.1}
+#performance-panel .activity-cache-stats span{font-size:7px;letter-spacing:.4px}
+#performance-panel .activity-cache-scoreboard .activity-feedback{grid-column:1;min-height:0;margin:0;padding:5px 7px;font-size:10px;line-height:1.3;align-self:center;border-radius:5px}
+#performance-panel .activity-cache-card .activity-segments input:disabled+span{opacity:.5;cursor:wait}
+#performance-panel .activity-cache-note{margin-top:5px;padding-top:4px}
+#performance-panel .activity-cache-note details{margin-top:0}
+#performance-panel .activity-cache-note summary{font-size:10px;line-height:1.3}
+#performance-panel .activity-cache-note details p{font-size:11px;line-height:1.5;margin-top:7px}
+@container(max-width:356px){#performance-panel .activity-cache-top{display:block}#performance-panel .activity-cache-top .activity-segment-field{margin-top:5px}#performance-panel .activity-cache-top .activity-segment-field legend{display:inline-block;margin:0 5px 0 0;float:left;padding-top:6px}#performance-panel .activity-cache-sequence{gap:2px}#performance-panel .activity-cache-request strong{font-size:9px}#performance-panel .activity-cache-link-label{font-size:7px}}
+@container(max-width:356px){#performance-panel .activity-cache-flow{grid-template-columns:60px minmax(14px,.5fr) minmax(100px,1.5fr) minmax(20px,1fr) minmax(105px,1.6fr)}#performance-panel .activity-cache-ram-headings,#performance-panel .activity-cache-ram-data{grid-template-columns:20px minmax(0,1fr)}#performance-panel .activity-cache-ram-headings>span:last-child,#performance-panel .activity-cache-ram-data small{display:none}#performance-panel .activity-cache-cell strong{font-size:8.5px;letter-spacing:-.25px}#performance-panel .activity-cache-node-title small{font-size:7px}#performance-panel .activity-cache-time-comparison{grid-template-columns:minmax(0,1fr) 58px}#performance-panel .activity-cache-time-row{grid-template-columns:66px minmax(15px,1fr) 46px;gap:3px}}
+@media(prefers-reduced-motion:reduce){#performance-panel .activity-cache-inline-packet{animation:none!important;left:50%}#performance-panel .activity-cache-time-track>i{transition:none!important}}
+@media screen and (min-width:1000px) and (max-height:760px){
+  #performance-panel .activity-cache-actions{margin:5px 0}
+  #performance-panel .activity-cache-layout{gap:4px}
+  #performance-panel .activity-cache-request{height:18px}
+  #performance-panel .activity-cache-viewport{padding-top:1px}
+  #performance-panel .activity-cache-flow{grid-template-rows:176px;margin-top:0}
+  #performance-panel .activity-cache-ram{height:174px;padding:5px}
+  #performance-panel .activity-cache-ram-heading{margin-bottom:3px}
+  #performance-panel .activity-cache-ram-data{min-height:15.5px;padding:1.5px 1px}
+  #performance-panel .activity-cache-box{padding:4px 5px}
+  #performance-panel .activity-cache-slots{margin-top:4px}
+  #performance-panel .activity-cache-slots[data-capacity="8"] .activity-cache-cell{height:32px;min-height:32px;padding:1px}
+  #performance-panel .activity-cache-route-status{padding:3px 6px;min-height:21px}
+  #performance-panel .activity-cache-legend{margin-top:3px}
+  #performance-panel .activity-cache-time-comparison{padding:5px 8px;gap:3px 8px}
+  #performance-panel .activity-cache-stats>div{padding:3px 5px}
+  #performance-panel .activity-cache-note{margin-top:3px;padding-top:3px}
+}
 </style>
 </head>
 <body>
@@ -575,14 +674,14 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
     <div>
       <p class="activity-eyebrow">04 / PERFORMANCE LAB</p>
       <h2 id="activity-performance-title">What makes a CPU faster?</h2>
-      <p>Change one characteristic at a time. These three experiments make the trade-offs visible.</p>
+      <p>Compare clock rate, cores and cache in one view.</p>
     </div>
     <span class="activity-model-label">SIMPLIFIED TEACHING MODELS</span>
   </div>
   <div class="activity-performance-grid">
     <article class="activity-card activity-clock-card" aria-labelledby="activity-clock-title">
       <div class="activity-card-heading"><span class="activity-lab-number activity-teal">01</span><div><p class="activity-eyebrow">CLOCK RATE</p><h3 id="activity-clock-title">More cycles each second</h3></div></div>
-      <p class="activity-card-intro">Compare the same 16-cycle task on two CPUs with the same design.</p>
+      <p class="activity-card-intro">Run the same 16-cycle task at different clock rates.</p>
       <fieldset class="activity-segment-field"><legend>Your CPU’s clock rate</legend><div class="activity-segments"><label><input type="radio" name="activity-clock-rate" value="1"><span>1 GHz</span></label><label><input type="radio" name="activity-clock-rate" value="2" checked><span>2 GHz</span></label><label><input type="radio" name="activity-clock-rate" value="4"><span>4 GHz</span></label></div></fieldset>
       <div class="activity-clock-comparison">
         <div class="activity-clock-row"><div class="activity-clock-row-label"><span>Reference CPU</span><strong>1 GHz</strong></div><div class="activity-clock-track"><div id="activity-clock-base-bar" class="activity-clock-fill activity-clock-base-fill"></div><span id="activity-clock-base-light" class="activity-clock-light" aria-hidden="true"></span></div><output id="activity-clock-base-count">0 / 16 cycles</output></div>
@@ -590,44 +689,43 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
       </div>
       <div class="activity-inline-actions"><button id="activity-clock-run" class="activity-button activity-button-primary" type="button">Run comparison <span aria-hidden="true">▶</span></button><button id="activity-clock-reset" class="activity-button" type="button">Reset</button></div>
       <p id="activity-clock-result" class="activity-feedback" role="status">Choose a clock rate, then start both CPUs together.</p>
-      <div class="activity-learning-note"><strong>1 GHz = one billion clock cycles per second.</strong><p>A clock cycle is a timing pulse. An instruction can take several cycles. Higher clock rates help when the other performance factors stay the same.</p><small>Animation is slowed down. The task’s 16 cycles are an illustrative example.</small></div>
+      <details class="activity-learning-note activity-performance-notes"><summary>How clock rate helps</summary><strong>1 GHz = one billion clock cycles per second.</strong><p>A clock cycle is a timing pulse. An instruction can take several cycles. Higher clock rates help when the other performance factors stay the same.</p><small>Animation is slowed down. The task’s 16 cycles are an illustrative example.</small></details>
     </article>
     <article class="activity-card activity-cores-card" aria-labelledby="activity-cores-title">
       <div class="activity-card-heading"><span class="activity-lab-number activity-purple">02</span><div><p class="activity-eyebrow">NUMBER OF CORES</p><h3 id="activity-cores-title">Share the work</h3></div></div>
-      <p class="activity-card-intro">A core is a processing unit that can execute instructions. Give 12 equal-sized jobs to your CPU.</p>
+      <p class="activity-card-intro">Share 12 jobs between 1, 2 or 4 processing cores.</p>
       <div class="activity-cores-controls"><fieldset class="activity-segment-field"><legend>CPU cores</legend><div class="activity-segments"><label><input type="radio" name="activity-core-count" value="1"><span>1</span></label><label><input type="radio" name="activity-core-count" value="2"><span>2</span></label><label><input type="radio" name="activity-core-count" value="4" checked><span>4</span></label></div></fieldset><label class="activity-select-field">Workload<select id="activity-core-workload"><option value="parallel">Independent jobs</option><option value="dependent">One dependency chain</option></select></label></div>
       <div class="activity-work-queue"><span>JOBS</span><div id="activity-core-queue" aria-label="Job queue"></div></div>
       <div id="activity-core-lanes" class="activity-core-lanes" aria-label="Work completed by each core"></div>
       <div class="activity-core-counters"><span><strong id="activity-core-done">0</strong> / 12 jobs complete</span><span><strong id="activity-core-steps">0</strong> time steps</span></div>
       <div class="activity-inline-actions"><button id="activity-core-run" class="activity-button activity-button-purple" type="button">Run jobs <span aria-hidden="true">▶</span></button><button id="activity-core-step" class="activity-button" type="button">One step</button><button id="activity-core-reset" class="activity-button" type="button">Reset</button></div>
       <p id="activity-core-result" class="activity-feedback" role="status">Independent jobs can be processed at the same time. Try 1, 2 and 4 cores.</p>
-      <div class="activity-learning-note"><strong>More cores help with parallel work.</strong><p>If a job needs the previous result, it has to wait. Software must be able to split the work; real speed-ups also depend on coordination and shared resources.</p><small>One model time step is the time for one equal-sized job on one core.</small></div>
+      <details class="activity-learning-note activity-performance-notes"><summary>When more cores help</summary><strong>More cores help with parallel work.</strong><p>If a job needs the previous result, it has to wait. Software must be able to split the work; real speed-ups also depend on coordination and shared resources.</p><small>One model time step is the time for one equal-sized job on one core.</small></details>
     </article>
     <article class="activity-card activity-cache-card" aria-labelledby="activity-cache-title">
       <div class="activity-cache-top">
-        <div><div class="activity-card-heading"><span class="activity-lab-number activity-orange">03</span><div><p class="activity-eyebrow">CACHE</p><h3 id="activity-cache-title">Data passes through cache</h3></div></div><p class="activity-card-intro">Data fetched from RAM enters cache before reaching the CPU. Cache keeps the most recently used items. A repeated request can stop at cache.</p></div>
+        <div><div class="activity-card-heading"><span class="activity-lab-number activity-orange">03</span><div><p class="activity-eyebrow">CACHE</p><h3 id="activity-cache-title">Reuse recent data</h3></div></div><p class="activity-card-intro">Keep recent data for faster reuse.</p></div>
         <fieldset class="activity-segment-field"><legend>Cache capacity</legend><div class="activity-segments"><label><input type="radio" name="activity-cache-size" value="2" checked><span>2 items</span></label><label><input type="radio" name="activity-cache-size" value="4"><span>4 items</span></label><label><input type="radio" name="activity-cache-size" value="8"><span>8 items</span></label></div></fieldset>
       </div>
       <div class="activity-inline-actions activity-cache-actions"><button id="activity-cache-step" class="activity-button activity-button-primary" type="button">Next request <span aria-hidden="true">▶</span></button><button id="activity-cache-run" class="activity-button" type="button">Play requests</button><button id="activity-cache-reset" class="activity-button" type="button">Reset</button><span class="activity-cache-start-note">Data follows one line through cache.</span></div>
       <div class="activity-cache-layout">
         <div>
-          <p class="activity-small-heading">NEXT CPU REQUESTS · ADDRESSES IN DENARY</p>
+          <p class="activity-small-heading">REQUESTS · DENARY ADDRESSES</p>
           <div id="activity-cache-sequence" class="activity-cache-sequence" aria-label="Memory request sequence"></div>
-          <div class="activity-cache-viewport" tabindex="0" role="region" aria-label="CPU, cache and RAM on one horizontal data transmission path. Scroll sideways on a small screen."><div id="activity-cache-flow" class="activity-cache-flow" aria-label="Data from RAM passes through cache before reaching the CPU"></div></div>
-          <div class="activity-cache-legend"><span><i class="activity-key activity-key-teal"></i>Hit: CACHE → CPU · RAM idle · 1 cycle</span><span><i class="activity-key activity-key-orange"></i>Miss: RAM → CACHE → CPU · 5 cycles</span></div>
+          <div class="activity-cache-viewport" tabindex="0" role="region" aria-label="CPU, cache and RAM on one horizontal data transmission path."><div id="activity-cache-flow" class="activity-cache-flow" aria-label="Data from RAM passes through cache before reaching the CPU"></div></div>
+          <div class="activity-cache-legend"><span><i class="activity-key activity-key-teal"></i>Hit: 1 cycle · RAM idle</span><span><i class="activity-key activity-key-orange"></i>Miss: 5 cycles · read RAM</span></div>
         </div>
         <div id="activity-cache-time-comparison" class="activity-cache-time-comparison" role="group" aria-label="Waiting time comparison">
-          <header class="activity-cache-time-heading"><h4>Time for these requests</h4><small>Compare the same completed requests. Shorter bar = less waiting.</small></header>
+          <header class="activity-cache-time-heading"><h4>Waiting time</h4><small>Compare the same completed requests. Shorter bar = less waiting.</small></header>
           <div class="activity-cache-time-row" data-kind="ram"><span>RAM every time</span><div class="activity-cache-time-track"><i id="activity-cache-without-bar"></i></div><output id="activity-cache-without-time">0 cycles</output></div>
           <div class="activity-cache-time-row" data-kind="cache"><span id="activity-cache-with-label">Using cache</span><div class="activity-cache-time-track"><i id="activity-cache-with-bar"></i></div><output id="activity-cache-with-time">0 cycles</output></div>
           <div class="activity-cache-saved-panel"><strong id="activity-cache-saved">0</strong><span>cycles saved</span><small id="activity-cache-saving-percent">Ready to compare</small></div>
         </div>
         <div class="activity-cache-scoreboard">
           <div class="activity-cache-stats"><div><strong id="activity-cache-hits">0</strong><span>CACHE HITS</span></div><div><strong id="activity-cache-misses">0</strong><span>RAM READS</span></div><div><strong id="activity-cache-cycles">0</strong><span>CYCLES</span></div></div>
-          <p id="activity-cache-result" class="activity-feedback" role="status">Data follows one line through cache. Request them again to see the time saving.</p>
         </div>
       </div>
-      <div class="activity-learning-note activity-cache-note"><details><summary>How this model works</summary><p>There is one transmission path: CPU ← CACHE ← RAM. On a miss, data arrives from RAM, is kept in cache, and is forwarded unchanged to the CPU. On a hit, only the CPU–cache part of that same path is used; RAM stays idle. Choose a capacity of 2, 4 or 8 items. The least recently used item is replaced when cache is full. Cache entries are ordered from least to most recently used, reading left to right and then top to bottom. Two earlier reads have already saved addresses 1 and 3; Reset restores those copies. The comparison counts only the requests shown above, not the earlier reads. A cache hit costs 1 model cycle; a miss costs 5 cycles in total, including the RAM read and saving its copy. The animation is slowed down for teaching. This activity reads instructions and data without executing a program. Addresses are denary, and the same eight bits are preserved at every transfer. Cache is fast memory, usually on the processor; this diagram illustrates its place in the access path.</p></details></div>
+      <div class="activity-learning-note activity-cache-note"><details class="activity-performance-notes"><summary>How cache saves time</summary><p id="activity-cache-result" class="activity-feedback" role="status">Data follows one line through cache. Request them again to see the time saving.</p><p>There is one transmission path: CPU ← CACHE ← RAM. On a miss, data arrives from RAM, is kept in cache, and is forwarded unchanged to the CPU. On a hit, only the CPU–cache part of that same path is used; RAM stays idle. Choose a capacity of 2, 4 or 8 items. The least recently used item is replaced when cache is full. Cache entries are ordered from least to most recently used, reading left to right and then top to bottom. Two earlier reads have already saved addresses 1 and 3; Reset restores those copies. The comparison counts only the requests shown above, not the earlier reads. A cache hit costs 1 model cycle; a miss costs 5 cycles in total, including the RAM read and saving its copy. The animation is slowed down for teaching. This activity reads instructions and data without executing a program. Addresses are denary, and the same eight bits are preserved at every transfer. Cache is fast memory, usually on the processor; this diagram illustrates its place in the access path.</p></details></div>
     </article>
   </div>
 </section>
@@ -1814,7 +1912,7 @@ main:has(#build-panel:not([hidden])){padding-top:16px}
       '<div class="activity-cache-link ' + leftState + '" data-link="cpu-cache" style="--cache-travel-time:' + cacheTiming.cacheToCpu + 'ms"><span class="activity-cache-link-label">' + leftLabel + '</span><div class="activity-cache-link-rail" aria-hidden="true">' + packet(toCpu) + '</div></div>' +
       '<div class="activity-cache-box' + (stage === 'cache-fill' || toCpu ? ' activity-cache-source-active' : '') + '"><strong class="activity-cache-node-title">CACHE <small>' + cache.cells.length + ' / ' + cache.size + ' items</small></strong><p class="activity-cache-recent-note">Keep the ' + cache.size + ' most recently used items</p>' + slots + '<p id="activity-cache-copy-status" class="activity-cache-node-status">' + cacheStatus + '</p></div>' +
       '<div class="activity-cache-link ' + rightState + '" data-link="cache-ram" style="--cache-travel-time:' + cacheTiming.ramToCache + 'ms"><span class="activity-cache-link-label">' + rightLabel + '</span><div class="activity-cache-link-rail" aria-hidden="true">' + packet(fromRam) + '</div></div>' +
-      '<div class="activity-cache-ram' + (ramReading ? ' activity-cache-ram-active' : '') + (current && current.hit ? ' activity-cache-ram-idle' : '') + '"><div class="activity-cache-ram-heading"><strong class="activity-cache-node-title">RAM</strong><span id="activity-cache-ram-status">' + (ramReading ? 'READING' : 'IDLE') + '</span></div><div class="activity-cache-ram-headings"><span>Address</span><span>8-bit data</span><span>Meaning</span></div>' + Object.keys(ramWords).map(address => {
+      '<div class="activity-cache-ram' + (ramReading ? ' activity-cache-ram-active' : '') + (current && current.hit ? ' activity-cache-ram-idle' : '') + '"><div class="activity-cache-ram-heading"><strong class="activity-cache-node-title">RAM</strong><span id="activity-cache-ram-status">' + (ramReading ? 'READING' : 'IDLE') + '</span></div><div class="activity-cache-ram-headings"><span title="Address in denary">Addr</span><span>8-bit data</span><span>Meaning</span></div>' + Object.keys(ramWords).map(address => {
         const data = ramWords[address];
         return '<div class="activity-cache-ram-data' + (ramReading && Number(address) === pending.address ? ' activity-ram-read' : '') + '" data-ram-address="' + address + '"><span>' + address + '</span><b>' + cacheBits(data.value) + '</b><small>' + (data.type === 'Instruction' ? data.meaning : data.value + ' denary') + '</small></div>';
       }).join('') + '<p class="activity-cache-ram-caption">Instructions and data share RAM.</p></div>' +
