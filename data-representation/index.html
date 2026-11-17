@@ -201,17 +201,17 @@ function saveFile(name,content,type='text/plain;charset=utf-8'){
  const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),15000);
 }
 function stat(value,label){return `<div class="stat"><strong class="num">${value}</strong><span>${label}</span></div>`;}
-function translateStatic(){document.documentElement.lang=lang;$$$$('[data-en]').forEach(el=>el.textContent=el.dataset[lang]);$('language').textContent=lang==='en'?'VI':'EN';}
+function translateStatic(){document.documentElement.lang=lang;$$$('[data-en]').forEach(el=>el.textContent=el.dataset[lang]);$('language').textContent=lang==='en'?'VI':'EN';}
 function toggleLab(name,updateHash=true){
  if(!['text','bitmap','vector','sound','compression'].includes(name))return;
  if(activeLab==='vector')stopVector();if(activeLab==='sound'){pauseSound();stopAudio();}
- activeLab=name;$$$$('[data-lab]').forEach(b=>{const on=b.dataset.lab===name;b.setAttribute('aria-selected',String(on));b.tabIndex=on?0:-1;});
- $$$$('main>section').forEach(s=>s.hidden=s.id!=='lab-'+name);
+ activeLab=name;$$$('[data-lab]').forEach(b=>{const on=b.dataset.lab===name;b.setAttribute('aria-selected',String(on));b.tabIndex=on?0:-1;});
+ $$$('main>section').forEach(s=>s.hidden=s.id!=='lab-'+name);
  if(updateHash){try{history.replaceState(null,'','#'+name);}catch(_){}}
  if(name==='text')renderText();if(name==='bitmap')renderBitmap();if(name==='vector')renderVector();if(name==='sound')renderSound();if(name==='compression')renderCompression();renderNotes();
 }
-$$$$('[data-lab]').forEach(b=>b.addEventListener('click',()=>toggleLab(b.dataset.lab)));
-$$$$('[role="tab"]').forEach((b,i,arr)=>b.addEventListener('keydown',e=>{let n=i;if(e.key==='ArrowRight')n=(i+1)%arr.length;else if(e.key==='ArrowLeft')n=(i+arr.length-1)%arr.length;else if(e.key==='Home')n=0;else if(e.key==='End')n=arr.length-1;else return;e.preventDefault();arr[n].focus();toggleLab(arr[n].dataset.lab);}));
+$$$('[data-lab]').forEach(b=>b.addEventListener('click',()=>toggleLab(b.dataset.lab)));
+$$$('[role="tab"]').forEach((b,i,arr)=>b.addEventListener('keydown',e=>{let n=i;if(e.key==='ArrowRight')n=(i+1)%arr.length;else if(e.key==='ArrowLeft')n=(i+arr.length-1)%arr.length;else if(e.key==='Home')n=0;else if(e.key==='End')n=arr.length-1;else return;e.preventDefault();arr[n].focus();toggleLab(arr[n].dataset.lab);}));
 $('fullscreen').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch(_){toast(t('Use your browser’s full-screen command (usually F11).','Dùng lệnh toàn màn hình của trình duyệt (thường là F11).'));}});
 $('language').addEventListener('click',()=>{lang=lang==='en'?'vi':'en';try{localStorage.setItem('rgsv-data-lab-language',lang);}catch(_){}translateStatic();updateSelectLabels();updateAudioButtons();renderText();renderPickers();if(activeLab==='bitmap')renderBitmap();if(activeLab==='vector')renderVector();if(activeLab==='sound')renderSound();if(activeLab==='compression')renderCompression();renderNotes();if($('codebook').open)renderCodebook();});
 function updateSelectLabels(){
@@ -257,11 +257,11 @@ function renderText(){
  const bytes=encoding==='ascii'?units:bits/8;
  $('text-stats').innerHTML=stat(chars.length,t('code points in your message','điểm mã trong văn bản'))+stat(unsupported?`${chars.length-unsupported} / ${chars.length}`:chars.length,t('representable code points','điểm mã biểu diễn được'))+stat(`${fmt(bits)} ${t('bits','bit')}`,unsupported?t('supported part only','chỉ phần được hỗ trợ'):t('code data, before storage padding','dữ liệu mã, chưa đệm lưu trữ'))+`<div class="formula">${encoding==='ascii'?t(`<b>${units} × 7 = ${bits} code bits</b><br>Normally stored in ${units} byte(s), with one leading 0 per code.`,`<b>${units} × 7 = ${bits} bit mã</b><br>Thường lưu trong ${units} byte, thêm một bit 0 đầu mỗi mã.`):`<b>${units} × ${encoding==='extended'?8:16} = ${bits} ${t('bits','bit')} = ${fmt(bytes)} ${t('bytes','byte')}</b><br>${t('No header or byte-order mark counted.','Chưa tính phần đầu tệp hoặc dấu thứ tự byte.')}`}</div>`;
  $('text-save').disabled=!textRows.length;
- $$$$('[data-char]').forEach(el=>el.addEventListener('click',()=>{textSelected=+el.dataset.char;renderText();}));
+ $$$('[data-char]').forEach(el=>el.addEventListener('click',()=>{textSelected=+el.dataset.char;renderText();}));
 }
 $('text-input').addEventListener('input',()=>{const chars=Array.from($('text-input').value);if(chars.length>40){$('text-input').value=chars.slice(0,40).join('');toast(t('Keep the message to 40 code points for a readable display.','Giữ văn bản trong 40 điểm mã để dễ quan sát.'));}renderText();});
 $('encoding').addEventListener('change',()=>{renderText();bookStart=0;});
-$$$$('[data-example]').forEach(b=>b.addEventListener('click',()=>{$('text-input').value=b.dataset.example;textSelected=0;renderText();}));
+$$$('[data-example]').forEach(b=>b.addEventListener('click',()=>{$('text-input').value=b.dataset.example;textSelected=0;renderText();}));
 $('text-save').addEventListener('click',()=>{
  const lines=['RGSV | Text representation',`Encoding: ${encodingName()}`,`Original text (JSON escaped): ${JSON.stringify($('text-input').value)}`,'','Position\tCharacter\tCode point\tStored code unit(s), decimal\tBinary code unit(s)\tCode bits'];
  textRows.forEach((r,i)=>lines.push(`${i+1}\t${JSON.stringify(r.ch)}\tU+${r.cp.toString(16).toUpperCase().padStart(4,'0')}\t${r.valid?r.units.join(' '):'UNSUPPORTED'}\t${r.valid?r.units.map(u=>binary(u,r.bits)).join(' '):'—'}\t${r.totalBits}`));
@@ -278,7 +278,7 @@ function renderCodebook(){
  $('codebook-grid').innerHTML=html;
  const cp=bookCharacter(bookSelected),r=cp===null?null:encodeCharacter(String.fromCodePoint(cp),$('encoding').value);
  $('codebook-detail').textContent=r?`${r.info.text} → ${bookSelected} → ${r.units.map(u=>binary(u,r.bits)).join(' + ')}. ${t('Green cells appear in your message. Select any cell to inspect its bits.','Các ô xanh có trong văn bản. Chọn một ô để xem dãy bit.')}`:t('Undefined code slot. It is not a printable character.','Vị trí mã chưa định nghĩa. Không phải ký tự in được.');
- $$$$('[data-code]').forEach(b=>b.addEventListener('click',()=>{bookSelected=+b.dataset.code;$('codebook-goto').value=bookSelected;renderCodebook();}));
+ $$$('[data-code]').forEach(b=>b.addEventListener('click',()=>{bookSelected=+b.dataset.code;$('codebook-goto').value=bookSelected;renderCodebook();}));
 }
 $('open-codebook').addEventListener('click',()=>{const r=textRows[textSelected];bookSelected=r&&r.valid?($('encoding').value==='unicode'?r.cp:r.units[0]):65;bookStart=Math.floor(bookSelected/128)*128;$('codebook-goto').value=bookSelected;renderCodebook();$('codebook').showModal();});
 $('codebook-close').addEventListener('click',()=>$('codebook').close());$('codebook').addEventListener('click',e=>{if(e.target===$('codebook')){const r=$('codebook').getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)$('codebook').close();}});
@@ -302,7 +302,7 @@ function shapeSVG(s,extra=''){
 }
 function sceneSVG(scene,extra='',className='source-svg'){return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="${className}" role="img" aria-label="${escapeHTML(t(scene.en,scene.vi))}">${scene.shapes.map(s=>shapeSVG(s)).join('')}${extra}</svg>`;}
 let bitmapScene=0,vectorScene=0;
-function renderPickers(){['bitmap','vector'].forEach(kind=>{const selected=kind==='bitmap'?bitmapScene:vectorScene;$(kind+'-picker').innerHTML=SCENES.map((s,i)=>`<button class="image-choice" role="radio" aria-checked="${i===selected}" data-scene-kind="${kind}" data-scene="${i}" title="${escapeHTML(t(s.en,s.vi))}">${sceneSVG(s,'','')}<span>${t(s.en,s.vi)}</span></button>`).join('');});$$$$('[data-scene-kind]').forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.scene;if(b.dataset.sceneKind==='bitmap'){bitmapScene=i;pixelSelection=null;paletteHighlight=-1;renderPickers();renderBitmap();}else{vectorScene=i;resetVector();renderPickers();}}));}
+function renderPickers(){['bitmap','vector'].forEach(kind=>{const selected=kind==='bitmap'?bitmapScene:vectorScene;$(kind+'-picker').innerHTML=SCENES.map((s,i)=>`<button class="image-choice" role="radio" aria-checked="${i===selected}" data-scene-kind="${kind}" data-scene="${i}" title="${escapeHTML(t(s.en,s.vi))}">${sceneSVG(s,'','')}<span>${t(s.en,s.vi)}</span></button>`).join('');});$$$('[data-scene-kind]').forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.scene;if(b.dataset.sceneKind==='bitmap'){bitmapScene=i;pixelSelection=null;paletteHighlight=-1;renderPickers();renderBitmap();}else{vectorScene=i;resetVector();renderPickers();}}));}
 const hitCanvas=document.createElement('canvas'),hitCtx=hitCanvas.getContext('2d');
 function hitShape(s,x,y){
  if(s.type==='rect')return x>=s.x&&x<s.x+s.w&&y>=s.y&&y<s.y+s.h;
@@ -339,7 +339,7 @@ function renderBitmap(){
  $('bitmap-alert').classList.toggle('warn',lost);
  $('bitmap-alert').textContent=lost?t(`${bits}-bit colour stores at most ${bitmapData.capacity} colours. ${bitmapData.sourceColours.length} sampled colours → ${bitmapData.palette.length} palette colours: ${bitmapData.changed} pixels change colour.`,`${bits} bit lưu tối đa ${bitmapData.capacity} màu. ${bitmapData.sourceColours.length} màu lấy mẫu → ${bitmapData.palette.length} màu trong bảng: ${bitmapData.changed} điểm ảnh đổi màu.`):t(`${bits} bits per pixel → up to ${bitmapData.capacity} colours. This picture uses ${bitmapData.palette.length}. Each binary number points to one palette entry.`,`${bits} bit mỗi điểm ảnh → tối đa ${bitmapData.capacity} màu. Ảnh này dùng ${bitmapData.palette.length} màu. Mỗi số nhị phân trỏ đến một màu trong bảng.`);
  const size=n*n*bits;$('bitmap-stats').innerHTML=stat(fmt(n*n),t('pixels','điểm ảnh'))+stat(bits,t('bits per pixel','bit mỗi điểm ảnh'))+stat(`${fmt(size/8)} B`,t('pixel data only','chỉ dữ liệu điểm ảnh'))+`<div class="formula"><b>${n} × ${n} × ${bits} = ${fmt(size)} ${t('bits','bit')} ÷ 8 = ${fmt(size/8)} ${t('bytes','byte')}</b><br>${t('Uncompressed indices. Palette and file header are not included.','Mã màu chưa nén. Chưa tính bảng màu và phần đầu tệp.')}</div>`;
- $$$$('[data-palette]').forEach(b=>b.addEventListener('click',()=>{paletteHighlight=paletteHighlight===+b.dataset.palette?-1:+b.dataset.palette;renderBitmap();}));
+ $$$('[data-palette]').forEach(b=>b.addEventListener('click',()=>{paletteHighlight=paletteHighlight===+b.dataset.palette?-1:+b.dataset.palette;renderBitmap();}));
  drawBitmap();renderPixelDetail();
 }
 function drawBitmap(){
@@ -397,7 +397,7 @@ function renderVector(){
  $('vector-rebuild').disabled=!complete||vector.playing;
  $('vector-save-svg').disabled=!complete;$('vector-save-txt').disabled=!complete;
  $('vector-stats').innerHTML=stat(`${vector.written} / ${total}`,t('drawing instructions','lệnh vẽ'))+stat('x, y',t('positions, sizes and colours','vị trí, kích thước và màu'))+stat(complete?`${fmt(new TextEncoder().encode(exportVectorSVG()).length)} B`:'—',t('actual SVG file size','kích thước tệp SVG thực'))+`<div class="formula"><b>${t('Shapes, not a grid of pixels.','Các hình, không phải lưới điểm ảnh.')}</b><br>${t('SVG keeps the geometry. A screen rasterises it for display.','SVG giữ dữ liệu hình học. Màn hình raster hoá để hiển thị.')}</div>`;
- $$$$('[data-shape]').forEach(b=>b.addEventListener('click',()=>focusVector(+b.dataset.shape)));$$$$('[data-instruction]').forEach(b=>b.addEventListener('click',()=>focusVector(+b.dataset.instruction)));
+ $$$('[data-shape]').forEach(b=>b.addEventListener('click',()=>focusVector(+b.dataset.shape)));$$$('[data-instruction]').forEach(b=>b.addEventListener('click',()=>focusVector(+b.dataset.instruction)));
 }
 function focusVector(index){stopVector();vector.mode='analyse';vector.focus=vector.focus===index?-1:index;renderVector();}
 function analyseNext(){
@@ -569,9 +569,9 @@ function renderCompression(){
  if(compressionScreen==='huffman')renderHuffman();
  if(compressionScreen==='jpeg')renderJPEG();
 }
-$$$('[data-compress-screen]').forEach(btn=>btn.addEventListener('click',()=>{compressionScreen=btn.dataset.compressScreen;$$$('[data-compress-screen]').forEach(b=>b.classList.toggle('active',b===btn));$$$('.compress-screen').forEach(s=>s.hidden=s.id!=='compress-'+compressionScreen);renderCompression();}));
+$$('[data-compress-screen]').forEach(btn=>btn.addEventListener('click',()=>{compressionScreen=btn.dataset.compressScreen;$$('[data-compress-screen]').forEach(b=>b.classList.toggle('active',b===btn));$$('.compress-screen').forEach(s=>s.hidden=s.id!=='compress-'+compressionScreen);renderCompression();}));
 $('rle-run').addEventListener('click',renderRLE);$('rle-input').addEventListener('input',renderRLE);$('rle-reset').addEventListener('click',()=>{$('rle-input').value='AAAAABBBCCDAAAAAA';renderRLE();});
-$$$('.rle-example').forEach(b=>b.addEventListener('click',()=>{$('rle-input').value=b.textContent;renderRLE();}));
+$$('.rle-example').forEach(b=>b.addEventListener('click',()=>{$('rle-input').value=b.textContent;renderRLE();}));
 $('huffman-run').addEventListener('click',renderHuffman);$('huffman-input').addEventListener('input',renderHuffman);
 document.querySelectorAll('.jpeg-sample').forEach(b=>b.addEventListener('click',()=>{jpegSample=b.dataset.jpegSample;jpegOriginal=null;document.querySelectorAll('.jpeg-sample').forEach(x=>x.classList.toggle('active',x.dataset.jpegSample===jpegSample));renderJPEG();}));
 function drawJpegSamples(){
