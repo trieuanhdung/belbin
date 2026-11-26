@@ -719,7 +719,7 @@ class VM{
  refType(r){return r.stringIndex!=null?'CHAR':r.offset==null?r.cell.type:r.cell.value.element;}
  write(r,value){if(r.cell.constant)throw new Error(`“${r.cell.name}” is a constant and cannot be changed.`);if(value==null)throw new Error('This value has not been initialised.');
   if(r.stringIndex!=null){const ch=coerce(value,'CHAR'),chars=Array.from(r.cell.value.value);chars[r.stringIndex-1]=ch.value;const before=r.cell.value;r.cell.value=V('STRING',chars.join(''));this.s.changes.push({id:r.cell.id,offset:r.stringIndex-1,name:this.refName(r),before:display(before,true),after:display(r.cell.value,true)});return;}
-  const type=this.refType(r);let next,newType=type;
+  const type=this.refType(r);if(type==='REAL'&&value.type==='INTEGER')value=V('REAL',value.value);let next,newType=type;
   if(type==='AUTO'){
    if(value.type==='ARRAY'&&value.items.length+this.memoryUse()>20000)throw new Error('Live array memory limit exceeded.');
    next=structuredClone(value);newType=value.type;
