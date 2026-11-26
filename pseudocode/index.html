@@ -726,7 +726,7 @@ class VM{
   }else if(type==='ARRAY'){
    const old=r.cell.value;
    if(value.type!=='ARRAY')throw new Error('An array variable must be assigned an array value.');
-   if(old?.element!==value.element&&!(value.literal&&old?.element==='REAL'&&value.element==='INTEGER'))throw new Error(`Array element type mismatch: expected ${old?.element||'an array'}, received ${value.element}.`);
+   if(old?.element!==value.element&&!(old?.element==='REAL'&&value.element==='INTEGER'))throw new Error(`Array element type mismatch: expected ${old?.element||'an array'}, received ${value.element}.`);
    if(value.literal){
     if(old.bounds.length!==1)throw new Error('A one-dimensional array literal can only be copied into a one-dimensional array.');
     if(value.items.length>old.items.length)throw new Error(`Too many values for array ${r.cell.name}: ${value.items.length} values supplied, but the array holds ${old.items.length} elements. The array will not be resized.`);
@@ -737,7 +737,7 @@ class VM{
    }else{
     const sameShape=old.bounds.length===value.bounds.length&&old.bounds.every(([lo,hi],i)=>hi-lo===value.bounds[i][1]-value.bounds[i][0]);
     if(!sameShape)throw new Error('Array-to-array assignment requires matching dimensions. Use an array literal to copy values into the start of an existing array without resizing it.');
-    next={...old,items:structuredClone(value.items)};
+    next={...old,items:value.items.map(item=>coerce(item,old.element))};
    }
   }else if(r.cell.implicit&&r.offset==null&&type==='INTEGER'&&value.type==='REAL'){next=coerce(value,'REAL');newType='REAL';}
   else if(r.cell.implicit&&r.offset==null&&type==='CHAR'&&value.type==='STRING'){next=value;newType='STRING';}
